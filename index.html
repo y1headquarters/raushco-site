@@ -1,0 +1,2823 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raushco — India Saving. भारतीय बचत.</title>
+<meta name="description" content="Raushco backs a credit card with your own fixed deposits, tracks every savings goal, and keeps cash, gold and silver in one passbook — banking built for growing companies.">
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500&family=Pinyon+Script&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'Inter';
+    src: url('assets/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+    font-weight: 300 800; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Geist Mono';
+    src: url('assets/fonts/GeistMono-VariableFont_wght.ttf') format('truetype');
+    font-weight: 400 600; font-style: normal; font-display: swap;
+  }
+
+  :root {
+    --ink: #1C1A16;
+    --ink-soft: #46574F;
+    --paper: #FFFFFF;
+    --paper-raised: #FFFFFF;
+    --night: #0B1C18;
+    --night-raised: #142E28;
+    --night-text: #ECEEE6;
+    --night-text-soft: #9FB3AB;
+    --brand: #D7A23B;
+    --brand-soft: #F0D9A6;
+    --brand-deep: #1F6F5C;
+    --line: rgba(15,36,32,0.12);
+    --line-dark: rgba(255,255,255,0.14);
+    --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
+    --font-serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { max-width: 100%; display: block; }
+  a { color: inherit; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  h1, h2, h3 { font-family: var(--font-body); font-weight: 600; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+  em { font-style: normal; color: var(--brand); }
+  p { margin: 0; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 15px;
+    padding: 13px 24px;
+    border-radius: 999px;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: transform .15s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn:hover { transform: translateY(-1px); }
+  .hero-signup .btn:hover { transform: none; }
+  .btn-primary { background: var(--brand); color: var(--night); }
+  .btn-primary:hover { background: var(--brand-soft); }
+  .btn-ghost-dark { border-color: var(--line-dark); color: var(--night-text); }
+  .btn-ghost-dark:hover { border-color: var(--night-text-soft); }
+  .btn-ghost-light { border-color: var(--line); color: var(--ink); }
+  .btn-ghost-light:hover { border-color: var(--ink-soft); }
+  .btn-text-dot {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; border: 0; border-radius: 0;
+    padding: 14px; font-size: 14px; color: var(--ink);
+    text-decoration: none; cursor: pointer;
+    transition: color 0.15s;
+  }
+  .btn-text-dot:hover { color: #605F5C; transform: none; }
+  .btn-text-dot .dot {
+    display: inline-block; width: 10px; height: 10px;
+    background: var(--ink);
+    transition: transform 0.3s ease;
+  }
+  /* Rotation is driven by JS (see the ratchet-dot script near the end of
+     body), not a CSS :hover rule — societies.ai's own dot never springs
+     back to 0 on mouse-leave; it advances another 90deg on every hover
+     transition (enter AND leave), so repeated hovers keep turning it
+     forward: 0 -> 90 -> 180 -> 270 -> ... */
+  @media (prefers-reduced-motion: reduce) {
+    .btn-text-dot .dot { transition: none; }
+  }
+  .btn-deep { background: var(--brand-deep); color: #F3FBF8; }
+  .btn-deep:hover { background: #26816C; }
+
+  /* ---------- Announcement bar ---------- */
+  .announce-bar {
+    background: #1C1A16; color: var(--night-text);
+    font-family: var(--font-body); font-size: 13.5px;
+  }
+  .announce-row {
+    display: flex; align-items: center; justify-content: center; gap: 18px;
+    height: 44px; position: relative;
+  }
+  /* 4 squares in a 2x2 grid, lighting up one at a time in a loop — matched
+     to societies.ai's own announcement bar via direct computed-style/
+     keyframe inspection: 1.2s linear cycle, each dot on for exactly one
+     quarter (0%-24.9%) then off, negative per-dot delays producing a
+     clean no-gap/no-overlap handoff in BR -> BL -> TL -> TR order. */
+  .announce-chase { display: inline-grid; grid-template-columns: repeat(2, 1fr); gap: 2px; width: 14px; height: 14px; flex-shrink: 0; }
+  .announce-chase span { width: 6px; height: 6px; background: var(--night-text); opacity: 0.25; animation: announce-chase-pulse 1.2s linear infinite; }
+  .announce-chase span:nth-child(1) { animation-delay: 0.6s; } /* top-left */
+  .announce-chase span:nth-child(2) { animation-delay: 0.9s; } /* top-right */
+  .announce-chase span:nth-child(3) { animation-delay: 0.3s; } /* bottom-left */
+  .announce-chase span:nth-child(4) { animation-delay: 0s; }   /* bottom-right — chase starts here */
+  @keyframes announce-chase-pulse { 0%, 24.9% { opacity: 1; } 25%, 100% { opacity: 0.25; } }
+  .announce-text { display: flex; align-items: center; gap: 18px; }
+  .announce-text-dim { color: rgba(255, 255, 255, 0.6); }
+  .announce-text-bright { color: var(--night-text); }
+  .announce-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    color: var(--night-text); text-decoration: none; white-space: nowrap;
+    opacity: 0.85; transition: opacity 0.2s ease;
+  }
+  .announce-link:hover { opacity: 1; }
+  .announce-link-dot { width: 10px; height: 10px; background: var(--night-text); flex-shrink: 0; transition: transform 0.3s ease; }
+  /* Rotation: JS ratchet, same as .btn-text-dot .dot above — see note there. */
+  @media (prefers-reduced-motion: reduce) {
+    .announce-chase span, .announce-link-dot { animation: none; }
+    .announce-chase span { opacity: 0.6; }
+  }
+  .announce-close {
+    position: absolute; right: 32px; top: 50%; transform: translateY(-50%);
+    display: inline-flex; align-items: center; justify-content: center;
+    background: none; border: 0; color: var(--night-text-soft);
+    cursor: pointer; line-height: 1; padding: 4px;
+  }
+  .announce-close:hover { color: var(--night-text); }
+
+  /* ---------- Nav ---------- */
+  .site-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 2000;
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .site-header.nav-hidden { transform: translateY(-100%); }
+  header.site-nav {
+    background: #FFFFFF;
+  }
+  .nav-row { display: flex; align-items: center; justify-content: space-between; height: 62px; padding: 0 70px 0 84px; }
+  header.site-nav .wordmark { color: #000000; }
+  .wordmark { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-display); font-size: 15px; font-weight: 500; text-transform: uppercase; text-decoration: none; letter-spacing: 0.01em; }
+  .wordmark-mark { width: 24px; height: 24px; display: block; }
+  .wordmark-text.hidden { display: none; }
+  .nav-links { display: flex; align-items: center; gap: 44px; margin-left: 48px; margin-right: auto; }
+  header.site-nav .nav-links a { color: #000000; transition: color 0.15s; }
+  header.site-nav .nav-links a:hover { color: #605F5C; }
+  .nav-links a { font-size: 14px; text-decoration: none; }
+  .nav-actions { display: flex; align-items: center; gap: 12px; }
+  .nav-actions .btn { padding: 10px 20px; font-size: 14px; }
+
+  .nav-dropdown { position: static; }
+  .nav-dd-trigger { display: inline-flex; align-items: center; gap: 6px; }
+  .nav-dd-chevron { width: 10px; height: 7px; transition: transform 0.2s ease; }
+  .nav-dropdown:hover .nav-dd-chevron,
+  .nav-dropdown.open .nav-dd-chevron { transform: rotate(180deg); }
+  .nav-dropdown-panel {
+    position: absolute; top: 100%; left: 0; right: 0;
+    transform: translateY(8px);
+    width: auto; background: #FFFFFF; border-top: 1px solid var(--line);
+    box-shadow: 0 24px 56px rgba(0,0,0,0.14);
+    padding: 28px 40px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;
+    opacity: 0; visibility: hidden; pointer-events: none;
+    transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+  }
+  .nav-dropdown:hover .nav-dropdown-panel,
+  .nav-dropdown:focus-within .nav-dropdown-panel,
+  .nav-dropdown.open .nav-dropdown-panel {
+    opacity: 1; visibility: visible; pointer-events: auto; transform: translateY(0);
+  }
+  .nav-dd-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 10px; text-decoration: none;
+  }
+  .nav-dd-item:hover { background: rgba(112,115,147,0.06); }
+  .nav-dd-item .ic-chip {
+    width: 36px; height: 36px; border-radius: 0; background: var(--night);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .nav-dd-item .ic { width: 18px; height: 18px; }
+  .nav-dd-item h5 { font-size: 13.5px; font-weight: 600; color: var(--ink); margin: 0 0 3px; }
+  .nav-dd-item p { font-size: 12px; color: var(--ink-soft); line-height: 1.4; margin: 0; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    color: var(--night-text); overflow: hidden; position: relative;
+    margin: 20px;
+    height: calc(100vh - 40px);
+    display: flex;
+    align-items: flex-end;
+    transition: margin 0.3s ease, height 0.3s ease;
+  }
+  .hero.hero-scrolled {
+    margin: 0;
+    height: 100vh;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero { transition: none; }
+  }
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(rgba(0,0,0,0.18), rgba(0,0,0,0.18)),
+      url('assets/images/hero-shimla.jpg');
+    background-size: cover;
+    background-position: center;
+  }
+  .hero-content {
+    position: relative; z-index: 2;
+    padding: 0 32px 64px 64px;
+    max-width: 620px;
+  }
+  /* An original node-tour system — not ported from any reference site's
+     code. Dots drift gently in place forever; a JS-driven tour (see the
+     init script) periodically draws a line from the last-visited dot to
+     a newly-chosen one and swaps in that node's card, cycling endlessly
+     through a shuffled visit order. */
+  .hero-annotations {
+    position: absolute; inset: 0; z-index: 1; pointer-events: none;
+    overflow: hidden;
+  }
+  /* Each dot roams continuously along its own multi-point path rather
+     than sitting still — confirmed in societies.ai's own source (each
+     node holds a path array + a 48-90s randomized traversal duration
+     with ping-pong direction, not a fixed resting position). Waypoints
+     below are their real path coordinates, converted from the 1896x950
+     canvas space into percentages via the same cover-fit transform their
+     own code uses (scale = max(renderW/1896, renderH/950)), confirmed
+     against the hero image's actual measured render size. */
+  .hn-dot {
+    position: absolute; width: 10px; height: 10px; background: #FFFFFF;
+    opacity: 0;
+    animation-timing-function: ease-out, cubic-bezier(0.33, 0, 0.67, 1);
+    animation-iteration-count: 1, infinite;
+    animation-direction: normal, alternate;
+    animation-fill-mode: forwards, none;
+  }
+  /* Path animation-delays are negative — confirmed in their source, each
+     node has a per-node phase seed (l=[1.1,.33,.15,.62,0,1]) so it starts
+     PARTWAY along its path, not at the anchor point. A CSS animation with
+     a negative delay of -(seed*duration) behaves as if it had already
+     been running that long, landing it at the same phase/direction their
+     seed produces — only index 4 (seed 0) genuinely starts at its anchor. */
+  .hn-dot:nth-of-type(1) { animation-name: hnDotIn, hnPath1; animation-delay: 0.3s, -63.8s; animation-duration: 0.6s, 58s; }
+  .hn-dot:nth-of-type(2) { animation-name: hnDotIn, hnPath2; animation-delay: 1s, -23.43s; animation-duration: 0.6s, 71s; }
+  .hn-dot:nth-of-type(3) { animation-name: hnDotIn, hnPath3; animation-delay: 2s, -9.6s; animation-duration: 0.6s, 64s; }
+  .hn-dot:nth-of-type(4) { animation-name: hnDotIn, hnPath4; animation-delay: 0.7s, -48.98s; animation-duration: 0.6s, 79s; }
+  .hn-dot:nth-of-type(5) { animation-name: hnDotIn, hnPath5; animation-delay: 1.5s, 0s; animation-duration: 0.6s, 55s; }
+  .hn-dot:nth-of-type(6) { animation-name: hnDotIn, hnPath6; animation-delay: 2.5s, -68s; animation-duration: 0.6s, 68s; }
+  @keyframes hnDotIn { to { opacity: 1; } }
+  @keyframes hnPath1 { 0% { top: 17.26%; right: 28.21%; } 100% { top: 10.11%; right: 13.56%; } }
+  @keyframes hnPath2 { 0% { top: 40.00%; right: 33.70%; } 50% { top: 30.52%; right: 12.80%; } 100% { top: 33.15%; right: 4.07%; } }
+  @keyframes hnPath3 { 0% { top: 58.42%; right: 32.94%; } 50% { top: 52.53%; right: 12.65%; } 100% { top: 53.27%; right: 7.52%; } }
+  @keyframes hnPath4 { 0% { top: 68.74%; right: 32.94%; } 50% { top: 62.64%; right: 13.96%; } 100% { top: 63.37%; right: 8.34%; } }
+  @keyframes hnPath5 { 0% { top: 79.16%; right: 32.94%; } 50% { top: 72.85%; right: 15.27%; } 100% { top: 73.69%; right: 8.85%; } }
+  @keyframes hnPath6 { 0% { top: 89.26%; right: 32.94%; } 100% { top: 82.95%; right: 14.62%; } }
+  .hn-line-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+  .hn-edge-line { stroke: rgba(255,255,255,0.85); stroke-width: 1; }
+  .hn-label {
+    position: absolute; font-family: var(--font-body); font-size: 11.5px; color: #FFFFFF;
+    white-space: nowrap; opacity: 0; transition: opacity 0.4s ease;
+  }
+  .hn-label.is-visible { opacity: 1; }
+  /* Confirmed in their source: the card's DOM box sits at its final
+     position/size from the moment it opens — it never scales. A
+     clip-path: inset() window grows from a 10x10 square at the dot's
+     exact position out to the full box, so the title/body text is
+     always rendered at real size, just progressively unmasked, instead
+     of visibly scaling up from a tiny blob. */
+  .hn-card {
+    position: absolute; width: 260px;
+    background: #F7F6F1; border-radius: 0; padding: 18px 20px;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    clip-path: inset(50% 50% 50% 50%);
+    transition: clip-path 0.717s cubic-bezier(0.75, 0, 0.25, 1);
+  }
+  .hn-card h4 {
+    font-size: 13.5px; font-weight: 600; color: #1C1A16; margin: 0 0 8px;
+    transition: transform 0.717s cubic-bezier(0.75, 0, 0.25, 1);
+  }
+  .hn-card p, .hn-card span {
+    opacity: 0; transform: translateY(8px);
+    /* On close this is the only matching rule (is-visible's own delayed
+       variants below stop matching once the class is removed), so without
+       a delay the text used to finish fading ~400ms before the 0.717s
+       clip-path shrink finished — leaving a big, fully-sized, completely
+       blank card body visible for ~100-150ms. Delaying the close-direction
+       fade so it ends exactly as the box finishes collapsing removes that
+       window (confirmed via a live measurement of the actual gap). */
+    transition: opacity 0.28s ease 0.437s, transform 0.28s ease 0.437s;
+  }
+  .hn-card.is-visible p, .hn-card.is-visible span { opacity: 1; transform: translateY(0); }
+  .hn-card.is-visible p { transition-delay: 0.3s; }
+  .hn-card.is-visible span { transition-delay: 0.37s; }
+  .hn-card p { font-size: 11.5px; color: #5A5650; line-height: 1.5; margin: 0 0 10px; }
+  .hn-card span { font-family: var(--font-mono); font-size: 10px; color: #9C968A; }
+  @media (prefers-reduced-motion: reduce) {
+    .hn-dot { animation: none; opacity: 1; }
+    .hn-line-svg, .hn-card, .hn-label { display: none; }
+  }
+  .hero h1 { font-family: var(--font-display); font-weight: 500; letter-spacing: normal; font-size: 48px; line-height: 1.1; color: var(--night-text); }
+  .hero h1 .nowrap-line { white-space: nowrap; }
+  .hero p.lede { margin-top: 24px; font-size: 15px; line-height: 1.6; color: var(--night-text); max-width: 46ch; }
+  .hero-actions { display: flex; gap: 14px; margin-top: 36px; }
+  .hero-signup { display: flex; align-items: center; gap: 10px; margin-top: 36px; max-width: 620px; }
+  .hero-phone-box {
+    display: flex; align-items: stretch; flex: 2; min-width: 0;
+    border: 1px solid var(--line-dark); background: rgba(255,255,255,0.08);
+  }
+  .hero-phone-box:focus-within { border-color: var(--brand); background: rgba(255,255,255,0.12); }
+  .hero-country-chip {
+    position: relative;
+    display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0;
+    padding: 13px 16px;
+  }
+  .hero-country-chip::after {
+    content: ""; position: absolute; top: 10px; bottom: 10px; right: 0;
+    width: 1px; background: var(--line-dark);
+  }
+  .hero-country-chip img { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; }
+  .hero-country-chip span { font-size: 14px; font-weight: 500; color: var(--night-text); }
+  .hero-signup-input {
+    flex: 1; min-width: 0; font: inherit; font-size: 14px;
+    padding: 13px 20px; border: 0; background: transparent;
+    color: var(--night-text);
+  }
+  .hero-signup-input::placeholder { color: var(--night-text); }
+  .hero-signup-input:focus { outline: none; }
+  .hero-signup .btn { flex-shrink: 0; margin: 4px; }
+  .hero-signup .btn {
+    border-radius: 0;
+  }
+  .hero-signup .btn.btn-primary {
+    background: #FFFFFF; color: var(--ink); border: 1px solid transparent;
+    font-size: 14px;
+  }
+  .hero-signup .btn.btn-primary:hover,
+  .hero-signup .btn.btn-primary:focus-visible,
+  .hero-signup .btn.btn-primary:active {
+    background: #FFFFFF; color: var(--ink);
+    border-color: var(--night-text);
+    outline: none;
+  }
+
+  /* ---------- Feature image grid ---------- */
+  .grid-feature { padding: 200px 0 180px; background: var(--paper); }
+  .grid-feature .wrap { max-width: none; margin: 0 84px; padding: 0; }
+  .grid-feature .section-head { max-width: 640px; margin-bottom: 80px; }
+  .grid-feature .eyebrow { color: var(--brand-deep); margin-bottom: 14px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500; }
+  .grid-feature h2 { font-size: 32px; font-weight: 500; line-height: 1.2; color: var(--ink); }
+  .gf-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .gf-card-stage {
+    position: relative; aspect-ratio: 348 / 472;
+    perspective: 1400px;
+  }
+  .gf-card-page {
+    position: absolute; inset: 0;
+    background: #F4F2EC;
+    border-radius: 2px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.16), 0 0 4px rgba(0,0,0,0.04);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .gf-card-stage:hover .gf-card-page { opacity: 1; }
+  .gf-card {
+    position: absolute; inset: 0; overflow: hidden;
+    display: flex; flex-direction: column; padding: 20px 20px 20px 26px;
+    color: #FFFFFF;
+    border-radius: 2px;
+    box-shadow: 0 10px 16px rgba(0,0,0,0.1), 0 2px 3px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05);
+    transform-style: preserve-3d;
+    transform-origin: left center;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .gf-card-stage:hover .gf-card {
+    transform: rotateY(-24deg);
+  }
+  .gf-card::after {
+    content: ""; position: absolute; inset: 0;
+    background:
+      linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 48%),
+      rgba(0,0,0,0.22);
+    pointer-events: none;
+  }
+  /* The gallery's own cards never have text sitting above 48% height, so
+     the scrim only needed to darken the bottom. These book covers DO
+     (.gf-desc up top) — scoped here, not on .gf-card itself, so the
+     feature gallery above stays exactly as it was. */
+  .unbox-book-stage .gf-card::after {
+    background:
+      linear-gradient(180deg, rgba(0,0,0,0.78) 0%, rgba(0,0,0,0.5) 25%, rgba(0,0,0,0.1) 42%, rgba(0,0,0,0) 52%),
+      linear-gradient(0deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 48%),
+      rgba(0,0,0,0.22);
+  }
+  .gf-card::before {
+    content: ""; position: absolute; top: 0; bottom: 0; left: 14px; width: 3px;
+    background:
+      linear-gradient(90deg, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.12) 35%, rgba(255,255,255,0.18) 60%, rgba(0,0,0,0.12) 100%);
+    pointer-events: none; z-index: 1;
+  }
+  .gf-card-highlight {
+    position: absolute; inset: 0;
+    background: linear-gradient(100deg, rgba(255,255,255,0.35) 0%, rgba(255,255,255,0) 35%);
+    opacity: 0; transition: opacity 0.4s ease;
+    pointer-events: none;
+  }
+  .gf-card-stage:hover .gf-card-highlight { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .gf-card, .gf-card-page, .gf-card-highlight { transition: none; }
+  }
+  .gf-desc {
+    position: relative; z-index: 1; font-size: 16px; line-height: 1.3; max-width: 22ch; margin: 0; color: rgba(255,255,255,0.9);
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.55), -0.5px -0.5px 0 rgba(255,255,255,0.2);
+  }
+  .gf-bottom { position: relative; z-index: 1; margin-top: auto; }
+  .gf-sub {
+    display: block; font-size: 16px; font-weight: 400; opacity: 0.7; margin-bottom: 4px;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.5), -0.5px -0.5px 0 rgba(255,255,255,0.15);
+  }
+  .gf-heading {
+    font-size: 16px; font-weight: 400; line-height: 1.3; margin: 0;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.6), -0.5px -0.5px 0 rgba(255,255,255,0.25);
+  }
+
+  /* ---------- Trust strip: digital gallery ---------- */
+  .trust {
+    background: #FFFFFF;
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+  }
+  .gallery-stage {
+    position: relative;
+    width: 100%; min-height: 830px;
+    display: flex; align-items: center;
+    overflow: hidden;
+  }
+  .trust-label {
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    position: absolute; top: 44px; left: 50%; transform: translateX(-50%); z-index: 3;
+    width: 460px; max-width: calc(100% - 168px); height: 26px; border-radius: 0;
+    background:
+      repeating-linear-gradient(180deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, rgba(0,0,0,0.03) 1px, rgba(0,0,0,0.03) 2px),
+      linear-gradient(180deg,
+        #B9C6CD 0%, #E9EBEC 13%, #C7CCCE 26%,
+        #8F9699 48%, #CDD1D2 64%, #A3A8AA 80%, #DBDDDE 100%);
+    box-shadow:
+      0 0 0 1px rgba(15,18,20,0.5),
+      inset 0 1.5px 0 rgba(255,255,255,0.85),
+      inset 0 -1px 0 rgba(0,0,0,0.28),
+      inset 1px 0 0 rgba(255,255,255,0.35),
+      inset -1px 0 0 rgba(0,0,0,0.18),
+      0 10px 22px -8px rgba(0,0,0,0.5),
+      0 46px 60px -24px rgba(198,210,218,0.9),
+      0 20px 30px -14px rgba(198,210,218,0.75);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: #6E6E68;
+    text-shadow: -1px -1px 0 rgba(0,0,0,0.35), 1px 1px 0 rgba(255,255,255,0.55);
+  }
+  .trust-label::after {
+    content: ""; position: absolute; left: 6px; right: 6px; top: 3px; height: 1px;
+    background: rgba(255,255,255,0.7); border-radius: 1px; pointer-events: none;
+  }
+  .gallery-rail {
+    width: 100%; margin: 0; position: relative; z-index: 2;
+    overflow-x: auto; overflow-y: hidden;
+    cursor: grab;
+    -ms-overflow-style: none; scrollbar-width: none;
+  }
+  .gallery-rail::-webkit-scrollbar { display: none; }
+  .gallery-rail.dragging { cursor: grabbing; }
+  .gallery-track { display: flex; align-items: flex-start; gap: 18px; width: max-content; padding: 0 84px; }
+  .gallery-item {
+    flex: 0 0 420px; display: flex; flex-direction: column; align-items: center; gap: 22px;
+    position: relative; box-sizing: border-box;
+    user-select: none;
+  }
+  .gallery-dots {
+    display: flex; justify-content: center; gap: 8px;
+    position: absolute; bottom: 32px; left: 0; right: 0; z-index: 3;
+  }
+  .gallery-dots span { width: 6px; height: 6px; background: rgba(0,0,0,0.2); transition: background 0.3s ease; flex-shrink: 0; }
+  .gallery-dots span.active { background: #1C1A16; }
+  .gallery-frame-outer {
+    position: relative;
+    width: 420px; height: 420px;
+    box-sizing: border-box;
+    pointer-events: none;
+    filter: brightness(1) saturate(1);
+    transition: filter 0.6s ease, box-shadow 0.6s ease;
+  }
+  .gallery-item.lit .gallery-frame-outer {
+    filter: brightness(1.1) saturate(1.12);
+    box-shadow: 0 0 50px 14px rgba(198,210,218,0.45);
+  }
+  .gallery-canvas { position: relative; width: 100%; height: 100%; overflow: hidden; }
+  .gallery-canvas svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .gallery-canvas img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; user-drag: none; }
+  .gallery-plaque {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #1C1A16; text-align: center;
+  }
+
+  /* ---------- Unbox: card reveal ---------- */
+  /* A normal section with its own background color — independent of the
+     gallery melt above it, not formed or driven by it. */
+  .unbox {
+    /* Both colors sampled directly from societies.ai: #F4F4F0 is their
+       card background, and the manor line art has been recolored to
+       #8C8880 (their body-text gray) with its own cream background
+       fully removed — a transparent PNG with opacity baked into its
+       alpha channel (~18%), not a flat image needing a CSS opacity
+       trick on top. */
+    background: url('assets/images/usecases-manor.png') center / cover no-repeat, #F4F4F0;
+    padding: 140px 0 160px; position: relative; overflow: hidden;
+    /* Zero/Vibe mailer + letter colors, consolidated here (not on
+       .unbox-stage) so .theme-vibe can also override the section's own
+       background below — a class on an ANCESTOR can't be driven by a
+       custom property defined on a descendant. .theme-vibe is toggled
+       on this section element directly by setCard(). */
+    --mailer-c1: #1B2A4A; --mailer-c2: #101A2F;
+    --mailer-c1-dark: #16233D; --mailer-c2-dark: #0C1322;
+    --letter-bg1: #FFFFFF; --letter-bg2: #FAFAF6;
+  }
+  .unbox.theme-vibe {
+    /* Flat #060C0C, not a textured surface — the architecture blueprint
+       (same one Zero shows) is still here, just struck twice at a 1px
+       offset — a near-black copy down-right, a faint lighter-gray copy
+       up-left — so the line art itself reads as pressed/engraved into
+       the flat color instead of printed flat on top of it. */
+    background-image:
+      url('assets/images/usecases-manor-emboss-dark.png'),
+      url('assets/images/usecases-manor-emboss-light.png');
+    background-repeat: no-repeat, no-repeat;
+    background-size: cover, cover;
+    background-position: calc(50% + 1px) calc(50% + 1px), calc(50% - 1px) calc(50% - 1px);
+    background-color: #060C0C;
+    --mailer-c1: #670017; --mailer-c2: #43000F;
+    --mailer-c1-dark: #500012; --mailer-c2-dark: #34000C;
+    /* Warm brown presentation-tray leather, not khaki letter paper —
+       the Vibe "open" state is now a JPMorgan Palladium-style box
+       reveal (card inset in a tray, flanked by two books), not a
+       paper letter, so the surface underneath needs the same shift. */
+    --letter-bg1: #8F705E; --letter-bg2: #705749;
+  }
+  .unbox .wrap { max-width: none; margin: 0 84px; padding: 0; position: relative; z-index: 1000; }
+  /* Flanking column sketches — Vibe only, sitting behind .wrap (z-index
+     1000 there beats these having none) so they read as a backdrop
+     detail, not something overlapping the mailer. Engraved into the
+     leather/metal backdrop rather than printed on it — a dark shadow
+     on the light-facing side, a faint highlight on the far side, same
+     pairing used for the box frame on the envelope itself. */
+  .unbox.theme-vibe::before,
+  .unbox.theme-vibe::after {
+    content: '';
+    position: absolute; top: 40px; bottom: 40px; width: 220px;
+    background-image: url('assets/images/column-sketch-vibe.png');
+    background-repeat: no-repeat; background-size: contain; background-position: center;
+    opacity: 0.22;
+    filter:
+      drop-shadow(-1px -1px 1px rgba(0,0,0,0.6))
+      drop-shadow(1px 1px 1px rgba(255,255,255,0.06));
+    pointer-events: none;
+  }
+  .unbox.theme-vibe::before { left: 24px; }
+  .unbox.theme-vibe::after { right: 24px; transform: scaleX(-1); }
+  .unbox .section-head { text-align: center; max-width: none; margin: 0 auto 36px; }
+  .unbox .section-head .eyebrow {
+    display: block; color: #1C1A16; margin-bottom: 14px;
+    font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500;
+  }
+  .unbox .section-head h2 { font-size: 32px; font-weight: 500; line-height: 1.2; color: var(--ink); }
+  /* Plain on Zero (reads as ordinary heading text, same font as the
+     rest of the word) — the signature-script treatment is Vibe-only.
+     "Raushco" stays in the page's own display face (the brand name
+     reads plainly) and "Private" — the .unbox-heading-script span — is
+     the one cut in cursive, smaller than the rest of the line rather
+     than larger, like a signature trailing off after the name. */
+  .unbox-heading-script { font-family: inherit; }
+  .unbox.theme-vibe .section-head h2 {
+    /* Brushed-silver metal text, not flat cream — a few gray/white
+       bands clipped to the glyph shapes themselves. */
+    background: linear-gradient(180deg, #F4F4F4 0%, #BFBFBF 22%, #FFFFFF 46%, #9A9A9A 68%, #E8E8E8 88%, #C8C8C8 100%);
+    -webkit-background-clip: text; background-clip: text;
+    color: transparent; -webkit-text-fill-color: transparent;
+  }
+  .unbox.theme-vibe .unbox-heading-script {
+    font-family: 'Pinyon Script', cursive;
+    font-size: 0.85em; font-weight: 400;
+    margin-right: 2px;
+  }
+
+  /* A single sliding pill, not two separate buttons — sits top-right of
+     the section rather than centered under the heading. Sharp edges, not
+     a rounded pill; ink on the light section background, not gold (gold
+     isn't part of this page's own accent language). */
+  .unbox-toggle {
+    position: absolute; top: 6px; right: 0; z-index: 2;
+    display: inline-flex; align-items: center;
+    background: rgba(28,26,22,0.05); border: 1px solid rgba(28,26,22,0.14);
+    padding: 4px;
+  }
+  .unbox-toggle-thumb {
+    position: absolute; top: 4px; left: 4px; bottom: 4px;
+    width: calc(50% - 4px); background: #1C1A16;
+    transition: transform 0.4s cubic-bezier(0.65, 0, 0.35, 1);
+  }
+  .unbox-toggle[data-active="vibe"] .unbox-toggle-thumb { transform: translateX(100%); }
+  .unbox-tab {
+    position: relative; z-index: 1;
+    font-family: inherit; font-size: 13px; font-weight: 500; color: var(--ink-soft);
+    background: none; border: none; padding: 8px 22px; cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .unbox-tab.active { color: #FFFFFF; }
+  /* Everything above was tuned for the light Zero background — against
+     Vibe's near-black section bg, the dark-ink eyebrow/heading text and
+     the toggle's own light-on-light-tinted-dark chrome all go illegible
+     or just vanish. Same "1C1A16 on light, FFFFFF on dark" rule as the
+     rest of the page, applied locally to the toggle's own elements —
+     the white thumb needs ink text on it, not more white. */
+  .unbox.theme-vibe .section-head .eyebrow,
+  .unbox.theme-vibe .section-head h2 { color: #FFFFFF; }
+  .unbox.theme-vibe .unbox-toggle { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.22); }
+  .unbox.theme-vibe .unbox-toggle-thumb { background: #FFFFFF; }
+  .unbox.theme-vibe .unbox-tab { color: rgba(255,255,255,0.55); }
+  .unbox.theme-vibe .unbox-tab.active { color: #1C1A16; }
+
+  .unbox-stage {
+    /* Zero and Vibe share the exact same mailer component — the
+       --mailer-c* / --letter-bg* custom properties that color it live
+       on .unbox itself (see above), not here, so .theme-vibe toggled on
+       the SECTION can also swap the section's own background — a class
+       on an ancestor can't be driven by a property set on a descendant. */
+    display: flex; flex-direction: column; align-items: center; gap: 40px;
+    min-height: 420px;
+  }
+  /* A separate object from the mailer itself — not the hinged flap
+     translated in place, which would still read as "attached, just
+     rotated" — set down OUTSIDE the envelope, in the section's own
+     whitespace below it, the way you'd actually discard a torn strip.
+     A normal (non-absolute) flex child of .unbox-stage, positioned
+     after .unbox-result in the HTML — ordinary flex flow + gap places
+     it below everything correctly at any viewport, where a fixed pixel
+     offset would have needed separate tuning per breakpoint to clear
+     .unbox-result's actual (unscaled) height. */
+  .unbox-torn-strip-rest {
+    width: 300px; height: 29px;
+    background-image:
+      url('assets/images/tear-strip-ref.png'),
+      linear-gradient(155deg, var(--mailer-c1-dark) 0%, var(--mailer-c2-dark) 100%);
+    background-repeat: no-repeat, no-repeat;
+    background-position: center, 0 0;
+    background-size: 300px 29px, auto;
+    box-shadow: 0 10px 20px -6px rgba(10,14,26,0.45);
+    opacity: 0; pointer-events: none;
+    transform: translateY(-18px) rotate(0deg) scale(0.92);
+    transition: opacity 0.4s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .unbox-torn-strip-rest.landed {
+    opacity: 1;
+    transform: translateY(0) rotate(-6deg) scale(1);
+  }
+
+  /* -- Zero and Vibe share this exact mailer — the way banks actually mail a
+     physical card: a dark outer cover (return-address block, postage
+     indicia, a large tone-on-tone emblem) with a tear-strip across it;
+     tearing it open reveals an inner insert with the card affixed to
+     the right and copy on the left. */
+  /* Fixed design-pixel dimensions (needed since every child inside is
+     absolutely positioned in px) scaled as one unit to fit whatever
+     width .wrap actually has — continuous across all viewports, not
+     fixed breakpoints, and capped at 1 so it never grows past its
+     natural size. Unscaled, this was overflowing its own section badly
+     on narrow viewports (clipped by .unbox's overflow:hidden), which is
+     what was reading as "use-cases content inside Pick your card" — the
+     section's own maroon background was fine, the card itself was just
+     broken past the fold. margin-bottom removes the untransformed
+     layout box's leftover vertical space (transform doesn't shrink
+     that), so .unbox-stage doesn't reserve the full-size height below it. */
+  .unbox-mailer {
+    position: relative; width: 720px; height: 485px; z-index: 3;
+    --fit-scale: min(1, calc((100vw - 168px) / 720px));
+    transform: scale(var(--fit-scale));
+    transform-origin: top center;
+    margin-bottom: calc(-485px * (1 - var(--fit-scale)));
+  }
+  .unbox-mailer-cover {
+    /* No overflow:hidden — the tear-flap's 3D curl needs to extend past
+       the cover's own edge as it rotates (confirmed: at ~150°+ rotation
+       its foreshortened bounding box genuinely exceeds the cover's
+       bounds), and clipping it there cut off exactly the part of the
+       tear that should read as most visibly "peeling off." */
+    position: absolute; inset: 0;
+    background:
+      repeating-linear-gradient(115deg, rgba(255,255,255,0.025) 0 2px, transparent 2px 5px),
+      repeating-linear-gradient(25deg, rgba(0,0,0,0.07) 0 2px, transparent 2px 5px),
+      linear-gradient(155deg, var(--mailer-c1) 0%, var(--mailer-c2) 100%);
+    box-shadow: 0 30px 60px -22px rgba(8,14,26,0.55), 0 2px 0 rgba(0,0,0,0.05);
+  }
+  /* Vibe's woven-canvas surface — the Cartier awning itself is cloth,
+     not leather, so this swaps in a fine plain-weave crosshatch (two
+     perpendicular diagonal thread directions) plus a soft catch-light
+     sheen in the upper corner, instead of the flat printed-cardstock
+     look Zero uses or the pebbled hide grain tried earlier. */
+  .unbox.theme-vibe .unbox-mailer-cover {
+    background-image:
+      /* satin sheen — soft diagonal light/dark bands, the way fine
+         moiré/grosgrain fabric catches light unevenly across its
+         surface rather than reading as one flat matte color */
+      repeating-linear-gradient(72deg, rgba(255,255,255,0.05) 0px, transparent 10px, rgba(0,0,0,0.05) 20px, transparent 30px),
+      radial-gradient(ellipse 60% 45% at 26% 16%, rgba(255,232,205,0.16) 0%, transparent 62%),
+      url('assets/images/cloth-weave-vibe.png'),
+      linear-gradient(155deg, var(--mailer-c1) 0%, var(--mailer-c2) 100%);
+    background-repeat: no-repeat, no-repeat, repeat, no-repeat;
+    background-size: 100% 100%, 100% 100%, 90px 90px, 100% 100%;
+    background-position: 0 0, 0 0, 0 0, 0 0;
+  }
+  /* A tooled-leather border, not an all-over pattern — real Cartier
+     packaging (researched directly: smooth matte leather with gold-foil
+     accents, not a busy printed texture) keeps the hide itself plain
+     and puts the ornament at the edge instead. The tile is the window
+     lattice motif — an X-cross inside a diamond cell, the same trellis
+     unit the arched-window reference repeats across its three panes —
+     tessellating down the left and right edges — not top/bottom, which
+     are already occupied by the tear strip and the address/badge text
+     — struck twice, a dark offset copy for the groove and a gold
+     offset copy for the catch-light, same technique as the R mark so
+     the two engraved elements read as one language. */
+  .unbox.theme-vibe .unbox-mailer-cover::before,
+  .unbox.theme-vibe .unbox-mailer-cover::after {
+    content: '';
+    position: absolute; top: 90px; bottom: 60px; width: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16'%3E%3Cpath d='M0 0 L16 16 M16 0 L0 16 M8 0 L16 8 L8 16 L0 8 Z' fill='none' stroke='%23000000' stroke-width='1'/%3E%3C/svg%3E");
+    background-repeat: repeat-y;
+    background-size: 16px 16px;
+    filter:
+      drop-shadow(1px 1px 0.4px rgba(0,0,0,0.6))
+      drop-shadow(-1px -1px 0.4px rgba(222,187,130,0.6));
+    pointer-events: none;
+  }
+  .unbox.theme-vibe .unbox-mailer-cover::before { left: 16px; }
+  .unbox.theme-vibe .unbox-mailer-cover::after { right: 16px; }
+  /* Vibe's mailer-face text — a tint of the R's own gold, not the warm
+     white Zero uses, so every printed mark on the envelope (address,
+     postage, badge caption, seal label) reads as one consistent gold-
+     on-leather language instead of mixing gold accents with white ink. */
+  .unbox.theme-vibe .unbox-mailer-addr { color: rgba(198,170,122,0.6); }
+  .unbox.theme-vibe .unbox-mailer-postage { color: rgba(198,170,122,0.45); }
+  .unbox.theme-vibe .unbox-mailer-badge p { color: rgba(198,170,122,0.5); }
+  .unbox.theme-vibe .unbox-seal-label { color: rgba(198,170,122,0.65); }
+  .unbox-mailer-addr {
+    position: absolute; left: 34px; top: 112px;
+    font-family: var(--font-mono); font-size: 10.5px; line-height: 1.7; letter-spacing: 0.02em;
+    color: rgba(255,245,240,0.5); text-transform: uppercase;
+  }
+  .unbox-mailer-postage {
+    position: absolute; right: 34px; top: 112px; text-align: right;
+    font-family: var(--font-mono); font-size: 9.5px; line-height: 1.6; letter-spacing: 0.04em;
+    color: rgba(255,245,240,0.35); text-transform: uppercase;
+  }
+  .unbox-mailer-emblem {
+    /* The real brand mark — Subtract.png itself, square box with the R
+       cut out of it, same asset as .wordmark-mark. A mask + background-
+       color (rather than an <img> src) so the fill color can still
+       switch per theme — white on Zero's navy, gold on Vibe's leather —
+       instead of being baked into the asset. */
+    /* right:6px, not a negative inset — stays fully inside the
+       mailer's own 720x485 bounds rather than bleeding past its edge. */
+    position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+    width: 300px; height: 300px; opacity: 0.1; pointer-events: none;
+    background-color: #FFFFFF;
+    -webkit-mask-image: url('assets/brand/Subtract.png');
+    mask-image: url('assets/brand/Subtract.png');
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+  }
+  /* Vibe splits the one square+cutout mark into two separately-treated
+     pieces, not one flat shape: the square frame is ENGRAVED — same
+     envelope red, just darker, like a tonal groove pressed into the
+     leather — while the R itself is EMBOSSED — gold, raised, the way a
+     foil-stamped brand mark actually sits proud of the material. One
+     flat shadow direction couldn't do both at once. */
+  .unbox.theme-vibe .unbox-mailer-emblem {
+    /* Switches from the box+cutout asset to the R-only glyph — this
+       element is now just the embossed R; the engraved box frame is
+       .unbox-mailer-emblem-frame below. */
+    -webkit-mask-image: url('assets/brand/Subtract-glyph.png');
+    mask-image: url('assets/brand/Subtract-glyph.png');
+    opacity: 0.4;
+    /* Sampled from the Cartier awning reference's own script gold. */
+    background-color: #C6AA7A;
+    /* Stronger offset + stronger shadow/highlight opacity than the box
+       frame gets — the raised mark should read clearly as embossed,
+       not just barely textured. */
+    filter:
+      drop-shadow(2.5px 2.5px 2px rgba(0,0,0,0.65))
+      drop-shadow(-2px -2px 2px rgba(255,235,210,0.55));
+  }
+  /* The engraved box frame — Zero-only hides this (its box+R are still
+     one combined mark via .unbox-mailer-emblem itself); Vibe shows it
+     as a thin bordered square the same hue family as the envelope,
+     just darker, sitting behind the embossed R above. */
+  .unbox-mailer-emblem-frame { display: none; }
+  .unbox.theme-vibe .unbox-mailer-emblem-frame {
+    display: block;
+    position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+    width: 300px; height: 300px; opacity: 0.55; pointer-events: none;
+    background-color: var(--mailer-c1-dark);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect x='10' y='10' width='280' height='280' fill='none' stroke='white' stroke-width='16'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Crect x='10' y='10' width='280' height='280' fill='none' stroke='white' stroke-width='16'/%3E%3C/svg%3E");
+    -webkit-mask-size: contain; mask-size: contain;
+    -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    /* Inverted from the R's emboss — a groove cut INTO the leather has
+       its shadow on the light-facing side and a thin bounce-highlight
+       on the far side, the opposite of a raised mark. */
+    filter:
+      drop-shadow(-1px -1px 1px rgba(0,0,0,0.55))
+      drop-shadow(1px 1px 1px rgba(255,235,210,0.2));
+  }
+  .unbox-mailer-badge { position: absolute; left: 34px; bottom: 28px; }
+  .unbox-mailer-badge-pill {
+    display: inline-block;
+    font-family: var(--font-body); font-size: 10.5px; font-weight: 600; letter-spacing: 0.08em;
+    color: #1C1A16; background: #FFFFFF; padding: 7px 14px;
+    text-decoration: none; cursor: pointer;
+    transition: background 0.2s ease;
+  }
+  .unbox-mailer-badge-pill:hover { background: #F0EEEA; }
+  /* "Get invite" struck in the same gold as the R mark, not the plain
+     white CTA Zero uses — a brushed-gold gradient with a thin highlight
+     edge, like a foil-stamped card rather than a flat printed button. */
+  .unbox.theme-vibe .unbox-mailer-badge-pill {
+    color: #241A0E;
+    background: linear-gradient(170deg, #E3CB9B 0%, #C6AA7A 45%, #AD8F5F 100%);
+    box-shadow: 0 1px 0 rgba(255,245,222,0.5) inset, 0 3px 8px rgba(0,0,0,0.35);
+  }
+  .unbox.theme-vibe .unbox-mailer-badge-pill:hover {
+    background: linear-gradient(170deg, #EAD4A8 0%, #CEB382 45%, #B4985F 100%);
+  }
+  .unbox-mailer-badge p {
+    margin: 7px 0 0; max-width: 210px;
+    font-size: 10px; line-height: 1.45; color: rgba(255,245,240,0.38);
+  }
+  /* Full-width — a real tear-strip runs the entire length of the mailer,
+     not a shorter centered band — with a small margin off the very top
+     edge rather than sitting flush against it. */
+  .unbox-seal {
+    position: absolute; left: 0; right: 0; top: 14px; z-index: 3;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+  /* The tear-strip is a hinged 3D flap, not a flat shrinking bar — the
+     already-torn portion curls up and back as you drag, like a real
+     perforated strip peeling off, rather than simply vanishing. It's
+     the SAME navy as the envelope's own surface (not a lighter sticker
+     sitting on top) — it's a perforated section of the envelope itself,
+     with white pull-text and dashed lines printed on it. */
+  .unbox-tear-track {
+    /* The strip/flap now carry real torn notches (mask-image, see
+       .unbox-tear-strip), not just a flat rectangle — so whatever sits
+       directly behind them needs to match the envelope's own navy, or
+       those notches would read as random pale triangles poking through
+       a supposedly still-sealed strip. The letter's white only belongs
+       in the already-torn region, which .unbox-tear-letter-hint below
+       now provides on its own, width-bounded to match. Background is
+       the EXACT same three layers as .unbox-mailer-cover (not just the
+       same base navy) — the cover has a grain texture this didn't, so
+       the track's own box, even sitting flush against it with no color
+       difference, still read as a straight-edged rectangular seam. No
+       inset box-shadow either, for the same reason — that was a
+       recessed-paper cue from when this was a white reveal panel, and
+       on matching navy it just drew another straight dark line. */
+    /* No overflow:hidden here — the flap's 3D curl needs to escape the
+       track's own bounds too (same reasoning as the mailer-cover fix:
+       clipping it here would reproduce that exact bug one level down). */
+    position: relative; width: 100%; height: 40px; perspective: 340px;
+    background:
+      repeating-linear-gradient(115deg, rgba(255,255,255,0.025) 0 2px, transparent 2px 5px),
+      repeating-linear-gradient(25deg, rgba(0,0,0,0.07) 0 2px, transparent 2px 5px),
+      linear-gradient(155deg, var(--mailer-c1) 0%, var(--mailer-c2) 100%);
+  }
+  .unbox-tear-letter-hint {
+    /* The letter itself, peeking through the opening — not the track's
+       own background (that's now navy, matching the sealed envelope),
+       but its own white page. Width tracks the live tear position
+       (same as the strip/flap), so it only ever covers the region
+       that's actually been torn away, never bleeding into the part the
+       strip/flap's torn notches still expose as navy. No padding on
+       THIS element — border-box still can't shrink a box below its own
+       padding, so animating width toward 0 with padding here left a
+       permanent ~44px-wide sliver visible even when fully sealed. The
+       padding lives on the fixed-width inner instead. The live (right)
+       edge is left to the strip/flap's own curl and edge-line to read
+       as torn — a mask here would need to tile across this element's
+       full (and constantly changing) width to stay solid everywhere
+       but its very edge, and a single small repeat-y tile anchored to
+       `right` leaves everything left of it unmasked, i.e. invisible. */
+    position: absolute; top: 0; bottom: 0; left: 0; width: 0; overflow: hidden;
+    background: linear-gradient(180deg, var(--letter-bg1) 0%, var(--letter-bg2) 100%);
+  }
+  .unbox-tear-letter-hint-inner {
+    /* Fixed at the track's own full width, not 100% of the shrinking
+       outer — the lines stay put and are progressively uncovered as the
+       window grows, like reading a static page through an opening
+       envelope, rather than stretching to fill it. */
+    position: absolute; top: 0; bottom: 0; left: 0; width: 720px;
+    padding: 0 22px;
+    display: flex; flex-direction: column; justify-content: center; gap: 7px;
+  }
+  .unbox-tear-letter-hint-inner span {
+    display: block; height: 3px; border-radius: 1px;
+    background: rgba(16,26,20,0.1);
+  }
+  .unbox-tear-letter-hint-inner span:nth-child(1) { width: 62%; }
+  .unbox-tear-letter-hint-inner span:nth-child(2) { width: 84%; }
+  .unbox-tear-letter-hint-inner span:nth-child(3) { width: 48%; }
+  /* The reference strip graphic itself (assets/images/tear-strip-ref.png
+     — recolored from the exact PNG shared as a reference: dashed rule
+     top/bottom with periodic diagonal kinks, "OPEN HERE / PULL TO OPEN /
+     PULL" text, the pull-tab notch), not a hand-redrawn approximation —
+     tiled across the strip so both its lines AND its text come straight
+     from that asset. No separate middle "rope" line — the reference has
+     none; that was a misreading. */
+  .unbox-tear-strip {
+    /* the remaining, not-yet-torn paper */
+    position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: 0; padding: 0;
+    background-image:
+      url('assets/images/tear-strip-ref.png'),
+      repeating-linear-gradient(115deg, rgba(255,255,255,0.025) 0 2px, transparent 2px 5px),
+      repeating-linear-gradient(25deg, rgba(0,0,0,0.07) 0 2px, transparent 2px 5px),
+      linear-gradient(155deg, var(--mailer-c1) 0%, var(--mailer-c2) 100%);
+    background-repeat: repeat-x, no-repeat, no-repeat, no-repeat;
+    background-position: left center, 0 0, 0 0, 0 0;
+    background-size: auto 40px, auto, auto, auto;
+    overflow: hidden;
+  }
+  .unbox-tear-flap {
+    /* the torn-away portion — hinges on its own right edge (the live
+       tear boundary) and rotates up/back in 3D as more is torn. Its
+       width and rotation are both driven purely by `progress`, the same
+       value the existing GSAP snap-back/snap-complete tweens already
+       animate — so the curl inherits that easing for free. Same strip
+       graphic as .unbox-tear-strip — it's the piece that came away from
+       it, same material, same print — just a darker gradient underneath
+       since it's now the shadowed, lifted side. */
+    position: absolute; top: 0; bottom: 0; left: 0; width: 0;
+    transform-origin: 100% 50%;
+    background-image:
+      url('assets/images/tear-strip-ref.png'),
+      linear-gradient(155deg, var(--mailer-c1-dark) 0%, var(--mailer-c2-dark) 100%);
+    background-repeat: repeat-x, no-repeat;
+    background-position: left center, 0 0;
+    background-size: auto 40px, auto;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.45);
+  }
+  .unbox-tear-grab {
+    position: absolute; inset: 0; width: 100%; height: 100%; z-index: 2;
+    background: none; border: none; margin: 0; padding: 0;
+    cursor: grab; touch-action: pan-y;
+  }
+  .unbox-tear-grab:active { cursor: grabbing; }
+  .unbox-seal-label {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,245,240,0.5);
+  }
+  /* Open state = a visibly TORN envelope with the letter on top of it —
+     not a pristine cover with the tear evidence wiped away. The shrunk
+     strip and exposed letter-colored gap stay exactly where the tear
+     left them; only the now-irrelevant "swipe to tear" instruction
+     fades, and the whole seal stops being interactive. The curled flap
+     itself fades out here — it's not still hanging off the hinge, it's
+     the SAME piece now reappearing, detached, as .unbox-torn-strip-rest
+     set down nearby (see completeReveal in the script). */
+  .unbox-mailer.torn .unbox-mailer-cover { pointer-events: none; }
+  .unbox-mailer.torn .unbox-seal { pointer-events: none; }
+  .unbox-mailer.torn .unbox-seal-label { opacity: 0; transition: opacity 0.3s ease; }
+  .unbox-mailer.torn .unbox-tear-flap { opacity: 0; transition: opacity 0.35s ease 0.25s; }
+  .unbox-insert-close {
+    position: absolute; right: 14px; top: 14px; z-index: 2;
+    width: 26px; height: 26px; border-radius: 50%; border: none;
+    background: rgba(15,36,32,0.08); color: var(--ink-soft);
+    font-family: var(--font-body); font-size: 15px; line-height: 1; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s ease 0.2s, background 0.2s ease;
+  }
+  .unbox-insert-close:hover { background: rgba(15,36,32,0.16); }
+  .unbox-mailer.torn .unbox-insert-close { opacity: 1; pointer-events: auto; }
+  /* Dark ink on a light tint was built for the white/khaki letter — on
+     the brown tray it almost vanishes. Light on dark instead. */
+  .unbox.theme-vibe .unbox-insert-close { background: rgba(0,0,0,0.3); color: #F0EBE0; }
+  .unbox.theme-vibe .unbox-insert-close:hover { background: rgba(0,0,0,0.45); }
+
+  /* A faint dashed sketch of the envelope itself — its outline and open
+     flap fold-lines — sitting behind the insert once torn open, so the
+     letter reads as a piece of paper sitting on top of an opened
+     envelope, not a card floating in isolation. */
+  .unbox-dieline {
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+    width: 720px; height: 485px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.6s ease 0.1s;
+  }
+  .unbox-mailer.torn .unbox-dieline { opacity: 1; }
+
+  /* -- Insert: a letter, not a card-shaped box — white stock, each
+     content block (copy, card) outlined with a dashed die-line like a
+     real print layout, the card shown peeking from under a translucent
+     paper sticker as if taped to the sheet. */
+  .unbox-insert {
+    position: absolute; left: 50%; top: 50%;
+    transform: translate(-50%, -46%) scale(0.95);
+    width: 692px; height: 435px;
+    background: linear-gradient(180deg, var(--letter-bg1) 0%, var(--letter-bg2) 100%);
+    /* drop-shadow, not box-shadow — it follows the clipped (zigzag)
+       silhouette below rather than the letter's rectangular box, so the
+       shadow doesn't betray a straight edge the paper no longer has. */
+    filter: drop-shadow(0 26px 40px rgba(10,10,10,0.4));
+    /* The letter was torn out along with the envelope's own opening —
+       its top and bottom edges carry the same ragged, torn silhouette
+       as the strip/flap rather than a clean rectangular die-cut. */
+    clip-path: polygon(0.0px 0px, 13.8px 7px, 27.7px 0px, 41.5px 7px, 55.4px 0px, 69.2px 7px, 83.0px 0px, 96.9px 7px, 110.7px 0px, 124.6px 7px, 138.4px 0px, 152.2px 7px, 166.1px 0px, 179.9px 7px, 193.8px 0px, 207.6px 7px, 221.4px 0px, 235.3px 7px, 249.1px 0px, 263.0px 7px, 276.8px 0px, 290.6px 7px, 304.5px 0px, 318.3px 7px, 332.2px 0px, 346.0px 7px, 359.8px 0px, 373.7px 7px, 387.5px 0px, 401.4px 7px, 415.2px 0px, 429.0px 7px, 442.9px 0px, 456.7px 7px, 470.6px 0px, 484.4px 7px, 498.2px 0px, 512.1px 7px, 525.9px 0px, 539.8px 7px, 553.6px 0px, 567.4px 7px, 581.3px 0px, 595.1px 7px, 609.0px 0px, 622.8px 7px, 636.6px 0px, 650.5px 7px, 664.3px 0px, 678.2px 7px, 692.0px 0px, 692.0px 435px, 678.2px 428px, 664.3px 435px, 650.5px 428px, 636.6px 435px, 622.8px 428px, 609.0px 435px, 595.1px 428px, 581.3px 435px, 567.4px 428px, 553.6px 435px, 539.8px 428px, 525.9px 435px, 512.1px 428px, 498.2px 435px, 484.4px 428px, 470.6px 435px, 456.7px 428px, 442.9px 435px, 429.0px 428px, 415.2px 435px, 401.4px 428px, 387.5px 435px, 373.7px 428px, 359.8px 435px, 346.0px 428px, 332.2px 435px, 318.3px 428px, 304.5px 435px, 290.6px 428px, 276.8px 435px, 263.0px 428px, 249.1px 435px, 235.3px 428px, 221.4px 435px, 207.6px 428px, 193.8px 435px, 179.9px 428px, 166.1px 435px, 152.2px 428px, 138.4px 435px, 124.6px 428px, 110.7px 435px, 96.9px 428px, 83.0px 435px, 69.2px 428px, 55.4px 435px, 41.5px 428px, 27.7px 435px, 13.8px 428px, 0.0px 435px);
+    display: flex; align-items: stretch; gap: 18px;
+    padding: 24px;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    /* Above the (now-persistently-visible) torn seal — the letter
+       should read as sitting on top of the torn envelope, not partly
+       hidden behind whatever of the strip/flap still overlaps it. */
+    z-index: 4;
+  }
+  .unbox-mailer.torn .unbox-insert { opacity: 1; transform: translate(-50%, -50%) scale(1); pointer-events: auto; }
+  /* Vibe's insert is a rigid presentation tray now, not torn paper — a
+     straight rounded-rect box, not the jagged torn-edge silhouette
+     Zero's actual paper letter still carries. */
+  .unbox.theme-vibe .unbox-insert { clip-path: none; border-radius: 14px; }
+  .unbox.theme-vibe .unbox-insert::before,
+  .unbox.theme-vibe .unbox-insert::after { display: none; }
+  /* The clipped silhouette alone isn't enough where it sits over paper
+     that's already white (the top edge, once torn, has the now-white
+     track directly behind it — no contrast, so the cut reads as
+     invisible there). These print a dark ink zigzag directly onto the
+     page's own top/bottom edge instead, so the torn trim is visible
+     against the letter's own background, not dependent on it. */
+  .unbox-insert::before,
+  .unbox-insert::after {
+    content: ''; position: absolute; left: 0; right: 0; height: 9px;
+    background-repeat: repeat-x; background-size: 28px 9px;
+    pointer-events: none;
+  }
+  .unbox-insert::before {
+    top: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='9'%3E%3Cpath d='M0 9 L7 2 L14 9 L21 2 L28 9 L28 0 L0 0 Z' fill='%231C1A16' opacity='0.85'/%3E%3C/svg%3E");
+  }
+  .unbox-insert::after {
+    bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='9'%3E%3Cpath d='M0 0 L7 7 L14 0 L21 7 L28 0 L28 9 L0 9 Z' fill='%231C1A16' opacity='0.85'/%3E%3C/svg%3E");
+  }
+  /* Card centered, a content column flanking it on each side — the
+     JPMorgan Palladium presentation-box layout (booklet / card /
+     booklet) rather than the old two-column text-then-card split. */
+  .unbox-insert-text {
+    position: relative;
+    flex: 1; padding: 22px 20px;
+    border: 1px dashed rgba(15,36,32,0.25); border-radius: 8px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .unbox-insert-text h4 { font-family: var(--font-display); font-size: 21px; font-weight: 500; color: var(--ink); margin: 0 0 10px; }
+  .unbox-insert-text p { margin: 0; font-size: 13.5px; line-height: 1.6; color: var(--ink-soft); }
+  .unbox-insert-label {
+    display: block; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--ink-soft); margin-bottom: 10px;
+  }
+  .unbox-insert-next p { font-size: 13.5px; }
+  .unbox-insert-card {
+    position: relative; flex: 0 0 180px;
+    border: 1px dashed rgba(15,36,32,0.25); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .unbox-insert-card img {
+    width: 136px; height: auto;
+    filter: drop-shadow(0 14px 22px rgba(0,0,0,0.3));
+  }
+  /* Vibe: the two text columns become the actual feature-gallery cards
+     from .grid-feature above (Credit / Deposits — same component, same
+     rug photos), not a from-scratch "book" reskin. .unbox-book-stage
+     IS .gf-card-stage; its own hover tilt (rotateY, see .grid-feature
+     rules) is the "with animation" part, already built, reused as-is. */
+  .unbox-book-stage { display: none; }
+  .unbox.theme-vibe .unbox-insert-plain { display: none; }
+  .unbox.theme-vibe .unbox-book-stage {
+    display: block; width: 100%; max-width: 100%;
+  }
+  .unbox.theme-vibe .unbox-insert-text {
+    padding: 0; border: none; background: none; box-shadow: none;
+  }
+  /* The card's own compartment — an inset leather window, not a
+     dashed placeholder box, echoing the reference's recessed card slot. */
+  .unbox.theme-vibe .unbox-insert-card {
+    /* A faint rectangular placeholder, not a heavy inset box — sharp
+       corners (no border-radius) and a flat 20%-opacity fill, closer
+       to how the reference's card window actually reads. */
+    border-radius: 0;
+    background: rgba(20,17,15,0.1);
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: none;
+  }
+
+
+  .unbox-result {
+    text-align: center; max-width: 360px;
+    opacity: 0; transform: translateY(16px);
+    transition: opacity 0.6s ease 0.1s, transform 0.6s ease 0.1s;
+    pointer-events: none;
+  }
+  .unbox-result.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+  .unbox-result h3 { font-size: 22px; font-weight: 500; color: var(--ink); margin-bottom: 8px; }
+  .unbox-result p { font-size: 14px; color: var(--ink-soft); line-height: 1.5; margin-bottom: 20px; }
+
+  /* ---------- Section shell ---------- */
+  section { padding: 108px 0; }
+  .section-head { max-width: 640px; margin-bottom: 56px; }
+  .section-head .eyebrow { color: var(--brand-deep); margin-bottom: 14px; }
+  .section-head h2 { font-size: 40px; line-height: 1.18; }
+  .section-head p { margin-top: 16px; font-size: 16px; color: var(--ink-soft); line-height: 1.6; }
+
+  /* ---------- Feature bento ---------- */
+  .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 20px; }
+  .feature-card {
+    background: var(--paper-raised); border: 1px solid var(--line); border-radius: 18px;
+    padding: 30px; display: flex; flex-direction: column; gap: 14px;
+  }
+  .feature-card .ic-chip {
+    width: 48px; height: 48px; border-radius: 12px;
+    background: var(--night); display: flex; align-items: center; justify-content: center;
+  }
+  .feature-card .ic { width: 22px; height: 22px; }
+  .feature-card h3 { font-size: 20px; font-weight: 600; color: var(--ink); }
+  .feature-card p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.55; }
+  .f-card { grid-column: span 3; }
+  .f-goals { grid-column: span 3; }
+  .f-deposits { grid-column: span 2; }
+  .f-gold { grid-column: span 2; }
+  .f-bills { grid-column: span 2; }
+  .f-tax { grid-column: span 6; display: grid; grid-template-columns: 1.2fr 1fr; align-items: center; gap: 32px; }
+  .f-tax .tax-visual {
+    background: var(--paper); border: 1px solid var(--line); border-radius: 14px; padding: 20px;
+    font-family: var(--font-mono); font-size: 13px; color: var(--ink-soft);
+  }
+  .f-tax .tax-visual .row { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px dashed var(--line); }
+  .f-tax .tax-visual .row:last-child { border-bottom: 0; }
+  .f-tax .tax-visual .row b { color: var(--ink); font-weight: 500; }
+
+  /* ---------- How it works ---------- */
+  .how { background: var(--night); color: var(--night-text); }
+  .how .section-head .eyebrow { color: var(--brand); }
+  .how .section-head p { color: var(--night-text-soft); }
+  .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; counter-reset: step; }
+  .step { border-top: 1px solid var(--line-dark); padding-top: 24px; }
+  .step .num { font-family: var(--font-mono); font-size: 13px; color: var(--brand); }
+  .step h3 { font-size: 22px; font-weight: 600; margin-top: 14px; color: var(--night-text); }
+  .step p { margin-top: 10px; font-size: 14.5px; color: var(--night-text-soft); line-height: 1.6; }
+
+  /* ---------- Security ---------- */
+  .security { background: var(--paper); }
+  .security-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .security-visual { margin-top: 36px; width: 100%; max-width: 340px; }
+  .security-points { display: flex; flex-direction: column; gap: 28px; }
+  .sec-point { display: flex; gap: 16px; }
+  .sec-point .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand-deep); margin-top: 8px; flex-shrink: 0; }
+  .sec-point h3 { font-family: var(--font-body); font-weight: 600; font-size: 16px; color: var(--ink); }
+  .sec-point p { margin-top: 6px; font-size: 14.5px; color: var(--ink-soft); line-height: 1.6; }
+
+  /* ---------- CTA band ---------- */
+  .cta-band { background: var(--brand); color: var(--night); }
+  .cta-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+  .cta-band h2 { font-family: var(--font-display); font-weight: 400; letter-spacing: normal; font-size: 38px; max-width: 18ch; color: var(--night); }
+
+  /* ---------- Use cases (layout/animation pattern from monumint.com's
+     "What are the use cases?" section: pinned panel, a left rail of steps
+     that dim/brighten as you scroll, a right stage that crossfades to
+     match — rebuilt with GSAP ScrollTrigger rather than their Framer
+     internals, using Raushco's own four product pillars and iconography,
+     not monumint's artwork or copy.) ---------- */
+  .usecases { background: #012738; position: relative; overflow: hidden; padding: 140px 0 160px; }
+  .usecases-texture {
+    position: absolute; inset: 0; pointer-events: none;
+    background-image:
+      radial-gradient(rgba(255,255,255,0.14) 1px, transparent 1px),
+      linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 14px 14px, 56px 56px, 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, #000 0%, transparent 72%);
+    mask-image: radial-gradient(ellipse 70% 60% at 50% 20%, #000 0%, transparent 72%);
+  }
+  /* Architectural blueprint of a manor — inverted so its cream ground
+     becomes dark navy; hue-rotate(180deg) after the invert brings the
+     linework back to its own original blue family (not gold — monumint's
+     own reference art stays monochrome-blue, so ours does too) rather
+     than the orange/amber an invert alone would produce. Lives inside the
+     pinned panel itself (checked directly against monumint: their own
+     background art sits inside the same sticky container that gets
+     pinned, so it never scrolls on its own during the pin, and it's sized
+     close to its native resolution there instead of being stretched to
+     cover a much taller area — fixing both the drift and the softness). */
+  .usecases-manor {
+    position: absolute; top: 0; right: -80px; height: 100%; width: auto; max-width: none;
+    pointer-events: none; opacity: 0.55; mix-blend-mode: screen; object-fit: cover;
+    filter: invert(1) hue-rotate(180deg) saturate(1.3) brightness(0.85) contrast(1.05);
+  }
+  .usecases-head { position: relative; text-align: center; max-width: 620px; margin: 0 auto 64px; }
+  .usecases-eyebrow { display: inline-flex; align-items: center; gap: 10px; color: rgba(255,255,255,0.5); margin-bottom: 18px; }
+  .usecases-eyebrow-dot { width: 7px; height: 7px; background: rgba(255,255,255,0.5); flex-shrink: 0; }
+  .usecases-head h2 {
+    font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.01em;
+    font-size: 44px; line-height: 1.18; color: #fff;
+  }
+  .usecases-panel {
+    position: relative; display: flex; border: 1px solid rgba(255,255,255,0.14);
+    background: #012738; height: calc(100vh - 64px); max-height: 820px; overflow: hidden;
+  }
+  .usecases-list {
+    flex: 1; min-width: 0; border-right: 1px solid rgba(255,255,255,0.14);
+    padding: 56px 56px 56px 0; display: flex; flex-direction: column; justify-content: center; overflow: hidden;
+    position: relative;
+    /* Sits above the manor image in paint order and blocks it out behind
+       the copy, so the art only ever reads as texture on the stage side. */
+    background: linear-gradient(to right, #012738 72%, transparent 100%);
+  }
+  .usecases-step { display: flex; gap: 20px; opacity: 0.55; transition: opacity 0.5s ease; }
+  .usecases-step.is-active { opacity: 1; }
+  .usecases-step-rail { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; }
+  .usecases-step-icon-box {
+    width: 30px; height: 30px; display: flex; align-items: center; justify-content: center;
+    border: 1px dashed rgba(255,255,255,0.28); color: rgba(255,255,255,0.4); flex-shrink: 0;
+    transition: border-color 0.5s ease, border-style 0.5s ease, color 0.5s ease;
+  }
+  .usecases-step.is-active .usecases-step-icon-box { border-style: solid; border-color: rgba(255,255,255,0.65); color: #fff; }
+  .usecases-step-icon-box svg { width: 17px; height: 17px; }
+  .usecases-step-rail-line { width: 1px; flex: 1; background: rgba(255,255,255,0.14); margin: 4px 0; }
+  .usecases-step:last-child .usecases-step-rail-line { display: none; }
+  .usecases-step-body { padding-bottom: 48px; }
+  .usecases-step:last-child .usecases-step-body { padding-bottom: 0; }
+  .usecases-step-body h3 { font-family: var(--font-serif); font-weight: 400; font-size: 19px; color: #fff; margin-bottom: 8px; }
+  .usecases-step-body p { font-size: 14px; line-height: 1.6; color: rgba(255,255,255,0.6); max-width: 38ch; }
+  .usecases-stage { flex: 1; min-width: 0; position: relative; display: none; align-items: center; justify-content: center; }
+  .usecases-illo {
+    position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+    opacity: 0; transition: opacity 0.6s ease;
+  }
+  .usecases-illo.is-active { opacity: 1; }
+  /* A tilted card floating above two stacked isometric platform boxes
+     (each a top face + two shaded side walls, for real volume) — same
+     structural idea as monumint's own stage: a raised card over a
+     receding stack of planes. Built from original shapes, not traced
+     from their artwork, in Raushco's own palette. */
+  .uc-stage { position: relative; width: 400px; height: 420px; flex-shrink: 0; }
+  .uc-stage-platforms { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .uc-plat-top { fill: rgba(154,177,186,0.08); stroke: rgba(154,177,186,0.45); stroke-width: 1; }
+  .uc-plat-left { fill: rgba(154,177,186,0.03); stroke: rgba(154,177,186,0.25); stroke-width: 1; }
+  .uc-plat-right { fill: rgba(1,39,56,0.3); stroke: rgba(154,177,186,0.25); stroke-width: 1; }
+  .uc-plat-2 { opacity: 0.5; }
+  .uc-stage-card {
+    position: absolute; top: 20px; left: 50%;
+    width: 270px; height: 176px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(154,177,186,0.14), rgba(1,39,56,0.65));
+    border: 1px solid rgba(205,216,221,0.4);
+    padding: 16px 20px;
+    transform: translateX(-50%) perspective(900px) rotateY(-17deg) rotateX(8deg);
+    box-shadow: 26px 32px 60px rgba(0,0,0,0.45);
+  }
+  .uc-stage-badge {
+    position: absolute; top: -16px; left: -16px; width: 40px; height: 40px; border-radius: 9px;
+    background: #012738; border: 1px solid rgba(255,255,255,0.6); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.45);
+  }
+  .uc-stage-badge svg { width: 21px; height: 21px; }
+  .uc-stage-mark {
+    position: absolute; top: -12px; right: -12px; width: 30px; height: 30px; border-radius: 50%;
+    border: 1px solid rgba(154,177,186,0.5); background: #012738;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-serif); font-size: 13px; color: rgba(255,255,255,0.8);
+  }
+  .uc-stage-rows { display: flex; flex-direction: column; margin-top: 22px; }
+  .uc-stage-rows span {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.03em;
+    color: rgba(255,255,255,0.4); padding: 7px 0;
+  }
+  .uc-stage-rows span:first-child { color: rgba(255,255,255,0.92); }
+  @media (prefers-reduced-motion: reduce) {
+    .usecases-step, .usecases-illo, .usecases-step-icon-box { transition: none; }
+  }
+  @media (min-width: 981px) {
+    .usecases-stage { display: flex; }
+  }
+
+  /* ---------- Footer ---------- */
+  footer { background: var(--night); color: var(--night-text-soft); padding: 64px 0 40px; }
+  .footer-top { display: flex; justify-content: space-between; gap: 48px; flex-wrap: wrap; padding-bottom: 48px; border-bottom: 1px solid var(--line-dark); }
+  .footer-cols { display: flex; gap: 64px; flex-wrap: wrap; }
+  .footer-col h4 { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--night-text-soft); margin: 0 0 14px; font-weight: 500; }
+  .footer-col a { display: block; font-size: 14px; color: var(--night-text); text-decoration: none; margin-bottom: 10px; opacity: 0.85; }
+  .footer-col a:hover { opacity: 1; }
+  .footer-bottom { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; padding-top: 28px; font-size: 12.5px; }
+  .footer-legal { max-width: 640px; line-height: 1.6; }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  @media (max-width: 980px) {
+    .hero-content { padding: 0 24px 48px 32px; }
+    .hero h1 { font-size: 42px; }
+    .bento { grid-template-columns: repeat(2, 1fr); }
+    .f-card, .f-goals, .f-deposits, .f-gold, .f-bills, .f-tax { grid-column: span 2; }
+    .f-tax { grid-template-columns: 1fr; }
+    .steps { grid-template-columns: 1fr; }
+    .security-grid { grid-template-columns: 1fr; gap: 40px; }
+    .nav-links { display: none; }
+    .usecases-head h2 { font-size: 34px; }
+    .usecases-panel { border: 0; background: none; }
+    .usecases-list { border-right: 0; padding: 0; display: flex; flex-direction: column; gap: 0; }
+    .usecases-step { opacity: 1; }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 20px; }
+    section { padding: 72px 0; }
+    .hero h1 { font-size: 34px; }
+    .section-head h2 { font-size: 30px; }
+    .bento { grid-template-columns: 1fr; }
+    .f-card, .f-goals, .f-deposits, .f-gold, .f-bills, .f-tax { grid-column: span 1; }
+    .hero-signup { flex-direction: column; align-items: stretch; }
+    .cta-inner { flex-direction: column; align-items: flex-start; }
+    .usecases { padding: 96px 0 120px; }
+    .usecases-head h2 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="site-header" id="siteHeader">
+  <div class="announce-bar" id="announceBar">
+    <div class="wrap announce-row">
+      <span class="announce-chase" aria-hidden="true"><span></span><span></span><span></span><span></span></span>
+      <span class="announce-text">
+        <span class="announce-text-dim">Unfolding Raushco</span>
+        <span class="announce-text-bright">We're a financial technology company, not a bank yet.</span>
+      </span>
+      <a class="announce-link" href="https://app.dev.y1card.com/auth/initiate-otp">
+        <span>Open your account</span>
+        <span class="announce-link-dot" aria-hidden="true"></span>
+      </a>
+      <button class="announce-close" id="announceClose" aria-label="Dismiss announcement">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" aria-hidden="true" focusable="false"><path d="M5 5L19 19M19 5L5 19" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <header class="site-nav">
+    <div class="nav-row">
+      <a class="wordmark" href="#top">
+        <img class="wordmark-mark" src="assets/brand/Subtract.png" alt="Raushco">
+        <span class="wordmark-text hidden">Raushco</span>
+      </a>
+      <nav class="nav-links">
+        <div class="nav-dropdown">
+          <a href="#product" class="nav-dd-trigger">
+            Personal
+            <svg class="nav-dd-chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="nav-dropdown-panel">
+            <a class="nav-dd-item" href="#product">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><rect x="4" y="10" width="32" height="20" rx="4" stroke="#D7A23B" stroke-width="2"/><rect x="4" y="16" width="32" height="4" fill="#D7A23B"/><rect x="9" y="24" width="8" height="2.5" rx="1.25" fill="#D7A23B"/></svg></div>
+              <div><h5>FD-backed credit card</h5><p>Spend against a fixed deposit you own.</p></div>
+            </a>
+            <a class="nav-dd-item" href="#product">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="15" stroke="#D7A23B" stroke-width="2"/><circle cx="20" cy="20" r="9" stroke="#D7A23B" stroke-width="2"/><circle cx="20" cy="20" r="3" fill="#D7A23B"/></svg></div>
+              <div><h5>Goals</h5><p>Track every contribution against a target.</p></div>
+            </a>
+            <a class="nav-dd-item" href="#product">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><path d="M6 24 L14 14 L20 20 L34 8" stroke="#D7A23B" stroke-width="2" fill="none"/><path d="M26 8 H34 V16" stroke="#D7A23B" stroke-width="2" fill="none"/></svg></div>
+              <div><h5>Fixed &amp; recurring deposits</h5><p>Lock a rate or drip-feed monthly.</p></div>
+            </a>
+            <a class="nav-dd-item" href="#product">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><circle cx="15" cy="20" r="10" fill="#D7A23B"/><circle cx="25" cy="20" r="10" stroke="#ECEEE6" stroke-width="2" fill="none"/></svg></div>
+              <div><h5>Gold &amp; silver</h5><p>Hold bullion alongside your cash.</p></div>
+            </a>
+            <a class="nav-dd-item" href="#product">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><rect x="7" y="6" width="26" height="28" rx="2" stroke="#D7A23B" stroke-width="2"/><path d="M13 14H27M13 20H27M13 26H21" stroke="#D7A23B" stroke-width="2"/></svg></div>
+              <div><h5>Bill pay</h5><p>Every recurring bill in one inbox.</p></div>
+            </a>
+            <a class="nav-dd-item" href="#product">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><rect x="6" y="4" width="28" height="32" rx="2" stroke="#D7A23B" stroke-width="2"/><path d="M12 12H28M12 18H28M12 24H22" stroke="#D7A23B" stroke-width="2"/></svg></div>
+              <div><h5>Tax</h5><p>Filing connected straight to Quicko.</p></div>
+            </a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <a href="#solutions" class="nav-dd-trigger">
+            Business
+            <svg class="nav-dd-chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="nav-dropdown-panel">
+            <a class="nav-dd-item" href="#solutions">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="14" stroke="#D7A23B" stroke-width="2"/><path d="M20 12V20L26 24" stroke="#D7A23B" stroke-width="2" stroke-linecap="round"/></svg></div>
+              <div><h5>For founders</h5><p>Runway and operations in one view.</p></div>
+            </a>
+            <a class="nav-dd-item" href="#solutions">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><path d="M8 28V16M20 28V10M32 28V20" stroke="#D7A23B" stroke-width="2" stroke-linecap="round"/></svg></div>
+              <div><h5>For finance teams</h5><p>Close the books without chasing statements.</p></div>
+            </a>
+            <a class="nav-dd-item" href="#solutions">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><circle cx="14" cy="16" r="5" stroke="#D7A23B" stroke-width="2"/><circle cx="27" cy="16" r="5" stroke="#D7A23B" stroke-width="2"/><path d="M6 31c1-5 6-8 8-8s7 3 8 8M19 31c1-5 6-8 8-8s7 3 8 8" stroke="#D7A23B" stroke-width="2" stroke-linecap="round"/></svg></div>
+              <div><h5>For growing teams</h5><p>Scale approvals as headcount grows.</p></div>
+            </a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <a href="#resources" class="nav-dd-trigger">
+            Resources
+            <svg class="nav-dd-chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="nav-dropdown-panel">
+            <a class="nav-dd-item" href="#help">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="14" stroke="#D7A23B" stroke-width="2"/><path d="M16 16a4 4 0 1 1 6 3c-1.5 1-2 2-2 3" stroke="#D7A23B" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="27" r="1.2" fill="#D7A23B"/></svg></div>
+              <div><h5>Help center</h5><p>Answers to common account questions.</p></div>
+            </a>
+            <a class="nav-dd-item" href="#security">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><path d="M20 7l11 4v8c0 8-5 13-11 14-6-1-11-6-11-14v-8l11-4z" stroke="#D7A23B" stroke-width="2"/></svg></div>
+              <div><h5>Security</h5><p>How we protect your deposits and data.</p></div>
+            </a>
+            <a class="nav-dd-item" href="#blog">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><rect x="7" y="6" width="26" height="28" rx="2" stroke="#D7A23B" stroke-width="2"/><path d="M13 14H27M13 20H27M13 26H21" stroke="#D7A23B" stroke-width="2"/></svg></div>
+              <div><h5>Blog</h5><p>Notes on banking for startups.</p></div>
+            </a>
+            <a class="nav-dd-item" href="#guides">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><rect x="6" y="4" width="28" height="32" rx="2" stroke="#D7A23B" stroke-width="2"/><path d="M12 12H28M12 18H28M12 24H22" stroke="#D7A23B" stroke-width="2"/></svg></div>
+              <div><h5>Guides</h5><p>Walkthroughs for every feature.</p></div>
+            </a>
+          </div>
+        </div>
+        <div class="nav-dropdown">
+          <a href="#about" class="nav-dd-trigger">
+            About
+            <svg class="nav-dd-chevron" viewBox="0 0 12 8" fill="none" aria-hidden="true"><path d="M1 1.5L6 6.5L11 1.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </a>
+          <div class="nav-dropdown-panel">
+            <a class="nav-dd-item" href="#company">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><rect x="9" y="8" width="22" height="26" stroke="#D7A23B" stroke-width="2"/><path d="M15 15H25M15 21H25M15 27H21" stroke="#D7A23B" stroke-width="2"/></svg></div>
+              <div><h5>Company</h5><p>Who we are and why we started Raushco.</p></div>
+            </a>
+            <a class="nav-dd-item" href="#careers">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><rect x="8" y="14" width="24" height="18" rx="2" stroke="#D7A23B" stroke-width="2"/><path d="M15 14v-3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3" stroke="#D7A23B" stroke-width="2"/></svg></div>
+              <div><h5>Careers</h5><p>Open roles across the team.</p></div>
+            </a>
+            <a class="nav-dd-item" href="#partners">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><circle cx="15" cy="20" r="9" stroke="#D7A23B" stroke-width="2"/><circle cx="25" cy="20" r="9" stroke="#ECEEE6" stroke-width="2"/></svg></div>
+              <div><h5>Partners</h5><p>The banks and platforms we work with.</p></div>
+            </a>
+            <a class="nav-dd-item" href="#contact">
+              <div class="ic-chip"><svg class="ic" viewBox="0 0 40 40" fill="none"><rect x="6" y="10" width="28" height="20" rx="2" stroke="#D7A23B" stroke-width="2"/><path d="M7 12l13 10 13-10" stroke="#D7A23B" stroke-width="2"/></svg></div>
+              <div><h5>Contact</h5><p>Reach the team directly.</p></div>
+            </a>
+          </div>
+        </div>
+        <a href="#pricing">Pricing</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn-text-dot" href="https://app.dev.y1card.com/auth/initiate-otp">
+          <span>Login</span>
+        </a>
+        <a class="btn-text-dot" href="https://app.dev.y1card.com/auth/initiate-otp">
+          <span>Open account</span>
+          <span class="dot" aria-hidden="true"></span>
+        </a>
+      </div>
+    </div>
+  </header>
+</div>
+
+<main id="top">
+
+  <section class="hero">
+    <div class="hero-bg" aria-hidden="true"></div>
+    <div class="hero-annotations" aria-hidden="true" id="heroNodes">
+      <div class="hn-dot" style="top:17.26%; right:28.21%;"></div>
+      <div class="hn-dot" style="top:40.00%; right:33.70%;"></div>
+      <div class="hn-dot" style="top:58.42%; right:32.94%;"></div>
+      <div class="hn-dot" style="top:68.74%; right:32.94%;"></div>
+      <div class="hn-dot" style="top:79.16%; right:32.94%;"></div>
+      <div class="hn-dot" style="top:89.26%; right:32.94%;"></div>
+      <svg class="hn-line-svg" id="hnLineSvg"></svg>
+      <div class="hn-card" id="hnCard">
+        <h4></h4>
+        <p></p>
+        <span></span>
+      </div>
+    </div>
+    <div class="hero-content">
+      <h1>India Saving.<br>भारतीय बचत.</h1>
+      <p class="lede">A trusted financial institution for savings, investments, retirement and wealth, and all money-related services.</p>
+      <form class="hero-signup" onsubmit="return false;">
+        <div class="hero-phone-box">
+          <div class="hero-country-chip">
+            <img src="assets/images/india.png" alt="India">
+            <span>+91</span>
+          </div>
+          <input class="hero-signup-input" type="tel" placeholder="Mobile number" required aria-label="Mobile number">
+          <button type="submit" class="btn btn-primary">Open account</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <section class="grid-feature">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Everything you do with money.<br>All in one place.</h2>
+      </div>
+      <div class="gf-row">
+        <div class="gf-card-stage">
+          <div class="gf-card-page"></div>
+          <div class="gf-card" style="background-image: url('assets/images/rug-1.jpg'); background-size: cover; background-position: center;">
+            <p class="gf-desc">No credit history required.</p>
+            <div class="gf-bottom">
+              <span class="gf-sub">Credit</span>
+              <h3 class="gf-heading">A card backed by your own deposit.</h3>
+            </div>
+            <div class="gf-card-highlight"></div>
+          </div>
+        </div>
+        <div class="gf-card-stage">
+          <div class="gf-card-page"></div>
+          <div class="gf-card" style="background-image: url('assets/images/rug-2.jpg'); background-size: cover; background-position: center;">
+            <p class="gf-desc">Fixed and recurring, your choice.</p>
+            <div class="gf-bottom">
+              <span class="gf-sub">Deposits</span>
+              <h3 class="gf-heading">Lock a rate, or build one monthly.</h3>
+            </div>
+            <div class="gf-card-highlight"></div>
+          </div>
+        </div>
+        <div class="gf-card-stage">
+          <div class="gf-card-page"></div>
+          <div class="gf-card" style="background-image: url('assets/images/rug-3.jpg'); background-size: cover; background-position: center;">
+            <p class="gf-desc">Valued live, spendable later.</p>
+            <div class="gf-bottom">
+              <span class="gf-sub">Reserves</span>
+              <h3 class="gf-heading">Gold and silver, held digitally.</h3>
+            </div>
+            <div class="gf-card-highlight"></div>
+          </div>
+        </div>
+        <div class="gf-card-stage">
+          <div class="gf-card-page"></div>
+          <div class="gf-card" style="background-image: url('assets/images/rug-4.jpg'); background-size: cover; background-position: center;">
+            <p class="gf-desc">Government-backed, tax-efficient.</p>
+            <div class="gf-bottom">
+              <span class="gf-sub">Retirement</span>
+              <h3 class="gf-heading">An NPS account, opened in minutes.</h3>
+            </div>
+            <div class="gf-card-highlight"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="trust">
+    <div class="gallery-stage">
+      <span class="trust-label">Partnered banks and financial institutions</span>
+      <div class="gallery-rail">
+        <div class="gallery-track" id="galleryTrack"></div>
+      </div>
+      <div class="gallery-dots" id="galleryDots"></div>
+    </div>
+  </div>
+
+  <section class="unbox">
+    <div class="wrap">
+      <div class="unbox-toggle" id="unboxToggle" data-active="zero" role="tablist">
+        <div class="unbox-toggle-thumb"></div>
+        <button class="unbox-tab active" data-card="zero" role="tab" aria-selected="true">Carlton Zero</button>
+        <button class="unbox-tab" data-card="vibe" role="tab" aria-selected="false">Rockvest Vibe</button>
+      </div>
+      <div class="section-head">
+        <span class="eyebrow" id="unboxEyebrow">Deposit-backed cards</span>
+        <h2><span id="unboxHeadingScript">Pick</span><span class="unbox-heading-script" id="unboxHeadingRest"> your card.</span></h2>
+      </div>
+      <div class="unbox-stage">
+        <!-- Zero: a card-carrier mailer, the way banks actually mail a
+             physical card — tear the strip open, the insert inside holds
+             the card (stuck to the right) and copy (on the left). -->
+        <div class="unbox-mailer" id="unboxMailer">
+          <div class="unbox-mailer-cover">
+            <div class="unbox-mailer-addr">Raushco<br>Account Services<br>Electronic Service Requested</div>
+            <div class="unbox-mailer-postage">Presorted Standard<br>Postage Paid<br>Raushco</div>
+            <div class="unbox-mailer-emblem-frame" aria-hidden="true"></div>
+            <div class="unbox-mailer-emblem" aria-hidden="true"></div>
+            <div class="unbox-mailer-badge">
+              <a href="#" class="unbox-mailer-badge-pill" id="unboxBadgePill">Apply for card</a>
+              <p>Approval subject to verification. Terms and condition apply.</p>
+            </div>
+            <div class="unbox-seal" id="unboxSeal">
+              <div class="unbox-tear-track">
+                <!-- A hint that this is the letter itself, not a blank
+                     placeholder — faint text-line marks, visible exactly
+                     where the strip has torn away. Width tracks the live
+                     tear position, so it only ever extends as far as the
+                     strip/flap have actually receded. -->
+                <div class="unbox-tear-letter-hint" id="unboxTearLetterHint"><div class="unbox-tear-letter-hint-inner"><span></span><span></span><span></span></div></div>
+                <div class="unbox-tear-strip"></div>
+                <div class="unbox-tear-flap" id="unboxTearFlap"></div>
+                <button class="unbox-tear-grab" id="unboxTearHandle" aria-label="Swipe right to tear open"></button>
+              </div>
+              <span class="unbox-seal-label">Swipe to tear</span>
+            </div>
+          </div>
+          <svg class="unbox-dieline" viewBox="0 0 720 485" fill="none" aria-hidden="true">
+            <rect x="5" y="5" width="710" height="475" rx="4" stroke="rgba(255,245,240,0.32)" stroke-width="1" stroke-dasharray="4 4"/>
+            <path d="M5 5 L360 181 L715 5" stroke="rgba(255,245,240,0.32)" stroke-width="1" stroke-dasharray="4 4"/>
+          </svg>
+          <div class="unbox-insert" id="unboxInsert">
+            <button class="unbox-insert-close" id="unboxInsertClose" aria-label="Close and reseal">&times;</button>
+            <div class="unbox-insert-text">
+              <div class="unbox-insert-plain">
+                <h4 id="unboxInsertName">Unity Zero</h4>
+                <p id="unboxInsertCopy">Your card is ready to activate. Scan the QR code in the Raushco app or tap your card to your phone to get started — no paperwork, no waiting in line.</p>
+              </div>
+              <!-- Vibe: the same feature-gallery card component used up in
+                   .grid-feature — "Credit" with its own rug-1.jpg cover,
+                   as it already exists on this page, not a reskin. -->
+              <div class="gf-card-stage unbox-book-stage">
+                <div class="gf-card-page"></div>
+                <div class="gf-card" style="background-image: url('assets/images/rug-1.jpg'); background-size: cover; background-position: center;">
+                  <p class="gf-desc">No credit history required.</p>
+                  <div class="gf-bottom">
+                    <span class="gf-sub">Credit</span>
+                    <h3 class="gf-heading">A card backed by your own deposit.</h3>
+                  </div>
+                  <div class="gf-card-highlight"></div>
+                </div>
+              </div>
+            </div>
+            <div class="unbox-insert-card">
+              <img class="unbox-card-img" id="unboxCardImg" src="assets/cards/zero-front.svg" alt="Unity Zero card" draggable="false">
+            </div>
+            <div class="unbox-insert-text unbox-insert-next">
+              <div class="unbox-insert-plain">
+                <span class="unbox-insert-label">Next step</span>
+                <p>To confirm you've received your card, open the Raushco app and tap Activate.</p>
+              </div>
+              <!-- Vibe: "Deposits", same gf-card component, rug-2.jpg cover. -->
+              <div class="gf-card-stage unbox-book-stage">
+                <div class="gf-card-page"></div>
+                <div class="gf-card" style="background-image: url('assets/images/rug-2.jpg'); background-size: cover; background-position: center;">
+                  <p class="gf-desc">Fixed and recurring, your choice.</p>
+                  <div class="gf-bottom">
+                    <span class="gf-sub">Deposits</span>
+                    <h3 class="gf-heading">Lock a rate, or build one monthly.</h3>
+                  </div>
+                  <div class="gf-card-highlight"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="unbox-result" id="unboxResult">
+          <h3 id="unboxCardName">Unity Zero</h3>
+          <p id="unboxCardDesc">A card backed by your own deposit. No credit history required.</p>
+          <a href="#" class="btn-primary">Open account</a>
+        </div>
+        <!-- The torn-off strip doesn't stay hinged to the envelope once
+             fully torn — it comes free and is set down nearby, outside
+             the envelope itself, the way you'd actually discard a strip
+             you just tore off rather than leave it dangling in place.
+             A normal flex child of .unbox-stage (after .unbox-result,
+             same as everything else here) rather than absolutely
+             positioned, so it lands below EVERYTHING via ordinary flex
+             flow + gap — robust at any viewport/scale, unlike a fixed
+             pixel offset that has to separately account for how tall
+             .unbox-result happens to be. -->
+        <div class="unbox-torn-strip-rest" id="unboxTornStripRest" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+  // Smooth scroll (Lenis) + scroll-driven reveals (GSAP/ScrollTrigger).
+  // Both are optional enhancements — every interaction above already works
+  // without them, so guard in case either CDN fails to load.
+  // smoothWheel is off so wheel/trackpad scrolling is untouched, 1:1 native —
+  // any amount of Lenis's input smoothing reads as "slow" next to native
+  // trackpad momentum. Lenis still runs (RAF loop + ScrollTrigger sync) so
+  // it's wired up and ready for things like smooth anchor-link scrollTo
+  // later; it just doesn't intercept everyday page scrolling.
+  var ENABLE_LENIS = true;
+  if (ENABLE_LENIS && window.Lenis) {
+    var lenis = new Lenis({ smoothWheel: false, smoothTouch: false });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    if (window.gsap && window.ScrollTrigger) {
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    }
+  }
+
+  if (window.gsap && window.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!reduceMotion) {
+      gsap.utils.toArray('.section-head').forEach(function (el) {
+        gsap.from(el, {
+          opacity: 0, y: 28, duration: 0.8, ease: 'power2.out',
+          scrollTrigger: { trigger: el, start: 'top 85%' }
+        });
+      });
+      gsap.from('.gf-card-stage', {
+        opacity: 0, y: 36, duration: 0.7, ease: 'power2.out', stagger: 0.12,
+        scrollTrigger: { trigger: '.gf-row', start: 'top 85%' }
+      });
+      var recenterGallery = function () { if (window.centerRailBetweenBarAndDots) window.centerRailBetweenBarAndDots(); };
+      gsap.from('.trust-label', {
+        opacity: 0, y: 16, duration: 0.8, ease: 'power2.out',
+        scrollTrigger: { trigger: '.trust', start: 'top 80%' },
+        onComplete: recenterGallery
+      });
+      gsap.from('.gallery-rail, .gallery-dots', {
+        opacity: 0, y: 24, duration: 0.8, ease: 'power2.out', stagger: 0.1,
+        scrollTrigger: { trigger: '.trust', start: 'top 70%' },
+        onComplete: recenterGallery
+      });
+
+    }
+  }
+
+  // Hero node tour — an original, from-scratch implementation (not ported
+  // from any reference site's code), but timed against constants read
+  // directly out of societies.ai's own shipped source: pulse/edge-draw
+  // duration 1000ms, card open/close ~717ms (43/60*1000), the settle gap
+  // between phases 700ms, label fade 400ms, and the easing curve
+  // cubic-bezier(.75,0,.25,1) used throughout. Multiple edges accumulate
+  // simultaneously (a small network), same as their reference — capped
+  // and retracting the oldest, rather than a single line swapped in place.
+  (function () {
+    var container = document.getElementById('heroNodes');
+    if (!container) return;
+    var dots = Array.prototype.slice.call(container.querySelectorAll('.hn-dot'));
+    var lineSvg = document.getElementById('hnLineSvg');
+    var card = document.getElementById('hnCard');
+    if (!dots.length || !lineSvg || !card) return;
+    var cardH4 = card.querySelector('h4');
+    var cardP = card.querySelector('p');
+    var cardSpan = card.querySelector('span');
+
+    // Exact text pulled from societies.ai's own bundle, including the
+    // exact per-card pixel widths — swap this for Raushco's own copy
+    // once the positions/timings are confirmed to match.
+    var personas = [
+      { title: 'Millennial, Instagram User', desc: 'Following culture and brands closely, and posting an opinion on most of them.', loc: 'Manchester, UK', width: 230 },
+      { title: 'Editor, Financial Times', desc: "Deciding which of the day's market stories reaches the front page.", loc: 'London, UK', width: 234 },
+      { title: 'Director, US SEC', desc: 'Reviewing how listed companies disclose risk to the investors who buy them.', loc: 'Washington, USA', width: 218 },
+      { title: 'Engineer, Cloudscale Systems', desc: 'Building distributed systems that power millions of daily transactions.', loc: 'Bangalore, India', width: 240 },
+      { title: 'Portfolio Manager, Tarnbrook Capital', desc: 'Weighing earnings calls and market signals across a global equities book.', loc: 'New York, USA', width: 272 },
+      { title: 'Founder, Novatech Ventures', desc: 'Serial entrepreneur building the next generation of SaaS tools.', loc: 'Seoul, South Korea', width: 242 }
+    ];
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // Cubic-bezier evaluator, ported from their own easing utility (a
+    // generic bezier-solve technique, not creative content) so the JS-side
+    // animations use the identical curve as the CSS transitions do.
+    function bezier(x1, y1, x2, y2) {
+      function sample(p1, p2, t) {
+        var mt = 1 - t;
+        return 3 * mt * mt * t * p1 + 3 * mt * t * t * p2 + t * t * t;
+      }
+      return function (l) {
+        if (l <= 0) return 0;
+        if (l >= 1) return 1;
+        var lo = 0, hi = 1, mid = l;
+        for (var k = 0; k < 16; k++) {
+          if (sample(x1, x2, mid) < l) lo = mid; else hi = mid;
+          mid = (lo + hi) / 2;
+        }
+        return sample(y1, y2, mid);
+      };
+    }
+    var easeF = bezier(0.75, 0, 0.25, 1);
+
+    var DRAW_MS = 1000;   // edge/pulse draw duration
+    var LEAD_MS = 700;    // settle gap between an edge completing and the card reacting
+    var CARD_MS = 717;    // card open/close duration (43/60 * 1000)
+
+    var labels = dots.map(function () {
+      var el = document.createElement('span');
+      el.className = 'hn-label';
+      container.appendChild(el);
+      return el;
+    });
+    var labelOn = dots.map(function () { return false; });
+    var labelWidth = dots.map(function () { return 0; });
+    var labelSide = dots.map(function () { return true; });
+    var cardNode = -1;
+    var cardFinalW = 0, cardFinalH = 0; // fixed while open; position is not
+    // cardTransitionNode stays set to the relevant node through BOTH the
+    // open AND close animations (cardNode itself flips the instant
+    // hideCard() runs, well before the close has visually finished), so
+    // line endpoints keep tracking it the whole time it's visually
+    // present, not just while it's the "resting open" card.
+    var cardTransitionNode = -1;
+    var cardVisualProgress = 0; // 0 = looks like the dot, 1 = looks like the full card
+    var cardAnim = null; // { startTs, dir: 1 (opening) | -1 (closing), fromProgress }
+
+    function shuffledOrder(n) {
+      var arr = [];
+      for (var i = 0; i < n; i++) arr.push(i);
+      for (var j = arr.length - 1; j > 0; j--) {
+        var k = Math.floor(Math.random() * (j + 1));
+        var tmp = arr[j]; arr[j] = arr[k]; arr[k] = tmp;
+      }
+      return arr;
+    }
+
+    var order = shuffledOrder(dots.length);
+    var orderIdx = 0;
+
+    // Recently-visited nodes an edge can originate from. A new edge
+    // prefers whichever of these sits geometrically closest to the new
+    // target — which both keeps lines short (so they rarely cross) and,
+    // when one node is the nearest source for two targets in a row,
+    // naturally produces the branching "hub" structure confirmed by
+    // real societies.ai frames (one node with two lines radiating out).
+    var visitedSet = [];
+
+    function dotCenter(i) {
+      var r = dots[i].getBoundingClientRect();
+      var cr = container.getBoundingClientRect();
+      return { x: r.left - cr.left + r.width / 2, y: r.top - cr.top + r.height / 2 };
+    }
+
+    function safeTop() {
+      var header = document.getElementById('siteHeader');
+      var headerBottom = header ? header.getBoundingClientRect().bottom : 0;
+      var containerTop = container.getBoundingClientRect().top;
+      return Math.max(8, headerBottom - containerTop + 10);
+    }
+
+    function cardRectRelative() {
+      var cr = container.getBoundingClientRect();
+      var r = card.getBoundingClientRect();
+      return { left: r.left - cr.left, top: r.top - cr.top, width: r.width, height: r.height };
+    }
+
+    function closestPointOnRect(px, py, rect) {
+      return {
+        x: Math.max(rect.left, Math.min(rect.left + rect.width, px)),
+        y: Math.max(rect.top, Math.min(rect.top + rect.height, py))
+      };
+    }
+
+    function rectsOverlap(ax1, ay1, ax2, ay2, bx1, by1, bx2, by2) {
+      return ax1 < bx2 && ax2 > bx1 && ay1 < by2 && ay2 > by1;
+    }
+
+    function placeNear(el, i, w, h, posOverride, cardRectOverride, sideOverride) {
+      var pos = posOverride || dotCenter(i);
+      var cw = container.getBoundingClientRect().width;
+      var ch = container.getBoundingClientRect().height;
+      // The side (label left-of-dot vs right-of-dot) is locked once when
+      // the label first appears, not recomputed every frame — otherwise,
+      // since labels now track their drifting dot live, a dot crossing
+      // the container's horizontal midpoint would flip its label from one
+      // side to the other mid-display, a visible side-swap glitch.
+      var onLeft = sideOverride !== undefined ? sideOverride : pos.x < cw / 2;
+      var left = onLeft ? pos.x + 14 : pos.x - w - 14;
+      var top = pos.y - h / 2;
+      left = Math.max(8, Math.min(cw - w - 8, left));
+      top = Math.max(safeTop(), Math.min(ch - h - 8, top));
+
+      // Keep labels off the open card's face — otherwise a label can
+      // render on top of the card (labels are DOM-appended after the
+      // card, so they'd paint over its text). Try increasingly different
+      // spots; if every one of them still overlaps (a tall card leaves no
+      // clear band above or below it), just hide the label for this frame
+      // rather than show broken, illegible overlapping text.
+      el.style.visibility = '';
+      el.setAttribute('data-collision-checked', (cardTransitionNode >= 0 && cardTransitionNode !== i) ? '1' : '0');
+      if (cardTransitionNode >= 0 && cardTransitionNode !== i) {
+        var cr = cardRectOverride || cardRectRelative();
+        el.setAttribute('data-cr-used', cr.left.toFixed(1) + ',' + cr.top.toFixed(1) + ',' + cr.width.toFixed(1) + ',' + cr.height.toFixed(1));
+        var overlapsCard = function (l, t) {
+          return rectsOverlap(l, t, l + w, t + h, cr.left, cr.top, cr.left + cr.width, cr.top + cr.height);
+        };
+        if (overlapsCard(left, top)) {
+          var altLeft = onLeft ? pos.x - w - 14 : pos.x + 14;
+          altLeft = Math.max(8, Math.min(cw - w - 8, altLeft));
+          var belowTop = Math.max(safeTop(), Math.min(ch - h - 8, cr.top + cr.height + 10));
+          var aboveTop = Math.max(safeTop(), Math.min(ch - h - 8, cr.top - h - 10));
+          if (!overlapsCard(altLeft, top)) {
+            left = altLeft;
+          } else if (!overlapsCard(left, belowTop)) {
+            top = belowTop;
+          } else if (!overlapsCard(altLeft, belowTop)) {
+            left = altLeft; top = belowTop;
+          } else if (!overlapsCard(left, aboveTop)) {
+            top = aboveTop;
+          } else if (!overlapsCard(altLeft, aboveTop)) {
+            left = altLeft; top = aboveTop;
+          } else {
+            el.style.visibility = 'hidden';
+          }
+        }
+      }
+
+      el.style.left = left + 'px';
+      el.style.top = top + 'px';
+    }
+
+    var MAX_LABELS = 3;
+    var labelQueue = [];
+
+    function showLabel(i) {
+      if (labelOn[i] || i === cardNode) return;
+      labelOn[i] = true;
+      labelQueue.push(i);
+      while (labelQueue.length > MAX_LABELS) hideLabel(labelQueue.shift());
+      var el = labels[i];
+      el.textContent = personas[i % personas.length].title;
+      el.classList.add('is-visible');
+      labelWidth[i] = el.offsetWidth || 140;
+      var pos = dotCenter(i);
+      labelSide[i] = pos.x < container.getBoundingClientRect().width / 2;
+      placeNear(el, i, labelWidth[i], 14, pos, null, labelSide[i]);
+    }
+
+    function hideLabel(i) {
+      labelOn[i] = false;
+      labels[i].classList.remove('is-visible');
+      var qi = labelQueue.indexOf(i);
+      if (qi >= 0) labelQueue.splice(qi, 1);
+    }
+
+    // --- Edges -------------------------------------------------------
+    // Every edge endpoint is recomputed LIVE, every frame, from wherever
+    // its node currently is — never animated toward a fixed snapshot.
+    // Dots keep drifting continuously (their own CSS path animation),
+    // so a line that only animates once toward a captured (x,y) goes
+    // stale the moment its node moves on; this is what made lines look
+    // disconnected from their dots. A node's "current point" is its live
+    // dot center, or — once it's the open card — the nearest point on
+    // the card's own (growing) rect: the dot and the card are the same
+    // node, just small or big, so there's always somewhere real to touch.
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+    // Confirmed via live sampling of the real site: societies.ai never
+    // shows more than 2 lines converging on one node (89% of its non-empty
+    // samples showed exactly 2, zero showed 3+) — MAX_EDGES=3 let a 3-edge
+    // hub sit as steady-state roughly half the time here, well past what
+    // the reference ever does.
+    var MAX_EDGES = 2;
+    var edges = []; // { from, to, progress, state, segA, segB, startTs, retractFrom }
+
+    function addEdge(fromI, toI) {
+      var segA = document.createElementNS(SVG_NS, 'line');
+      var segB = document.createElementNS(SVG_NS, 'line');
+      segA.setAttribute('class', 'hn-edge-line');
+      segB.setAttribute('class', 'hn-edge-line');
+      lineSvg.appendChild(segA);
+      lineSvg.appendChild(segB);
+      var edge = { from: fromI, to: toI, progress: 0, state: 'growing', segA: segA, segB: segB, startTs: null, retractFrom: 0 };
+      edges.push(edge);
+      // Evicted edges must stay in `edges` (just flagged 'retracting') so
+      // the per-frame loop below can keep animating and eventually remove
+      // them — shifting them out here orphaned them: the loop never saw
+      // them again, so they never finished retracting or got removed from
+      // the DOM, leaving permanent frozen "ghost" lines behind on every
+      // single eviction (visibly, dozens of stray lines piling up over time).
+      var active = edges.filter(function (e) { return e.state !== 'retracting'; });
+      while (active.length > MAX_EDGES) beginRetract(active.shift());
+      return edge;
+    }
+
+    function beginRetract(edge) {
+      edge.state = 'retracting';
+      edge.retractFrom = edge.progress;
+      edge.startTs = null;
+    }
+
+    function setLine(el, p, q) {
+      el.setAttribute('x1', p.x); el.setAttribute('y1', p.y);
+      el.setAttribute('x2', q.x); el.setAttribute('y2', q.y);
+    }
+
+    // Direct port of their line-gap shape (`ef`) and its rescaled easing
+    // (`w`): a small (<=6px) break that sweeps the full length of a
+    // line over a 2s ramp, then disappears for 2s, repeating — all solid
+    // edges share one clock, so every gap travels in sync.
+    var wPivot = easeF(0.5);
+    function wEase(x) {
+      if (x <= 0) return 0;
+      if (x >= 1) return 1;
+      return (easeF(0.5 + 0.5 * x) - wPivot) / (1 - wPivot);
+    }
+    function computeGap(progress, len) {
+      var half = Math.min(6, len);
+      if (half < 0.5 || len < 0.5) return { gapStart: 0, gapWidth: 0, gapEnd: 0 };
+      var span = len + half;
+      var s = Math.min(span, Math.max(0, progress * span));
+      if (s <= half) {
+        var w1 = half * wEase(s / half);
+        return { gapStart: 0, gapWidth: w1, gapEnd: w1 };
+      }
+      if (s >= len) {
+        var w2 = half * wEase(1 - Math.min(1, (s - len) / half));
+        return { gapStart: len - w2, gapWidth: w2, gapEnd: len };
+      }
+      return { gapStart: s - half, gapWidth: half, gapEnd: s };
+    }
+
+    // The card grows out of the dot itself (confirmed in their source:
+    // the box sits at its final position/size from the start — it's a
+    // clip-path window that grows from a 10x10 square at the dot, never
+    // a scale transform — so title/body text is always full-size, just
+    // progressively unmasked), while the title text independently
+    // glides from wherever the label was sitting into its slot inside
+    // the card — a FLIP-style move, since it's the same information
+    // "becoming" the heading.
+    function showCard(i) {
+      var labelRect = labels[i].getBoundingClientRect();
+      var containerRect = container.getBoundingClientRect();
+      var dotPos = dotCenter(i);
+
+      cardNode = i;
+      cardTransitionNode = i;
+      cardAnim = { startTs: null, dir: 1, fromProgress: cardVisualProgress };
+      hideLabel(i);
+      // Confirmed in their canvas loop: a node's own square stops being
+      // drawn once it's the active card node (`if (e !== z) drawDot()`) —
+      // the card doesn't sit beside the dot, it *is* the dot, grown up.
+      dots[i].style.visibility = 'hidden';
+
+      var persona = personas[i % personas.length];
+      cardH4.textContent = persona.title;
+      cardP.textContent = persona.desc;
+      cardSpan.textContent = persona.loc;
+
+      var finalW = persona.width;
+      var cw = containerRect.width, ch = containerRect.height;
+      var onLeft = dotPos.x < cw / 2;
+      var finalLeft = onLeft ? dotPos.x + 14 : dotPos.x - finalW - 14;
+      finalLeft = Math.max(8, Math.min(cw - finalW - 8, finalLeft));
+
+      card.style.transition = 'none';
+      card.style.width = finalW + 'px';
+      card.style.left = finalLeft + 'px';
+      card.style.top = '-9999px';
+      card.classList.remove('is-visible');
+      void card.offsetWidth;
+      var naturalH = card.offsetHeight;
+
+      var finalTop = Math.max(safeTop(), Math.min(ch - naturalH - 8, dotPos.y - 10));
+      card.style.top = finalTop + 'px';
+      cardFinalW = finalW;
+      cardFinalH = naturalH;
+
+      var closedLeft = dotPos.x - 5, closedTop = dotPos.y - 5;
+      var insetTop = closedTop - finalTop;
+      var insetLeft = closedLeft - finalLeft;
+      var insetRight = (finalLeft + finalW) - (closedLeft + 10);
+      var insetBottom = (finalTop + naturalH) - (closedTop + 10);
+      card.style.clipPath = 'inset(' + insetTop + 'px ' + insetRight + 'px ' + insetBottom + 'px ' + insetLeft + 'px)';
+
+      var h4Rect = cardH4.getBoundingClientRect();
+      var dx = labelRect.left - h4Rect.left;
+      var dy = (labelRect.top + labelRect.height / 2) - (h4Rect.top + h4Rect.height / 2);
+      cardH4.style.transition = 'none';
+      cardH4.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+      void card.offsetWidth;
+
+      card.style.transition = '';
+      cardH4.style.transition = '';
+      card.style.clipPath = 'inset(0px 0px 0px 0px)';
+      cardH4.style.transform = '';
+      card.classList.add('is-visible');
+    }
+
+    function hideCard() {
+      card.classList.remove('is-visible');
+      if (cardNode >= 0) {
+        var leaving = cardNode;
+        var dotPos = dotCenter(leaving);
+        var r = card.getBoundingClientRect();
+        var cr = container.getBoundingClientRect();
+        var finalLeft = r.left - cr.left, finalTop = r.top - cr.top;
+        var finalW = r.width, finalH = r.height;
+        var closedLeft = dotPos.x - 5, closedTop = dotPos.y - 5;
+        var insetTop = closedTop - finalTop;
+        var insetLeft = closedLeft - finalLeft;
+        var insetRight = (finalLeft + finalW) - (closedLeft + 10);
+        var insetBottom = (finalTop + finalH) - (closedTop + 10);
+        card.style.clipPath = 'inset(' + insetTop + 'px ' + insetRight + 'px ' + insetBottom + 'px ' + insetLeft + 'px)';
+        // cardTransitionNode stays set to `leaving` through the close —
+        // cardNode itself flips right now, well before the 717ms shrink
+        // has visually finished, so any line still touching this node
+        // needs a separate signal to keep tracking it through the close.
+        cardAnim = { startTs: null, dir: -1, fromProgress: cardVisualProgress };
+        cardNode = -1;
+        dots[leaving].style.visibility = '';
+        window.setTimeout(function () { showLabel(leaving); }, 250);
+      }
+    }
+
+    function pickSource(targetI) {
+      if (!visitedSet.length) return -1;
+      var tp = dotCenter(targetI);
+      var best = -1, bestD = Infinity;
+      for (var k = 0; k < visitedSet.length; k++) {
+        var vi = visitedSet[k];
+        if (vi === targetI) continue;
+        var p = dotCenter(vi);
+        var dx = p.x - tp.x, dy = p.y - tp.y;
+        var d2 = dx * dx + dy * dy;
+        if (d2 < bestD) { bestD = d2; best = vi; }
+      }
+      return best;
+    }
+
+    function visit(i) {
+      var src = pickSource(i);
+      if (src >= 0) addEdge(src, i);
+      window.setTimeout(function () {
+        // Both ends of the edge label at the same moment it finishes
+        // drawing — their source labels pulseFrom and pulseTo together,
+        // not staggered.
+        if (src >= 0) showLabel(src);
+        showLabel(i);
+        window.setTimeout(function () {
+          var hadCard = cardNode >= 0;
+          hideCard();
+          window.setTimeout(function () { showCard(i); }, hadCard ? CARD_MS : 0);
+        }, LEAD_MS);
+      }, src >= 0 ? DRAW_MS : 100);
+      if (visitedSet.indexOf(i) === -1) visitedSet.push(i);
+      if (visitedSet.length > 4) visitedSet.shift();
+    }
+
+    function tick() {
+      visit(order[orderIdx]);
+      orderIdx++;
+      if (orderIdx >= order.length) { order = shuffledOrder(dots.length); orderIdx = 0; }
+      window.setTimeout(tick, 5200);
+    }
+    // Confirmed via live sampling: reference's first line appears by
+    // ~3-4s; ours didn't appear until ~6.4s because the first visit()
+    // can't draw an edge (visitedSet starts empty), so no edge existed
+    // until the SECOND tick fired. A shorter initial delay (matching the
+    // 100ms already used elsewhere for "no source yet") pulls that floor
+    // down to ~5.3s — still a bit behind reference, but tick()'s own
+    // 5200ms cadence (not measured on the reference) would need to
+    // shrink too to close the rest of the gap, which isn't backed by data.
+    window.setTimeout(tick, 100);
+
+    // Single perpetual render loop: re-derives every edge's true
+    // endpoints and every visible label's position from the live scene
+    // every frame, instead of animating toward a position captured once.
+    function tickFrame(ts) {
+      requestAnimationFrame(tickFrame);
+
+      var cyclePos = ts % 4000;
+      var gapProg = easeF(cyclePos >= 2000 ? 0 : cyclePos / 2000);
+
+      // Advance the card's own open/close reveal progress on the same
+      // duration/easing as its CSS clip-path transition, so edge
+      // endpoints touching it can track how much of the card is ACTUALLY
+      // visible right now — otherwise a line snaps to touch the card's
+      // full final edge the instant it starts opening (while it's still
+      // visually a tiny point), and likewise snaps away from it before
+      // the close has visually finished.
+      if (cardAnim) {
+        if (cardAnim.startTs === null) cardAnim.startTs = ts;
+        var cp = Math.min(1, (ts - cardAnim.startTs) / CARD_MS);
+        var ce = easeF(cp);
+        cardVisualProgress = cardAnim.dir > 0
+          ? cardAnim.fromProgress + (1 - cardAnim.fromProgress) * ce
+          : cardAnim.fromProgress * (1 - ce);
+        if (cp >= 1) {
+          cardAnim = null;
+          if (cardVisualProgress < 0.001) cardTransitionNode = -1;
+        }
+      }
+
+      // The open card is the same node as its dot, just big — their dot
+      // never stops drifting along its path (confirmed in their source:
+      // the card's position is driven by the SAME continuously-updating
+      // path position the whole time it's open OR transitioning, not
+      // frozen at open-time). Re-anchor it live every frame.
+      if (cardTransitionNode >= 0) {
+        var liveDot = dotCenter(cardTransitionNode);
+        var cwNow = container.getBoundingClientRect().width;
+        var chNow = container.getBoundingClientRect().height;
+        var onLeftNow = liveDot.x < cwNow / 2;
+        var liveLeft = onLeftNow ? liveDot.x + 14 : liveDot.x - cardFinalW - 14;
+        liveLeft = Math.max(8, Math.min(cwNow - cardFinalW - 8, liveLeft));
+        var liveTop = Math.max(safeTop(), Math.min(chNow - cardFinalH - 8, liveDot.y - 10));
+        card.style.left = liveLeft + 'px';
+        card.style.top = liveTop + 'px';
+      }
+
+      var centers = [];
+      for (var ci = 0; ci < dots.length; ci++) centers[ci] = dotCenter(ci);
+
+      // Interpolate the rect a touching line clamps to between a tiny
+      // 10x10 window at the live dot (progress 0) and the card's actual
+      // current box (progress 1), matching the reveal exactly instead of
+      // jumping straight to the full box.
+      var cRect = null;
+      if (cardTransitionNode >= 0) {
+        var fullRect = cardRectRelative();
+        if (cardVisualProgress >= 0.999) {
+          cRect = fullRect;
+        } else {
+          var dp = dotCenter(cardTransitionNode);
+          var p = Math.max(0, cardVisualProgress);
+          cRect = {
+            left: (dp.x - 5) + (fullRect.left - (dp.x - 5)) * p,
+            top: (dp.y - 5) + (fullRect.top - (dp.y - 5)) * p,
+            width: 10 + (fullRect.width - 10) * p,
+            height: 10 + (fullRect.height - 10) * p
+          };
+        }
+      }
+      card.setAttribute('data-c-rect', cRect ? (cRect.left.toFixed(2) + ',' + cRect.top.toFixed(2) + ',' + cRect.width.toFixed(2) + ',' + cRect.height.toFixed(2)) : '');
+
+      function livePoint(nodeIdx, towardX, towardY) {
+        if (nodeIdx === cardTransitionNode && cRect) return closestPointOnRect(towardX, towardY, cRect);
+        return centers[nodeIdx];
+      }
+
+      for (var ei = edges.length - 1; ei >= 0; ei--) {
+        var edge = edges[ei];
+        if (edge.startTs === null) edge.startTs = ts;
+        var elapsed = ts - edge.startTs;
+
+        if (edge.state === 'growing') {
+          var t = Math.min(1, elapsed / DRAW_MS);
+          edge.progress = easeF(t);
+          if (t >= 1) edge.state = 'solid';
+        } else if (edge.state === 'retracting') {
+          var rt = Math.min(1, elapsed / (DRAW_MS * 0.6));
+          edge.progress = edge.retractFrom * (1 - easeF(rt));
+          if (rt >= 1) {
+            if (edge.segA.parentNode) edge.segA.parentNode.removeChild(edge.segA);
+            if (edge.segB.parentNode) edge.segB.parentNode.removeChild(edge.segB);
+            edges.splice(ei, 1);
+            continue;
+          }
+        }
+
+        var rawFrom = centers[edge.from], rawTo = centers[edge.to];
+        var a = livePoint(edge.from, rawTo.x, rawTo.y);
+        var bFull = livePoint(edge.to, rawFrom.x, rawFrom.y);
+        var b = { x: a.x + (bFull.x - a.x) * edge.progress, y: a.y + (bFull.y - a.y) * edge.progress };
+        edge.segA.setAttribute('data-state', edge.state);
+
+        if (edge.progress < 0.999) {
+          setLine(edge.segA, a, b);
+          setLine(edge.segB, b, b);
+          continue;
+        }
+        var dx = bFull.x - a.x, dy = bFull.y - a.y, len = Math.hypot(dx, dy);
+        if (len < 0.5) { setLine(edge.segA, a, bFull); setLine(edge.segB, bFull, bFull); continue; }
+        var gap = computeGap(gapProg, len);
+        if (gap.gapWidth < 0.01) { setLine(edge.segA, a, bFull); setLine(edge.segB, bFull, bFull); continue; }
+        var t1 = gap.gapStart / len, t2 = gap.gapEnd / len;
+        var p1 = { x: a.x + dx * t1, y: a.y + dy * t1 };
+        var p2 = { x: a.x + dx * t2, y: a.y + dy * t2 };
+        setLine(edge.segA, a, p1);
+        setLine(edge.segB, p2, bFull);
+      }
+
+      for (var li = 0; li < dots.length; li++) {
+        if (labelOn[li]) placeNear(labels[li], li, labelWidth[li] || 140, 14, centers[li], cRect, labelSide[li]);
+      }
+    }
+    requestAnimationFrame(tickFrame);
+  })();
+
+  // Dismissal is intentionally per-view, not persisted — closing it just
+  // hides it until the next full page load, which always shows it again.
+  var announceBar = document.getElementById('announceBar');
+  var announceClose = document.getElementById('announceClose');
+  if (announceBar && announceClose) {
+    announceClose.addEventListener('click', function () {
+      announceBar.style.display = 'none';
+    });
+  }
+
+  // Square-dot ratchet: matches societies.ai exactly (verified via direct
+  // computed-style inspection) — the dot does NOT spring back to 0deg on
+  // mouse-leave. Every hover transition, entering or leaving, turns it
+  // another 90deg forward, so repeated hovers keep winding it onward
+  // (0 -> 90 -> 180 -> 270 -> ...) rather than toggling back and forth.
+  function ratchetDot(trigger, dot) {
+    if (!trigger || !dot) return;
+    var turns = 0;
+    function advance() {
+      turns += 1;
+      dot.style.transform = 'rotate(' + (turns * 90) + 'deg)';
+    }
+    trigger.addEventListener('mouseenter', advance);
+    trigger.addEventListener('mouseleave', advance);
+  }
+  document.querySelectorAll('.btn-text-dot').forEach(function (trigger) {
+    ratchetDot(trigger, trigger.querySelector('.dot'));
+  });
+  var announceLink = document.querySelector('.announce-link');
+  if (announceLink) ratchetDot(announceLink, announceLink.querySelector('.announce-link-dot'));
+
+  var siteNav = document.getElementById('siteHeader');
+  var lastScrollY = window.scrollY;
+  var heroEl = document.querySelector('.hero');
+  window.addEventListener('scroll', function () {
+    var currentScrollY = window.scrollY;
+    if (currentScrollY > lastScrollY && currentScrollY > 80) {
+      siteNav.classList.add('nav-hidden');
+    } else {
+      siteNav.classList.remove('nav-hidden');
+    }
+    if (heroEl) {
+      if (currentScrollY > 10) {
+        heroEl.classList.add('hero-scrolled');
+      } else {
+        heroEl.classList.remove('hero-scrolled');
+      }
+    }
+    lastScrollY = currentScrollY;
+  }, { passive: true });
+
+  (function () {
+    var partners = [
+      { name: 'Unity Small Finance Bank', img: 'assets/images/partner-unity.jpg' },
+      { name: 'Suryoday Small Finance Bank', img: 'assets/images/partner-suryoday.jpg' },
+      { name: 'Mahindra Finance', img: 'assets/images/partner-mahindra.jpg' },
+      { name: 'Shriram Finance', img: 'assets/images/partner-shriram.jpg' },
+      { name: 'Bajaj Finance', img: 'assets/images/partner-bajaj.jpg' },
+      { name: 'Augmont', img: 'assets/images/partner-augmont.jpg' },
+      { name: 'PensionBox', img: 'assets/images/partner-pensionbox.jpg' },
+      { name: 'Fixerra', img: 'assets/images/partner-fixerra.jpg' },
+      { name: 'Zerodha', img: 'assets/images/partner-zerodha.jpg' },
+      { name: 'IndusInd Bank (Coming soon)', img: 'assets/images/partner-indusind.jpg' },
+      { name: 'LIC (Coming soon)', img: 'assets/images/partner-lic.jpg' }
+    ];
+    var shapes = {
+      steps: '<path d="M20 150 L20 110 L55 110 L55 85 L90 85 L90 60 L125 60 L125 150 Z" fill="rgba(255,255,255,0.22)"/>',
+      sun: '<circle cx="85" cy="78" r="30" fill="rgba(255,255,255,0.2)"/><path d="M20 150 Q85 100 150 150 Z" fill="rgba(255,255,255,0.15)"/>',
+      road: '<line x1="10" y1="108" x2="160" y2="108" stroke="rgba(255,255,255,0.18)" stroke-width="1.5"/><path d="M55 150 L78 95 L92 95 L115 150 Z" fill="rgba(255,255,255,0.2)"/>',
+      vehicle: '<rect x="48" y="92" width="74" height="32" rx="3" fill="rgba(255,255,255,0.22)"/><rect x="58" y="68" width="34" height="26" rx="2" fill="rgba(255,255,255,0.22)"/><circle cx="66" cy="128" r="11" fill="rgba(255,255,255,0.22)"/><circle cx="104" cy="128" r="11" fill="rgba(255,255,255,0.22)"/>',
+      rings: '<circle cx="85" cy="85" r="52" fill="none" stroke="rgba(255,255,255,0.25)" stroke-width="6"/><circle cx="85" cy="85" r="30" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="6"/>',
+      ingots: '<rect x="35" y="104" width="100" height="18" rx="2" fill="rgba(255,255,255,0.22)"/><rect x="45" y="82" width="80" height="18" rx="2" fill="rgba(255,255,255,0.22)"/><rect x="55" y="60" width="60" height="18" rx="2" fill="rgba(255,255,255,0.22)"/>',
+      tree: '<rect x="80" y="104" width="10" height="46" fill="rgba(255,255,255,0.22)"/><circle cx="85" cy="82" r="36" fill="rgba(255,255,255,0.2)"/>',
+      network: '<g stroke="rgba(255,255,255,0.25)" stroke-width="2"><line x1="42" y1="128" x2="85" y2="68"/><line x1="85" y1="68" x2="128" y2="128"/><line x1="42" y1="128" x2="128" y2="128"/></g><g fill="rgba(255,255,255,0.3)"><circle cx="42" cy="128" r="8"/><circle cx="85" cy="68" r="8"/><circle cx="128" cy="128" r="8"/></g>',
+      kite: '<path d="M85 38 L122 86 L85 152 L48 86 Z" fill="rgba(255,255,255,0.22)"/><path d="M85 38 L85 152 M48 86 L122 86" stroke="rgba(255,255,255,0.15)" stroke-width="1.5"/><path d="M85 152 Q92 162 85 168 Q78 174 85 180" stroke="rgba(255,255,255,0.22)" stroke-width="2" fill="none"/>'
+    };
+    function frameSvg(shape, c1, c2, seed) {
+      return '<svg viewBox="0 0 170 170" xmlns="http://www.w3.org/2000/svg">' +
+        '<defs><linearGradient id="g' + seed + '" x1="0" y1="0" x2="1" y2="1">' +
+        '<stop offset="0%" stop-color="' + c1 + '"/><stop offset="100%" stop-color="' + c2 + '"/>' +
+        '</linearGradient></defs>' +
+        '<rect width="170" height="170" fill="url(#g' + seed + ')"/>' +
+        shapes[shape] +
+        '<rect width="170" height="170" filter="url(#grain)" opacity="0.5"/>' +
+        '</svg>';
+    }
+    var grainDefs = '<svg width="0" height="0" style="position:absolute"><filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="noise"/><feColorMatrix in="noise" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.5 0"/></filter></svg>';
+    var track = document.getElementById('galleryTrack');
+    var dotsWrap = document.getElementById('galleryDots');
+    if (track) {
+      function buildItem(p, seed) {
+        var art = p.img ? '<img src="' + p.img + '" alt="' + p.name + '" loading="lazy" draggable="false">' : frameSvg(p.shape, p.c1, p.c2, seed);
+        return '<div class="gallery-item">' +
+          '<div class="gallery-frame-outer"><div class="gallery-canvas">' + art + '</div></div>' +
+          '<span class="gallery-plaque">' + p.name + '</span>' +
+          '</div>';
+      }
+      // The item list is rendered twice back-to-back so the carousel can
+      // loop seamlessly: once scrollLeft passes one full set's width, it's
+      // silently rewound by that same width — invisible, since the second
+      // copy is pixel-identical to the first.
+      var html = grainDefs;
+      partners.forEach(function (p, i) { html += buildItem(p, i); });
+      partners.forEach(function (p, i) { html += buildItem(p, i + 1000); });
+      track.innerHTML = html;
+
+      var dotsHtml = '';
+      partners.forEach(function (p, i) { dotsHtml += '<span' + (i === 0 ? ' class="active"' : '') + '></span>'; });
+      if (dotsWrap) dotsWrap.innerHTML = dotsHtml;
+
+      var rail = track.parentElement;
+      var total = partners.length;
+      var dotEls = dotsWrap ? dotsWrap.querySelectorAll('span') : [];
+      var current = 0;
+
+      // The gap is computed, not hardcoded, so "N full frames + a 10% peek of
+      // the next one" holds at any viewport width, not just the one it was
+      // tuned against. leftInset must match .gallery-track's own padding-left.
+      // Three 420px frames need ~1437px of usable width at minimum gap, so on
+      // narrower viewports this falls back to 2 full frames (then 1) rather
+      // than forcing a gap that doesn't fit — avoids overlap/broken layout.
+      var leftInset = 84;
+      function recalcGap() {
+        var first = track.querySelector('.gallery-item');
+        if (!first) return;
+        var w = first.getBoundingClientRect().width;
+        if (!w) return;
+        var usable = rail.clientWidth - leftInset;
+        var minGap = 14;
+        var n = 3, gap;
+        while (n > 1) {
+          gap = (usable - 0.10 * w) / n - w;
+          if (gap >= minGap) break;
+          n--;
+        }
+        track.style.gap = Math.max(minGap, gap) + 'px';
+      }
+
+      function itemStep() {
+        var first = track.querySelector('.gallery-item');
+        var gap = parseFloat(getComputedStyle(track).columnGap) || 40;
+        return (first ? first.offsetWidth : 380) + gap;
+      }
+
+      // One "set" is the width of a single pass through all partners. Once
+      // scrollLeft crosses it, it's rewound by the same amount — the second
+      // copy of the track is right there to take over, so nothing visibly
+      // jumps. This is what makes the loop continuous instead of restarting.
+      function setWidth() { return total * itemStep(); }
+
+      function updateActiveDot() {
+        var sw = setWidth();
+        var idx = Math.round((((rail.scrollLeft % sw) + sw) % sw) / itemStep()) % total;
+        if (idx !== current) {
+          current = idx;
+          dotEls.forEach(function (d, i) { d.classList.toggle('active', i === current); });
+        }
+      }
+
+      // Whichever frame is passing under the light's position (the stage's
+      // horizontal center, where the bar sits) gets the "caught in the
+      // light" treatment. Computed arithmetically from scrollLeft rather
+      // than measuring every item's rect each frame.
+      var allItems = track.querySelectorAll('.gallery-item');
+      var litIndex = -1;
+      function updateLitFrame() {
+        var step = itemStep();
+        var target = rail.scrollLeft + rail.clientWidth / 2 - leftInset;
+        var idx = Math.floor(target / step);
+        var within = target - idx * step;
+        var w = allItems[0] ? allItems[0].getBoundingClientRect().width : 0;
+        var hit = (idx >= 0 && idx < allItems.length && within >= 0 && within <= w) ? idx : -1;
+        if (hit === litIndex) return;
+        if (litIndex >= 0 && allItems[litIndex]) allItems[litIndex].classList.remove('lit');
+        if (hit >= 0) allItems[hit].classList.add('lit');
+        litIndex = hit;
+      }
+
+      function goTo(index, smooth) {
+        current = (index + total) % total;
+        var base = Math.floor(rail.scrollLeft / setWidth()) * setWidth();
+        rail.scrollTo({ left: base + current * itemStep(), behavior: smooth === false ? 'auto' : 'smooth' });
+        dotEls.forEach(function (d, i) { d.classList.toggle('active', i === current); });
+      }
+
+      // Continuous drift, not discrete jumps — "slow and smooth but not very
+      // slow": a frame-width takes roughly 9s to drift past at this speed.
+      var AUTO_SPEED = 48; // px/second
+      var autoPaused = false, autoLastT = null, isDown = false;
+      function autoTick(t) {
+        if (autoLastT == null) autoLastT = t;
+        var dt = Math.min(0.05, (t - autoLastT) / 1000);
+        autoLastT = t;
+        if (!autoPaused && !isDown) {
+          rail.scrollLeft += AUTO_SPEED * dt;
+          var sw = setWidth();
+          if (rail.scrollLeft >= sw) rail.scrollLeft -= sw;
+          updateActiveDot();
+          updateLitFrame();
+        }
+        requestAnimationFrame(autoTick);
+      }
+      function pauseAuto() { autoPaused = true; }
+      function resumeAuto() { autoPaused = false; autoLastT = null; }
+      // Exposed so the melt effect below can pause the continuous drift
+      // while it's animating the real frames — otherwise the drift's own
+      // scrollLeft changes and the melt's GSAP transforms would fight.
+      window.pauseGalleryAuto = pauseAuto;
+      window.resumeGalleryAuto = resumeAuto;
+
+      // Keeps dots in sync with native wheel/trackpad/scrollbar scrolling,
+      // which bypasses both the drag handler and the auto-drift tick.
+      var dotSyncRaf = null;
+      rail.addEventListener('scroll', function () {
+        cancelAnimationFrame(dotSyncRaf);
+        dotSyncRaf = requestAnimationFrame(function () { updateActiveDot(); updateLitFrame(); });
+      }, { passive: true });
+
+      // Desktop mouse drag-to-scroll
+      var startX = 0, startScroll = 0, dragged = false;
+      var dragRaf = null, pendingDx = 0;
+      rail.addEventListener('mousedown', function (e) {
+        isDown = true; dragged = false;
+        rail.classList.add('dragging');
+        startX = e.pageX; startScroll = rail.scrollLeft;
+      });
+      window.addEventListener('mousemove', function (e) {
+        if (!isDown) return;
+        e.preventDefault(); // suppress native image-drag ghost, which was fighting this
+        pendingDx = e.pageX - startX;
+        if (Math.abs(pendingDx) > 4) dragged = true;
+        if (dragRaf) return;
+        dragRaf = requestAnimationFrame(function () {
+          var sw = setWidth();
+          var next = startScroll - pendingDx;
+          rail.scrollLeft = ((next % sw) + sw) % sw; // wrap during manual drag too
+          updateLitFrame();
+          dragRaf = null;
+        });
+      });
+      window.addEventListener('mouseup', function () {
+        if (!isDown) return;
+        isDown = false;
+        if (dragRaf) { cancelAnimationFrame(dragRaf); dragRaf = null; }
+        rail.classList.remove('dragging');
+        updateActiveDot();
+        updateLitFrame();
+        resumeAuto();
+      });
+      rail.addEventListener('click', function (e) { if (dragged) e.preventDefault(); });
+      rail.addEventListener('dragstart', function (e) { e.preventDefault(); });
+
+      rail.addEventListener('mouseenter', pauseAuto);
+      rail.addEventListener('mouseleave', function () { if (!isDown) resumeAuto(); });
+      rail.addEventListener('touchstart', pauseAuto, { passive: true });
+      rail.addEventListener('touchend', resumeAuto, { passive: true });
+
+      dotEls.forEach(function (d, i) {
+        d.style.cursor = 'pointer';
+        d.addEventListener('click', function () {
+          pauseAuto();
+          goTo(i);
+          setTimeout(resumeAuto, 600);
+        });
+      });
+
+      // The rail is flex-centered in the stage by default, which only
+      // balances against the stage's total height — not against the bar and
+      // dots specifically. Nudge it so the gap above (to the bar) and the
+      // gap below (to the dots) come out equal.
+      var stage = document.querySelector('.gallery-stage');
+      var trustLabel = document.querySelector('.trust-label');
+      function centerRailBetweenBarAndDots() {
+        if (!stage || !trustLabel || !dotsWrap) return;
+        rail.style.marginTop = '0px';
+        var barRect = trustLabel.getBoundingClientRect();
+        var dotsRect = dotsWrap.getBoundingClientRect();
+        var railRect = rail.getBoundingClientRect();
+        var gapAbove = railRect.top - barRect.bottom;
+        var gapBelow = dotsRect.top - railRect.bottom;
+        var delta = (gapBelow - gapAbove) / 2;
+        // align-items:center centers the item's margin box, so a margin-top
+        // of X only shifts the visible content by X/2 — double it to get the
+        // full intended shift.
+        rail.style.marginTop = (delta * 2) + 'px';
+      }
+      // Exposed so the GSAP reveal animations (a separate script block,
+      // after this one) can re-settle the gap once their own y-offset
+      // transitions finish — otherwise a run mid-animation measures a
+      // transient position, not the resting one.
+      window.centerRailBetweenBarAndDots = centerRailBetweenBarAndDots;
+
+      window.addEventListener('resize', function () {
+        recalcGap();
+        centerRailBetweenBarAndDots();
+        updateLitFrame();
+      });
+
+      recalcGap();
+      centerRailBetweenBarAndDots();
+      updateLitFrame();
+      window.addEventListener('load', centerRailBetweenBarAndDots);
+      if (document.fonts && document.fonts.ready) {
+        // Self-hosted fonts load async and can resize the bar's text after
+        // the above runs — this is what actually guarantees settled sizing.
+        document.fonts.ready.then(centerRailBetweenBarAndDots);
+      }
+      rail.scrollLeft = 0;
+      requestAnimationFrame(autoTick);
+    }
+  })();
+
+  // "Pick your card" is an ordinary section below with its own static
+  // background color — no scroll-driven animation tied to the gallery
+  // above it.
+
+  (function () {
+    var mailer = document.getElementById('unboxMailer');
+    if (!mailer) return;
+    var unboxSection = document.querySelector('.unbox');
+    var headingScriptEl = document.getElementById('unboxHeadingScript');
+    var headingRestEl = document.getElementById('unboxHeadingRest');
+    var eyebrowEl = document.getElementById('unboxEyebrow');
+    var badgePillEl = document.getElementById('unboxBadgePill');
+    var seal = document.getElementById('unboxSeal');
+    var tearStrip = seal.querySelector('.unbox-tear-strip');
+    var tearFlap = document.getElementById('unboxTearFlap');
+    var tornStripRest = document.getElementById('unboxTornStripRest');
+    var tearLetterHint = document.getElementById('unboxTearLetterHint');
+    var tearHandle = document.getElementById('unboxTearHandle');
+    var tearTrack = tearHandle.parentElement;
+    var insertNameEl = document.getElementById('unboxInsertName');
+    var cardImgEl = document.getElementById('unboxCardImg');
+    var result = document.getElementById('unboxResult');
+    var cardNameEl = document.getElementById('unboxCardName');
+    var cardDescEl = document.getElementById('unboxCardDesc');
+    var toggle = document.getElementById('unboxToggle');
+    var tabs = document.querySelectorAll('.unbox-tab');
+
+    // Zero and Vibe are literally the same physical object now — the
+    // same card-carrier mailer, torn open along the same strip — just
+    // recolored (.theme-vibe swaps the navy for ink black, see the
+    // --mailer-c* custom properties on .unbox-stage) and carrying its
+    // own name/copy/card art. Interactive the moment it's on screen —
+    // no separate "open" step.
+    var cards = {
+      zero: { name: 'Unity Zero', desc: 'A card backed by your own deposit. No credit history required.', cardImg: 'assets/cards/zero-front.svg', cardAlt: 'Unity Zero card', headingScript: 'Pick', headingRest: ' your card.', eyebrow: 'Deposit-backed cards', badgePill: 'Apply for card' },
+      vibe: { name: 'Unity Vibe', desc: 'Built for everyday spending, fully secured by your own funds.', cardImg: 'assets/cards/vibe-front.svg', cardAlt: 'Unity Vibe card', headingScript: 'Raushco', headingRest: ' Private', eyebrow: 'Invite only', badgePill: 'Get invite' }
+    };
+    var current = 'zero';
+    var isTorn = false, dragging = false, progress = 0;
+    var hasGsap = !!window.gsap;
+
+    function trackWidth() { return tearTrack.getBoundingClientRect().width; }
+    var TEAR_CURL_DEG = 160; // how far the torn flap rotates back at full tear
+
+    function setProgress(p) {
+      progress = Math.max(0, Math.min(1, p));
+      var tw = trackWidth();
+      var torn = progress * tw;
+      // The remaining paper shrinks away from the left (its own
+      // ::after rides along, always marking the true tear boundary),
+      // while a SEPARATE flap of the same width hinges on its own
+      // right edge and curls back in 3D — the torn piece peeling off,
+      // not just vanishing.
+      tearStrip.style.left = torn + 'px';
+      tearFlap.style.width = torn + 'px';
+      tearLetterHint.style.width = torn + 'px';
+      // Eased, not linear — real paper starts lifting and curling the
+      // moment you begin pulling, not just in the final stretch. A
+      // sqrt curve front-loads the rotation so the roll is already
+      // clearly visible a little way into the drag, then eases off
+      // rather than saving all the motion for the very end.
+      var curl = Math.sqrt(progress);
+      tearFlap.style.transform = 'rotateY(' + (-(curl * TEAR_CURL_DEG)) + 'deg)';
+    }
+
+    function resetUnbox() {
+      isTorn = false; progress = 0;
+      mailer.classList.remove('torn');
+      result.classList.remove('show');
+      tearStrip.style.left = '0';
+      tearFlap.style.width = '0';
+      tearLetterHint.style.width = '0';
+      tearFlap.style.transform = 'rotateY(0deg)';
+      // Cleared, not set to '1' — an inline opacity (even "1") outranks
+      // the CSS ".torn" rule that's supposed to fade this on reveal,
+      // since inline style always wins over a class selector regardless
+      // of specificity. Clearing it lets that rule actually take effect
+      // the next time .torn is added, rather than being permanently
+      // shadowed by a stale inline value from the previous reset.
+      tearHandle.style.opacity = '';
+      seal.style.opacity = '';
+      tornStripRest.classList.remove('landed');
+    }
+
+    function setCard(key) {
+      current = key;
+      cardNameEl.textContent = cards[key].name;
+      cardDescEl.textContent = cards[key].desc;
+      insertNameEl.textContent = cards[key].name;
+      cardImgEl.src = cards[key].cardImg;
+      cardImgEl.alt = cards[key].cardAlt;
+      headingScriptEl.textContent = cards[key].headingScript;
+      headingRestEl.textContent = cards[key].headingRest;
+      eyebrowEl.textContent = cards[key].eyebrow;
+      badgePillEl.textContent = cards[key].badgePill;
+      unboxSection.classList.toggle('theme-vibe', key === 'vibe');
+    }
+
+    tabs.forEach(function (t) {
+      t.addEventListener('click', function () {
+        if (t.classList.contains('active')) return;
+        var key = t.getAttribute('data-card');
+        tabs.forEach(function (o) { o.classList.remove('active'); o.setAttribute('aria-selected', 'false'); });
+        t.classList.add('active'); t.setAttribute('aria-selected', 'true');
+        toggle.setAttribute('data-active', key);
+        resetUnbox();
+        setCard(key);
+      });
+    });
+
+    function completeReveal() {
+      isTorn = true;
+      // The cover-fade and insert-reveal are plain CSS transitions
+      // (triggered by the .torn class) — only the result panel's
+      // timing needs JS, staggered so it lands after the insert has
+      // visibly settled rather than popping in alongside it.
+      mailer.classList.add('torn');
+      // Lands just after the hinged flap starts fading (see the
+      // `.unbox-mailer.torn .unbox-tear-flap` transition delay) —
+      // reads as the same piece reappearing where it was set down,
+      // not two copies overlapping mid-crossfade.
+      window.setTimeout(function () { tornStripRest.classList.add('landed'); }, 150);
+      window.setTimeout(function () { result.classList.add('show'); }, 350);
+    }
+
+    function snapBack() {
+      if (hasGsap) {
+        gsap.to({ p: progress }, { p: 0, duration: 0.4, ease: 'power3.out', onUpdate: function () { setProgress(this.targets()[0].p); } });
+      } else { setProgress(0); }
+    }
+    function snapComplete() {
+      if (hasGsap) {
+        gsap.to({ p: progress }, { p: 1, duration: 0.3, ease: 'power3.out', onUpdate: function () { setProgress(this.targets()[0].p); }, onComplete: completeReveal });
+      } else { setProgress(1); completeReveal(); }
+    }
+
+    var dragSign = 1, startCoord = 0, startProgress = 0;
+    function dragStart(coord, sign) {
+      if (isTorn) return;
+      dragging = true; dragSign = sign; startCoord = coord; startProgress = progress;
+      tearHandle.style.cursor = 'grabbing';
+    }
+    function dragMove(coord) {
+      if (!dragging) return;
+      var delta = (coord - startCoord) * dragSign;
+      setProgress(startProgress + delta / trackWidth());
+    }
+    function dragEnd() {
+      if (!dragging) return;
+      dragging = false;
+      tearHandle.style.cursor = 'grab';
+      if (progress >= 0.8) snapComplete(); else snapBack();
+    }
+
+    // Reseal — reverts to the closed state so it can be torn open again,
+    // rather than being a one-shot reveal with no way back.
+    var insertClose = document.getElementById('unboxInsertClose');
+    if (insertClose) insertClose.addEventListener('click', resetUnbox);
+
+    tearHandle.addEventListener('mousedown', function (e) { e.preventDefault(); dragStart(e.clientX, 1); });
+    tearHandle.addEventListener('touchstart', function (e) { dragStart(e.touches[0].clientX, 1); }, { passive: true });
+    window.addEventListener('mousemove', function (e) { if (dragging) { e.preventDefault(); dragMove(e.clientX); } });
+    window.addEventListener('mouseup', dragEnd);
+    window.addEventListener('touchmove', function (e) { if (dragging) dragMove(e.touches[0].clientX); }, { passive: true });
+    window.addEventListener('touchend', dragEnd);
+
+    setCard('zero');
+    setProgress(0);
+  })();
+
+  document.querySelectorAll('.nav-dropdown').forEach(function (dd) {
+    var trigger = dd.querySelector('.nav-dd-trigger');
+    if (!trigger) return;
+    trigger.addEventListener('click', function (e) {
+      e.preventDefault();
+      var isOpen = dd.classList.contains('open');
+      document.querySelectorAll('.nav-dropdown.open').forEach(function (o) { o.classList.remove('open'); });
+      if (!isOpen) dd.classList.add('open');
+    });
+  });
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.nav-dropdown')) {
+      document.querySelectorAll('.nav-dropdown.open').forEach(function (o) { o.classList.remove('open'); });
+    }
+  });
+</script>
+
+</body>
+</html>
