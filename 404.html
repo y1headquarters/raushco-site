@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raushco</title>
+<!--
+  GitHub Pages has no server-side routing — any path with no matching
+  static file (e.g. /r/ABC123, a different referral code per user) falls
+  through to this 404.html instead. Used here as the standard GH Pages
+  redirect trick: for a referral link (/r/CODE), hand the code to the
+  real app at app.raushco.com/r/CODE, where app.component.ts's
+  captureWebReferralCode() picks it up and stores it for signup. Any
+  other unmatched path just goes back to the homepage rather than
+  showing a dead end.
+-->
+<script>
+  (function () {
+    var m = window.location.pathname.match(/^\/r\/([A-Za-z0-9]+)/);
+    if (m) {
+      window.location.replace('https://app.raushco.com/r/' + m[1]);
+    } else {
+      window.location.replace('https://raushco.com/');
+    }
+  })();
+</script>
+</head>
+<body></body>
+</html>
