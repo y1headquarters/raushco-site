@@ -1,0 +1,1508 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Personal Banking | Raushco</title>
+<meta name="description" content="A personal account built around what you're saving for — an FD-backed credit card, goal-tracked deposits, and gold &amp; silver, all in one passbook.">
+<link rel="icon" href="data:,">
+<style>
+  @font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+    font-weight: 300 800; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Geist Mono';
+    src: url('../assets/fonts/GeistMono-VariableFont_wght.ttf') format('truetype');
+    font-weight: 400 600; font-style: normal; font-display: swap;
+  }
+
+  /* ---------- Tokens -----------------------------------------------
+     Real values, re-extracted this round directly from mercury.com's
+     own compiled marketing CSS (not the dashboard app's), plus visual
+     confirmation against live screenshots of mercury.com/personal-
+     banking. Two real ramps: "beige" (warm — every regular content
+     section) and "neutral" (cool — hero + dashboard-app only), plus
+     "purple" which on THIS page belongs only to the footer/disclaimers
+     block, not "What's included" (corrected this round — it's beige). */
+  :root {
+    --pb-purple-200: #c1c9fa;
+    --pb-purple-300: #a7b6f8;
+    --pb-purple-400: #9cb4e8;
+    --pb-purple-600: #5266eb;   /* primary accent, every theme */
+    --pb-purple-700: #4354c8;   /* hover */
+    --pb-purple-800: #3442a6;
+
+    --pb-neutral-1000: #10101a; /* hero canvas */
+    --pb-neutral-950: #171721;
+
+    --pb-beige-50:  #fcfcfa;
+    --pb-beige-100: #f6f5f2;
+    --pb-beige-150: #efeee9;    /* default section bg on this page */
+    --pb-beige-200: #e0ded7;
+    --pb-beige-300: #c8c4b8;
+    --pb-beige-500: #767165;
+    --pb-beige-700: #3a3831;
+    --pb-beige-900: #201f1c;
+
+    /* Shadowed onto the page below — every component references
+       --pb-base-*, so retargeting these is what moves the page from
+       cool-neutral to warm-beige site-wide. Hero + footer override
+       back to explicit colours locally. */
+    --pb-base-100: var(--pb-beige-100);
+    --pb-base-150: var(--pb-beige-150);
+    --pb-base-200: var(--pb-beige-200);
+    --pb-base-400: var(--pb-beige-300);
+    --pb-base-500: var(--pb-beige-500);
+    --pb-base-600: var(--pb-beige-500);
+    --pb-base-700: var(--pb-beige-700);
+    --pb-base-900: var(--pb-beige-900);
+
+    --pb-green-600: #188554;
+
+    /* Dark-purple — footer + disclaimers ONLY on this page */
+    --pb-dp-bg: #181623;
+    --pb-dp-bg-2: #1e1b2c;
+    --pb-dp-border: rgba(255,255,255,.1);
+    --pb-dp-text: rgba(255,255,255,.92);
+    --pb-dp-muted: rgba(255,255,255,.5);
+
+    --pb-border: rgba(58,56,49,.12);
+    --pb-border-input: rgba(58,56,49,.18);
+    --pb-border-focus: #707393;
+
+    --pb-radius-s: 4px;
+    --pb-radius-m: 8px;
+    --pb-radius-l: 12px;
+    --pb-radius-xl: 20px;
+    --pb-radius-full: 9999px;
+
+    --pb-card-shadow: 0 0 2px rgba(175,178,206,.4), 0 1px 4px rgba(4,4,52,.08);
+
+    --pb-ease-appear: cubic-bezier(0,0,.2,1);
+    --pb-ease-transform: cubic-bezier(.2,.4,.2,1);
+    --pb-ease-snap: cubic-bezier(.16,0,.13,1);
+    --pb-ease-pop: cubic-bezier(.2,1,.4,1);
+
+    --pb-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --pb-serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --pb-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+    /* Real clamp pulled off mercury.com's own compiled CSS
+       (arcadia-display-3 — the exact tier the real H1 on this page
+       uses) widened slightly: live screenshots show the real hero
+       headline dominating the viewport more than this clamp alone
+       produces at common widths, so the max step is raised to match. */
+    --pb-size-hero: clamp(2.5rem, .4rem + 6.2vw, 7rem);
+    --pb-size-module: clamp(1.875rem, 1.1rem + 3vw, 4.5rem);
+    --pb-size-sub: clamp(1.25rem, 1.05rem + .5vw, 1.5rem);
+    --pb-size-lede: clamp(1.125rem, 1rem + .4vw, 1.375rem);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: #14161c;
+    color: var(--pb-base-700);
+    font-family: var(--pb-font);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    counter-reset: fn;
+  }
+  img, svg { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 40px; }
+  @media (max-width: 640px) { .wrap { padding: 0 20px; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; } }
+
+  .eyebrow {
+    font-family: var(--pb-mono); font-size: 12px; letter-spacing: .14em;
+    text-transform: uppercase; font-weight: 500; color: var(--pb-purple-600);
+  }
+  h1, h2, h3, h4 { font-family: var(--pb-font); margin: 0; text-wrap: balance; color: var(--pb-base-900); }
+  h1 { font-size: var(--pb-size-hero); font-weight: 480; line-height: 1.04; letter-spacing: -0.02em; }
+  h2.module-head { font-size: var(--pb-size-module); font-weight: 480; line-height: 1.06; letter-spacing: -0.01em; }
+  h2 { font-weight: 480; line-height: 1.12; letter-spacing: -0.01em; font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem); }
+  h3 { font-size: clamp(1.375rem, 1.1rem + 1vw, 1.875rem); font-weight: 560; line-height: 1.2; }
+  h4 { font-size: 17px; font-weight: 600; line-height: 1.3; }
+  p { margin: 0; }
+  .lede { font-size: var(--pb-size-lede); line-height: 1.45; color: var(--pb-base-600); font-weight: 400; }
+  .accent-serif { font-family: var(--pb-serif); font-style: italic; font-weight: 400; }
+  sup.fn { font-size: .55em; margin-left: 2px; position: relative; top: -.3em; }
+  sup.fn a.fn-link { counter-increment: fn; color: inherit; opacity: .6; text-decoration: underline; text-underline-offset: 2px; }
+  sup.fn a.fn-link::before { content: counter(fn); }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: var(--pb-font); font-weight: 500; font-size: 15px;
+    padding: 8px 32px; min-height: 40px; border-radius: var(--pb-radius-full);
+    border: 1px solid transparent; cursor: pointer; text-decoration: none;
+    transition: background .2s var(--pb-ease-transform), border-color .2s var(--pb-ease-transform), color .2s var(--pb-ease-transform);
+  }
+  .btn-primary { background: var(--pb-purple-600); color: #fff; }
+  .btn-primary:hover { background: var(--pb-purple-700); }
+  .btn-ghost { border-color: transparent; color: var(--pb-base-700); background: transparent; }
+  .btn-ghost:hover { color: var(--pb-purple-600); }
+  .btn-lg { padding: 11px 36px; font-size: 16px; min-height: 48px; }
+
+  .input {
+    font-family: var(--pb-font); font-size: 15px; line-height: 24px;
+    padding: 8px 14px; border-radius: var(--pb-radius-m);
+    border: 1px solid var(--pb-border-input); background: #fff; color: var(--pb-base-700);
+    outline: none; transition: border-color .15s;
+  }
+  .input:focus { border-color: var(--pb-border-focus); }
+  .input::placeholder { color: var(--pb-base-500); }
+
+  /* Reusable frosted-pill form — hero reuses it on dark, closing CTA
+     reuses it on light. Button sits INSET inside the pill, not a
+     separate element beside it (confirmed from the real page). */
+  .frosted-form { display: flex; align-items: center; gap: 6px; max-width: 460px; margin: 0 auto;
+    padding: 6px; border-radius: var(--pb-radius-full); }
+  .frosted-form .input { flex: 1; background: transparent; border: none; padding-left: 16px; }
+  .frosted-form.on-dark { background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.14); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+  .frosted-form.on-dark .input { color: #fff; }
+  .frosted-form.on-dark .input::placeholder { color: rgba(255,255,255,.45); }
+  .frosted-form.on-light { background: #fff; border: 1px solid var(--pb-border-input); }
+  @media (max-width: 480px) { .frosted-form { flex-direction: column; background: transparent !important; border: none !important; padding: 0; gap: 10px; backdrop-filter: none !important; }
+    .frosted-form .input { background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.16); border-radius: var(--pb-radius-full); padding: 10px 16px; }
+    .frosted-form.on-light .input { background: #fff; border-color: var(--pb-border-input); color: var(--pb-base-700); }
+    .frosted-form .btn { width: 100%; } }
+
+  /* Email focus tooltip — appears while the field has focus, offering a
+     one-click marketing opt-out (matches the earlier Mercury-clone WIP). */
+  .email-field { position: relative; flex: 1; }
+  .email-field .input { width: 100%; }
+  .email-tip { position: absolute; top: calc(100% + 10px); left: 0; width: 300px; max-width: 80vw;
+    background: rgba(16,16,26,.96); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,.12);
+    border-radius: var(--pb-radius-l); padding: 14px 16px; text-align: left;
+    opacity: 0; transform: translateY(-4px); pointer-events: none;
+    transition: opacity .18s var(--pb-ease-snap), transform .18s var(--pb-ease-snap); z-index: 20;
+    box-shadow: 0 12px 32px rgba(0,0,0,.4); }
+  .email-field:focus-within .email-tip { opacity: 1; transform: none; pointer-events: auto; }
+  .email-tip p { font-size: 12.5px; color: rgba(255,255,255,.7); line-height: 1.5; margin: 0; }
+  .email-tip p b { color: #fff; font-weight: 600; }
+  .opt-out { display: flex; align-items: center; gap: 8px; margin-top: 11px; font-size: 13px; color: #fff; cursor: pointer; }
+  .opt-out .cbx { position: absolute; opacity: 0; width: 0; height: 0; }
+  .opt-out .cbx-box { width: 16px; height: 16px; flex: 0 0 16px; border-radius: 4px; border: 1.5px solid rgba(255,255,255,.4);
+    background: transparent; display: inline-flex; align-items: center; justify-content: center;
+    transition: background .15s var(--pb-ease-snap), border-color .15s var(--pb-ease-snap); }
+  .opt-out .cbx-check { width: 10px; height: 10px; opacity: 0; transition: opacity .12s var(--pb-ease-snap); }
+  .opt-out .cbx:checked + .cbx-box { background: var(--pb-purple-600); border-color: var(--pb-purple-600); }
+  .opt-out .cbx:checked + .cbx-box .cbx-check { opacity: 1; }
+  .frosted-form.on-light .email-tip { background: #fff; border-color: var(--pb-border); box-shadow: var(--pb-card-shadow); }
+  .frosted-form.on-light .email-tip p { color: var(--pb-base-600); }
+  .frosted-form.on-light .email-tip p b { color: var(--pb-base-900); }
+  .frosted-form.on-light .opt-out { color: var(--pb-base-900); }
+  .frosted-form.on-light .opt-out .cbx-box { border-color: var(--pb-border-input); }
+
+  /* ---------- Nav — literal clone of the mercury-wip-reference nav
+     (deploy/website/mercury-clone-wip.html on dashboard-b2b, live at
+     test.raushco.com/mercury-wip-reference/): same classes, same
+     values, same two-axis scroll/theme system. Own logo + link targets
+     only. ---------- */
+  .nav { position: sticky; top: 0; z-index: 60; background: transparent; backdrop-filter: none; border-bottom: 1px solid transparent; transition: border-color .3s var(--pb-ease-snap), background .4s var(--pb-ease-snap), color .4s var(--pb-ease-snap), backdrop-filter .4s var(--pb-ease-snap); }
+  .nav.scrolled { border-color: var(--pb-border); background: rgba(255,255,255,.85); backdrop-filter: saturate(180%) blur(16px); -webkit-backdrop-filter: saturate(180%) blur(16px); }
+  .nav[data-theme="dark"] { background: transparent; border-color: transparent; }
+  .nav[data-theme="dark"].scrolled { background: #17171E; border-color: rgba(255,255,255,.12); backdrop-filter: saturate(180%) blur(16px); -webkit-backdrop-filter: saturate(180%) blur(16px); }
+  .nav[data-theme="dark"] .brand, .nav[data-theme="dark"] .nav-links a, .nav[data-theme="dark"] .btn-ghost, .nav[data-theme="dark"] .btn-line { color: #fff; }
+  .nav[data-theme="dark"] .nav-links > a:hover, .nav[data-theme="dark"] .nav-links > .nav-item > a:hover { background: rgba(120,126,150,.35); color: #fff; }
+  .nav[data-theme="dark"] .btn-ghost:hover { background: rgba(255,255,255,.1); }
+  .nav[data-theme="dark"] .btn-line { border-color: rgba(255,255,255,.28); }
+  .nav[data-theme="dark"] .btn-line:hover { border-color: #fff; }
+  .nav-inner { position: relative; display: flex; align-items: center; justify-content: space-between; height: 72px; width: 100%; padding: 0 36px; }
+  @media (max-width: 640px) { .nav-inner { padding: 0 20px; } }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; color: var(--pb-base-900); }
+  .brand .mk { width: 26px; height: 26px; flex: 0 0 26px; filter: brightness(0) invert(1); transition: filter .25s; }
+  .nav:not([data-theme="dark"]) .brand .mk { filter: none; }
+  .nav-links { position: absolute; inset: 0; margin: auto; width: fit-content; height: fit-content; display: flex; align-items: center; gap: 2px; }
+  .nav-links a { height: 38px; font-size: 14.5px; color: var(--pb-base-700); font-weight: 500; padding: 0 15px; border-radius: 999px; transition: color .15s var(--pb-ease-snap), background .15s var(--pb-ease-snap); display: inline-flex; align-items: center; gap: 5px; }
+  .nav:not(.scrolled):not([data-theme="dark"]) .nav-links a { color: var(--pb-base-700); }
+  .nav:not(.scrolled)[data-theme="dark"] .nav-links a, .nav[data-theme="dark"]:not(.scrolled) .nav-links a { color: #fff; }
+  .nav-links > a:hover, .nav-links > .nav-item > a:hover { color: var(--pb-base-900); background: var(--pb-base-100); }
+  .caret { font-size: 9px; color: var(--pb-base-500); display: inline-flex; }
+  .nav[data-theme="dark"] .caret { color: rgba(255,255,255,.7); }
+  .caret svg { transition: transform .2s var(--pb-ease-snap); display: block; }
+
+  /* Mega-menu — click to open, not hover; closes on outside click. */
+  .nav-item { position: relative; }
+  .nav-item.open .nav-drop-trigger { background: rgba(120,126,150,.3); }
+  .nav-item.open .caret svg { transform: rotate(180deg); }
+  .mega-menu { position: fixed; left: 0; right: 0; top: 72px; background: #fff; border: 1px solid var(--pb-border); border-radius: 0 0 16px 16px; overflow: hidden; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity .2s var(--pb-ease-snap), transform .2s var(--pb-ease-snap), visibility 0s .2s; z-index: 55; text-align: left; }
+  .nav[data-theme="dark"] .mega-menu { background: #1e1e2a; border-color: rgba(255,255,255,.1); }
+  .nav-item.open .mega-menu { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+  .nav:has(.nav-item.open) { background: #fff !important; border-color: transparent; }
+  .nav[data-theme="dark"]:has(.nav-item.open) { background: #1e1e2a !important; border-color: transparent; }
+  .mega-grid { display: grid; grid-template-columns: 1.25fr repeat(4, 1fr); column-gap: 40px; max-width: 1240px; margin: 0 auto; padding: 40px 36px; }
+  .mega-grid-3 { grid-template-columns: repeat(3, 1fr); row-gap: 32px; }
+  .mega-col-more { grid-column: 3; grid-row: 1 / span 3; }
+  .mega-feature, .mega-col { border-right: 1px solid var(--pb-border); }
+  .nav[data-theme="dark"] .mega-feature, .nav[data-theme="dark"] .mega-col { border-right-color: rgba(255,255,255,.08); }
+  .mega-grid > :last-child { border-right: none; }
+  .mega-feature h4, .mega-col h4 { color: var(--pb-base-900); font-weight: 600; letter-spacing: -.015em; margin: 0 0 8px; }
+  .nav[data-theme="dark"] .mega-feature h4, .nav[data-theme="dark"] .mega-col h4 { color: #fff; }
+  .mega-feature h4 { font-size: 21px; }
+  .mega-feature-item { border-top: 1px solid var(--pb-border); padding: 14px 0; }
+  .nav[data-theme="dark"] .mega-feature-item { border-top-color: rgba(255,255,255,.1); }
+  .mega-feature-item h5 { color: var(--pb-base-900); font-size: 16px; font-weight: 600; margin: 0 0 3px; letter-spacing: -.01em; }
+  .nav[data-theme="dark"] .mega-feature-item h5 { color: #fff; }
+  .mega-feature-item p { font-size: 13px; color: var(--pb-base-700); margin: 0; line-height: 1.4; }
+  .nav[data-theme="dark"] .mega-feature-item p { color: rgba(255,255,255,.5); }
+  .mega-feature .mega-cta { margin-top: 20px; }
+  .mega-col h4 { font-size: 15.5px; }
+  .mega-feature p, .mega-col p { font-size: 13.5px; color: var(--pb-base-700); line-height: 1.5; margin: 0; }
+  .nav[data-theme="dark"] .mega-feature p, .nav[data-theme="dark"] .mega-col p { color: rgba(255,255,255,.5); }
+  .mega-feature p { margin-bottom: 20px; }
+  .mega-cta { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--pb-base-900); background: rgba(0,0,0,.05); padding: 9px 16px; border-radius: 999px; transition: background .15s var(--pb-ease-snap); }
+  .mega-cta:hover { background: rgba(0,0,0,.09); }
+  .nav[data-theme="dark"] .mega-cta { color: #fff; background: rgba(120,126,150,.3); }
+  .nav[data-theme="dark"] .mega-cta:hover { background: rgba(120,126,150,.45); }
+  .mega-label { display: block; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--pb-base-500); margin: 18px 0 12px; }
+  .nav[data-theme="dark"] .mega-label { color: rgba(255,255,255,.35); }
+  .mega-col { padding-right: 24px; }
+  .mega-menu a.mega-col { display: block; height: auto; padding: 0 24px 0 0; gap: 0; border-radius: 0; }
+  .mega-menu a.mega-col:hover { background: rgba(0,0,0,.025); }
+  .nav[data-theme="dark"] .mega-menu a.mega-col:hover { background: rgba(255,255,255,.035); }
+  .mega-menu a.mega-head-link { display: block; height: auto; padding: 0; gap: 0; border-radius: 0; }
+  .mega-menu a.mega-head-link::after { content: none; }
+  .mega-menu a.mega-foot { display: block; height: auto; padding: 24px 36px; gap: 0; border-radius: 0; }
+  .mega-col a { display: flex; align-items: center; gap: 6px; font-size: 14.5px; color: var(--pb-base-700); padding: 6px 0; transition: color .15s var(--pb-ease-snap); }
+  .mega-col a:hover { color: var(--pb-base-900); }
+  .nav[data-theme="dark"] .mega-col a { color: rgba(255,255,255,.75); }
+  .nav[data-theme="dark"] .mega-col a:hover { color: #fff; }
+  .mega-col a::after { content: '\2192'; opacity: 0; transform: translateX(-4px); transition: opacity .15s var(--pb-ease-snap), transform .15s var(--pb-ease-snap); }
+  .mega-col a:hover::after { opacity: 1; transform: none; }
+  .mega-foot { display: block; border-top: 1px solid var(--pb-border); padding: 24px 36px; background: rgba(0,0,0,.015); transition: background .15s var(--pb-ease-snap); }
+  .mega-foot:hover { background: rgba(0,0,0,.035); }
+  .nav[data-theme="dark"] .mega-foot { border-top-color: rgba(255,255,255,.08); background: rgba(255,255,255,.035); }
+  .nav[data-theme="dark"] .mega-foot:hover { background: rgba(255,255,255,.07); }
+  .mega-foot h4 { display: inline-flex; align-items: center; gap: 8px; color: var(--pb-base-900); font-size: 19px; font-weight: 600; letter-spacing: -.015em; margin: 0 0 1px; }
+  .nav[data-theme="dark"] .mega-foot h4 { color: #fff; }
+  .mega-foot h4 .arrow { width: 20px; height: 20px; border-radius: 50%; background: rgba(0,0,0,.06); display: inline-flex; align-items: center; justify-content: center; font-size: 11px; transition: background .15s var(--pb-ease-snap), transform .15s var(--pb-ease-snap); }
+  .mega-foot:hover h4 .arrow { background: rgba(0,0,0,.1); transform: translateX(2px); }
+  .nav[data-theme="dark"] .mega-foot h4 .arrow { background: rgba(255,255,255,.1); }
+  .nav[data-theme="dark"] .mega-foot:hover h4 .arrow { background: rgba(255,255,255,.18); }
+  .mega-foot p { font-size: 13.5px; color: var(--pb-base-700); margin: 0; }
+  .nav[data-theme="dark"] .mega-foot p { color: rgba(255,255,255,.5); }
+  @media (max-width: 980px) { .mega-menu { display: none; } }
+
+  .nav-cta { display: flex; align-items: center; gap: 10px; }
+  .nav .btn-primary, .nav .btn-ghost, .nav .btn-line { height: 38px; }
+  .btn-line { background: transparent; color: var(--pb-base-900); padding: 8px 15px; border-radius: 999px; border: 1px solid var(--pb-border-input); font-size: 14.5px; font-weight: 500; display: inline-flex; align-items: center; transition: border-color .16s var(--pb-ease-snap); }
+  .btn-line:hover { border-color: var(--pb-base-900); }
+  .nav-burger { display: none; width: 34px; height: 34px; border: none; background: transparent; color: var(--pb-base-900); cursor: pointer; align-items: center; justify-content: center; font-size: 18px; }
+
+  @media (max-width: 980px) { .nav-links, .nav-cta { display: none; } .nav-burger { display: flex; } }
+  .nav[data-theme="dark"] .nav-burger { color: #fff; }
+  .nav-menu { display: none; flex-direction: column; gap: 2px; padding: 8px 20px 20px; border-top: 1px solid var(--pb-border); background: rgba(255,255,255,.97); backdrop-filter: blur(16px); }
+  .nav[data-theme="dark"] .nav-menu { background: rgba(20,20,27,.97); border-top-color: rgba(255,255,255,.12); }
+  .nav.menu-open .nav-menu { display: flex; }
+  .nav-menu a { padding: 12px 4px; font-size: 15px; font-weight: 500; color: inherit; border-bottom: 1px solid var(--pb-border); }
+  .nav[data-theme="dark"] .nav-menu a { border-bottom-color: rgba(255,255,255,.1); }
+  .nav-menu .btn { margin-top: 10px; justify-content: center; }
+
+  /* ---------- Section rhythm ---------- */
+  section { padding: clamp(64px, 5vw + 40px, 128px) 0; }
+  .section-intro { max-width: 680px; margin: 0 0 56px; }
+  .section-intro.centered { margin-inline: auto; text-align: center; }
+  .section-intro .eyebrow { margin-bottom: 16px; display: block; }
+  .section-intro h2 { margin-bottom: 16px; }
+  .section-intro .lede { margin: 0 auto; }
+
+  /* ---------- Hero — matches the earlier Mercury-clone WIP's hero exactly
+     (deploy/website/mercury-clone-wip.html on dashboard-b2b, now live at
+     test.raushco.com/mercury-wip-reference/): full-bleed photo band, nav
+     pulled over it via negative margin, merged email pill + separate
+     "Launch demo" ghost button, disclosure pinned to the hero's bottom
+     edge. Same hero-mercury.png (verified non-Mercury stock/generated
+     photography, not a captured Mercury asset — see mercury-wip-reference
+     deploy notes). Own logo/copy, not Mercury's.
+     Mercury's own hero has no viewport-based height rule at all
+     (`height:max-content`) — it's naturally taller than 100vh purely because
+     a full-bleed-width 2:1 image stacks below the headline, and live-measured
+     ratios on the real page land at 1.19-1.26x viewport height across several
+     sizes. Our content does the same most of the time, but our own
+     .wrap/.hero-preview width caps out at 1240px, so on a wide-but-short-
+     relative-height viewport (confirmed live: 1920x1200) the content-driven
+     height can dip to ~0.97x viewport — shorter than the screen, which starves
+     the sticky pill of room again. min-height:118vh is a floor sized to
+     Mercury's own measured low end (never the whole story, like the old
+     100vh was) — content still grows taller than it on its own whenever it
+     needs to (e.g. narrower/mobile widths where the text wraps more). ---------- */
+  /* No bottom padding — confirmed live on mercury.com that the dashboard
+     image's own wrapper bottom edge exactly equals the hero section's own
+     bottom edge (509.15625px top / 1165.15625px bottom at a 1600-wide
+     viewport, zero gap either side), not a card floating with clearance
+     below it. That flush edge, paired with the image having no bottom
+     radius/border, is what reads as the photo continuing past the visible
+     frame instead of a tidy self-contained card. */
+  .hero { position: relative; margin-top: -73px; min-height: 118vh; display: flex; flex-direction: column;
+    align-items: center; justify-content: flex-start; text-align: center; padding: calc(9vh + 72px) 0 0; }
+  /* Wraps just the blurred photo + grain so overflow:hidden can stay scoped to
+     the decorative background layer. Confirmed from parsing Mercury's real DOM:
+     their sticky disclosure pill sits as a SIBLING of this overflow-hidden
+     layer, not inside it — position:sticky is inert on any element with an
+     overflow:hidden ancestor between it and the scroll container, so clipping
+     had to move off .hero itself and onto this wrapper instead. */
+  .hero-clip { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
+  /* Real mercury.com/personal-banking's backdrop is barely recognizable as a
+     photo — heavily blurred and desaturated into soft abstract light/shadow
+     shapes, confirmed directly against a live screenshot. 3px was nowhere
+     close; this needs a real, heavy blur, not a light softening. */
+  .hero-bg { position: absolute; inset: -160px; background: #10101a url('../assets/images/hero-personal-banking.jpg') center center / cover no-repeat;
+    filter: blur(48px) saturate(.7) brightness(.95); }
+  /* Real mercury.com/personal-banking vignette — confirmed via direct research
+     against the live page: a flat top-fade only (18% black at the top, fully
+     transparent by 60% down), not a 3-stop top+bottom treatment. */
+  /* Stronger/fuller than the real Mercury gradient on purpose — that flat
+     18%-top-fade was tuned for Mercury's own calm, low-contrast photo. This
+     image (vivid purple blossoms, bright moon) needs real coverage across
+     its full height or it fights the text instead of sitting behind it. */
+  /* Radial vignette in deep purple-navy (not flat black) so the overlay reads
+     as part of the photo's own cool palette rather than a generic dark film
+     laid on top — plus a top/bottom linear pass for nav and pill legibility. */
+  .hero-bg::after { content: ''; position: absolute; inset: -12px;
+    background:
+      radial-gradient(ellipse 85% 65% at 50% 36%, transparent 0%, rgba(14,11,26,.38) 55%, rgba(9,7,18,.74) 100%),
+      linear-gradient(180deg, rgba(9,7,18,.5) 0%, transparent 22%, transparent 68%, rgba(9,7,18,.58) 100%); }
+  .hero-grain { position: absolute; inset: 0; opacity: .035; mix-blend-mode: overlay; pointer-events: none; animation: grainFlicker .2s steps(1) infinite; }
+  @keyframes grainFlicker { 0%, 100% { opacity: .025; } 50% { opacity: .05; } 75% { opacity: .03; } }
+  @media (max-width: 1024px) { .hero-grain { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .hero-grain { animation: none; } }
+
+  /* Reusable mini mock-card — used wherever a section needs a believable
+     "glimpse of the app" visual instead of a bare icon in empty space. */
+  .mini-card { width: 82%; background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); padding: 20px 22px; box-shadow: var(--pb-card-shadow); }
+  .mini-card-head { font-size: 12px; color: var(--pb-base-500); margin-bottom: 10px; }
+  .mini-card-amt { font-size: 22px; font-weight: 600; color: var(--pb-base-900); margin-bottom: 14px; font-variant-numeric: tabular-nums; }
+  .mini-card-chart { width: 100%; height: 52px; display: block; margin-bottom: 12px; }
+  .mini-card-foot { font-size: 12px; color: var(--pb-base-500); }
+  .mini-card-rows { display: flex; flex-direction: column; }
+  .mini-card-row { display: flex; justify-content: space-between; gap: 12px; font-size: 12.5px; color: var(--pb-base-700); padding: 9px 0; border-top: 1px solid var(--pb-border); }
+  .mini-card-row:first-child { border-top: none; }
+  .mini-card-row .mc-sub { color: var(--pb-base-500); }
+  .hero-inner { position: relative; z-index: 1; padding: 0 24px; }
+  .hero .eyebrow { color: var(--pb-purple-300); display: block; margin-bottom: 16px; }
+  /* font-weight:600 on purpose, not a fractional variable-axis value like 530 —
+     the fallback system font (shown briefly before Inter loads, font-display:swap)
+     only has discrete weights and rounds an odd value like 530 up to 600 anyway,
+     so using 600 directly removes the visible thickness jump when Inter swaps in. */
+  .hero h1 { color: #fff; font-weight: 500; font-size: clamp(2.1rem, 5vw, 3.6rem); line-height: 1.05;
+    letter-spacing: -.03em; max-width: 26ch; margin: 0 auto 18px; }
+  .hero-sub { font-weight: 400; font-size: 20px; color: rgba(255,255,255,.72); max-width: 48ch;
+    margin: 0 auto 30px; line-height: 1.5; letter-spacing: -.005em; }
+  .hero-form { position: relative; z-index: 1; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; align-items: center; }
+  .email-combo { display: flex; align-items: center; height: 48px; border: 1px solid rgba(255,255,255,.25); border-radius: var(--pb-radius-full);
+    background: rgba(255,255,255,.1); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 5px 5px 5px 20px;
+    transition: border-color .15s var(--pb-ease-snap), background .15s var(--pb-ease-snap); }
+  .email-combo:focus-within { border-color: rgba(255,255,255,.6); background: rgba(255,255,255,.16); }
+  .email-combo .email-field { flex: 0 0 auto; }
+  .email-combo input { height: 100%; width: 220px; max-width: 46vw; border: none; background: transparent; padding: 0; font-size: 15px; color: #fff; }
+  .email-combo input::placeholder { color: rgba(255,255,255,.55); }
+  .email-combo .btn-primary { height: 38px; flex: 0 0 auto; }
+  /* Spans .hero's full (content-driven) height so .hero-note-wrap's sticky
+     child has room to travel — a sticky element's scroll range is bounded by
+     its containing block's box, so without this the pill would just sit at
+     its static position with nothing to stick within. Sits as a sibling of
+     .hero-clip, outside its overflow:hidden, matching Mercury's real DOM
+     (parsed from their fetched markup: a CSS-grid-overlay of the same idea —
+     a second grid item sharing the content's row, escaping the background
+     layer's own clipped wrapper). pointer-events:none so this full-height
+     overlay never blocks the headline/CTA beneath it; re-enabled on the pill
+     wrap below. */
+  .hero-note-track { position: absolute; inset: 0; z-index: 2; display: flex;
+    align-items: flex-end; justify-content: center; pointer-events: none; }
+  /* Real value, confirmed from Mercury's compiled CSS (--grid-margins is a
+     bare alias of --gap-lg): the sticky pill's resting offset is exactly
+     24px below 1024px viewport width and 32px at/above it — two discrete
+     tiers, not a fluid clamp. The transition is their own confirmed easing
+     ("ease-in-out-cubic"), so a resize across that breakpoint settles
+     smoothly instead of snapping. Mercury applies that same value as a
+     margin on every side of the wrapper too (`m-grid-margins`), not just as
+     the sticky `bottom` offset — without it, once the pill releases from
+     sticky and settles at .hero-note-track's own flex-end edge (the hero's
+     real bottom), it sits flush against the next section with no gap. The
+     margin-bottom keeps that same breathing room in both states. */
+  .hero-note-wrap { position: sticky; bottom: 24px; margin-bottom: 24px; pointer-events: auto;
+    transition: bottom .5s cubic-bezier(.65,.05,.36,1); }
+  @media (min-width: 1024px) { .hero-note-wrap { bottom: 32px; margin-bottom: 32px; } }
+  /* Wider than the page's standard .wrap (1240px) on purpose — confirmed live
+     on mercury.com that the hero's own image uses a noticeably more generous
+     gutter than their regular content width (144px side margins at a 1600px
+     viewport, i.e. ~9% each side — their own Tailwind gap-3xl token, not
+     their standard container). Using the same 9%-each-side ratio here rather
+     than .wrap's fixed 40px gives a visibly bigger image on real screens,
+     matching their proportions instead of our usual page-content width. */
+  .hero-preview { position: relative; z-index: 1; margin: 40px 9% 0; }
+  /* aspect-ratio is exact, confirmed three independent ways in Mercury's
+     compiled CSS/markup (Tailwind class, inline aspect-ratio style, and the
+     asset's own filename/query string). Mercury swaps to a 9:16 crop below
+     1024px using a second, differently-shot mobile asset — we only have the
+     one wide dashboard image, so forcing 9:16 here would crop it down to an
+     unreadable sliver; kept at 2:1 throughout instead of guessing a worse
+     mobile-only ratio. No border — confirmed the real card has none at its
+     flush-with-the-hero bottom edge, which is what sells it as continuing
+     past the frame rather than a tidily-bordered card; the shadow alone
+     still reads fine against the beige section below once it releases. */
+  .hero-preview-card { aspect-ratio: 2/1; border-radius: 41px 41px 0 0; overflow: hidden;
+    box-shadow: 0 20px 24px rgba(0,0,0,.15), 0 36px 120px rgba(0,0,0,.15); }
+  .hero-preview-card img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+  @media (max-width: 640px) { .hero-preview-card { border-radius: 24px 24px 0 0; } }
+  /* Real value, confirmed from Mercury's compiled CSS: the pill's background
+     is their actual neutral-base-900 token (#1e1e2a), fully opaque — not a
+     translucent dark gray like the earlier guess. */
+  .hero-note { display: inline-block; font-size: 12.5px; color: rgba(255,255,255,.8); white-space: nowrap; line-height: 1.5;
+    background: #1e1e2a; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 10px 20px; border-radius: 14px; }
+  @media (max-width: 760px) { .hero-note { white-space: normal; max-width: 90vw; text-align: center; } }
+  @media (max-width: 620px) { .hero-form { flex-direction: column; align-items: stretch; } .email-combo { width: 100%; }
+    .email-combo input { width: 100%; max-width: none; } }
+  .btn-line { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.3); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+  .btn-line:hover { border-color: #fff; background: rgba(255,255,255,.14); }
+
+  /* ---------- Accordion-with-visual: "One subscription" ----------
+     Real mechanic: flex-row-reverse (visual renders LEFT, list RENDERS
+     RIGHT on desktop), 3 items, first open by default, expand via the
+     CSS grid-template-rows 0fr/1fr trick (no JS height measuring),
+     small dot indicator (not numbered badges). Reused for the FAQ
+     list too — same technique, confirmed on the real page. */
+  /* Plain beige, no separate dark-to-beige gradient here — the hero's own
+     background (photo + its own bottom-edge overlay fade) now fully covers
+     the hero's real (content-driven, taller-than-viewport) height on its own,
+     clipped exactly at the hero's bottom edge via .hero-clip. A second flat
+     dark band stacked right after that read as an unwanted seam/drop-shadow
+     (confirmed from a screenshot: a solid, textureless dark strip between the
+     photo and this section) and kept the nav's dark/light sync a step behind
+     what was actually on screen — removing it fixes both. */
+  /* --pb-base-100 here (lighter), not -150 — the accordion visual's own
+     frame uses -150 (darker) deliberately, so the two actually contrast.
+     Using the same token for both (the original bug the user caught) made
+     the frame blend invisibly into the section's own background even
+     though it was rendering correctly; mercury.com's real pairing is the
+     same half-step (confirmed live: ~rgb(246,245,242) page vs ~rgb(238,237,233)
+     baked into the image, i.e. beige-100 vs beige-150). */
+  .acc-section { position: relative; background: var(--pb-base-100); color: var(--pb-base-700);
+    transition: background-color .4s var(--pb-ease-snap), color .4s var(--pb-ease-snap); }
+  /* Retargets the SAME --pb-base-* indirection every component here already
+     reads from (see :root's comment) while <body data-theme="dark">, set by
+     the nav's own observer — not a separate mechanism, the identical flag at
+     the identical moment. Confirmed live on mercury.com: while this section
+     is still mostly off-screen and the hero covers the majority of the
+     viewport, its heading/body already render light-on-dark, matching the
+     nav; they cross-fade to normal beige/dark-text the instant the nav does,
+     not before or after. Re-declaring color here (not just the variable)
+     matters — a plain var() redefinition wouldn't reach any child that
+     inherits its color from <body> instead of referencing the token
+     directly, since that substitution already happened up at <body>. */
+  body[data-theme="dark"] .acc-section {
+    --pb-base-100: var(--pb-neutral-1000); --pb-base-150: var(--pb-neutral-1000); --pb-base-900: #fff;
+    --pb-base-700: rgba(255,255,255,.72); --pb-base-600: rgba(255,255,255,.6);
+    --pb-base-500: rgba(255,255,255,.55); --pb-base-400: rgba(255,255,255,.3);
+    --pb-border: rgba(255,255,255,.14);
+  }
+  /* The accordion's "app glimpse" visual is a self-contained light UI card
+     (hardcoded #fff background, like a screenshot) — excluded from the
+     retarget above and re-pinned to its normal light tokens, or its own text
+     would turn near-white on a background that's staying white regardless. */
+  body[data-theme="dark"] .acc-section .acc-visual,
+  body[data-theme="dark"] .acc-section .mini-card {
+    --pb-base-900: var(--pb-beige-900); --pb-base-700: var(--pb-beige-700);
+    --pb-base-600: var(--pb-beige-500); --pb-base-500: var(--pb-beige-500);
+    --pb-base-400: var(--pb-beige-300); --pb-base-100: var(--pb-beige-100);
+    --pb-border: rgba(58,56,49,.12);
+  }
+  .acc-list-wrap h2, .acc-q .acc-title, .acc-a p, .acc-dot { transition: color .4s var(--pb-ease-snap), border-color .4s var(--pb-ease-snap), background-color .4s var(--pb-ease-snap); }
+  /* Mini-card's default shadow has a light-colored first layer (reads fine on
+     a beige backdrop, but shows as a weird glow against this section's dark
+     top zone) — a plain neutral shadow instead avoids that regardless of what's
+     behind it. Scoped to this specific card since it's the one that overlaps
+     the dark gradient; other mini-cards elsewhere stay on the normal shadow. */
+  .acc-visual .mini-card { box-shadow: 0 1px 4px rgba(0,0,0,.18); }
+  /* stretch (not start) + .acc-visual opting back out with align-self below —
+     confirmed live on mercury.com: the image and the text column are the
+     same (stretched) height, and within the text column the heading stays
+     at the top while the accordion items themselves get pushed to the
+     bottom via justify-content:space-between (not a flat bottom-align of
+     everything) — see .acc-list-wrap. */
+  .acc-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: 56px; align-items: stretch; }
+  @media (max-width: 1024px) { .acc-layout { grid-template-columns: 1fr; gap: 32px; } }
+  /* Real mercury.com has no CSS background anywhere in its own ancestor chain
+     for this element (checked live, every ancestor computes transparent) —
+     the slightly-darker-beige "placeholder" frame around their card is baked
+     into their image asset's own pixels, and pixel-sampling it from a live
+     render landed at ~rgb(238,237,233), a near-exact match for our own
+     --pb-base-150 (#efeee9, already "default section bg on this page" per
+     its own :root comment). Applying it here as a real background+padding
+     rather than relying on whatever each supplied image happens to bake in
+     keeps the frame consistent across all three (and any future) images. */
+  .acc-visual { order: -1; aspect-ratio: 4/5; border-radius: var(--pb-radius-l); background: var(--pb-base-150); padding: 28px;
+    align-self: start; position: sticky; top: 96px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  /* Stacked, crossfading images — one per accordion item, matching real
+     mercury.com: its visual is a swappable <img> per item (their own
+     product screenshot), not a single static mock, switched by data-state
+     rather than a hand-built mini-card. */
+  .acc-visual-img { position: absolute; inset: 28px; width: calc(100% - 56px); height: calc(100% - 56px); object-fit: cover; display: block;
+    border-radius: var(--pb-radius-m); opacity: 0; transition: opacity .4s var(--pb-ease-snap); }
+  .acc-visual-img.active { opacity: 1; }
+  @media (max-width: 1024px) { .acc-visual { display: none; } }
+  .acc-visual-chip { display: inline-flex; width: 64px; height: 64px; border-radius: var(--pb-radius-l); background: var(--pb-base-100);
+    align-items: center; justify-content: center; margin-bottom: 18px; }
+  .acc-visual-chip .ic { width: 32px; height: 32px; }
+  .acc-visual .cap { font-size: 15px; font-weight: 600; color: var(--pb-base-900); text-align: center; }
+  /* flex column + space-between, not block flow — real mercury.com has
+     exactly 2 children here (the heading block, the items block) spread to
+     opposite ends of the stretched column, which is what actually produces
+     the big gap above the items (not a bottom-align of the whole column). */
+  .acc-list-wrap { display: flex; flex-direction: column; justify-content: space-between; }
+  .acc-list-wrap h2 { margin-bottom: 8px; font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem); }
+  /* Real values, live-measured on mercury.com/personal-banking (computed
+     styles, not Tailwind class guesses): the divider above a closed item is
+     a faint rgba(112,115,147,.22), darkening to a near-solid rgb(42,41,36)
+     for the item that's currently open — and the dot isn't a hollow ring
+     that fills in, it's fully invisible (no border at all) until open, then
+     a small solid dot. Transition timing/easing matches their own
+     "transition-colors" default. */
+  /* Real mercury.com puts the gap below an item's text on the NEXT item, as
+     margin-top:12px (not padding on the current one — confirmed live via
+     full box-model dump: a closed item's own padding/margin-bottom is 0px;
+     the 12px lives entirely on `not-first:mt-s12`). Precisely reconciles the
+     measured gaps: ~13.6px between two closed items (12px margin + ~1.6px
+     of the title's own line-height leading, not a spacing rule) and exactly
+     32px after the open item (that same 12px plus .acc-a p's own 20px
+     bottom padding below). */
+  .acc-item { border-top: 1px solid rgba(112,115,147,.22); transition: border-color .4s var(--pb-ease-snap); }
+  .acc-item:not(:first-child) { margin-top: 12px; }
+  .acc-item.open { border-top-color: #2a2924; }
+  /* 12px top, 0 bottom — real measured value: the gap above each item's
+     title comes entirely from padding-top under its own divider; there's no
+     matching bottom padding, the next item's divider sits right after the
+     text's own line-height. */
+  .acc-q { width: 100%; text-align: left; background: none; border: 0; padding: 12px 0 0; display: flex; align-items: center;
+    gap: 14px; cursor: pointer; font-family: var(--pb-font); }
+  .acc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: transparent; transition: background-color .4s var(--pb-ease-snap); }
+  .acc-item.open .acc-dot { background: #5d4e27; }
+  .acc-q .acc-title { flex: 1; font-size: 18px; font-weight: 550; color: #5a5548; transition: color .4s var(--pb-ease-snap); }
+  .acc-item.open .acc-q .acc-title { color: #2a2924; }
+  .acc-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s var(--pb-ease-transform); }
+  .acc-item.open .acc-a { grid-template-rows: 1fr; }
+  .acc-a-inner { overflow: hidden; }
+  /* 0 top — real measured value: title and body are structurally flush, no
+     gap/rule between them, confirmed via a full box-model dump (both sides'
+     padding/margin are 0px). The 20px bottom was already right. */
+  .acc-a p { padding: 0 0 20px 23px; font-size: 14.5px; line-height: 1.6; color: var(--pb-base-600); max-width: 440px; }
+
+  /* ---------- Carousel: "Banking that moves like software" --------
+     Real page: a slideshow (Embla-signature), NOT an accordion —
+     corrected this round. One big image + 3 persistent captions below
+     it on desktop (active one emphasised); each slide carries its own
+     caption on mobile. Built with a plain transform-based track
+     (own implementation, not the Embla library) — same end behaviour. */
+  .carousel-section { background: var(--pb-base-100); }
+  .car-viewport { overflow: hidden; border-radius: var(--pb-radius-l); max-width: 1040px; margin: 0 auto; }
+  /* Real mercury.com doesn't use a CSS transition here at all — it's a custom
+     JS/rAF physics loop (confirmed live: transitionDuration computes to 0s,
+     no Web Animations object either), easing out over ~680ms to 99% with a
+     long asymptotic tail past 1.5s. A full physics reimplementation isn't
+     proportionate here; this longer, more decelerated curve gets close to
+     the same FEEL without one. */
+  .car-track { display: flex; transition: transform .6s cubic-bezier(.16,1,.3,1); }
+  /* 2/1 throughout, not 4/5-on-mobile-then-2/1 — the three real images here
+     are landscape screenshots (1774x887, exactly 2:1), same reasoning as the
+     hero preview card: forcing a portrait crop on mobile would just show a
+     thin unreadable sliver with no tall-shaped asset to back it. */
+  /* No border/shadow — real mercury.com has neither on this card (confirmed
+     live: border-width and box-shadow both compute to none/0 on every
+     element in that stack); the only "frame" is the photo itself clipped to
+     this same 12px radius (--pb-radius-l already matches their measured
+     12px exactly). */
+  .car-slide { flex: 0 0 100%; aspect-ratio: 2/1; background: #fff; border-radius: var(--pb-radius-l);
+    overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; }
+  .car-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .car-slide-ic { width: 72px; height: 72px; border-radius: var(--pb-radius-l); background: var(--pb-base-100); display: flex; align-items: center; justify-content: center; }
+  .car-slide-ic .ic { width: 38px; height: 38px; }
+  .car-chat-card { width: min(84%, 420px); display: flex; flex-direction: column; gap: 14px; }
+  .car-chat-bubble { align-self: flex-end; background: var(--pb-base-100); border-radius: 14px 14px 4px 14px; padding: 10px 16px; font-size: 13.5px; color: var(--pb-base-700); max-width: 82%; }
+  .car-chat-reply { display: flex; gap: 10px; align-items: flex-start; }
+  .car-chat-avatar { width: 22px; height: 22px; border-radius: 50%; background: var(--pb-purple-600); flex-shrink: 0; margin-top: 2px; }
+  .car-chat-reply-body { flex: 1; min-width: 0; }
+  .car-chat-reply-title { font-size: 13.5px; color: var(--pb-base-700); margin-bottom: 10px; line-height: 1.5; }
+  .car-chat-result { background: #fff; border: 1px solid var(--pb-border); border-radius: 10px; padding: 12px 14px; }
+  .car-chat-result-row { display: flex; justify-content: space-between; font-size: 13px; font-weight: 600; color: var(--pb-base-900); margin-bottom: 9px; }
+  .car-chat-result-bar { height: 6px; border-radius: 3px; background: var(--pb-base-200); overflow: hidden; }
+  .car-chat-result-bar span { display: block; height: 100%; width: 62%; background: var(--pb-purple-600); border-radius: 3px; }
+  .car-cap-mobile { position: absolute; left: 24px; right: 24px; bottom: 20px; background: rgba(255,255,255,.9); backdrop-filter: blur(6px); border-radius: var(--pb-radius-m); padding: 14px 16px; }
+  .car-cap-mobile h4 { font-size: 15px; margin-bottom: 4px; }
+  .car-cap-mobile p { font-size: 13px; color: var(--pb-base-600); line-height: 1.5; }
+  @media (min-width: 640px) { .car-cap-mobile { display: none; } }
+  /* Gaps are real measured values: viewport-&gt;captions 24px (was 40 — that was
+     actually the OTHER gap's value, the two had gotten swapped), inter-
+     caption gap 32px (was 40). */
+  .car-captions { display: none; }
+  @media (min-width: 640px) { .car-captions { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; max-width: 1040px; margin: 24px auto 0; } }
+  /* Pure opacity swap, confirmed live — no color or font-weight change
+     between active/inactive (real title/body colors are byte-identical in
+     both states; reusing section 2's own exact-measured values here too,
+     since they're the same ink tokens). .62/.2s replaced with the real
+     .7/.3s ease-out (Tailwind's own cubic-bezier, not a generic ease). */
+  .car-cap-btn { text-align: left; background: none; border: 0; padding: 0; cursor: pointer; font-family: var(--pb-font); opacity: .7; transition: opacity .3s cubic-bezier(0,0,.2,1); }
+  .car-cap-btn.active, .car-cap-btn:hover { opacity: 1; }
+  .car-cap-btn h4 { font-size: 15.5px; margin-bottom: 6px; color: #2a2924; }
+  .car-cap-btn p { font-size: 13.5px; color: #5a5548; line-height: 1.5; }
+  .car-controls { display: flex; align-items: center; justify-content: flex-start; gap: 16px; margin-top: 40px; max-width: 1040px; margin-inline: auto; }
+  .car-arrow-group { display: flex; gap: 8px; }
+  /* Real values: a warm gold/tan tint, not a neutral gray — rgba(138,117,60,
+     .1) resting, deepening to .16 on hover (opacity-only, same hue, no
+     border/shadow at either state, both confirmed live). */
+  .car-arrow { width: 40px; height: 40px; border-radius: 50%; background: rgba(138,117,60,.1); border: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .15s; flex-shrink: 0; }
+  .car-arrow:hover { background: rgba(138,117,60,.16); }
+  .car-arrow svg { width: 14px; height: 14px; }
+  .car-pager { font-family: var(--pb-font); font-size: 16px; font-weight: 500; color: #2a2924; min-width: 44px; text-align: center; }
+
+  /* ---------- Split-image rows: savings / investing / protection --- */
+  .split-section:nth-of-type(even) .split-row { flex-direction: row-reverse; }
+  .split-row { display: flex; align-items: center; gap: 64px; }
+  @media (max-width: 900px) { .split-row { flex-direction: column !important; gap: 32px; } }
+  .split-col { flex: 1; min-width: 0; }
+  .split-col h3 { margin-bottom: 18px; }
+  .split-divider { height: 1px; background: var(--pb-border); margin: 20px 0; }
+  .split-feature { display: flex; gap: 14px; align-items: flex-start; }
+  .split-feature .ic-chip { background: var(--pb-base-100); }
+  .split-feature h5 { font-size: 15px; font-weight: 600; margin-bottom: 4px; color: var(--pb-base-900); }
+  .split-feature p { font-size: 14px; color: var(--pb-base-600); line-height: 1.55; }
+  .split-visual { flex: 1; aspect-ratio: 1/1; max-width: 420px; border-radius: var(--pb-radius-l); background: var(--pb-base-100); border: 1px solid var(--pb-border);
+    display: flex; align-items: center; justify-content: center; margin-inline: auto; }
+  .split-visual .ic-chip { width: 72px; height: 72px; }
+  .split-visual .ic-chip .ic { width: 36px; height: 36px; }
+  .split-visual .mini-card { width: 84%; }
+
+  /* ---------- Bullet grid ---------- */
+  .bullet-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: var(--pb-border); border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); overflow: hidden; }
+  @media (max-width: 768px) { .bullet-grid { grid-template-columns: 1fr; } }
+  .bullet-item { background: #fff; padding: 24px 28px; display: flex; gap: 14px; align-items: flex-start; }
+  .bullet-item .dot-ic { width: 20px; height: 20px; border-radius: 50%; background: var(--pb-purple-200); flex-shrink: 0; margin-top: 2px; display: flex; align-items: center; justify-content: center; }
+  .bullet-item .dot-ic svg { width: 11px; height: 9px; }
+  .bullet-item p { font-size: 15px; color: var(--pb-base-700); line-height: 1.5; }
+
+  /* ---------- Tabs ---------- */
+  .tabs-head { display: flex; justify-content: center; gap: 4px; border-bottom: 1px solid var(--pb-border); margin-bottom: 40px; overflow-x: auto; }
+  .tab-btn { padding: 13px 18px; font-size: 14.5px; font-weight: 500; color: var(--pb-base-500); border-bottom: 1px solid transparent;
+    cursor: pointer; white-space: nowrap; transition: color .15s, border-color .15s; background: none; font-family: var(--pb-font); }
+  .tab-btn:hover { color: var(--pb-base-900); }
+  .tab-btn.active { color: var(--pb-purple-600); border-color: var(--pb-purple-600); }
+  .tab-panel { display: none; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+  .tab-panel.active { display: grid; }
+  @media (max-width: 860px) { .tab-panel { grid-template-columns: 1fr; gap: 28px; } }
+  .tab-panel h3 { margin-bottom: 14px; }
+  .tab-panel .lede { font-size: 15px; }
+  .tab-visual { aspect-ratio: 5/4; border-radius: var(--pb-radius-l); background: #fff; border: 1px solid var(--pb-border); display: flex; align-items: center; justify-content: center; }
+  .tab-visual .ic-chip { width: 72px; height: 72px; background: var(--pb-base-100); }
+  .tab-visual .ic-chip .ic { width: 38px; height: 38px; }
+
+  /* ---------- Testimonial — single quote, full-bleed photo-
+     placeholder + gradient, overlaid blockquote (corrected from a
+     2-quote tab-switcher — the real page's SSR markup shows no tab
+     triggers, just one panel). ---------- */
+  .testi-section .wrap { text-align: center; }
+  .testi-disclosure { font-size: 12px; color: var(--pb-base-500); max-width: 560px; margin: 0 auto 28px; line-height: 1.6; }
+  .testi-card { position: relative; border-radius: var(--pb-radius-xl); overflow: hidden; aspect-ratio: 16/10; max-width: 1040px; margin: 0 auto; }
+  @media (max-width: 640px) { .testi-card { aspect-ratio: 3/4; } }
+  .testi-photo { position: absolute; inset: 0; background:
+      radial-gradient(ellipse 70% 60% at 30% 30%, rgba(167,182,248,.35), transparent 60%),
+      radial-gradient(ellipse 60% 60% at 75% 70%, rgba(82,102,235,.28), transparent 65%), var(--pb-beige-900); }
+  .testi-overlay { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(10,9,16,.82), rgba(10,9,16,.1) 60%); }
+  .testi-quote { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; justify-content: flex-end; align-items: flex-start;
+    text-align: left; padding: 48px; }
+  @media (max-width: 640px) { .testi-quote { padding: 28px; } }
+  .testi-quote blockquote { margin: 0 0 20px; font-size: clamp(20px, 2.2vw, 28px); font-weight: 480; line-height: 1.38; color: #fff; max-width: 640px; }
+  .testi-quote blockquote::before { content: '\201C'; } .testi-quote blockquote::after { content: '\201D'; }
+  .testi-name { display: block; font-size: 15px; font-weight: 600; color: #fff; }
+  .testi-role { display: block; font-size: 13px; color: rgba(255,255,255,.6); margin-top: 2px; }
+
+  /* ---------- Included — plain bordered list, beige (NOT purple —
+     corrected this round; the real section carries no colour block
+     and no icons at all). "Included" label right-aligned on desktop
+     (flex-row-reverse), centered/stacked on mobile. ---------- */
+  .incl-list { border-top: 1px solid var(--pb-border); border-bottom: 1px solid var(--pb-border); max-width: 760px; margin: 0 auto; }
+  .incl-row { border-top: 1px solid var(--pb-border); padding: 22px 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; }
+  .incl-row:first-child { border-top: none; }
+  @media (min-width: 768px) { .incl-row { flex-direction: row-reverse; justify-content: space-between; text-align: left; gap: 24px; } }
+  .incl-row .incl-label { font-weight: 560; color: var(--pb-base-900); font-size: 16px; flex-shrink: 0; }
+  .incl-row .incl-desc { color: var(--pb-base-600); font-size: 14.5px; }
+
+  /* ---------- FAQ — same grid-rows accordion technique, top-border-
+     only rows (confirmed identical mechanic to the "One subscription"
+     accordion on the real page). ---------- */
+  .faq-list { max-width: 760px; margin: 0 auto; border-top: 1px solid var(--pb-border); }
+  .faq-item { border-bottom: 1px solid var(--pb-border); }
+  .faq-q { width: 100%; text-align: left; background: none; border: 0; padding: 22px 0; display: flex; justify-content: space-between; align-items: center;
+    gap: 16px; cursor: pointer; font-size: 16px; font-weight: 500; color: var(--pb-base-900); font-family: var(--pb-font); }
+  .faq-q .plus { width: 16px; height: 16px; position: relative; flex-shrink: 0; }
+  .faq-q .plus::before, .faq-q .plus::after { content: ''; position: absolute; background: var(--pb-base-600); transition: transform .2s var(--pb-ease-transform); }
+  .faq-q .plus::before { width: 16px; height: 2px; top: 7px; left: 0; }
+  .faq-q .plus::after { width: 2px; height: 16px; top: 0; left: 7px; }
+  .faq-item.open .faq-q .plus::after { transform: rotate(90deg); }
+  .faq-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s var(--pb-ease-transform); }
+  .faq-item.open .faq-a { grid-template-rows: 1fr; }
+  .faq-a-inner { overflow: hidden; }
+  .faq-a p { padding-bottom: 22px; font-size: 14.5px; line-height: 1.6; color: var(--pb-base-600); max-width: 640px; }
+
+  /* ---------- Closing CTA ---------- */
+  .closer { text-align: center; background: var(--pb-beige-100); }
+  .closer h2 { margin-bottom: 28px; }
+
+  /* ---------- Footer + disclaimers — dark-purple theme (moved here
+     from "Included" this round; this is the page's one saturated
+     section, confirmed). ---------- */
+  .dark-purple { background: var(--pb-dp-bg); }
+  footer.dp { padding: 64px 0 40px; }
+  .foot-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 32px 24px; margin-bottom: 8px; }
+  @media (min-width: 768px) { .foot-grid { grid-template-columns: 1.2fr repeat(4, 1fr); } }
+  .foot-col h5 { font-size: 12.5px; color: var(--pb-dp-muted); margin-bottom: 14px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
+  .foot-col a { display: block; font-size: 14.5px; color: var(--pb-dp-text); padding: 6px 0; transition: color .15s; }
+  .foot-col a:hover { color: var(--pb-purple-300); }
+  .disclaimer-section { border-top: 1px solid var(--pb-dp-border); padding: 40px 0 56px; }
+  .disc-layout { display: grid; grid-template-columns: 1fr; gap: 20px; }
+  @media (min-width: 768px) { .disc-layout { grid-template-columns: 1fr 2fr; gap: 40px; } }
+  .disc-layout h5 { font-size: 13px; color: var(--pb-dp-text); font-weight: 600; }
+  .disclaimers { font-size: 12px; line-height: 1.7; color: var(--pb-dp-muted); }
+  .disclaimers p { margin-bottom: 10px; }
+  .disclaimers ol { margin: 0; padding-left: 18px; }
+  .disclaimers li { margin-bottom: 6px; }
+  .foot-bottom { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    padding-top: 20px; margin-top: 8px; border-top: 1px solid var(--pb-dp-border); font-size: 12.5px; color: var(--pb-dp-muted); }
+  .foot-bottom a { color: var(--pb-dp-muted); }
+  .foot-bottom a:hover { color: #fff; }
+
+  /* ---------- Scroll-reveal ---------- */
+  .reveal { opacity: 0; transform: translateY(18px); }
+  @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+
+  <nav class="nav" id="nav" data-theme="dark">
+    <div class="nav-inner">
+      <a class="brand" href="#top"><img class="mk" src="../assets/brand/Subtract.png" alt="Raushco"> Raushco</a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="#" class="nav-drop-trigger">Products <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          <div class="mega-menu">
+            <div class="mega-grid">
+              <div class="mega-feature">
+                <h4>Business Banking</h4>
+                <p>Manage your business finances at every stage of growth.</p>
+                <div class="mega-feature-item"><h5>Books</h5><p>AI-powered accounting software</p></div>
+                <div class="mega-feature-item"><h5>Payroll</h5><p>Pay your team, file taxes</p></div>
+                <a class="mega-cta" href="https://app.raushco.com/auth/initiate-otp">Try the demo <span class="arrow">&#8599;</span></a>
+              </div>
+              <div class="mega-col">
+                <h4>Banking &amp; More</h4>
+                <p>Apply for business accounts, earn yield, and access capital.</p>
+                <span class="mega-label">Products</span>
+                <a href="../business-banking/index.html">Checking &amp; Savings</a>
+                <a href="../working-capital-loans/index.html">Working Capital Loans</a>
+                <a href="../venture-debt/index.html">Venture Debt</a>
+                <a href="../treasury/index.html">Treasury</a>
+              </div>
+              <div class="mega-col">
+                <h4>Cards &amp; Expense Management</h4>
+                <p>Issue cards instantly and control team and vendor spend.</p>
+                <span class="mega-label">Products</span>
+                <a href="../credit/index.html">Business Credit Cards</a>
+                <a href="../spend-management/index.html">Spend Management</a>
+              </div>
+              <div class="mega-col">
+                <h4>Payments &amp; Invoicing</h4>
+                <p>Send payments, create invoices, and sync your accounting tools.</p>
+                <span class="mega-label">Products</span>
+                <a href="../business-payments/index.html">Payments</a>
+                <a href="../invoicing/index.html">Invoicing</a>
+                <a href="../accounting-integrations/index.html">Accounting Automations</a>
+              </div>
+              <div class="mega-col">
+                <h4>Intelligence</h4>
+                <p>Leverage AI to understand and manage your finances.</p>
+                <span class="mega-label">Products</span>
+                <a href="#">Command</a>
+                <a href="#">Insights</a>
+                <a href="#">API</a>
+              </div>
+            </div>
+            <a class="mega-foot" href="../personal-banking/index.html">
+              <span><h4>Personal Banking <span class="arrow">&rarr;</span></h4><p>A smarter way to manage, move, and grow your personal finances.</p></span>
+            </a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-drop-trigger">Solutions <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          <div class="mega-menu">
+            <div class="mega-grid mega-grid-3">
+              <a class="mega-col" href="../tech-ai-startups/index.html">
+                <h4>Tech</h4><p>Spend less time on money management and more time building.</p>
+              </a>
+              <a class="mega-col" href="../vc-funds/index.html">
+                <h4>VC Funds</h4><p>Manage investments in all your portfolio companies in one place.</p>
+              </a>
+              <a class="mega-col" href="../ecommerce/index.html">
+                <h4>Ecommerce</h4><p>Get everything you need to grow your brand at every stage.</p>
+              </a>
+              <a class="mega-col" href="../web3/index.html">
+                <h4>Crypto</h4><p>Run everything from a fast, compliant hub built for the speed of crypto.</p>
+              </a>
+              <a class="mega-col" href="../agencies-and-consultants/index.html">
+                <h4>Agencies, Consultants &amp; Firms</h4><p>Simplify your finances across every client and project.</p>
+              </a>
+              <a class="mega-col" href="../accounting-firms/index.html">
+                <h4>Accounting Firms</h4><p>Bring clarity to your clients and efficiency to your firm.</p>
+              </a>
+              <div class="mega-col mega-col-more">
+                <span class="mega-label" style="margin-top:0">&amp; More</span>
+                <a href="#">SaaS</a>
+                <a href="#">LLCs</a>
+                <a href="#">Life Science</a>
+                <a href="#">Climate</a>
+                <a href="#">Real Estate &amp; Construction</a>
+                <a href="#">Healthcare Services</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-drop-trigger">Resources <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          <div class="mega-menu">
+            <div class="mega-grid mega-grid-3">
+              <div class="mega-col">
+                <a class="mega-head-link" href="../blog/index.html"><h4>Blog</h4><p>Practical resources, insights, and inspiration.</p></a>
+                <span class="mega-label">Jump to</span>
+                <a href="#">Starting A Business</a>
+                <a href="#">Scaling &amp; Growing</a>
+                <a href="#">Stories</a>
+                <a href="#">Company News</a>
+              </div>
+              <div class="mega-col">
+                <h4>Perks</h4><p>Deals on the top software picks for growing businesses.</p>
+                <span class="mega-label">Jump to</span>
+                <a href="#">Startup Bundle</a>
+                <a href="#">Growth Bundle</a>
+                <a href="#">Ecommerce Bundle</a>
+              </div>
+              <div class="mega-col">
+                <h4>Tools</h4><p>Free calculators, templates, and databases.</p>
+                <span class="mega-label">Jump to</span>
+                <a href="#">Investor Database</a>
+                <a href="#">SAFE Generator</a>
+                <a href="#">Burn Rate Calculator</a>
+              </div>
+            </div>
+            <a class="mega-foot" href="../releases/index.html"><span><h4>Product Releases <span class="arrow">&rarr;</span></h4></span></a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-drop-trigger">About <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          <div class="mega-menu">
+            <div class="mega-grid mega-grid-3">
+              <a class="mega-col" href="../about/index.html">
+                <h4>Our Story</h4><p>The vision behind Raushco and the people helping to shape the future of banking.</p>
+              </a>
+              <div class="mega-col">
+                <span class="mega-label" style="margin-top:0">Connect</span>
+                <a href="#">Events</a>
+                <a href="../partnerships/index.html">Partnerships</a>
+                <a href="../jobs/index.html">Careers</a>
+              </div>
+              <div class="mega-col">
+                <span class="mega-label" style="margin-top:0">Support</span>
+                <a href="#">Help Center &#8599;</a>
+                <a href="#">FAQs</a>
+                <a href="#">Switch to Raushco</a>
+              </div>
+            </div>
+            <a class="mega-foot" href="../contact/index.html"><span><h4>Contact us <span class="arrow">&rarr;</span></h4></span></a>
+          </div>
+        </div>
+        <a href="../pricing/index.html">Pricing</a>
+      </div>
+      <div class="nav-cta">
+        <a class="btn btn-ghost" href="https://dev.raushco.com/login">Log in</a>
+        <a class="btn btn-primary" href="https://dev.raushco.com/create-account">Open account</a>
+      </div>
+      <button class="nav-burger" id="navBurger" aria-label="Menu">&#9776;</button>
+    </div>
+    <div class="nav-menu" id="navMenu">
+      <a href="#">Products</a>
+      <a href="#">Solutions</a>
+      <a href="#">Resources</a>
+      <a href="#">About</a>
+      <a href="../pricing/index.html">Pricing</a>
+      <a class="btn btn-ghost" href="https://dev.raushco.com/login">Log in</a>
+      <a class="btn btn-primary" href="https://dev.raushco.com/create-account">Open account</a>
+    </div>
+  </nav>
+
+<main>
+
+  <!-- ===================== Hero — cloned from the mercury-wip-reference WIP:
+       full-bleed photo band, nav slides over it, merged email pill +
+       separate ghost "Launch demo" button, disclosure pinned to the
+       hero's bottom edge. Same hero-mercury.png asset; disclosure line
+       kept factually ours (DICGC/partner-bank-NBFC, not FDIC/Choice
+       Financial Group — those are Mercury's own named partner banks,
+       not Raushco's; copying them verbatim would be a false claim). -->
+  <section class="hero" id="top" data-theme="dark">
+    <div class="hero-clip" aria-hidden="true">
+      <div class="hero-bg"></div>
+      <svg class="hero-grain" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+        <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" stitchTiles="stitch" result="noise"/><feColorMatrix in="noise" type="matrix" values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.5 0"/></filter>
+        <rect width="100%" height="100%" filter="url(#grain)"/>
+      </svg>
+    </div>
+    <div class="wrap hero-inner">
+      <span class="eyebrow">Personal banking</span>
+      <h1>Banking built around what you&rsquo;re <span class="accent-serif">saving for</span>.</h1>
+      <p class="hero-sub">One account for every goal — spend against your own fixed deposit with the Raushco card<sup class="fn"><a href="#fn-fdcard" class="fn-link" aria-label="Footnote"></a></sup>.</p>
+      <div class="hero-form">
+        <div class="email-combo">
+          <div class="email-field">
+            <input type="email" placeholder="Enter your email" aria-label="Email address">
+            <div class="email-tip">
+              <p>Raushco will occasionally send you emails with offers, news, and updates. <b>Check this box if you'd rather not.</b></p>
+              <label class="opt-out">
+                <input type="checkbox" class="cbx">
+                <span class="cbx-box"><svg class="cbx-check" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+                Opt out
+              </label>
+            </div>
+          </div>
+          <a class="btn btn-primary" href="https://app.raushco.com/auth/initiate-otp">Open account</a>
+        </div>
+      </div>
+    </div>
+    <div class="hero-preview" aria-hidden="true">
+      <div class="hero-preview-card">
+        <img src="../assets/images/raushco-dashboard-overlay.png" alt="Raushco dashboard — balance, accounts, and goals" loading="eager">
+      </div>
+    </div>
+    <div class="hero-note-track">
+      <div class="hero-note-wrap"><span class="hero-note">Raushco is a fintech platform, not a bank. Deposit and card products are provided through our partner banks and NBFCs.</span></div>
+    </div>
+  </section>
+
+  <!-- ===================== "One subscription" accordion — visual LEFT / list RIGHT, dot indicators, grid-rows expand ===================== -->
+  <section class="acc-section">
+    <div class="wrap acc-layout">
+      <div class="acc-visual reveal" id="accVisual1">
+        <img class="acc-visual-img active" src="../assets/images/acc-savings-dashboard.png" alt="Raushco savings dashboard — balance, growth chart, and an earning-interest note" loading="lazy">
+        <img class="acc-visual-img" src="../assets/images/acc-accounts-sidebar.png" alt="Raushco account switcher — personal, joint, and family trust accounts" loading="lazy">
+        <img class="acc-visual-img" src="../assets/images/acc-tax-transfer.png" alt="Raushco automated transfer confirmation — ₹500 monthly tax transfer" loading="lazy">
+      </div>
+      <div class="acc-list-wrap">
+        <h2 class="reveal">One account.<br>Endless ways to put it to work.</h2>
+        <div class="acc-list">
+          <div class="acc-item open" data-acc1="0">
+            <button class="acc-q"><span class="acc-dot"></span><span class="acc-title">7.00% APY<sup class="fn"><a href="#fn-savings-apy" class="fn-link" aria-label="Footnote"></a></sup> on your savings</span></button>
+            <div class="acc-a"><div class="acc-a-inner"><p>Never miss an opportunity to grow with high-yield savings accounts with no minimum balance.</p></div></div>
+          </div>
+          <div class="acc-item" data-acc1="1">
+            <button class="acc-q"><span class="acc-dot"></span><span class="acc-title">Personal, joint, and trust accounts<sup class="fn"><a href="#fn-trust-accounts" class="fn-link" aria-label="Footnote"></a></sup></span></button>
+            <div class="acc-a"><div class="acc-a-inner"><p>All under one login. High-yield savings, debit cards, real-time payments<sup class="fn"><a href="#fn-realtime-payments" class="fn-link" aria-label="Footnote"></a></sup> where available, and unlimited USD wires across all of them, plus customer permissions to share access however you want.</p></div></div>
+          </div>
+          <div class="acc-item" data-acc1="2">
+            <button class="acc-q"><span class="acc-dot"></span><span class="acc-title">Intelligence and automations<sup class="fn"><a href="#fn-intelligence" class="fn-link" aria-label="Footnote"></a></sup></span></button>
+            <div class="acc-a"><div class="acc-a-inner"><p>Built-in software that gives you clarity, completes tasks via prompts, and runs rules to keep your accounts on track.</p></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Carousel — "Banking that moves like software" ===================== -->
+  <section class="carousel-section">
+    <div class="wrap">
+      <div class="section-intro centered reveal">
+        <h2 class="module-head">Banking that moves like software.</h2>
+      </div>
+      <div class="car-viewport">
+        <div class="car-track" id="carTrack">
+          <div class="car-slide">
+            <img src="../assets/images/car-netflix-limit.png" alt="Raushco virtual card — Netflix spending limit" loading="lazy">
+            <div class="car-cap-mobile"><h4>Ask questions and take action</h4><p>Every answer comes from your own account data — every action still needs your approval.</p></div>
+          </div>
+          <div class="car-slide">
+            <img src="../assets/images/car-zomato-insights.png" alt="Raushco spending insights — Zomato" loading="lazy">
+            <div class="car-cap-mobile"><h4>See where your money actually goes</h4><p>Spending and cash flow tracked automatically, without leaving your passbook.</p></div>
+          </div>
+          <div class="car-slide">
+            <img src="../assets/images/acc-savings-dashboard.png" alt="Raushco goal tracking" loading="lazy">
+            <div class="car-cap-mobile"><h4>Goals that stay in sync</h4><p>Every linked deposit and holding updates the goal it funds, in real time.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="car-captions" id="carCaptions">
+        <button class="car-cap-btn active" data-goto="0"><h4>Ask questions and take action</h4><p>Every answer comes from your own account data — every action still needs your approval.</p></button>
+        <button class="car-cap-btn" data-goto="1"><h4>See where your money actually goes</h4><p>Spending and cash flow tracked automatically, without leaving your passbook.</p></button>
+        <button class="car-cap-btn" data-goto="2"><h4>Goals that stay in sync</h4><p>Every linked deposit and holding updates the goal it funds, in real time.</p></button>
+      </div>
+      <div class="car-controls">
+        <span class="car-pager" id="carPager">01 / 03</span>
+        <div class="car-arrow-group">
+          <button class="car-arrow" id="carPrev" aria-label="Previous"><svg viewBox="0 0 16 16" fill="none"><path d="M10 2L4 8l6 6" stroke="#2a2924" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="car-arrow" id="carNext" aria-label="Next"><svg viewBox="0 0 16 16" fill="none"><path d="M6 2l6 6-6 6" stroke="#2a2924" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Split-image rows: rate / gold / protection ===================== -->
+  <section class="split-section">
+    <div class="wrap">
+      <div class="section-intro centered reveal">
+        <h2 class="module-head">Rates you can see before you book.</h2>
+        <p class="lede" style="margin-top:14px;">A live rate across our partner banks, locked the moment you confirm — no branch visit, no waiting for a callback.</p>
+      </div>
+      <div class="split-row">
+        <div class="split-col reveal">
+          <h3>Compare tenures, lock the best one</h3>
+          <p class="lede" style="font-size:15px;">Every partner bank's current rate, side by side, for the tenure you actually want — pick once and the rate is locked for the full term.</p>
+          <div class="split-divider"></div>
+          <div class="split-feature">
+            <div class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M3 12h18M14 6l6 6-6 6" stroke="#5266eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div><h5>No rate surprises</h5><p>What you lock in at booking is what you earn at maturity, full stop.</p></div>
+          </div>
+        </div>
+        <div class="split-visual reveal">
+          <div class="mini-card">
+            <div class="mini-card-head">Live rates &middot; 24mo tenure</div>
+            <div class="mini-card-rows">
+              <div class="mini-card-row"><span>HDFC Bank</span><span>7.40%</span></div>
+              <div class="mini-card-row"><span>SBI</span><span>7.10%</span></div>
+              <div class="mini-card-row"><span>ICICI Bank</span><span>6.85%</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="split-section">
+    <div class="wrap">
+      <div class="split-row">
+        <div class="split-col reveal">
+          <h3>Gold &amp; silver, valued in real time</h3>
+          <p class="lede" style="font-size:15px;">Buy bullion in small amounts and see it marked against your other goals every day — not just when you remember to check.</p>
+          <div class="split-divider"></div>
+          <div class="split-feature">
+            <div class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="12" r="6" fill="#5266eb"/><circle cx="15" cy="12" r="6" stroke="#5266eb" stroke-width="1.6" fill="none"/></svg></div>
+            <div><h5>Sell back when you need it</h5><p>Liquidity without a separate app or a separate login.</p></div>
+          </div>
+        </div>
+        <div class="split-visual reveal">
+          <div class="mini-card">
+            <div class="mini-card-head">Holdings</div>
+            <div class="mini-card-rows">
+              <div class="mini-card-row"><span>Gold &middot; <span class="mc-sub">18.2g</span></span><span>&#8377;1,12,400</span></div>
+              <div class="mini-card-row"><span>Silver &middot; <span class="mc-sub">240g</span></span><span>&#8377;21,600</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="split-section">
+    <div class="wrap">
+      <div class="split-row">
+        <div class="split-col reveal">
+          <h3>Deposits, protected by design</h3>
+          <p class="lede" style="font-size:15px;">Every fixed and recurring deposit is booked with a regulated partner bank or NBFC — the same protections that apply to a deposit you'd open yourself.</p>
+          <div class="split-divider"></div>
+          <div class="split-feature">
+            <div class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none"><path d="M12 3l8 3v6c0 5-3.4 8-8 9-4.6-1-8-4-8-9V6l8-3z" stroke="#5266eb" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+            <div><h5>DICGC-eligible, where applicable<sup class="fn" style="margin-left:0;"><a href="#fn-dicgc" class="fn-link" aria-label="Footnote"></a></sup></h5><p>Deposit insurance up to the standard DICGC limit, per depositor, per bank.</p></div>
+          </div>
+        </div>
+        <div class="split-visual reveal">
+          <div class="mini-card">
+            <div class="mini-card-head">Deposit protection</div>
+            <div class="mini-card-amt" style="font-size:19px;">Covered up to &#8377;5,00,000</div>
+            <div class="mini-card-rows">
+              <div class="mini-card-row"><span>Per depositor, per bank</span><span style="color:var(--pb-green-600);">&#10003;</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Automations bullet grid ===================== -->
+  <section style="background:var(--pb-base-150);">
+    <div class="wrap">
+      <div class="section-intro reveal">
+        <span class="eyebrow">Less manual, more automatic</span>
+        <h2>Make money moves without the follow-up.</h2>
+      </div>
+      <div class="bullet-grid reveal">
+        <div class="bullet-item"><div class="dot-ic"><svg viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1.5" stroke="#5266eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><p>Open a dedicated goal for every target — a trip, a deposit, a down payment.</p></div>
+        <div class="bullet-item"><div class="dot-ic"><svg viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1.5" stroke="#5266eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><p>Turn on auto-renewal so a maturing fixed deposit rolls straight into a new term.</p></div>
+        <div class="bullet-item"><div class="dot-ic"><svg viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1.5" stroke="#5266eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><p>Set a recurring deposit to drip-feed a goal monthly, without a standing instruction at your bank.</p></div>
+        <div class="bullet-item"><div class="dot-ic"><svg viewBox="0 0 11 9" fill="none"><path d="M1 4.5L4 7.5L10 1.5" stroke="#5266eb" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div><p>Keep every recurring bill in one inbox instead of scattered across apps.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Tabs: every way you save ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="section-intro centered reveal">
+        <span class="eyebrow" style="display:block; margin-bottom:16px;">Room for every goal</span>
+        <h2>Every way you save, in one place.</h2>
+      </div>
+      <div class="tabs-head">
+        <button class="tab-btn active" data-tab="fd">Fixed deposits</button>
+        <button class="tab-btn" data-tab="rd">Recurring deposits</button>
+        <button class="tab-btn" data-tab="bullion">Gold &amp; silver</button>
+        <button class="tab-btn" data-tab="bills">Bill pay</button>
+      </div>
+      <div class="tab-panel active" data-tab-panel="fd">
+        <div><h3>Lock a rate the day you book it</h3><p class="lede">Choose a bank partner and tenure, lock the rate upfront, and let it run — with auto-renewal if you'd rather not decide again at maturity.</p></div>
+        <div class="tab-visual"><div class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none"><rect x="2" y="9" width="20" height="12" rx="2" stroke="#5266eb" stroke-width="1.6"/><path d="M6 9V6a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v3" stroke="#5266eb" stroke-width="1.6"/></svg></div></div>
+      </div>
+      <div class="tab-panel" data-tab-panel="rd">
+        <div><h3>Drip-feed a goal every month</h3><p class="lede">Set a monthly amount once and a recurring deposit takes it from there — building toward a goal without a manual transfer each time.</p></div>
+        <div class="tab-visual"><div class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#5266eb" stroke-width="1.6"/><path d="M12 7v5l3 2" stroke="#5266eb" stroke-width="1.6" stroke-linecap="round"/></svg></div></div>
+      </div>
+      <div class="tab-panel" data-tab-panel="bullion">
+        <div><h3>Hold bullion next to your cash</h3><p class="lede">Buy gold or silver in small amounts, see it valued against your other goals in real time, and sell back whenever you need the liquidity.</p></div>
+        <div class="tab-visual"><div class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="12" r="6" fill="#5266eb"/><circle cx="15" cy="12" r="6" stroke="#5266eb" stroke-width="1.6" fill="none"/></svg></div></div>
+      </div>
+      <div class="tab-panel" data-tab-panel="bills">
+        <div><h3>Every bill, one inbox</h3><p class="lede">Recurring bills land in a single place instead of scattered across apps and emails — pay them without hunting them down first.</p></div>
+        <div class="tab-visual"><div class="ic-chip"><svg class="ic" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="16" height="18" rx="1.5" stroke="#5266eb" stroke-width="1.6"/><path d="M8 8h8M8 12h8M8 16h5" stroke="#5266eb" stroke-width="1.6"/></svg></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Testimonial — single quote, full-bleed overlay ===================== -->
+  <section class="testi-section" style="background:var(--pb-base-150);">
+    <div class="wrap">
+      <p class="testi-disclosure">Sample quote for layout purposes — not a real customer. Replace with a verified testimonial before publishing.</p>
+      <div class="testi-card reveal">
+        <div class="testi-photo" aria-hidden="true"></div>
+        <div class="testi-overlay" aria-hidden="true"></div>
+        <figure class="testi-quote">
+          <blockquote>Moving our fixed deposits to Raushco was mainly about the card — spending against money that's still earning interest felt like it shouldn't be allowed.</blockquote>
+          <figcaption><span class="testi-name">Sample customer</span><span class="testi-role">Illustrative quote · Bengaluru</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== What's included — plain list, beige (not purple) ===================== -->
+  <section>
+    <div class="wrap">
+      <div class="section-intro centered reveal">
+        <h2 class="module-head" style="font-size:clamp(1.75rem,1.2rem + 2vw,3rem);">Everything in one account.</h2>
+        <p class="lede" style="margin-top:14px;">No separate sign-up for any of it — every goal, deposit, and the card draw from the same login.</p>
+      </div>
+      <div class="incl-list reveal">
+        <div class="incl-row"><span class="incl-label">Included</span><span class="incl-desc">FD-backed credit card</span></div>
+        <div class="incl-row"><span class="incl-label">Included</span><span class="incl-desc">Unlimited goal tracking</span></div>
+        <div class="incl-row"><span class="incl-label">Included</span><span class="incl-desc">Fixed &amp; recurring deposits</span></div>
+        <div class="incl-row"><span class="incl-label">Included</span><span class="incl-desc">Gold &amp; silver holdings</span></div>
+        <div class="incl-row"><span class="incl-label">Included</span><span class="incl-desc">Bill pay, in one inbox</span></div>
+        <div class="incl-row"><span class="incl-label">Included</span><span class="incl-desc">Tax filing, connected</span></div>
+      </div>
+      <div style="text-align:center; margin-top:36px;">
+        <a class="btn btn-primary btn-lg" href="https://app.raushco.com/auth/initiate-otp">Open account</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FAQ ===================== -->
+  <section style="background:var(--pb-base-150);">
+    <div class="wrap">
+      <div class="section-intro centered reveal">
+        <h2 class="module-head" style="font-size:clamp(1.75rem,1.2rem + 2vw,3rem);">Frequently asked questions</h2>
+      </div>
+      <div class="faq-list">
+        <div class="faq-item open">
+          <button class="faq-q"><span>What does my account include?</span><span class="plus"></span></button>
+          <div class="faq-a"><div class="faq-a-inner"><p>Your Raushco account covers goal tracking, fixed and recurring deposits, gold &amp; silver holdings, bill pay, and the FD-backed credit card — all under one login, with no extra product sign-ups.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>How does the FD-backed credit card work?</span><span class="plus"></span></button>
+          <div class="faq-a"><div class="faq-a-inner"><p>The card is secured against a fixed deposit you hold with us. You spend against the card as normal while the underlying deposit keeps accruing — the deposit is what sets your limit.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Is my deposit protected?</span><span class="plus"></span></button>
+          <div class="faq-a"><div class="faq-a-inner"><p id="fn-dicgc">Deposits booked through our partner banks are eligible for DICGC deposit insurance up to ₹5,00,000 per depositor, per bank — the same coverage that applies to any deposit at that bank. <!-- Sample figure (the ₹5L DICGC limit is the real, standard rule) — confirm it applies as stated to Raushco's specific partner-bank/NBFC structure before publishing. --></p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>What are my options for gold &amp; silver?</span><span class="plus"></span></button>
+          <div class="faq-a"><div class="faq-a-inner"><p>You can buy gold or silver in small amounts directly inside the app, track its value alongside your other goals, and sell back when you need the liquidity.</p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>Are there fees?</span><span class="plus"></span></button>
+          <div class="faq-a"><div class="faq-a-inner"><p>There's no fee to open an account, create goals, or hold gold &amp; silver. The FD-backed card has no annual fee. <!-- Sample — insert the real, current fee schedule (forex markup, late payment, premature FD closure, etc.) before publishing. --></p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>What do you do for account security?</span><span class="plus"></span></button>
+          <div class="faq-a"><div class="faq-a-inner"><p>Encryption in transit and at rest, two-factor authentication on every login, and we never store your full card number on our own servers. <!-- Sample — confirm against Raushco's actual, current security posture before publishing. --></p></div></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q"><span>How do I contact support?</span><span class="plus"></span></button>
+          <div class="faq-a"><div class="faq-a-inner"><p>Once logged in, you can reach our support team directly from the app, or write to <a href="mailto:support@raushco.com" style="color:var(--pb-purple-600);">support@raushco.com</a>. <!-- Sample address — confirm the real support inbox before publishing. --></p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Closing CTA — reuses the frosted-form component, beige ===================== -->
+  <section class="closer">
+    <div class="wrap">
+      <span class="eyebrow">Ready when you are</span>
+      <h2 style="margin-top:16px;">Your savings deserve<br>a plan, not just an account.</h2>
+      <form class="frosted-form on-light" onsubmit="return false;" style="margin-top:32px;">
+        <div class="email-field">
+          <input class="input" type="email" placeholder="Enter your email" aria-label="Email address">
+          <div class="email-tip">
+            <p>Raushco will occasionally send you emails with offers, news, and updates. <b>Check this box if you'd rather not.</b></p>
+            <label class="opt-out">
+              <input type="checkbox" class="cbx">
+              <span class="cbx-box"><svg class="cbx-check" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+              Opt out
+            </label>
+          </div>
+        </div>
+        <button class="btn btn-primary" type="submit">Apply now</button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<div class="dark-purple" data-theme="dark">
+  <footer class="dp">
+    <div class="wrap">
+      <div class="foot-grid">
+        <div class="foot-col">
+          <a href="../index.html#top" style="margin-bottom:12px; display:inline-flex;">
+            <img src="../assets/brand/Subtract.png" alt="Raushco" style="filter:brightness(0) invert(1); width:28px; height:28px;">
+          </a>
+        </div>
+        <div class="foot-col">
+          <h5>Banking</h5>
+          <a href="../personal-banking/index.html">Personal banking</a>
+          <a href="../index.html#product">Goals</a>
+          <a href="../index.html#product">Fixed &amp; recurring deposits</a>
+          <a href="../index.html#product">Gold &amp; silver</a>
+          <a href="../index.html#product">FD-backed credit card</a>
+        </div>
+        <div class="foot-col">
+          <h5>Platform</h5>
+          <a href="../pricing/index.html">Pricing</a>
+          <a href="../index.html#product">Bill pay</a>
+          <a href="../index.html#product">Tax filing</a>
+        </div>
+        <div class="foot-col">
+          <h5>Resources</h5>
+          <a href="../index.html#resources">Help center</a>
+          <a href="../index.html#security">Security</a>
+          <a href="../blog/index.html">Blog</a>
+          <a href="../index.html#guides">Guides</a>
+        </div>
+        <div class="foot-col">
+          <h5>Company</h5>
+          <a href="../about/index.html">About</a>
+          <a href="../jobs/index.html">Careers</a>
+          <a href="../partnerships/index.html">Partners</a>
+          <a href="../contact/index.html">Contact</a>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 Raushco. All rights reserved.</span>
+        <span style="display:flex; gap:20px;">
+          <a href="../legal/privacy/index.html">Privacy</a>
+          <a href="../index.html#terms">Terms</a>
+        </span>
+      </div>
+    </div>
+  </footer>
+
+  <section class="disclaimer-section">
+    <div class="wrap disc-layout">
+      <h5>Disclaimers and footnotes</h5>
+      <div class="disclaimers">
+        <p>Raushco is a fintech platform, not a bank. Deposit and card products are provided through our partner banks and NBFCs, as applicable.</p>
+        <ol>
+          <li id="fn-fdcard">"FD-backed credit card" means the card's spending limit is secured against a fixed deposit held with a Raushco partner bank or NBFC; terms vary by partner.</li>
+          <li id="fn-savings-apy">7.00% is an indicative annual percentage yield; the actual rate depends on tenure and the partner bank or NBFC, and is subject to change.</li>
+          <li id="fn-dicgc-def">DICGC deposit insurance applies only to deposits held with DICGC-member banks, up to the standard per-depositor, per-bank limit; it does not apply to NBFC-issued deposits.</li>
+          <li id="fn-trust-accounts">Joint and trust account support varies by partner bank or NBFC and may require additional documentation.</li>
+          <li id="fn-realtime-payments">Real-time payments (UPI/IMPS) depend on the receiving bank and payment rail being available at the time of transfer.</li>
+          <li id="fn-intelligence">Automations and prompts act only on rules and permissions you set; Raushco does not move your money without your authorization.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script>
+  // Smooth scroll (Lenis) + scroll-driven reveals (GSAP/ScrollTrigger) —
+  // identical wiring to the homepage's own setup. smoothWheel/smoothTouch
+  // stay off so native scroll feel is untouched; lagSmoothing(0) stops
+  // GSAP's post-stutter catch-up from reading as a random speed-up.
+  var ENABLE_LENIS = true;
+  if (ENABLE_LENIS && window.Lenis) {
+    var lenis = new Lenis({ smoothWheel: false, smoothTouch: false });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+    if (window.gsap && window.ScrollTrigger) {
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add(function (time) { lenis.raf(time * 1000); });
+      gsap.ticker.lagSmoothing(0);
+    }
+  }
+
+  if (window.gsap && window.ScrollTrigger) {
+    gsap.registerPlugin(ScrollTrigger);
+    document.querySelectorAll('.reveal').forEach(function (el) {
+      gsap.to(el, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out', scrollTrigger: { trigger: el, start: 'top 85%' } });
+    });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.style.opacity = 1; el.style.transform = 'none'; });
+  }
+
+  // Placeholder links (href="#") shouldn't append "#" to the URL bar.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href="#"]');
+    if (a) e.preventDefault();
+  });
+
+  // Mega-menu: click to open, click elsewhere to close (not hover-driven).
+  // Literal port of the mercury-wip-reference nav JS.
+  document.querySelectorAll('.nav-item').forEach(function (item) {
+    var trigger = item.querySelector('.nav-drop-trigger');
+    if (!trigger) return;
+    trigger.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.nav-item.open').forEach(function (o) { o.classList.remove('open'); });
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+  document.addEventListener('click', function () {
+    document.querySelectorAll('.nav-item.open').forEach(function (o) { o.classList.remove('open'); });
+  });
+
+  var navEl = document.getElementById('nav');
+  addEventListener('scroll', function () { navEl.classList.toggle('scrolled', scrollY > 8); }, { passive: true });
+  var navBurger = document.getElementById('navBurger');
+  if (navBurger) navBurger.addEventListener('click', function () {
+    navEl.classList.toggle('menu-open');
+    navBurger.innerHTML = navEl.classList.contains('menu-open') ? '&#10005;' : '&#9776;';
+  });
+
+  // Nav crossfades dark/light as it slides over differently-themed section
+  // bands underneath. Confirmed from the real mercury.com/personal-banking
+  // (live-measured, not guessed): it does NOT use a narrow band just under
+  // the nav — it flips the instant a section boundary crosses the vertical
+  // MIDPOINT of the viewport, i.e. whichever themed section covers more than
+  // half the screen wins. A narrow near-top band (what this used to be) has
+  // an inherent blind spot: once a section's bottom edge is above that band,
+  // the OTHER section can already dominate the visible screen while the nav
+  // is still reading the old theme — confirmed on our own page as a 320-540px
+  // scrollY mismatch window across realistic viewport sizes. rootMargin
+  // '-50% 0px -50% 0px' collapses the observed root to a single line at 50%
+  // viewport height, which is the standard idiom for this exact effect.
+  // Picks whichever themed section is currently topmost on the rare frame
+  // where two register at once (a boundary crossing is a single instant).
+  (function () {
+    if (!window.IntersectionObserver) return;
+    var activeThemed = new Set();
+    var themeIO = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (e.isIntersecting) activeThemed.add(e.target); else activeThemed.delete(e.target);
+      });
+      if (activeThemed.size) {
+        var topEl = null, topY = Infinity;
+        activeThemed.forEach(function (el) {
+          var y = el.getBoundingClientRect().top;
+          if (y < topY) { topY = y; topEl = el; }
+        });
+        navEl.dataset.theme = topEl.dataset.theme;
+        // Also stamped on <body>, not just the nav — confirmed live on
+        // mercury.com that the handoff section's own background/text swap
+        // in lockstep with the nav off one shared flag (CSS transition doing
+        // the crossfade), not a scroll-position gradient. See .acc-section's
+        // dark-scope token override.
+        document.body.dataset.theme = topEl.dataset.theme;
+      } else {
+        delete navEl.dataset.theme;
+        delete document.body.dataset.theme;
+      }
+    }, { rootMargin: '-50% 0px -50% 0px', threshold: 0 });
+    document.querySelectorAll('[data-theme]:not(#nav)').forEach(function (el) { themeIO.observe(el); });
+  })();
+
+  // Generic single-open accordion — CSS grid-rows (0fr/1fr) does the
+  // height animation, so this just toggles the .open class.
+  function wireAccordion(selector, onOpen) {
+    var items = document.querySelectorAll(selector);
+    items.forEach(function (item, idx) {
+      var q = item.querySelector('.acc-q, .faq-q');
+      q.addEventListener('click', function () {
+        var willOpen = !item.classList.contains('open');
+        items.forEach(function (o) { o.classList.remove('open'); });
+        if (willOpen) { item.classList.add('open'); if (onOpen) onOpen(idx); }
+      });
+    });
+  }
+  wireAccordion('[data-acc1]', function (idx) {
+    var imgs = document.querySelectorAll('#accVisual1 .acc-visual-img');
+    imgs.forEach(function (img, i) { img.classList.toggle('active', i === idx); });
+  });
+  wireAccordion('.faq-item');
+
+  // Carousel — "Banking that moves like software".
+  (function () {
+    var track = document.getElementById('carTrack');
+    var slides = track ? track.querySelectorAll('.car-slide') : [];
+    var capBtns = document.querySelectorAll('#carCaptions .car-cap-btn');
+    var pager = document.getElementById('carPager');
+    var prev = document.getElementById('carPrev');
+    var next = document.getElementById('carNext');
+    if (!track || !slides.length) return;
+    var i = 0;
+    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+    function render() {
+      track.style.transform = 'translateX(-' + (i * 100) + '%)';
+      capBtns.forEach(function (b, idx) { b.classList.toggle('active', idx === i); });
+      if (pager) pager.textContent = pad(i + 1) + ' / ' + pad(slides.length);
+    }
+    if (prev) prev.addEventListener('click', function () { i = (i - 1 + slides.length) % slides.length; render(); });
+    if (next) next.addEventListener('click', function () { i = (i + 1) % slides.length; render(); });
+    capBtns.forEach(function (b, idx) { b.addEventListener('click', function () { i = idx; render(); }); });
+    render();
+  })();
+
+  // Tabs — "every way you save".
+  document.querySelectorAll('.tab-btn[data-tab]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.getAttribute('data-tab');
+      document.querySelectorAll('.tab-btn[data-tab]').forEach(function (b) { b.classList.remove('active'); });
+      document.querySelectorAll('.tab-panel').forEach(function (p) { p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.querySelector('.tab-panel[data-tab-panel="' + key + '"]').classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
