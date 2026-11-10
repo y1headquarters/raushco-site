@@ -1104,17 +1104,30 @@
   .tl-tab.active { color: #fff; background: var(--pb-purple-600); border-color: var(--pb-purple-600); }
 
   .tl-section { padding: 48px 0 clamp(96px, 8vw + 56px, 160px); background: #fbfcfd; }
-  .tl-grid { max-width: 1144px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  @media (max-width: 900px) { .tl-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .tl-grid { grid-template-columns: 1fr; } }
-  .tl-card { position: relative; display: block; background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); padding: 28px; text-align: left; transition: border-color .15s; }
-  .tl-card:hover { border-color: var(--pb-base-400); }
-  .tl-card.is-soon { cursor: default; }
-  .tl-card-ic { width: 44px; height: 44px; border-radius: var(--pb-radius-m); background: var(--pb-base-100); display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
-  .tl-card-ic svg { width: 22px; height: 22px; color: var(--bb-ink-900); }
-  .tl-card h3 { font-size: 17px; font-weight: 600; color: var(--bb-ink-900); margin-bottom: 6px; }
-  .tl-card p { font-size: 14px; line-height: 1.5; color: var(--pb-base-600); }
-  .tl-card-soon { position: absolute; top: 24px; right: 24px; font-size: 10.5px; font-weight: 700; letter-spacing: .04em; color: var(--pb-base-600); background: var(--pb-base-100); padding: 4px 10px; border-radius: 999px; }
+  .tl-grid { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  @media (max-width: 1024px) { .tl-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 760px) { .tl-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 480px) { .tl-grid { grid-template-columns: 1fr; } }
+
+  /* Book-cover card — same mechanic as the homepage's own sec-card / the
+     Raushco-promise cards elsewhere on this site: hover opens the cover on
+     its left hinge like a book, revealing a page underneath. */
+  .tl-card { display: block; text-decoration: none; font-size: 14.5px; color: var(--bb-ink-600); line-height: 1.5; }
+  .tl-card-img { position: relative; aspect-ratio: 4/5; perspective: 1400px; margin-bottom: 18px; }
+  .tl-card-page { position: absolute; inset: 0; background: #F4F2EC; border-radius: 10px; box-shadow: 0 4px 14px rgba(0,0,0,.16), 0 0 4px rgba(0,0,0,.04); opacity: 0; transition: opacity .4s ease; }
+  .tl-card-img:hover .tl-card-page { opacity: 1; }
+  .tl-card-cover { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; padding: 20px 20px 20px 26px; color: #fff; border-radius: 10px; box-shadow: 0 10px 16px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.1), 0 4px 6px rgba(0,0,0,.05); transform-style: preserve-3d; transform-origin: left center; transition: transform .4s cubic-bezier(.4,0,.2,1); }
+  .tl-card-img:hover .tl-card-cover { transform: rotateY(-24deg); }
+  .tl-card-cover::before { content: ''; position: absolute; top: 0; bottom: 0; left: 14px; width: 3px; background: linear-gradient(90deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.12) 35%, rgba(255,255,255,.18) 60%, rgba(0,0,0,.12) 100%); pointer-events: none; z-index: 1; }
+  .tl-card-highlight { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 35%); opacity: 0; transition: opacity .4s ease; pointer-events: none; }
+  .tl-card-img:hover .tl-card-highlight { opacity: 1; }
+  .tl-card-ic { position: relative; z-index: 1; width: 26px; height: 26px; }
+  .tl-card-ic svg { width: 100%; height: 100%; display: block; }
+  .tl-card-bottom { position: relative; z-index: 1; margin-top: auto; }
+  .tl-card-sub { display: block; font-size: 12px; font-weight: 400; opacity: .75; margin-bottom: 4px; text-transform: uppercase; letter-spacing: .03em; text-shadow: 1px 1px 0 rgba(0,0,0,.5), -.5px -.5px 0 rgba(255,255,255,.15); }
+  .tl-card-title { font-size: 15px; font-weight: 600; line-height: 1.3; margin: 0; color: #fff; text-shadow: 1px 1px 0 rgba(0,0,0,.6), -.5px -.5px 0 rgba(255,255,255,.25); }
+  .tl-card-soon { position: absolute; z-index: 2; top: 14px; right: 14px; font-size: 10px; font-weight: 700; letter-spacing: .04em; color: #fff; background: rgba(0,0,0,.28); backdrop-filter: blur(4px); padding: 4px 9px; border-radius: 999px; }
+  @media (prefers-reduced-motion: reduce) { .tl-card-cover, .tl-card-page, .tl-card-highlight { transition: none; } }
 
 </style>
 </head>
@@ -1384,81 +1397,198 @@
     <div class="wrap">
       <div class="tl-grid" id="tlGrid">
         <a class="tl-card" data-cat="savings" href="../fixed-deposit/index.html">
-          
-          <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></svg></div>
-          <h3>Fixed Deposit Calculator</h3>
+          <div class="tl-card-img">
+            <div class="tl-card-page"></div>
+            <div class="tl-card-cover" style="background:linear-gradient(145deg,#5266EB,#2F3C9E)">
+              
+              <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></svg></div>
+              <div class="tl-card-bottom">
+                <span class="tl-card-sub">Savings</span>
+                <h3 class="tl-card-title">Fixed Deposit Calculator</h3>
+              </div>
+              <div class="tl-card-highlight"></div>
+            </div>
+          </div>
           <p>Compare rates across partner banks and NBFCs and work out your FD maturity value.</p>
         </a>
         <a class="tl-card" data-cat="savings" href="../recurring-deposit/index.html">
-          
-          <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 5v5h5"/><path d="M12 7v5l3 3"/></svg></div>
-          <h3>Recurring Deposit Calculator</h3>
+          <div class="tl-card-img">
+            <div class="tl-card-page"></div>
+            <div class="tl-card-cover" style="background:linear-gradient(145deg,#5266EB,#2F3C9E)">
+              
+              <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 5v5h5"/><path d="M12 7v5l3 3"/></svg></div>
+              <div class="tl-card-bottom">
+                <span class="tl-card-sub">Savings</span>
+                <h3 class="tl-card-title">Recurring Deposit Calculator</h3>
+              </div>
+              <div class="tl-card-highlight"></div>
+            </div>
+          </div>
           <p>See what a monthly RD builds up to by the time it matures.</p>
         </a>
-        <div class="tl-card is-soon" data-cat="savings">
-          <span class="tl-card-soon">Coming soon</span>
-          <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
-          <h3>NSC Calculator</h3>
+        <div class="tl-card" data-cat="savings">
+          <div class="tl-card-img">
+            <div class="tl-card-page"></div>
+            <div class="tl-card-cover" style="background:linear-gradient(145deg,#5266EB,#2F3C9E)">
+              <span class="tl-card-soon">Coming soon</span>
+              <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div>
+              <div class="tl-card-bottom">
+                <span class="tl-card-sub">Savings</span>
+                <h3 class="tl-card-title">NSC Calculator</h3>
+              </div>
+              <div class="tl-card-highlight"></div>
+            </div>
+          </div>
           <p>Work out maturity value on a National Savings Certificate.</p>
         </div>
-        <div class="tl-card is-soon" data-cat="savings">
-          <span class="tl-card-soon">Coming soon</span>
-          <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.4-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9z"/></svg></div>
-          <h3>Sukanya Samriddhi Calculator</h3>
+        <div class="tl-card" data-cat="savings">
+          <div class="tl-card-img">
+            <div class="tl-card-page"></div>
+            <div class="tl-card-cover" style="background:linear-gradient(145deg,#5266EB,#2F3C9E)">
+              <span class="tl-card-soon">Coming soon</span>
+              <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.4-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9z"/></svg></div>
+              <div class="tl-card-bottom">
+                <span class="tl-card-sub">Savings</span>
+                <h3 class="tl-card-title">Sukanya Samriddhi Calculator</h3>
+              </div>
+              <div class="tl-card-highlight"></div>
+            </div>
+          </div>
           <p>Project a Sukanya Samriddhi Yojana account to maturity.</p>
         </div>
-        <div class="tl-card is-soon" data-cat="investments">
-          <span class="tl-card-soon">Coming soon</span>
-          <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7h-6v6"/></svg></div>
-          <h3>SIP Calculator</h3>
+        <div class="tl-card" data-cat="investments">
+          <div class="tl-card-img">
+            <div class="tl-card-page"></div>
+            <div class="tl-card-cover" style="background:linear-gradient(145deg,#2F3C9E,#1B2466)">
+              <span class="tl-card-soon">Coming soon</span>
+              <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M21 7h-6v6"/></svg></div>
+              <div class="tl-card-bottom">
+                <span class="tl-card-sub">Investing</span>
+                <h3 class="tl-card-title">SIP Calculator</h3>
+              </div>
+              <div class="tl-card-highlight"></div>
+            </div>
+          </div>
           <p>See what a monthly SIP could grow into over time.</p>
         </div>
         <a class="tl-card" data-cat="investments" href="../mutual-funds/index.html">
-          
-          <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
-          <h3>Mutual Fund Returns Calculator</h3>
+          <div class="tl-card-img">
+            <div class="tl-card-page"></div>
+            <div class="tl-card-cover" style="background:linear-gradient(145deg,#2F3C9E,#1B2466)">
+              
+              <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
+              <div class="tl-card-bottom">
+                <span class="tl-card-sub">Investing</span>
+                <h3 class="tl-card-title">Mutual Fund Returns Calculator</h3>
+              </div>
+              <div class="tl-card-highlight"></div>
+            </div>
+          </div>
           <p>Estimate returns on a mutual fund investment.</p>
         </a>
-        <div class="tl-card is-soon" data-cat="investments">
-          <span class="tl-card-soon">Coming soon</span>
-          <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l4-6 3 3 4-7"/></svg></div>
-          <h3>CAGR Calculator</h3>
+        <div class="tl-card" data-cat="investments">
+          <div class="tl-card-img">
+            <div class="tl-card-page"></div>
+            <div class="tl-card-cover" style="background:linear-gradient(145deg,#2F3C9E,#1B2466)">
+              <span class="tl-card-soon">Coming soon</span>
+              <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19V5"/><path d="M4 19h16"/><path d="M8 15l4-6 3 3 4-7"/></svg></div>
+              <div class="tl-card-bottom">
+                <span class="tl-card-sub">Investing</span>
+                <h3 class="tl-card-title">CAGR Calculator</h3>
+              </div>
+              <div class="tl-card-highlight"></div>
+            </div>
+          </div>
           <p>Work out the compound annual growth rate of an investment.</p>
         </div>
-        <div class="tl-card is-soon" data-cat="investments">
-          <span class="tl-card-soon">Coming soon</span>
-          <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div>
-          <h3>Goal SIP Calculator</h3>
+        <div class="tl-card" data-cat="investments">
+          <div class="tl-card-img">
+            <div class="tl-card-page"></div>
+            <div class="tl-card-cover" style="background:linear-gradient(145deg,#2F3C9E,#1B2466)">
+              <span class="tl-card-soon">Coming soon</span>
+              <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div>
+              <div class="tl-card-bottom">
+                <span class="tl-card-sub">Investing</span>
+                <h3 class="tl-card-title">Goal SIP Calculator</h3>
+              </div>
+              <div class="tl-card-highlight"></div>
+            </div>
+          </div>
           <p>Work backward from a savings goal to the SIP you'd need.</p>
         </div>
         <a class="tl-card" data-cat="retirement" href="../nps/index.html">
-          
-          <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3.5v5c0 4.6-3 8.7-7 10-4-1.3-7-5.4-7-10v-5L12 3z"/><path d="M9 12.2l2 2 4-4.4"/></svg></div>
-          <h3>NPS Calculator</h3>
+          <div class="tl-card-img">
+            <div class="tl-card-page"></div>
+            <div class="tl-card-cover" style="background:linear-gradient(145deg,#6B5BEB,#39308F)">
+              
+              <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3.5v5c0 4.6-3 8.7-7 10-4-1.3-7-5.4-7-10v-5L12 3z"/><path d="M9 12.2l2 2 4-4.4"/></svg></div>
+              <div class="tl-card-bottom">
+                <span class="tl-card-sub">Retirement</span>
+                <h3 class="tl-card-title">NPS Calculator</h3>
+              </div>
+              <div class="tl-card-highlight"></div>
+            </div>
+          </div>
           <p>Project your National Pension System corpus at retirement.</p>
         </a>
         <a class="tl-card" data-cat="retirement" href="../corporate-nps/index.html">
-          
-          <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="11" rx="1"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14v3"/></svg></div>
-          <h3>Corporate NPS Calculator</h3>
+          <div class="tl-card-img">
+            <div class="tl-card-page"></div>
+            <div class="tl-card-cover" style="background:linear-gradient(145deg,#6B5BEB,#39308F)">
+              
+              <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="10" width="18" height="11" rx="1"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/><path d="M12 14v3"/></svg></div>
+              <div class="tl-card-bottom">
+                <span class="tl-card-sub">Retirement</span>
+                <h3 class="tl-card-title">Corporate NPS Calculator</h3>
+              </div>
+              <div class="tl-card-highlight"></div>
+            </div>
+          </div>
           <p>Estimate your retirement corpus under a Corporate NPS plan.</p>
         </a>
-        <div class="tl-card is-soon" data-cat="retirement">
-          <span class="tl-card-soon">Coming soon</span>
-          <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4.4 0 7-2.7 7-6.5 0-3-2-5-3.3-7.3C14.6 6 14 4.5 14 3c-2 1.2-3 3.3-3 5.3 0 1-.3 1.7-1 2.2C8.6 11.6 7 13 7 15.5 7 19.3 9.6 22 12 22z"/></svg></div>
-          <h3>Retirement Corpus Calculator</h3>
+        <div class="tl-card" data-cat="retirement">
+          <div class="tl-card-img">
+            <div class="tl-card-page"></div>
+            <div class="tl-card-cover" style="background:linear-gradient(145deg,#6B5BEB,#39308F)">
+              <span class="tl-card-soon">Coming soon</span>
+              <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22c4.4 0 7-2.7 7-6.5 0-3-2-5-3.3-7.3C14.6 6 14 4.5 14 3c-2 1.2-3 3.3-3 5.3 0 1-.3 1.7-1 2.2C8.6 11.6 7 13 7 15.5 7 19.3 9.6 22 12 22z"/></svg></div>
+              <div class="tl-card-bottom">
+                <span class="tl-card-sub">Retirement</span>
+                <h3 class="tl-card-title">Retirement Corpus Calculator</h3>
+              </div>
+              <div class="tl-card-highlight"></div>
+            </div>
+          </div>
           <p>Work out how much you need saved to retire on your terms.</p>
         </div>
-        <div class="tl-card is-soon" data-cat="tax">
-          <span class="tl-card-soon">Coming soon</span>
-          <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M9 14h6M9 17h4"/></svg></div>
-          <h3>Income Tax Calculator</h3>
+        <div class="tl-card" data-cat="tax">
+          <div class="tl-card-img">
+            <div class="tl-card-page"></div>
+            <div class="tl-card-cover" style="background:linear-gradient(145deg,#8B5CF6,#4C1D95)">
+              <span class="tl-card-soon">Coming soon</span>
+              <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l5 5v13a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1z"/><path d="M14 3v5h5"/><path d="M9 14h6M9 17h4"/></svg></div>
+              <div class="tl-card-bottom">
+                <span class="tl-card-sub">Tax</span>
+                <h3 class="tl-card-title">Income Tax Calculator</h3>
+              </div>
+              <div class="tl-card-highlight"></div>
+            </div>
+          </div>
           <p>Estimate your income tax under the old and new regimes.</p>
         </div>
-        <div class="tl-card is-soon" data-cat="tax">
-          <span class="tl-card-soon">Coming soon</span>
-          <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg></div>
-          <h3>HRA Calculator</h3>
+        <div class="tl-card" data-cat="tax">
+          <div class="tl-card-img">
+            <div class="tl-card-page"></div>
+            <div class="tl-card-cover" style="background:linear-gradient(145deg,#8B5CF6,#4C1D95)">
+              <span class="tl-card-soon">Coming soon</span>
+              <div class="tl-card-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg></div>
+              <div class="tl-card-bottom">
+                <span class="tl-card-sub">Tax</span>
+                <h3 class="tl-card-title">HRA Calculator</h3>
+              </div>
+              <div class="tl-card-highlight"></div>
+            </div>
+          </div>
           <p>Work out how much of your HRA is tax-exempt.</p>
         </div>
       </div>
