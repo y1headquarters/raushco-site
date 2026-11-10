@@ -1049,7 +1049,10 @@
   .bk-layout { max-width: 1200px; margin: 0 auto; padding: 0 40px 80px; display: grid; grid-template-columns: 1fr 380px; gap: 56px; }
   @media (max-width: 900px) { .bk-layout { grid-template-columns: 1fr; padding: 0 20px 56px; } }
 
+  .bk-breadcrumb-wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+  @media (max-width: 900px) { .bk-breadcrumb-wrap { padding: 0 20px; } }
   .bk-breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--pb-base-500); margin-bottom: 24px; }
+  .bk-breadcrumb-home svg { width: 15px; height: 15px; display: block; }
   .bk-breadcrumb a { color: var(--pb-base-500); text-decoration: none; }
   .bk-breadcrumb a:hover { color: var(--pb-base-900); text-decoration: underline; }
   .bk-breadcrumb span[aria-current] { color: var(--pb-base-700); }
@@ -1065,10 +1068,10 @@
   .bk-identity h1 { font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.5rem); font-weight: 560; letter-spacing: -.02em; line-height: 1.1; color: var(--pb-base-900); margin: 0 0 10px; }
   .bk-badge-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
   .bk-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 4px 0; color: var(--pb-base-500); }
-  .bk-badge-dot { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
-  .bk-badge-partner { color: var(--pb-purple-600); }
+  .bk-badge-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 5px 12px 5px 10px; border-radius: 999px; }
+  .bk-badge-partner { color: var(--pb-purple-600); background: rgba(82,102,235,.1); border: 1px solid rgba(82,102,235,.22); }
   .bk-badge-partner::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--pb-purple-600); display: inline-block; }
-  .bk-badge-comingsoon { color: var(--pb-base-500); }
+  .bk-badge-comingsoon { color: var(--pb-base-700); background: var(--pb-beige-150); border: 1px solid var(--pb-border); }
   .bk-badge-comingsoon::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--pb-base-500); display: inline-block; }
   .bk-badge-sep { color: var(--pb-border); }
 
@@ -1425,14 +1428,19 @@
 
 <main>
 <div class="bk-page" id="top">
+  <div class="bk-breadcrumb-wrap">
+    <nav class="bk-breadcrumb" aria-label="Breadcrumb">
+      <a href="../../../index.html#top" class="bk-breadcrumb-home" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg></a>
+      <span>/</span>
+      <a href="../../../index.html#product">Deposits</a>
+      <span>/</span>
+      <a href="../../../fixed-deposit/index.html">Fixed Deposits</a>
+      <span>/</span>
+      <span aria-current="page">Shriram Finance</span>
+    </nav>
+  </div>
   <div class="bk-layout">
     <div class="bk-col-main">
-
-      <nav class="bk-breadcrumb" aria-label="Breadcrumb">
-        <a href="../../../fixed-deposit/index.html">Fixed Deposits</a>
-        <span>/</span>
-        <span aria-current="page">Shriram Finance</span>
-      </nav>
 
       <div class="bk-banner-wrap">
         <div class="bk-banner">
@@ -1446,7 +1454,7 @@
         <div class="bk-badge-row">
           <span class="bk-badge">RBI-registered NBFC</span>
           <span class="bk-badge-sep">&middot;</span>
-          <span class="bk-badge-dot bk-badge-partner">Our partner bank</span>
+          <span class="bk-badge-pill bk-badge-partner">Partner bank</span>
         </div>
       </div>
 
