@@ -1046,8 +1046,13 @@
 
   .bk-page { background: #fff; padding: 48px 0 0; }
   body { background: #fff; }
-  .bk-layout { max-width: 1200px; margin: 0 auto; padding: 0 40px 80px; display: grid; grid-template-columns: 1fr 380px; gap: 40px; }
+  .bk-layout { max-width: 1200px; margin: 0 auto; padding: 0 40px 80px; display: grid; grid-template-columns: 1fr 380px; gap: 56px; }
   @media (max-width: 900px) { .bk-layout { grid-template-columns: 1fr; padding: 0 20px 56px; } }
+
+  .bk-breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--pb-base-500); margin-bottom: 24px; }
+  .bk-breadcrumb a { color: var(--pb-base-500); text-decoration: none; }
+  .bk-breadcrumb a:hover { color: var(--pb-base-900); text-decoration: underline; }
+  .bk-breadcrumb span[aria-current] { color: var(--pb-base-700); }
 
   .bk-banner-wrap { position: relative; margin-bottom: 44px; }
   .bk-banner { position: relative; aspect-ratio: 2.4/1; border-radius: var(--pb-radius-l); overflow: hidden; background: var(--pb-beige-150); }
@@ -1057,7 +1062,7 @@
   .bk-logo-plate img { width: 100%; height: 100%; object-fit: contain; }
 
   .bk-identity { margin: 48px 0 20px; }
-  .bk-identity h1 { font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.1rem); font-weight: 560; letter-spacing: -.015em; color: var(--pb-base-900); margin: 0 0 8px; }
+  .bk-identity h1 { font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.5rem); font-weight: 560; letter-spacing: -.02em; line-height: 1.1; color: var(--pb-base-900); margin: 0 0 10px; }
   .bk-badge-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
   .bk-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 4px 0; color: var(--pb-base-500); }
   .bk-badge-dot { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
@@ -1069,7 +1074,7 @@
 
   .bk-section { padding: 36px 0; border-top: 1px solid var(--pb-border); }
   .bk-section:first-of-type { border-top: none; padding-top: 12px; }
-  .bk-section h2 { font-size: 20px; font-weight: 600; color: var(--pb-base-900); margin: 0 0 6px; }
+  .bk-section h2 { font-size: 21px; font-weight: 600; letter-spacing: -.01em; color: var(--pb-base-900); margin: 0 0 8px; }
   .bk-section-sub { color: var(--pb-base-500); font-size: 14.5px; margin: 0 0 24px; max-width: 64ch; line-height: 1.5; }
 
   /* Rate table */
@@ -1088,7 +1093,7 @@
 
   .bk-highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 28px; }
   .bk-highlight { background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); padding: 18px 16px; }
-  .bk-highlight img { width: 32px; height: 32px; display: block; margin-bottom: 12px; }
+  .bk-highlight svg { width: 22px; height: 22px; display: block; margin-bottom: 14px; color: var(--pb-purple-600); }
   .bk-highlight span { font-size: 13.5px; color: var(--pb-base-900); font-weight: 500; line-height: 1.4; display: block; }
 
   /* Calculator — sticky right column */
@@ -1096,11 +1101,17 @@
   .bk-calc-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
   .bk-calc-field label { display: block; font-size: 13px; color: var(--pb-base-500); margin-bottom: 8px; }
   .bk-calc-field input, .bk-calc-field select { width: 100%; box-sizing: border-box; height: 48px; padding: 0 14px; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-m); font-family: inherit; font-size: 15px; color: var(--pb-base-900); background: #fff; }
+  .bk-calc-field select { appearance: none; -webkit-appearance: none; padding-right: 36px; cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%2370707d' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center; }
   .bk-calc-field input:focus, .bk-calc-field select:focus { outline: none; border-color: var(--pb-purple-600); }
   .bk-calc-field.full { grid-column: 1 / -1; }
   .bk-calc-divider { height: 1px; background: var(--pb-border); margin: 18px 0; }
   .bk-calc-rows { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
   .bk-calc-rowline { display: flex; justify-content: space-between; align-items: baseline; font-size: 13.5px; }
+  .bk-calc-rowline .l { flex: 0 0 auto; order: 1; }
+  .bk-calc-rowline::after { content: ''; order: 2; flex: 1 1 auto; border-bottom: 1px dashed var(--pb-border); margin: 0 8px 4px; }
+  .bk-calc-rowline .v { flex: 0 0 auto; order: 3; }
   .bk-calc-rowline .l { color: var(--pb-base-500); }
   .bk-calc-rowline .v { font-weight: 600; color: var(--pb-base-900); font-variant-numeric: tabular-nums; }
   .bk-calc-rowline.hl .v { color: var(--pb-purple-600); font-size: 16px; }
@@ -1108,6 +1119,7 @@
   .bk-calc .btn-primary { width: 100%; justify-content: center; height: 46px; }
 
   /* About stats */
+  .bk-about-card { background: var(--pb-beige-150); border-radius: var(--pb-radius-l); padding: 28px; }
   .bk-about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; margin-bottom: 24px; }
   .bk-about-stat .n { font-size: 28px; font-weight: 600; color: var(--pb-base-900); letter-spacing: -.01em; }
   .bk-about-stat .l { font-size: 13px; color: var(--pb-base-700); margin-top: 2px; }
@@ -1126,7 +1138,7 @@
   .bk-faq-item.open .bk-faq-a { max-height: 480px; }
   .bk-faq-a-inner { padding: 0 2px 18px; font-size: 14px; color: var(--pb-base-700); line-height: 1.6; max-width: 68ch; }
 
-  .bk-cta-band { background: #14141b; padding: 56px 0; text-align: center; }
+  .bk-cta-band { background: #171721; padding: 56px 0; text-align: center; }
   .bk-cta-band h2 { color: #fff; margin-bottom: 8px; font-size: 24px; }
   .bk-cta-band p { color: rgba(255,255,255,.55); margin-bottom: 24px; font-size: 15px; }
 
@@ -1135,6 +1147,7 @@
      raushco.com's exactly, per explicit request: one consistent footer
      across all marketing pages. */
   footer[data-theme="dark"], section[data-theme="dark"] { background: #171721; color: #fff; }
+  footer { padding: 96px 0 0; }
   footer[data-theme="dark"] .brand { color: #fff; }
   .foot-brand { margin-bottom: 56px; }
   .foot-brand .brand { margin-bottom: 12px; }
@@ -1415,6 +1428,12 @@
   <div class="bk-layout">
     <div class="bk-col-main">
 
+      <nav class="bk-breadcrumb" aria-label="Breadcrumb">
+        <a href="../../../fixed-deposit/index.html">Fixed Deposits</a>
+        <span>/</span>
+        <span aria-current="page">Shriram Finance</span>
+      </nav>
+
       <div class="bk-banner-wrap">
         <div class="bk-banner">
           <img src="../../../assets/images/bank-banners/ShriramBanner.webp" alt="Shriram Finance branch signage">
@@ -1434,10 +1453,10 @@
       <section class="bk-section">
         <p class="bk-section-sub">Rates and tenure below are live from Shriram Finance via our Fixerra partner integration.</p>
         <div class="bk-highlights">
-          <div class="bk-highlight"><img src="https://images.fixerra.in/illustrations/RBI@3x.png" alt=""><span>All investments are regulated by RBI</span></div>
-          <div class="bk-highlight"><img src="https://images.fixerra.in/illustrations/Senior@3x.png" alt=""><span>Senior citizens get up to 0.50% extra</span></div>
-          <div class="bk-highlight"><img src="https://images.fixerra.in/illustrations/Women@3x.png" alt=""><span>Women get up to 0.05% extra</span></div>
-          <div class="bk-highlight"><img src="https://images.fixerra.in/illustrations/Bank@3x.png" alt=""><span>Maturity amount credited directly to your bank</span></div>
+          <div class="bk-highlight"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3.5v5c0 4.6-3 8.7-7 10-4-1.3-7-5.4-7-10v-5L12 3z"/><path d="M9 12.2l2 2 4-4.4"/></svg><span>All investments are regulated by RBI</span></div>
+          <div class="bk-highlight"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="2.2"/><circle cx="16.5" cy="16.5" r="2.2"/><path d="M17 7L7 17"/></svg><span>Senior citizens get up to 0.50% extra</span></div>
+          <div class="bk-highlight"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9z"/></svg><span>Women get up to 0.05% extra</span></div>
+          <div class="bk-highlight"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-6 9 6"/><path d="M5 10v9M9 10v9M15 10v9M19 10v9"/><path d="M3 19h18"/><path d="M3 10h18"/></svg><span>Maturity amount credited directly to your bank</span></div>
         </div>
         <table class="bk-rate-table">
           <thead><tr><th>Tenure</th><th>General</th><th>Senior citizen</th></tr></thead>
@@ -1461,18 +1480,20 @@
 
       <section class="bk-section">
         <h2>About Shriram Finance</h2>
-        <div class="bk-about-grid">
-          <div class="bk-about-stat"><div class="n">82.2 lakh</div><div class="l">Customers served</div></div>
-          <div class="bk-about-stat"><div class="n">3,000+</div><div class="l">Branches</div></div>
-          <div class="bk-about-stat"><div class="n">₹2.3L cr</div><div class="l">Assets under management</div></div>
-        </div>
-        <div class="bk-about-text">
-          <p>Shriram Finance is one of India’s larger NBFCs, founded in 1974, with assets under management of over ₹2.3 lakh crores and a workforce of more than 75,000 across 3,000+ branches.</p>
-          <p>As an NBFC, its fixed deposits sit outside DICGC’s ₹5 lakh bank-deposit insurance — that cover only extends to banks. In its place, independent agencies rate Shriram’s FDs directly:</p>
-        </div>
-        <div class="bk-rating-row">
-          <span class="bk-rating-pill">CRISIL AAA/Stable</span>
-          <span class="bk-rating-pill">ICRA AAA/Stable</span>
+        <div class="bk-about-card">
+          <div class="bk-about-grid">
+            <div class="bk-about-stat"><div class="n">82.2 lakh</div><div class="l">Customers served</div></div>
+            <div class="bk-about-stat"><div class="n">3,000+</div><div class="l">Branches</div></div>
+            <div class="bk-about-stat"><div class="n">₹2.3L cr</div><div class="l">Assets under management</div></div>
+          </div>
+          <div class="bk-about-text">
+            <p>Shriram Finance is one of India’s larger NBFCs, founded in 1974, with assets under management of over ₹2.3 lakh crores and a workforce of more than 75,000 across 3,000+ branches.</p>
+            <p>As an NBFC, its fixed deposits sit outside DICGC’s ₹5 lakh bank-deposit insurance — that cover only extends to banks. In its place, independent agencies rate Shriram’s FDs directly:</p>
+          </div>
+          <div class="bk-rating-row">
+            <span class="bk-rating-pill">CRISIL AAA/Stable</span>
+            <span class="bk-rating-pill">ICRA AAA/Stable</span>
+          </div>
         </div>
       </section>
 
