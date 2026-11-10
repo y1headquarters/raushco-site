@@ -4,19 +4,18 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Shriram Finance Fixed Deposit Rates &amp; Calculator | Raushco</title>
-<meta name="description" content="Shriram Finance fixed deposit rates, tenure options, and a maturity calculator — a Raushco partner NBFC. Compare rates and open an FD in minutes." />
-<title>Business Banking | Raushco</title>
-<meta name="description" content="Business banking built for how founders actually run a company — accounts, cards, and treasury tools your whole team can use.">
+<meta name="description" content="Shriram Finance fixed deposit rates, tenure options, and a maturity calculator — a Raushco partner NBFC. Compare rates and open an FD in minutes.">
 <link rel="icon" href="data:,">
 <style>
+
   @font-face {
     font-family: 'Inter';
-    src: url('../../../../assets/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+    src: url('../../assets/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
     font-weight: 300 800; font-style: normal; font-display: swap;
   }
   @font-face {
     font-family: 'Geist Mono';
-    src: url('../../../../assets/fonts/GeistMono-VariableFont_wght.ttf') format('truetype');
+    src: url('../../assets/fonts/GeistMono-VariableFont_wght.ttf') format('truetype');
     font-weight: 400 600; font-style: normal; font-display: swap;
   }
 
@@ -242,13 +241,6 @@
   .mega-grid { display: grid; grid-template-columns: 1.25fr repeat(4, 1fr); column-gap: 40px; max-width: 1240px; margin: 0 auto; padding: 40px 36px; }
   .mega-grid-3 { grid-template-columns: repeat(3, 1fr); row-gap: 32px; }
   .mega-grid-4 { grid-template-columns: repeat(4, 1fr); row-gap: 32px; }
-  /* The "& More" column's own list is much taller than its row siblings;
-     without an explicit span it inflates just row 1's track height (CSS
-     Grid sizes a row to its tallest cell), leaving a large dead gap under
-     the other short row-1 tiles — confirmed wrong against the real page.
-     Spanning it across all 3 rows (set once here, placement applies via
-     the .mega-col-more class wherever this 3rd-column list appears) lets
-     rows 1-3 size to their own short content instead. */
   .mega-col-more { grid-column: 3; grid-row: 1 / span 3; }
   .mega-feature, .mega-col { border-right: 1px solid var(--pb-border); }
   .nav[data-theme="dark"] .mega-feature, .nav[data-theme="dark"] .mega-col { border-right-color: rgba(255,255,255,.08); }
@@ -363,7 +355,7 @@
      photo — heavily blurred and desaturated into soft abstract light/shadow
      shapes, confirmed directly against a live screenshot. 3px was nowhere
      close; this needs a real, heavy blur, not a light softening. */
-  .hero-bg { position: absolute; inset: -160px; background: #10101a url('../../../../assets/images/hero-personal-banking.jpg') center center / cover no-repeat;
+  .hero-bg { position: absolute; inset: -160px; background: #10101a url('../../assets/images/hero-personal-banking.jpg') center center / cover no-repeat;
     filter: blur(48px) saturate(.7) brightness(.95); }
   /* Real mercury.com/personal-banking vignette — confirmed via direct research
      against the live page: a flat top-fade only (18% black at the top, fully
@@ -820,6 +812,7 @@
      sibling-of-a-clipped-layer workaround either; it's just a
      normal child here. */
   .bb-hero { position: relative; margin-top: -73px; background: var(--bb-lavender-bg); padding: calc(72px + 73px) 0 0; text-align: center; }
+  .bb-hero.tr-hero-neutral { background: #fbfcfd; }
   .bb-hero-inner { max-width: 948px; margin: 0 auto; padding: 0 24px; }
   .bb-hero h1 { color: var(--bb-ink-900); font-size: var(--bb-size-hero); font-weight: 480; line-height: 1.04; letter-spacing: -.02em; }
   .bb-hero-sub { margin: 12px auto 0; max-width: 688px; font-size: var(--pb-size-lede); line-height: 1.45; color: var(--bb-ink-600); }
@@ -897,6 +890,21 @@
   .bb-listing-item .ic { height: 24px; width: auto; color: #272735; margin-bottom: 8px; }
   .bb-listing-item h3 { font-size: 18px; font-weight: 480; line-height: 1.35; color: #272735; }
   .bb-listing-item p { font-size: 18px; font-weight: 360; line-height: 1.35; color: #535461; margin-top: 0; }
+
+  .fd-partner-grid { max-width: 1144px; margin: 56px auto 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 860px) { .fd-partner-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .fd-partner-grid { grid-template-columns: 1fr; } }
+  .fd-partner-card { background: #fff; border: 1px solid var(--pb-border); border-radius: 16px; padding: 28px; text-align: center; }
+  .fd-partner-logo { height: 32px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+  .fd-partner-logo img { max-height: 32px; max-width: 140px; border-radius: 4px; }
+  .fd-partner-rate { font-size: 36px; font-weight: 600; color: var(--pb-base-900); letter-spacing: -.02em; }
+  .fd-partner-rate span { font-size: 20px; font-weight: 500; }
+  .fd-partner-meta { font-size: 14px; color: var(--pb-base-700); margin: 6px 0 16px; min-height: 36px; }
+  .fd-partner-badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 5px 12px; border-radius: 999px; }
+  .fd-badge-insured { background: rgba(52,168,83,.12); color: #1a7a3a; }
+  .fd-badge-nbfc { background: rgba(0,0,0,.05); color: var(--pb-base-700); }
+  .fd-partner-card-more { display: flex; align-items: center; justify-content: center; background: var(--bb-lavender-bg); border-style: dashed; }
+  .fd-partner-card-more p { color: var(--pb-base-700); font-size: 15px; margin: 0; }
 
   /* ---------- Split rows (4x): text/media alternating, each row abuts
      the next (72px top padding only, 0 bottom — confirmed live). Video
@@ -998,7 +1006,42 @@
   .bb-cta-band-inner { max-width: 752px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; }
   .bb-cta-band h2 { font-size: 48px; font-weight: 480; line-height: 1.15; letter-spacing: .005em; color: #28253b; }
   .bb-cta-band .sub { margin-top: 12px; font-size: 21px; font-weight: 360; line-height: 1.35; color: #554e7b; }
-  .bb-cta-band .btn-primary { margin-top: 40px; }
+  .bb-cta-band .btn-primary, .bb-cta-band .bb-cta-pill { margin-top: 40px; }
+
+  /* ---------- Treasury-only: testimonial-slider, mid-page CTA band, rate
+     table — all deep-researched live against mercury.com/treasury. New
+     .tr-* prefix (not .bb-*) because the real components genuinely differ
+     from business-banking's own tabs-testimonial/cta-band mechanics, not
+     just a copy-paste of an existing class under a new name. ---------- */
+  .tr-testi-section { padding: 112px 0; background: var(--bb-lavender-bg); }
+  .tr-testi-col { max-width: 620px; margin: 0 auto; padding-top: 80px; text-align: center; }
+  .tr-testi-quote { font-size: 21px; font-weight: 360; line-height: 1.35; color: var(--bb-ink-900); }
+  .tr-testi-quote em { font-style: normal; font-weight: 480; }
+  .tr-testi-caption { margin-top: 40px; display: flex; align-items: center; justify-content: center; }
+  .tr-testi-who, .tr-testi-where { text-align: left; }
+  .tr-testi-where { margin-left: 16px; padding-left: 16px; border-left: 2px solid #c3c0df; }
+  .tr-testi-who p, .tr-testi-where p { font-size: 18px; line-height: 1.35; }
+  .tr-testi-who p:first-child, .tr-testi-where p:first-child { font-weight: 480; color: var(--bb-ink-900); }
+  .tr-testi-who p:last-child, .tr-testi-where p:last-child { margin-top: 2px; font-weight: 360; color: var(--bb-ink-600); }
+
+  /* Confirmed near-identical typography/spacing to .bb-cta-band (48px/480
+     heading, 12px/40px gaps) — reused verbatim, just a shorter section and
+     a tonal .bb-cta-pill button instead of the closing band's solid one. */
+  .bb-cta-band.tr-raise-band { padding: 96px 0; }
+
+  .tr-table-section { padding: 112px 0; background: var(--bb-lavender-bg); }
+  .tr-table-section h2 { font-size: 32px; font-weight: 360; line-height: 1.15; color: var(--bb-ink-900); text-align: center; }
+  .tr-table-scroll { position: relative; margin-top: 40px; overflow-x: auto; }
+  .tr-table-scroll::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; width: 48px;
+    background: linear-gradient(to left, var(--bb-lavender-bg), transparent); pointer-events: none; }
+  @media (min-width: 640px) { .tr-table-scroll::after { display: none; } }
+  .tr-rate-table { width: 100%; max-width: 620px; margin: 0 auto; border-collapse: collapse; border-bottom: 1px solid #c3c0df; }
+  .tr-rate-table th, .tr-rate-table td { padding: 12px 12px 12px 2px; text-align: left; font-size: 18px; line-height: 1.35;
+    color: var(--bb-ink-900); white-space: nowrap; }
+  .tr-rate-table tr { border-top: 1px solid #c3c0df; }
+  .tr-rate-table th { font-weight: 530; }
+  .tr-rate-table td { font-weight: 360; }
+
   /* Get-the-app QR modal — self-contained (no dependency on page-level CSS tokens), so this exact
      block can be copy-pasted onto every marketing page unchanged. Opened by every "Log in"
      link/button sitewide (wired by text content, not by class, in the matching script block —
@@ -1014,144 +1057,13 @@
   .qr-modal-code { display: inline-block; background: #f6f7f9; border-radius: 16px; padding: 14px; line-height: 0; }
   .qr-modal-code img { display: block; width: 176px; height: 176px; }
 
-  .otp-popup-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10,10,14,.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .25s cubic-bezier(.2,1,.4,1), visibility .25s; padding: 24px; }
-  .otp-popup-overlay.is-open { opacity: 1; visibility: visible; }
-  .otp-popup { position: relative; background: #ffffff; border-radius: 24px; padding: 40px 32px 32px; max-width: 360px; width: 100%; text-align: center; color: #0c1024; transform: scale(.94); transition: transform .25s cubic-bezier(.2,1,.4,1); box-shadow: 0 24px 60px -14px rgba(0,0,0,.28); font-family: inherit; }
-  .otp-popup-overlay.is-open .otp-popup { transform: none; }
-  .otp-popup-close { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 50%; background: #f6f7f9; border: 1px solid rgba(0,0,0,.08); color: #0c1024; font-size: 18px; line-height: 1; cursor: pointer; display: grid; place-items: center; transition: background .2s; padding: 0; }
-  .otp-popup-close:hover { background: #ececef; }
-  .otp-popup-h { font-size: 20px; font-weight: 700; letter-spacing: -.01em; margin: 0 0 6px; color: #0c1024; }
-  .otp-popup-sub { font-size: 14px; font-weight: 400; color: #6b7280; line-height: 1.45; margin: 0 0 20px; }
-  .otp-popup-text { font-size: 14px; font-weight: 400; color: #535461; line-height: 1.45; margin: 14px 0 0; }
-  .otp-popup-spinner { width: 28px; height: 28px; margin: 4px auto 0; border-radius: 50%; border: 3px solid rgba(112,115,147,.16); border-top-color: #061b89; animation: otp-popup-spin .8s linear infinite; }
-  @keyframes otp-popup-spin { to { transform: rotate(360deg); } }
-  .otp-popup-input { width: 100%; box-sizing: border-box; height: 48px; border: 1px solid rgba(112,115,147,.25); border-radius: 10px; text-align: center; font-size: 20px; letter-spacing: 6px; font-family: inherit; color: #0c1024; outline: none; margin-bottom: 10px; background: #fbfcfd; }
-  .otp-popup-input:focus { border-color: #061b89; box-shadow: 0 0 0 1px #061b89 inset; }
-  .otp-popup-error { font-size: 13px; color: #c0392b; margin: 0 0 10px; min-height: 16px; }
-  .otp-popup-btn { width: 100%; height: 48px; border: 0; border-radius: 999px; background: #061b89; color: #fff; font-size: 15px; font-weight: 600; letter-spacing: .2px; cursor: pointer; margin-top: 4px; transition: background .15s; }
-  .otp-popup-btn:disabled { opacity: .5; cursor: not-allowed; }
-  .otp-popup-btn:hover:not(:disabled) { background: #0a2199; }
-  .otp-popup-link { display: block; margin: 14px auto 0; border: 0; background: transparent; color: #061b89; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: underline; padding: 4px; }
-  .otp-popup-step[hidden] { display: none; }
 
-
-  /* ============================================================
-     Bank detail page — two-column layout (content + sticky calculator),
-     matching the structural pattern of stablemoney.in's own per-bank
-     pages (banner, logo, name/badges, rate table, calculator alongside),
-     rebuilt on this site's real tokens. The one thing deliberately NOT
-     reused from that reference is imagery: the banner below is a
-     generated gradient + grain texture, never a bank photo.
-     ============================================================ */
-
-  .bk-page { background: #fff; padding: 48px 0 0; }
-  body { background: #fff; }
-  .bk-layout { max-width: 1200px; margin: 0 auto; padding: 0 40px 80px; display: grid; grid-template-columns: 1fr 380px; gap: 56px; }
-  @media (max-width: 900px) { .bk-layout { grid-template-columns: 1fr; padding: 0 20px 56px; } }
-
-  .bk-breadcrumb-wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
-  @media (max-width: 900px) { .bk-breadcrumb-wrap { padding: 0 20px; } }
-  .bk-breadcrumb { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--pb-base-500); margin-bottom: 24px; }
-  .bk-breadcrumb-home svg { width: 15px; height: 15px; display: block; }
-  .bk-breadcrumb a { color: var(--pb-base-500); text-decoration: none; }
-  .bk-breadcrumb a:hover { color: var(--pb-base-900); text-decoration: underline; }
-  .bk-breadcrumb span[aria-current] { color: var(--pb-base-700); }
-
-  .bk-banner-wrap { position: relative; margin-bottom: 44px; }
-  .bk-banner { position: relative; aspect-ratio: 2.4/1; border-radius: var(--pb-radius-l); overflow: hidden; background: #F4F5F9; }
-  .bk-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .bk-logo-plate { position: absolute; left: 24px; bottom: -28px; width: 72px; height: 72px; border-radius: 50%; background: #fff; z-index: 2; overflow: hidden;
-    display: flex; align-items: center; justify-content: center; padding: 12px; border: 1px solid var(--pb-border); }
-  .bk-logo-plate img { width: 100%; height: 100%; object-fit: contain; }
-
-  .bk-identity { margin: 48px 0 20px; }
-  .bk-identity h1 { font-size: clamp(1.9rem, 1.4rem + 1.8vw, 2.5rem); font-weight: 560; letter-spacing: -.02em; line-height: 1.1; color: var(--pb-base-900); margin: 0 0 10px; }
-  .bk-badge-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
-  .bk-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 4px 0; color: var(--pb-base-500); }
-  .bk-badge-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; padding: 5px 12px 5px 10px; border-radius: 999px; }
-  .bk-badge-partner { color: var(--pb-purple-600); background: rgba(82,102,235,.1); border: 1px solid rgba(82,102,235,.22); }
-  .bk-badge-partner::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--pb-purple-600); display: inline-block; }
-  .bk-badge-comingsoon { color: var(--pb-base-700); background: #F4F5F9; border: 1px solid var(--pb-border); }
-  .bk-badge-comingsoon::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--pb-base-500); display: inline-block; }
-  .bk-badge-sep { color: var(--pb-border); }
-
-  .bk-section { padding: 36px 0; border-top: 1px solid var(--pb-border); }
-  .bk-section:first-of-type { border-top: none; padding-top: 12px; }
-  .bk-section h2 { font-size: 21px; font-weight: 600; letter-spacing: -.01em; color: var(--pb-base-900); margin: 0 0 20px; }
-  .bk-section-sub { color: var(--pb-base-500); font-size: 14.5px; margin: 0 0 24px; max-width: 64ch; line-height: 1.5; }
-
-  /* Rate table */
-  .bk-rate-table { width: 100%; border-collapse: collapse; background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); overflow: hidden; }
-  .bk-rate-table th, .bk-rate-table td { padding: 14px 18px; text-align: left; font-size: 15px; }
-  .bk-rate-table thead th { background: #F4F5F9; font-size: 11.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--pb-base-500); font-weight: 600; }
-  .bk-rate-table tbody tr { border-top: 1px solid var(--pb-border); }
-  .bk-rate-table tbody tr.bk-best { background: rgba(82,102,235,.06); }
-  .bk-rate-table td.rate { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--pb-base-900); }
-  .bk-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .04em; color: #fff; background: var(--pb-purple-600); padding: 2px 8px; border-radius: 999px; margin-left: 8px; vertical-align: middle; }
-  .bk-fact-grid { margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1px; background: var(--pb-border); border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); overflow: hidden; }
-  .bk-fact { background: #fff; padding: 16px 18px; }
-  .bk-fact .l { font-size: 12px; color: var(--pb-base-500); margin-bottom: 4px; }
-  .bk-fact .v { font-size: 15px; font-weight: 600; color: var(--pb-base-900); }
-  .bk-fine { margin-top: 18px; font-size: 12.5px; color: var(--pb-base-500); line-height: 1.55; }
-
-  .bk-highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 28px; }
-  .bk-highlight { background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); padding: 18px 16px; }
-  .bk-highlight svg { width: 22px; height: 22px; display: block; margin-bottom: 14px; color: var(--pb-base-900); }
-  .bk-highlight span { font-size: 13.5px; color: var(--pb-base-900); font-weight: 500; line-height: 1.4; display: block; }
-
-  /* Calculator — sticky right column */
-  .bk-calc { position: sticky; top: 96px; background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); padding: 32px; }
-  .bk-calc-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
-  .bk-calc-field label { display: block; font-size: 13px; color: var(--pb-base-500); margin-bottom: 8px; }
-  .bk-calc-field input, .bk-calc-field select { width: 100%; box-sizing: border-box; height: 48px; padding: 0 14px; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-m); font-family: inherit; font-size: 15px; color: var(--pb-base-900); background: #fff; }
-  .bk-calc-field select { appearance: none; -webkit-appearance: none; padding-right: 36px; cursor: pointer;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%2370707d' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat; background-position: right 12px center; }
-  .bk-calc-field input:focus, .bk-calc-field select:focus { outline: none; border-color: var(--pb-purple-600); }
-  .bk-calc-field.full { grid-column: 1 / -1; }
-  .bk-calc-divider { height: 1px; background: var(--pb-border); margin: 18px 0; }
-  .bk-calc-rows { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
-  .bk-calc-rowline { display: flex; justify-content: space-between; align-items: baseline; font-size: 13.5px; }
-  .bk-calc-rowline .l { flex: 0 0 auto; order: 1; }
-  .bk-calc-rowline::after { content: ''; order: 2; flex: 1 1 auto; border-bottom: 1px dashed var(--pb-border); margin: 0 8px 4px; }
-  .bk-calc-rowline .v { flex: 0 0 auto; order: 3; }
-  .bk-calc-rowline .l { color: var(--pb-base-500); }
-  .bk-calc-rowline .v { font-weight: 600; color: var(--pb-base-900); font-variant-numeric: tabular-nums; }
-  .bk-calc-rowline.hl .v { color: var(--pb-purple-600); font-size: 16px; }
-  .bk-calc-rowline.hl .l { font-weight: 500; color: var(--pb-base-700); }
-  .bk-calc .btn-primary { width: 100%; justify-content: center; height: 46px; }
-
-  /* About stats */
-  .bk-about-card { background: #F4F5F9; border-radius: var(--pb-radius-l); padding: 28px; }
-  .bk-about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; margin-bottom: 24px; }
-  .bk-about-stat .n { font-size: 28px; font-weight: 600; color: var(--pb-base-900); letter-spacing: -.01em; }
-  .bk-about-stat .l { font-size: 13px; color: var(--pb-base-700); margin-top: 2px; }
-  .bk-about-text { color: var(--pb-base-700); font-size: 15px; line-height: 1.65; }
-  .bk-about-text p { margin-bottom: 14px; }
-  .bk-rating-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
-  .bk-rating-pill { font-size: 12.5px; font-weight: 600; color: var(--pb-base-900); background: #F4F5F9; border: 1px solid var(--pb-border); padding: 6px 14px; border-radius: 999px; }
-
-  /* FAQ */
-  .bk-faq-item { border-top: 1px solid var(--pb-border); }
-  .bk-faq-item:first-child { border-top: none; }
-  .bk-faq-item:last-child { border-bottom: 1px solid var(--pb-border); }
-  .bk-faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 2px; background: none; border: 0; text-align: left; font-size: 15px; font-weight: 550; color: var(--pb-base-900); cursor: pointer; font-family: inherit; }
-  .bk-faq-chevron { flex: 0 0 auto; width: 18px; height: 18px; color: var(--pb-base-500); transition: transform .25s var(--pb-ease-pop); }
-  .bk-faq-item.open .bk-faq-chevron { transform: rotate(180deg); }
-  .bk-faq-a { max-height: 0; overflow: hidden; transition: max-height .3s var(--pb-ease-pop); }
-  .bk-faq-item.open .bk-faq-a { max-height: 480px; }
-  .bk-faq-a-inner { padding: 0 2px 18px; font-size: 14px; color: var(--pb-base-700); line-height: 1.6; max-width: 68ch; }
-
-  .bk-cta-band { background: #171721; padding: 56px 0; text-align: center; }
-  .bk-cta-band h2 { color: #fff; margin-bottom: 8px; font-size: 24px; }
-  .bk-cta-band p { color: rgba(255,255,255,.55); margin-bottom: 24px; font-size: 15px; }
-
-  /* Homepage's own footer/disclaimer classes (business-banking's footer uses
-     different, shorter ones) — pulled in so this page's footer matches
-     raushco.com's exactly, per explicit request: one consistent footer
-     across all marketing pages. */
-  footer[data-theme="dark"], section[data-theme="dark"] { background: #171721; color: #fff; }
+  /* Footer + disclaimers — reused verbatim from the homepage (its own
+     classes: foot-brand/foot-grid-m/foot-col/disc-grid-m/disc-content-m),
+     not fixed-deposit's own shorter footer. footer { padding } bumped
+     from the homepage's 56px to clear the sticky nav on this page too. */
   footer { padding: 96px 0 0; }
+  footer[data-theme="dark"], section.foot-disclaimers[data-theme="dark"] { background: #171721; color: #fff; }
   footer[data-theme="dark"] .brand { color: #fff; }
   .foot-brand { margin-bottom: 56px; }
   .foot-brand .brand { margin-bottom: 12px; }
@@ -1159,9 +1071,10 @@
   .foot-grid-m { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 40px; row-gap: 80px; align-items: start; padding-bottom: 56px; }
   .foot-col { display: grid; row-gap: 8px; align-items: start; }
   .foot-col h4 { font-size: 16px; line-height: 1.4; font-weight: 400; color: #C3C3CC; text-transform: none; letter-spacing: normal; margin: 0 0 2px; }
-  .foot-col a { font-size: 16px; line-height: 1.25; font-weight: 420; color: #EDEDF3; text-decoration: none; }
+  .foot-col a { font-size: 16px; line-height: 1.25; font-weight: 420; color: #EDEDF3; text-decoration: none; border-radius: 2px; transition: color .3s ease-out; }
   .foot-col a:hover { color: #C3C3CC; text-decoration: underline; text-decoration-color: #C3C3CC; text-decoration-thickness: 1px; text-underline-offset: 4px; }
-  .foot-disclaimers .wrap { margin-top: 64px; border-top: 1px solid rgba(255,255,255,.14); padding: 32px 24px 64px; }
+  .foot-col a:focus-visible { color: #C3C3CC; text-decoration: underline; text-decoration-color: #C3C3CC; text-decoration-thickness: 1px; text-underline-offset: 4px; outline: 2px solid #9CB4E8; outline-offset: 4px; }
+  .foot-disclaimers .wrap { margin-top: 128px; border-top: 1px solid #C3C3CC; padding: 32px 24px 64px; }
   .disc-grid-m { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 0; row-gap: 20px; }
   .disc-grid-m h2 { grid-column: span 4; font-size: 12px; line-height: 1.4; font-weight: 400; color: #EDEDF3; }
   .disc-content-m { grid-column: span 8; font-size: 12px; line-height: 1.4; color: #EDEDF3; }
@@ -1179,14 +1092,136 @@
     .disc-grid-m h2, .disc-grid-m .disc-content-m { grid-column: 1 / -1; }
   }
 
+  /* ============================================================
+     Bank detail page — new page-specific components only. Reuses
+     this page's own real tokens/fonts/nav/footer verbatim (see
+     head_inner above); nothing here redefines --pb-* or fonts.
+     ============================================================ */
+  .bk-hero { position: relative; margin-top: -73px; background: #fbfcfd; padding: calc(40px + 73px) 0 clamp(64px, 5vw + 40px, 112px); }
+  .bk-breadcrumb-wrap { max-width: 1240px; margin: 0 auto 40px; padding: 0 40px; }
+  @media (max-width: 640px) { .bk-breadcrumb-wrap { padding: 0 20px; } }
+  .bk-breadcrumb { display: flex; align-items: center; justify-content: flex-start; gap: 8px; font-size: 13px; color: var(--pb-base-500); }
+  .bk-breadcrumb-home svg { width: 15px; height: 15px; display: block; }
+  .bk-breadcrumb a { color: var(--pb-base-500); text-decoration: none; }
+  .bk-breadcrumb a:hover { color: var(--pb-base-900); text-decoration: underline; }
+  .bk-breadcrumb span[aria-current] { color: var(--pb-base-700); }
+
+  /* Two-column grid from the identity block through the calculator —
+     left: logo/name/badges/sub/banner; right: sticky calculator card.
+     Everything below this (rates, FAQ, etc.) reverts to full-width
+     single-column sections, same as the rest of this cloned page. */
+  .bk-layout { max-width: 1240px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: 1.5fr 1fr; gap: 48px; }
+  @media (max-width: 900px) { .bk-layout { grid-template-columns: 1fr; gap: 32px; } }
+  @media (max-width: 640px) { .bk-layout { padding: 0 20px; } }
+  /* Banner with the circular logo overlapping its bottom-left corner —
+     matches the original bank-page layout exactly. */
+  .bk-banner-wrap { position: relative; margin-bottom: 44px; }
+  .bk-banner { position: relative; aspect-ratio: 2.1/1; border-radius: var(--pb-radius-l); overflow: hidden; border: 1px solid var(--pb-border); }
+  .bk-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .bk-logo-plate { position: absolute; left: 24px; bottom: -28px; width: 72px; height: 72px; border-radius: 50%; background: #fff; border: 1px solid var(--pb-border); z-index: 2; overflow: hidden; }
+  .bk-logo-plate img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .bk-identity h1 { font-size: var(--bb-size-hero); font-weight: 480; line-height: 1.04; letter-spacing: -.02em; color: var(--bb-ink-900); margin-bottom: 12px; }
+  .bk-col-main h1 { font-size: var(--bb-size-hero); font-weight: 480; line-height: 1.04; letter-spacing: -.02em; color: var(--bb-ink-900); }
+  .bk-hero-badges { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--pb-base-500); }
+  .bk-badge-pill { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--pb-purple-600); background: rgba(82,102,235,.1); border: 1px solid rgba(82,102,235,.22); padding: 5px 14px; border-radius: 999px; }
+  .bk-badge-pill::before { content: ''; width: 6px; height: 6px; border-radius: 0; background: var(--pb-purple-600); }
+  .bk-badge-pill.comingsoon { color: var(--pb-base-700); background: var(--pb-base-100); border-color: var(--pb-border); }
+  .bk-badge-pill.comingsoon::before { background: var(--pb-base-500); }
+  .bk-hero-sub { margin-top: 20px; max-width: 60ch; font-size: var(--pb-size-lede); line-height: 1.45; color: var(--bb-ink-600); }
+
+  /* Highlight facts — 4-up icon grid right under the intro sentence. */
+  .bk-highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 16px; margin: 24px 0 8px; }
+  .bk-highlight { background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); padding: 18px 16px; }
+  .bk-highlight svg { width: 22px; height: 22px; display: block; margin-bottom: 14px; color: var(--bb-ink-900); }
+  .bk-highlight span { font-size: 13.5px; color: var(--bb-ink-900); font-weight: 500; line-height: 1.4; display: block; }
+
+  /* Calculator — sticky sidebar card, single column. Still the same
+     no-shadow, flat-1px-border, --pb-radius-l chrome as the rest of
+     this page's real components. */
+  .bk-calc { position: sticky; top: 96px; background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); padding: 28px; }
+  .bk-calc-field + .bk-calc-field { margin-top: 18px; }
+  .bk-calc-field label { display: block; font-size: 13.5px; color: var(--pb-base-600); margin-bottom: 8px; }
+  .bk-calc-field input, .bk-calc-field select { width: 100%; box-sizing: border-box; height: 46px; padding: 0 14px; border: 1px solid var(--pb-border-input); border-radius: var(--pb-radius-m); font-family: inherit; font-size: 15px; color: var(--bb-ink-900); background: #fff; }
+  .bk-calc-field select { appearance: none; -webkit-appearance: none; padding-right: 36px; cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23707393' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center; }
+  .bk-calc-field input:focus, .bk-calc-field select:focus { outline: none; border-color: var(--pb-border-focus); }
+  .bk-calc-divider { height: 1px; background: var(--pb-border); margin: 20px 0; }
+  .bk-calc .btn { width: 100%; margin-top: 20px; }
+  .bk-calc-rows { display: flex; flex-direction: column; }
+  .bk-calc-rowline { display: flex; justify-content: space-between; align-items: baseline; font-size: 13.5px; padding: 11px 0; border-top: 1px solid var(--pb-border); color: var(--bb-ink-900); }
+  .bk-calc-rowline:first-child { border-top: none; }
+  .bk-calc-rowline .l { color: var(--pb-base-600); }
+  .bk-calc-rowline .v { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .bk-calc-rowline.hl { font-size: 15px; }
+  .bk-calc-rowline.hl .v { color: var(--pb-purple-600); font-weight: 700; }
+
+  /* Rate table — reuses this page's own .tr-rate-table component verbatim. */
+  .bk-section { padding: clamp(56px, 5vw + 32px, 96px) 0; }
+  .bk-section .wrap { max-width: 900px; }
+  .bk-section h2 { text-align: center; margin-bottom: 12px; }
+  .bk-section-sub { text-align: center; color: var(--pb-base-600); font-size: 15px; margin: 0 auto 32px; max-width: 56ch; }
+  .bk-fine { margin-top: 18px; font-size: 12.5px; color: var(--pb-base-500); line-height: 1.55; text-align: center; }
+  .bk-best td { font-weight: 600; }
+  .bk-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .04em; color: #fff; background: var(--pb-purple-600); padding: 2px 8px; border-radius: 999px; margin-left: 8px; vertical-align: middle; }
+
+  /* Fact grid — reuses .bullet-grid verbatim for RBI/senior/women/maturity facts */
+  .bk-example-card { max-width: 480px; margin: 0 auto; background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); padding: 8px 24px; }
+  .bk-example-row { display: flex; justify-content: space-between; align-items: center; padding: 14px 0; border-top: 1px solid var(--pb-border); font-size: 14.5px; color: var(--bb-ink-900); }
+  .bk-example-row:first-child { border-top: none; }
+  .bk-example-row .l { color: var(--pb-base-600); }
+  .bk-example-row .v { font-weight: 600; font-variant-numeric: tabular-nums; }
+  .bk-example-row.hl .v { color: var(--pb-purple-600); font-weight: 700; font-size: 16px; }
+
+  .bk-about-card { background: var(--bb-lavender-bg); border-radius: var(--pb-radius-l); padding: 32px; }
+  .bk-about-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; text-align: left; }
+  .bk-about-grid .n { font-size: 24px; font-weight: 600; color: var(--bb-ink-900); }
+  .bk-about-grid .l { font-size: 12.5px; color: var(--pb-base-600); margin-top: 4px; }
+  .bk-about-text p { font-size: 15px; line-height: 1.6; color: var(--bb-ink-600); margin-bottom: 14px; }
+  .bk-about-text p:last-child { margin-bottom: 0; }
+  .bk-rating-row { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-start; }
+  .bk-rating-pill { font-size: 12.5px; font-weight: 600; color: var(--bb-ink-900); background: #fff; border: 1px solid var(--pb-border); padding: 6px 14px; border-radius: 999px; }
+
+  /* Left-aligned variant of .bk-section's heading/table/fine-print,
+     used for the two blocks embedded directly in the left column
+     (Rates and tenure / Know your returns) instead of as full-width
+     sections below. */
+  .bk-inline-block { margin-top: 48px; }
+  .bk-inline-block h2 { font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem); margin-bottom: 8px; }
+  .bk-inline-block .bk-section-sub { text-align: left; margin: 0 0 20px; max-width: none; }
+  .bk-inline-block .bk-fine { text-align: left; margin-top: 14px; }
+  .bk-inline-block .bk-example-card { margin: 0; max-width: none; }
+
+  .bk-promise-grid { max-width: 900px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  @media (max-width: 760px) { .bk-promise-grid { grid-template-columns: 1fr; max-width: 360px; } }
+
+  /* "Book cover" card — literal reuse of the homepage's own sec-card
+     mechanic (hover opens the cover on its left hinge like a book,
+     revealing a page underneath), with a colour-gradient cover in
+     place of a photo since these three aren't photographic subjects. */
+  .bk-promise { font-size: 14.5px; color: var(--bb-ink-600); line-height: 1.5; }
+  .bk-promise-img { position: relative; aspect-ratio: 4/5; perspective: 1400px; margin-bottom: 18px; }
+  .bk-promise-page { position: absolute; inset: 0; background: #F4F2EC; border-radius: 10px; box-shadow: 0 4px 14px rgba(0,0,0,.16), 0 0 4px rgba(0,0,0,.04); opacity: 0; transition: opacity .4s ease; }
+  .bk-promise-img:hover .bk-promise-page { opacity: 1; }
+  .bk-promise-cover { position: absolute; inset: 0; overflow: hidden; display: flex; flex-direction: column; padding: 20px 20px 20px 26px; color: #fff; border-radius: 10px; box-shadow: 0 10px 16px rgba(0,0,0,.1), 0 2px 3px rgba(0,0,0,.1), 0 4px 6px rgba(0,0,0,.05); transform-style: preserve-3d; transform-origin: left center; transition: transform .4s cubic-bezier(.4,0,.2,1); }
+  .bk-promise-img:hover .bk-promise-cover { transform: rotateY(-24deg); }
+  .bk-promise-cover::before { content: ''; position: absolute; top: 0; bottom: 0; left: 14px; width: 3px; background: linear-gradient(90deg, rgba(0,0,0,.35) 0%, rgba(0,0,0,.12) 35%, rgba(255,255,255,.18) 60%, rgba(0,0,0,.12) 100%); pointer-events: none; z-index: 1; }
+  .bk-promise-highlight { position: absolute; inset: 0; background: linear-gradient(100deg, rgba(255,255,255,.35) 0%, rgba(255,255,255,0) 35%); opacity: 0; transition: opacity .4s ease; pointer-events: none; }
+  .bk-promise-img:hover .bk-promise-highlight { opacity: 1; }
+  .bk-promise-icon { position: relative; z-index: 1; width: 26px; height: 26px; }
+  .bk-promise-icon svg { width: 100%; height: 100%; display: block; }
+  .bk-promise-bottom { position: relative; z-index: 1; margin-top: auto; }
+  .bk-promise-sub { display: block; font-size: 13px; font-weight: 400; opacity: .75; margin-bottom: 4px; text-shadow: 1px 1px 0 rgba(0,0,0,.5), -.5px -.5px 0 rgba(255,255,255,.15); }
+  .bk-promise-title { font-size: 16px; font-weight: 600; line-height: 1.3; margin: 0; color: #fff; text-shadow: 1px 1px 0 rgba(0,0,0,.6), -.5px -.5px 0 rgba(255,255,255,.25); }
+  @media (prefers-reduced-motion: reduce) { .bk-promise-cover, .bk-promise-page, .bk-promise-highlight { transition: none; } }
 
 </style>
 </head>
 <body>
 
-  <nav class="nav" id="nav" >
+<nav class="nav"<nav class="nav" id="nav" data-theme="dark">
     <div class="nav-inner">
-      <a class="brand" href="https://raushco.com/"><img class="mk" src="../../../../assets/brand/Subtract.png" alt="Raushco"> Raushco</a>
+      <a class="brand" href="https://raushco.com/"><img class="mk" src="../../assets/brand/Subtract.png" alt="Raushco"> Raushco</a>
       <div class="nav-links">
         <div class="nav-item">
           <a href="#" class="nav-drop-trigger">Personal <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
@@ -1196,39 +1231,39 @@
                 <h4>Banking</h4>
                 <p>Everyday accounts and money movement.</p>
                 <span class="mega-label">Products</span>
-                <a href="../../../../savings-account/index.html">Savings Account</a>
-                <a href="../../../../fixed-deposit/index.html">Fixed Deposits</a>
-                <a href="../../../../recurring-deposit/index.html">Recurring Deposits</a>
-                <a href="../../../../forex-remittance/index.html">Forex &amp; Remittance</a>
+                <a href="../../savings-account/index.html">Savings Account</a>
+                <a href="../../fixed-deposit/index.html">Fixed Deposits</a>
+                <a href="../../recurring-deposit/index.html">Recurring Deposits</a>
+                <a href="../../forex-remittance/index.html">Forex &amp; Remittance</a>
               </div>
               <div class="mega-col">
                 <h4>Investments</h4>
                 <p>Grow your money beyond a savings rate.</p>
                 <span class="mega-label">Products</span>
-                <a href="../../../../gold-silver/index.html">Gold &amp; Silver</a>
-                <a href="../../../../mutual-funds/index.html">Mutual Funds &amp; SIPs</a>
-                <a href="../../../../bonds/index.html">Bonds</a>
+                <a href="../../gold-silver/index.html">Gold &amp; Silver</a>
+                <a href="../../mutual-funds/index.html">Mutual Funds &amp; SIPs</a>
+                <a href="../../bonds/index.html">Bonds</a>
               </div>
               <div class="mega-col">
                 <h4>Retirement &amp; Insurance</h4>
                 <p>Plan for later, and protect what you have.</p>
                 <span class="mega-label">Products</span>
-                <a href="../../../../nps/index.html">NPS</a>
-                <a href="../../../../corporate-nps/index.html">Corporate NPS</a>
-                <a href="../../../../nps-vatsalya/index.html">NPS Vatsalya</a>
-                <a href="../../../../insurance/index.html">Insurance</a>
+                <a href="../../nps/index.html">NPS</a>
+                <a href="../../corporate-nps/index.html">Corporate NPS</a>
+                <a href="../../nps-vatsalya/index.html">NPS Vatsalya</a>
+                <a href="../../insurance/index.html">Insurance</a>
               </div>
               <div class="mega-col">
                 <h4>Credit &amp; Loans</h4>
                 <p>Spend and borrow against what you already have.</p>
                 <span class="mega-label">Products</span>
-                <a href="../../../../fd-backed-credit-card/index.html">FD-Backed Credit Card</a>
-                <a href="../../../../personal-loans/index.html">Personal Loans</a>
-                <a href="../../../../loan-against-fd/index.html">Loan Against FD</a>
-                <a href="../../../../gold-loan/index.html">Gold Loan</a>
+                <a href="../../fd-backed-credit-card/index.html">FD-Backed Credit Card</a>
+                <a href="../../personal-loans/index.html">Personal Loans</a>
+                <a href="../../loan-against-fd/index.html">Loan Against FD</a>
+                <a href="../../gold-loan/index.html">Gold Loan</a>
               </div>
             </div>
-            <a class="mega-foot" href="../../../../personal-banking/index.html">
+            <a class="mega-foot" href="../../personal-banking/index.html">
               <span><h4>Personal Banking <span class="arrow">&rarr;</span></h4><p>A smarter way to manage, move, and grow your personal finances.</p></span>
             </a>
           </div>
@@ -1248,27 +1283,27 @@
                 <h4>Banking &amp; More</h4>
                 <p>Apply for business accounts, earn yield, and access capital.</p>
                 <span class="mega-label">Products</span>
-                <a href="../../../../business-banking/index.html">Checking &amp; Savings</a>
-                <a href="../../../../working-capital-loans/index.html">Working Capital Loans</a>
-                <a href="../../../../venture-debt/index.html">Venture Debt</a>
-                <a href="../../../../treasury/index.html">Treasury</a>
+                <a href="../../business-banking/index.html">Checking &amp; Savings</a>
+                <a href="../../working-capital-loans/index.html">Working Capital Loans</a>
+                <a href="../../venture-debt/index.html">Venture Debt</a>
+                <a href="../../treasury/index.html">Treasury</a>
               </div>
               <div class="mega-col">
                 <h4>Cards &amp; Expense Management</h4>
                 <p>Issue cards instantly and control team and vendor spend.</p>
                 <span class="mega-label">Products</span>
-                <a href="../../../../credit/index.html">Business Credit Cards</a>
-                <a href="../../../../spend-management/index.html">Spend Management</a>
+                <a href="../../credit/index.html">Business Credit Cards</a>
+                <a href="../../spend-management/index.html">Spend Management</a>
               </div>
               <div class="mega-col">
                 <h4>Payments &amp; Invoicing</h4>
                 <p>Send payments, create invoices, and sync your accounting tools.</p>
                 <span class="mega-label">Products</span>
-                <a href="../../../../business-payments/index.html">Payments</a>
-                <a href="../../../../invoicing/index.html">Invoicing</a>
-                <a href="../../../../accounting-integrations/index.html">Accounting Automations</a>
-                <a href="../../../../invoice-discounting/index.html">Invoice Discounting</a>
-                <a href="../../../../collections/index.html">Collections</a>
+                <a href="../../business-payments/index.html">Payments</a>
+                <a href="../../invoicing/index.html">Invoicing</a>
+                <a href="../../accounting-integrations/index.html">Accounting Automations</a>
+                <a href="../../invoice-discounting/index.html">Invoice Discounting</a>
+                <a href="../../collections/index.html">Collections</a>
               </div>
               <div class="mega-col">
                 <h4>Intelligence</h4>
@@ -1285,22 +1320,22 @@
           <a href="#" class="nav-drop-trigger">Solutions <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
           <div class="mega-menu">
             <div class="mega-grid mega-grid-3">
-              <a class="mega-col" href="../../../../tech-ai-startups/index.html">
+              <a class="mega-col" href="../../tech-ai-startups/index.html">
                 <h4>Tech</h4><p>Spend less time on money management and more time building.</p>
               </a>
-              <a class="mega-col" href="../../../../vc-funds/index.html">
+              <a class="mega-col" href="../../vc-funds/index.html">
                 <h4>VC Funds</h4><p>Manage investments in all your portfolio companies in one place.</p>
               </a>
-              <a class="mega-col" href="../../../../ecommerce/index.html">
+              <a class="mega-col" href="../../ecommerce/index.html">
                 <h4>Ecommerce</h4><p>Get everything you need to grow your brand at every stage.</p>
               </a>
-              <a class="mega-col" href="../../../../web3/index.html">
+              <a class="mega-col" href="../../web3/index.html">
                 <h4>Crypto</h4><p>Run everything from a fast, compliant hub built for the speed of crypto.</p>
               </a>
-              <a class="mega-col" href="../../../../agencies-and-consultants/index.html">
+              <a class="mega-col" href="../../agencies-and-consultants/index.html">
                 <h4>Agencies, Consultants &amp; Firms</h4><p>Simplify your finances across every client and project.</p>
               </a>
-              <a class="mega-col" href="../../../../accounting-firms/index.html">
+              <a class="mega-col" href="../../accounting-firms/index.html">
                 <h4>Accounting Firms</h4><p>Bring clarity to your clients and efficiency to your firm.</p>
               </a>
               <div class="mega-col mega-col-more">
@@ -1320,7 +1355,7 @@
           <div class="mega-menu">
             <div class="mega-grid mega-grid-3">
               <div class="mega-col">
-                <a class="mega-head-link" href="../../../../blog/index.html"><h4>Blog</h4><p>Practical resources, insights, and inspiration.</p></a>
+                <a class="mega-head-link" href="../../blog/index.html"><h4>Blog</h4><p>Practical resources, insights, and inspiration.</p></a>
                 <span class="mega-label">Jump to</span>
                 <a href="#">Starting A Business</a>
                 <a href="#">Scaling &amp; Growing</a>
@@ -1342,21 +1377,21 @@
                 <a href="#">Burn Rate Calculator</a>
               </div>
             </div>
-            <a class="mega-foot" href="../../../../releases/index.html"><span><h4>Product Releases <span class="arrow">&rarr;</span></h4></span></a>
+            <a class="mega-foot" href="../../releases/index.html"><span><h4>Product Releases <span class="arrow">&rarr;</span></h4></span></a>
           </div>
         </div>
         <div class="nav-item">
           <a href="#" class="nav-drop-trigger">About <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
           <div class="mega-menu">
             <div class="mega-grid mega-grid-3">
-              <a class="mega-col" href="../../../../about/index.html">
+              <a class="mega-col" href="../../about/index.html">
                 <h4>Our Story</h4><p>The vision behind Raushco and the people helping to shape the future of banking.</p>
               </a>
               <div class="mega-col">
                 <span class="mega-label" style="margin-top:0">Connect</span>
                 <a href="#">Events</a>
-                <a href="../../../../partnerships/index.html">Partnerships</a>
-                <a href="../../../../jobs/index.html">Careers</a>
+                <a href="../../partnerships/index.html">Partnerships</a>
+                <a href="../../jobs/index.html">Careers</a>
               </div>
               <div class="mega-col">
                 <span class="mega-label" style="margin-top:0">Support</span>
@@ -1365,10 +1400,10 @@
                 <a href="#">Switch to Raushco</a>
               </div>
             </div>
-            <a class="mega-foot" href="../../../../contact/index.html"><span><h4>Contact us <span class="arrow">&rarr;</span></h4></span></a>
+            <a class="mega-foot" href="../../contact/index.html"><span><h4>Contact us <span class="arrow">&rarr;</span></h4></span></a>
           </div>
         </div>
-        <a href="../../../../pricing/index.html">Pricing</a>
+        <a href="../../pricing/index.html">Pricing</a>
       </div>
       <div class="nav-cta">
         <a class="btn btn-ghost" href="https://dev.raushco.com/login">Log in</a>
@@ -1378,177 +1413,140 @@
     </div>
     <div class="nav-menu" id="navMenu">
       <span class="mega-label" style="margin:12px 0 8px;">Personal</span>
-      <a href="../../../../savings-account/index.html">Savings Account</a>
-      <a href="../../../../fixed-deposit/index.html">Fixed Deposits</a>
-      <a href="../../../../recurring-deposit/index.html">Recurring Deposits</a>
-      <a href="../../../../forex-remittance/index.html">Forex &amp; Remittance</a>
-      <a href="../../../../gold-silver/index.html">Gold &amp; Silver</a>
-      <a href="../../../../mutual-funds/index.html">Mutual Funds &amp; SIPs</a>
-      <a href="../../../../bonds/index.html">Bonds</a>
-      <a href="../../../../nps/index.html">NPS</a>
-      <a href="../../../../corporate-nps/index.html">Corporate NPS</a>
-      <a href="../../../../nps-vatsalya/index.html">NPS Vatsalya</a>
-      <a href="../../../../insurance/index.html">Insurance</a>
-      <a href="../../../../fd-backed-credit-card/index.html">FD-Backed Credit Card</a>
-      <a href="../../../../personal-loans/index.html">Personal Loans</a>
-      <a href="../../../../loan-against-fd/index.html">Loan Against FD</a>
-      <a href="../../../../gold-loan/index.html">Gold Loan</a>
-      <a href="../../../../personal-banking/index.html">Personal Banking</a>
+      <a href="../../savings-account/index.html">Savings Account</a>
+      <a href="../../fixed-deposit/index.html">Fixed Deposits</a>
+      <a href="../../recurring-deposit/index.html">Recurring Deposits</a>
+      <a href="../../forex-remittance/index.html">Forex &amp; Remittance</a>
+      <a href="../../gold-silver/index.html">Gold &amp; Silver</a>
+      <a href="../../mutual-funds/index.html">Mutual Funds &amp; SIPs</a>
+      <a href="../../bonds/index.html">Bonds</a>
+      <a href="../../nps/index.html">NPS</a>
+      <a href="../../corporate-nps/index.html">Corporate NPS</a>
+      <a href="../../nps-vatsalya/index.html">NPS Vatsalya</a>
+      <a href="../../insurance/index.html">Insurance</a>
+      <a href="../../fd-backed-credit-card/index.html">FD-Backed Credit Card</a>
+      <a href="../../personal-loans/index.html">Personal Loans</a>
+      <a href="../../loan-against-fd/index.html">Loan Against FD</a>
+      <a href="../../gold-loan/index.html">Gold Loan</a>
+      <a href="../../personal-banking/index.html">Personal Banking</a>
       <span class="mega-label" style="margin:12px 0 8px;">Business</span>
-      <a href="../../../../business-banking/index.html">Checking &amp; Savings</a>
-      <a href="../../../../working-capital-loans/index.html">Working Capital Loans</a>
-      <a href="../../../../venture-debt/index.html">Venture Debt</a>
-      <a href="../../../../treasury/index.html">Treasury</a>
-      <a href="../../../../credit/index.html">Business Credit Cards</a>
-      <a href="../../../../spend-management/index.html">Spend Management</a>
-      <a href="../../../../business-payments/index.html">Payments</a>
-      <a href="../../../../invoicing/index.html">Invoicing</a>
-      <a href="../../../../accounting-integrations/index.html">Accounting Automations</a>
-      <a href="../../../../invoice-discounting/index.html">Invoice Discounting</a>
-      <a href="../../../../collections/index.html">Collections</a>
+      <a href="../../business-banking/index.html">Checking &amp; Savings</a>
+      <a href="../../working-capital-loans/index.html">Working Capital Loans</a>
+      <a href="../../venture-debt/index.html">Venture Debt</a>
+      <a href="../../treasury/index.html">Treasury</a>
+      <a href="../../credit/index.html">Business Credit Cards</a>
+      <a href="../../spend-management/index.html">Spend Management</a>
+      <a href="../../business-payments/index.html">Payments</a>
+      <a href="../../invoicing/index.html">Invoicing</a>
+      <a href="../../accounting-integrations/index.html">Accounting Automations</a>
+      <a href="../../invoice-discounting/index.html">Invoice Discounting</a>
+      <a href="../../collections/index.html">Collections</a>
       <span class="mega-label" style="margin:12px 0 8px;">Solutions</span>
-      <a href="../../../../tech-ai-startups/index.html">Tech &amp; AI Startups</a>
-      <a href="../../../../vc-funds/index.html">VC Funds</a>
-      <a href="../../../../ecommerce/index.html">Ecommerce</a>
-      <a href="../../../../web3/index.html">Web3 &amp; Crypto</a>
-      <a href="../../../../agencies-and-consultants/index.html">Agencies &amp; Consultants</a>
-      <a href="../../../../accounting-firms/index.html">Accounting Firms</a>
+      <a href="../../tech-ai-startups/index.html">Tech &amp; AI Startups</a>
+      <a href="../../vc-funds/index.html">VC Funds</a>
+      <a href="../../ecommerce/index.html">Ecommerce</a>
+      <a href="../../web3/index.html">Web3 &amp; Crypto</a>
+      <a href="../../agencies-and-consultants/index.html">Agencies &amp; Consultants</a>
+      <a href="../../accounting-firms/index.html">Accounting Firms</a>
       <span class="mega-label" style="margin:12px 0 8px;">Resources</span>
-      <a href="../../../../blog/index.html">Blog</a>
-      <a href="../../../../releases/index.html">Product Releases</a>
+      <a href="../../blog/index.html">Blog</a>
+      <a href="../../releases/index.html">Product Releases</a>
       <span class="mega-label" style="margin:12px 0 8px;">About</span>
-      <a href="../../../../about/index.html">Company</a>
-      <a href="../../../../jobs/index.html">Careers</a>
-      <a href="../../../../partnerships/index.html">Partnerships</a>
-      <a href="../../../../contact/index.html">Contact us</a>
-      <a href="../../../../pricing/index.html">Pricing</a>
+      <a href="../../about/index.html">Company</a>
+      <a href="../../jobs/index.html">Careers</a>
+      <a href="../../partnerships/index.html">Partnerships</a>
+      <a href="../../contact/index.html">Contact us</a>
+      <a href="../../pricing/index.html">Pricing</a>
       <a class="btn btn-ghost" href="https://dev.raushco.com/login">Log in</a>
       <a class="btn btn-primary" href="https://dev.raushco.com/create-account">Open account</a>
     </div>
   </nav>
 
+
 <main>
-<div class="bk-page" id="top">
-  <div class="bk-breadcrumb-wrap">
-    <nav class="bk-breadcrumb" aria-label="Breadcrumb">
-      <a href="../../../index.html#top" class="bk-breadcrumb-home" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg></a>
-      <span>/</span>
-      <a href="../../../index.html#product">Deposits</a>
-      <span>/</span>
-      <a href="../../../fixed-deposit/index.html">Fixed Deposits</a>
-      <span>/</span>
-      <span aria-current="page">Shriram Finance</span>
-    </nav>
-  </div>
-  <div class="bk-layout">
-    <div class="bk-col-main">
 
-      <div class="bk-banner-wrap">
-        <div class="bk-banner">
-          <img src="../../../assets/images/bank-banners/ShriramBanner.webp" alt="Shriram Finance branch signage">
+  <section class="bk-hero" id="top">
+    <div class="bk-breadcrumb-wrap">
+      <nav class="bk-breadcrumb" aria-label="Breadcrumb">
+        <a href="../../index.html#top" class="bk-breadcrumb-home" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg></a>
+        <span>/</span>
+        <a href="../index.html">Fixed Deposits</a>
+        <span>/</span>
+        <span aria-current="page">Shriram Finance</span>
+      </nav>
+    </div>
+    <div class="bk-layout">
+      <div class="bk-col-main">
+        <div class="bk-banner-wrap">
+          <div class="bk-banner"><img src="../../assets/images/bank-banners/ShriramBanner.webp" alt="Shriram Finance branch signage"></div>
+          <div class="bk-logo-plate"><img src="../../assets/images/market-shriram.png" alt="Shriram Finance"></div>
         </div>
-        <div class="bk-logo-plate"><img src="../../../assets/images/market-shriram.png" alt="Shriram Finance"></div>
-      </div>
-
-      <div class="bk-identity">
-        <h1>Shriram Finance</h1>
-        <div class="bk-badge-row">
-          <span class="bk-badge">RBI-registered NBFC</span>
-          <span class="bk-badge-sep">&middot;</span>
-          <span class="bk-badge-pill bk-badge-partner">Partner bank</span>
+        <div class="bk-identity">
+          <h1>Shriram Finance</h1>
+          <div class="bk-hero-badges">
+            <span>RBI-registered NBFC</span>
+            <span class="bk-badge-pill">Partner bank</span>
+          </div>
         </div>
-      </div>
-
-      <section class="bk-section">
-        <p class="bk-section-sub">Rates and tenure below are live from Shriram Finance.</p>
+        <p class="bk-hero-sub">Rates and tenure below are live from Shriram Finance.</p>
         <div class="bk-highlights">
           <div class="bk-highlight"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3.5v5c0 4.6-3 8.7-7 10-4-1.3-7-5.4-7-10v-5L12 3z"/><path d="M9 12.2l2 2 4-4.4"/></svg><span>All investments are regulated by RBI</span></div>
           <div class="bk-highlight"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7.5" cy="7.5" r="2.2"/><circle cx="16.5" cy="16.5" r="2.2"/><path d="M17 7L7 17"/></svg><span>Senior citizens get up to 0.50% extra</span></div>
           <div class="bk-highlight"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20s-7-4.4-9.5-9A5 5 0 0 1 12 6a5 5 0 0 1 9.5 5c-2.5 4.6-9.5 9-9.5 9z"/></svg><span>Women get up to 0.05% extra</span></div>
           <div class="bk-highlight"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10l9-6 9 6"/><path d="M5 10v9M9 10v9M15 10v9M19 10v9"/><path d="M3 19h18"/><path d="M3 10h18"/></svg><span>Maturity amount credited directly to your bank</span></div>
         </div>
-        <table class="bk-rate-table">
-          <thead><tr><th>Tenure</th><th>General</th><th>Senior citizen</th></tr></thead>
-          <tbody>
-            <tr><td>1 year</td><td class="rate">7.00%</td><td class="rate">7.50%</td></tr>
-            <tr><td>1 year 6 months</td><td class="rate">7.25%</td><td class="rate">7.75%</td></tr>
-            <tr><td>2 years</td><td class="rate">7.50%</td><td class="rate">8.00%</td></tr>
-            <tr class="bk-best"><td>3 years<span class="bk-tag">BEST RATE</span></td><td class="rate">7.85%</td><td class="rate">8.35%</td></tr>
-            <tr><td>4 years 2 months</td><td class="rate">7.85%</td><td class="rate">8.35%</td></tr>
-            <tr><td>5 years</td><td class="rate">7.85%</td><td class="rate">8.35%</td></tr>
-          </tbody>
-        </table>
-        <div class="bk-fact-grid">
-          <div class="bk-fact"><div class="l">Minimum investment</div><div class="v">₹5,000</div></div>
-          <div class="bk-fact"><div class="l">Compounding</div><div class="v">Yearly (also monthly/quarterly/half-yearly)</div></div>
-          <div class="bk-fact"><div class="l">Payout</div><div class="v">At maturity or periodic</div></div>
-          <div class="bk-fact"><div class="l">DICGC insurance</div><div class="v">Not applicable (NBFC, not a bank)</div></div>
-        </div>
-        <p class="bk-fine">Premature withdrawal: no penalty on the principal. Withdrawing in months 3–6 forfeits interest entirely; in months 6–12 the rate drops 3 percentage points below the 12-month rate; after 12 months it drops 2 percentage points below the rate for the held tenure. Settlement takes 3–5 working days after you confirm the foreclosure by email.</p>
-      </section>
 
-      <section class="bk-section">
-        <h2>About Shriram Finance</h2>
-        <div class="bk-about-card">
-          <div class="bk-about-grid">
-            <div class="bk-about-stat"><div class="n">82.2 lakh</div><div class="l">Customers served</div></div>
-            <div class="bk-about-stat"><div class="n">3,000+</div><div class="l">Branches</div></div>
-            <div class="bk-about-stat"><div class="n">₹2.3L cr</div><div class="l">Assets under management</div></div>
+        <div class="bk-inline-block reveal">
+          <h2>Rates and tenure</h2>
+          <p class="bk-section-sub">Live from Shriram Finance.</p>
+          <div class="tr-table-scroll">
+            <table class="tr-rate-table">
+              <thead><tr><th>Tenure</th><th>General</th><th>Senior citizen</th></tr></thead>
+              <tbody>
+                <tr><td>1 year</td><td>7.00%</td><td>7.50%</td></tr>
+                <tr><td>1 year 6 months</td><td>7.25%</td><td>7.75%</td></tr>
+                <tr><td>2 years</td><td>7.50%</td><td>8.00%</td></tr>
+                <tr class="bk-best"><td>3 years<span class="bk-tag">BEST RATE</span></td><td>7.85%</td><td>8.35%</td></tr>
+                <tr><td>4 years 2 months</td><td>7.85%</td><td>8.35%</td></tr>
+                <tr><td>5 years</td><td>7.85%</td><td>8.35%</td></tr>
+              </tbody>
+            </table>
           </div>
-          <div class="bk-about-text">
-            <p>Shriram Finance is one of India’s larger NBFCs, founded in 1974, with assets under management of over ₹2.3 lakh crores and a workforce of more than 75,000 across 3,000+ branches.</p>
-            <p>As an NBFC, its fixed deposits sit outside DICGC’s ₹5 lakh bank-deposit insurance — that cover only extends to banks. In its place, independent agencies rate Shriram’s FDs directly:</p>
-          </div>
-          <div class="bk-rating-row">
-            <span class="bk-rating-pill">CRISIL AAA/Stable</span>
-            <span class="bk-rating-pill">ICRA AAA/Stable</span>
-          </div>
+          <p class="bk-fine">Minimum investment ₹5,000 · Compounds yearly (also available monthly/quarterly/half-yearly) · Payout at maturity or periodic · Not DICGC-insured (NBFC, not a bank). Premature withdrawal: no penalty on the principal. Withdrawing in months 3–6 forfeits interest entirely; in months 6–12 the rate drops 3 percentage points below the 12-month rate; after 12 months it drops 2 percentage points below the rate for the held tenure.</p>
         </div>
-      </section>
 
-      <section class="bk-section">
-        <h2>Frequently asked questions</h2>
-        <div id="bkFaqList">
-          <div class="bk-faq-item open" data-bkfaq="0">
-            <button class="bk-faq-q"><span>Is my Shriram FD insured? Is it safe?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>No. Shriram Finance is an NBFC — FDs with it aren’t covered by DICGC and aren’t guaranteed by RBI. They’re rated by credit rating agencies instead, and Shriram’s FD is rated AAA/Stable by both CRISIL and ICRA.</p></div></div>
+        <div class="bk-inline-block reveal">
+          <h2>Know your returns</h2>
+          <div class="bk-example-card">
+            <div class="bk-example-row"><span class="l">Investment</span><span class="v">₹1,00,000</span></div>
+            <div class="bk-example-row"><span class="l">Tenure</span><span class="v">3 years</span></div>
+            <div class="bk-example-row"><span class="l">Rate (general)</span><span class="v">7.85%</span></div>
+            <div class="bk-example-row hl"><span class="l">Maturity value</span><span class="v">₹1,25,447</span></div>
           </div>
-          <div class="bk-faq-item" data-bkfaq="1">
-            <button class="bk-faq-q"><span>What’s the minimum and maximum amount and tenure?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>Minimum ₹5,000 in multiples of ₹1,000, maximum ₹10 crore, tenure from 12 to 60 months.</p></div></div>
-          </div>
-          <div class="bk-faq-item" data-bkfaq="2">
-            <button class="bk-faq-q"><span>How does Shriram compound interest?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>Shriram compounds interest monthly. The rate shown is the equivalent yearly rate, already including that monthly compounding. You can take the interest monthly, quarterly, half-yearly, yearly, or all at maturity.</p></div></div>
-          </div>
-          <div class="bk-faq-item" data-bkfaq="3">
-            <button class="bk-faq-q"><span>Can I withdraw early, and what does it cost?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>Yes, after a 3-month lock-in, with no penalty on the principal. Before 3 months: not allowed, except on the depositor’s death. 3–6 months: principal only, no interest. 6–12 months: 3 percentage points below the 12-month rate. After 12 months: 2 percentage points below the rate for the time held. Money is credited within 7 working days.</p></div></div>
-          </div>
-          <div class="bk-faq-item" data-bkfaq="4">
-            <button class="bk-faq-q"><span>How do I get my FD receipt, and what if I lose it?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>An e-receipt is sent to your registered email as soon as booking completes. If you lose it, a duplicate can be issued once you raise a request with the required documents.</p></div></div>
-          </div>
-          <div class="bk-faq-item" data-bkfaq="5">
-            <button class="bk-faq-q"><span>Can I book a Shriram FD jointly with someone?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>No. Joint holding isn’t available for Shriram Finance FDs — only individuals can book, and payment must come from a bank account in that same person’s name.</p></div></div>
-          </div>
-          <div class="bk-faq-item" data-bkfaq="6">
-            <button class="bk-faq-q"><span>How much TDS does Shriram deduct, and how do I avoid it?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>10% TDS once your interest from Shriram crosses ₹10,000 in a year. Submit Form 15G/15H to avoid it — you’ll get a link to do this online after booking.</p></div></div>
-          </div>
-          <div class="bk-faq-item" data-bkfaq="7">
-            <button class="bk-faq-q"><span>Where does my money actually go?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>Straight to Shriram Finance. Raushco doesn’t pool or hold your deposit — we just make it easy to open and track it from your account; your FD receipt comes directly from Shriram.</p></div></div>
+          <p class="bk-fine">Illustrative only — use the calculator alongside to try your own amount and tenure.</p>
+        </div>
+
+        <div class="bk-inline-block reveal">
+          <h2>About Shriram Finance</h2>
+          <div class="bk-about-card">
+            <div class="bk-about-grid">
+              <div><div class="n">82.2 lakh</div><div class="l">Customers served</div></div>
+              <div><div class="n">3,000+</div><div class="l">Branches</div></div>
+              <div><div class="n">₹2.3L cr</div><div class="l">Assets under management</div></div>
+            </div>
+            <div class="bk-about-text">
+              <p>Shriram Finance is one of India's larger NBFCs, founded in 1974, with assets under management of over ₹2.3 lakh crores and a workforce of more than 75,000 across 3,000+ branches.</p>
+              <p>As an NBFC, its fixed deposits sit outside DICGC's ₹5 lakh bank-deposit insurance — that cover only extends to banks. In its place, independent agencies rate Shriram's FDs directly:</p>
+            </div>
+            <div class="bk-rating-row">
+              <span class="bk-rating-pill">CRISIL AAA/Stable</span>
+              <span class="bk-rating-pill">ICRA AAA/Stable</span>
+            </div>
           </div>
         </div>
-      </section>
-
-    </div>
-
-    <aside class="bk-col-side">
-      <div class="bk-calc" id="bk-calculator">
-        <div class="bk-calc-inputs">
+      </div>
+      <aside class="bk-col-side">
+        <div class="bk-calc" id="bk-calculator">
           <div class="bk-calc-field">
             <label for="bkAmt">Amount</label>
             <input type="number" id="bkAmt" min="5000" max="100000000" step="5000" value="100000">
@@ -1557,7 +1555,7 @@
             <label for="bkSenior">Sr. Citizen</label>
             <select id="bkSenior"><option value="0">No</option><option value="1">Yes</option></select>
           </div>
-          <div class="bk-calc-field full">
+          <div class="bk-calc-field">
             <label for="bkTenure">Interest rate and tenure</label>
             <select id="bkTenure">
               <option value="0">1Y (7.00%)</option>
@@ -1568,48 +1566,157 @@
               <option value="5">5Y (7.85%)</option>
             </select>
           </div>
+          <div class="bk-calc-divider"></div>
+          <div class="bk-calc-rows">
+            <div class="bk-calc-rowline"><span class="l">Investment amount</span><span class="v" id="bkOutAmt">₹1,00,000</span></div>
+            <div class="bk-calc-rowline"><span class="l">Compounding</span><span class="v" id="bkOutComp">Yearly</span></div>
+            <div class="bk-calc-rowline"><span class="l">FD rate applicable</span><span class="v" id="bkOutRate">7.85%</span></div>
+            <div class="bk-calc-rowline"><span class="l">FD tenure</span><span class="v" id="bkOutTenure">3Y</span></div>
+            <div class="bk-calc-rowline hl"><span class="l">Maturity amount</span><span class="v" id="bkMaturity">₹1,25,447</span></div>
+            <div class="bk-calc-rowline"><span class="l">Interest earned</span><span class="v" id="bkInterest">₹25,447</span></div>
+          </div>
+          <a class="btn btn-primary" href="https://app.raushco.com/auth/initiate-otp">Open account</a>
         </div>
-        <div class="bk-calc-divider"></div>
-        <div class="bk-calc-rows">
-          <div class="bk-calc-rowline"><span class="l">Investment amount</span><span class="v" id="bkOutAmt">₹1,00,000</span></div>
-          <div class="bk-calc-rowline"><span class="l">Compounding</span><span class="v" id="bkOutComp">Yearly</span></div>
-          <div class="bk-calc-rowline"><span class="l">FD rate applicable</span><span class="v" id="bkOutRate">7.85%</span></div>
-          <div class="bk-calc-rowline"><span class="l">FD tenure</span><span class="v" id="bkOutTenure">3Y</span></div>
-          <div class="bk-calc-rowline hl"><span class="l">Maturity amount</span><span class="v" id="bkMaturity">₹1,24,230</span></div>
-          <div class="bk-calc-rowline"><span class="l">Interest earned</span><span class="v" id="bkInterest">₹24,230</span></div>
-        </div>
-        <a class="btn btn-primary" href="https://app.raushco.com/open-account">Open account</a>
-      </div>
-    </aside>
-
-  </div>
-
-  <section class="bk-cta-band">
-    <div class="wrap">
-      <h2>Open your Shriram Finance FD in minutes</h2>
-      <p>One Raushco account, live partner rates, no separate sign-up with the bank.</p>
-      <a class="btn btn-primary btn-lg" href="https://app.raushco.com/open-account">Open account</a>
+      </aside>
     </div>
   </section>
-</div>
+
+  <section class="bk-section" data-theme="neutral">
+    <div class="wrap">
+      <h2 class="reveal">Compare with top banks</h2>
+      <p class="bk-section-sub reveal">How Shriram Finance's best rate stacks up against two large banks' own FD rates.</p>
+      <div class="tr-table-scroll reveal">
+        <table class="tr-rate-table">
+          <thead><tr><th>Bank</th><th>Best rate</th></tr></thead>
+          <tbody>
+            <tr><td>SBI</td><td>7.05%</td></tr>
+            <tr><td>HDFC Bank</td><td>7.20%</td></tr>
+            <tr class="bk-best"><td>Shriram Finance<span class="bk-tag">PARTNER</span></td><td>7.85%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="bk-fine reveal">Highest publicly listed FD rate at each bank, for comparison only — not an endorsement or ranking.</p>
+    </div>
+  </section>
+
+  <section class="bk-section" style="padding-bottom: clamp(96px, 8vw + 64px, 176px);">
+    <div class="wrap">
+      <h2 class="reveal">The Raushco promise</h2>
+      <div class="bk-promise-grid reveal">
+        <div class="bk-promise">
+          <div class="bk-promise-img">
+            <div class="bk-promise-page"></div>
+            <div class="bk-promise-cover" style="background:linear-gradient(145deg,#5266EB,#2F3C9E)">
+              <div class="bk-promise-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3.5v5c0 4.6-3 8.7-7 10-4-1.3-7-5.4-7-10v-5L12 3z"/></svg></div>
+              <div class="bk-promise-bottom">
+                <span class="bk-promise-sub">Direct deposit</span>
+                <h4 class="bk-promise-title">Your money goes straight to Shriram Finance</h4>
+              </div>
+              <div class="bk-promise-highlight"></div>
+            </div>
+          </div>
+          <p>We never pool or hold your deposit ourselves.</p>
+        </div>
+        <div class="bk-promise">
+          <div class="bk-promise-img">
+            <div class="bk-promise-page"></div>
+            <div class="bk-promise-cover" style="background:linear-gradient(145deg,#2F3C9E,#1B2466)">
+              <div class="bk-promise-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>
+              <div class="bk-promise-bottom">
+                <span class="bk-promise-sub">Security</span>
+                <h4 class="bk-promise-title">Bank-grade encryption, KYC to payment</h4>
+              </div>
+              <div class="bk-promise-highlight"></div>
+            </div>
+          </div>
+          <p>Every step of booking and holding your FD is encrypted.</p>
+        </div>
+        <div class="bk-promise">
+          <div class="bk-promise-img">
+            <div class="bk-promise-page"></div>
+            <div class="bk-promise-cover" style="background:linear-gradient(145deg,#6B5BEB,#39308F)">
+              <div class="bk-promise-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M3 9h18M8 3v4M16 3v4"/></svg></div>
+              <div class="bk-promise-bottom">
+                <span class="bk-promise-sub">Tracking</span>
+                <h4 class="bk-promise-title">Every FD you hold, tracked in one place</h4>
+              </div>
+              <div class="bk-promise-highlight"></div>
+            </div>
+          </div>
+          <p>Across every partner bank and NBFC, not just Shriram.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bb-faq-section" data-theme="purple">
+    <div class="wrap bb-faq-wrap">
+      <h2 class="reveal">Frequently asked questions</h2>
+      <div class="reveal" id="bkFaqList">
+        <div class="bb-faq-item open" data-bkfaq="0">
+          <button class="bb-faq-q"><span class="t">Is my Shriram FD insured? Is it safe?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>No. Shriram Finance is an NBFC — FDs with it aren't covered by DICGC and aren't guaranteed by RBI. They're rated by credit rating agencies instead, and Shriram's FD is rated AAA/Stable by both CRISIL and ICRA.</p></div></div>
+        </div>
+        <div class="bb-faq-item" data-bkfaq="1">
+          <button class="bb-faq-q"><span class="t">What's the minimum and maximum amount and tenure?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>Minimum ₹5,000 in multiples of ₹1,000, maximum ₹10 crore, tenure from 12 to 60 months.</p></div></div>
+        </div>
+        <div class="bb-faq-item" data-bkfaq="2">
+          <button class="bb-faq-q"><span class="t">How does Shriram compound interest?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>Shriram compounds interest monthly. The rate shown is the equivalent yearly rate, already including that monthly compounding. You can take the interest monthly, quarterly, half-yearly, yearly, or all at maturity.</p></div></div>
+        </div>
+        <div class="bb-faq-item" data-bkfaq="3">
+          <button class="bb-faq-q"><span class="t">Can I withdraw early, and what does it cost?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>Yes, after a 3-month lock-in, with no penalty on the principal. Before 3 months: not allowed, except on the depositor's death. 3–6 months: principal only, no interest. 6–12 months: 3 percentage points below the 12-month rate. After 12 months: 2 percentage points below the rate for the time held. Money is credited within 7 working days.</p></div></div>
+        </div>
+        <div class="bb-faq-item" data-bkfaq="4">
+          <button class="bb-faq-q"><span class="t">How do I get my FD receipt, and what if I lose it?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>An e-receipt is sent to your registered email as soon as booking completes. If you lose it, a duplicate can be issued once you raise a request with the required documents.</p></div></div>
+        </div>
+        <div class="bb-faq-item" data-bkfaq="5">
+          <button class="bb-faq-q"><span class="t">Can I book a Shriram FD jointly with someone?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>No. Joint holding isn't available for Shriram Finance FDs — only individuals can book, and payment must come from a bank account in that same person's name.</p></div></div>
+        </div>
+        <div class="bb-faq-item" data-bkfaq="6">
+          <button class="bb-faq-q"><span class="t">How much TDS does Shriram deduct, and how do I avoid it?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>10% TDS once your interest from Shriram crosses ₹10,000 in a year. Submit Form 15G/15H to avoid it — you'll get a link to do this online after booking.</p></div></div>
+        </div>
+        <div class="bb-faq-item" data-bkfaq="7">
+          <button class="bb-faq-q"><span class="t">Where does my money actually go?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>Straight to Shriram Finance. Raushco doesn't pool or hold your deposit — we just make it easy to open and track it from your account; your FD receipt comes directly from Shriram.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bb-cta-band" data-theme="purple">
+    <div class="wrap bb-cta-band-inner reveal">
+      <h2>Open your Shriram Finance FD in minutes</h2>
+      <p class="sub">One Raushco account, live partner rates, no separate sign-up with the bank.</p>
+      <a class="btn btn-primary btn-lg" href="https://app.raushco.com/auth/initiate-otp">Open account</a>
+    </div>
+  </section>
+
 </main>
-  <footer data-theme="dark">
+
+
+<footer data-theme="dark">
   <div class="wrap">
     <div class="foot-brand">
-      <a class="brand" href="#top"><img class="mk" src="../../../assets/brand/Subtract.png" alt="Raushco"> Raushco</a>
+      <a class="brand" href="../../index.html#top"><img class="mk" src="../../assets/brand/Subtract.png" alt="Raushco"> Raushco</a>
       <p class="foot-tag">Banking, credit cards, treasury, and finance ops in one platform.</p>
     </div>
     <!-- Mercury's real footer: one 4-col grid that auto-wraps into 2 rows of 8 category columns
          (not 2 hand-coded rows) — row-gap:80px/column-gap:40px, DOM order below reads row-major
          (Banking…Finance Ops, then Solutions…Follow Us) same as theirs. -->
     <div class="foot-grid-m">
-      <div class="foot-col"><h4>Personal</h4><a href="../../../savings-account/index.html">Savings Account</a><a href="../../../fixed-deposit/index.html">Fixed Deposits</a><a href="../../../recurring-deposit/index.html">Recurring Deposits</a><a href="../../../forex-remittance/index.html">Forex &amp; Remittance</a><a href="../../../gold-silver/index.html">Gold &amp; Silver</a><a href="../../../mutual-funds/index.html">Mutual Funds &amp; SIPs</a><a href="../../../bonds/index.html">Bonds</a><a href="../../../nps/index.html">NPS</a><a href="../../../corporate-nps/index.html">Corporate NPS</a><a href="../../../nps-vatsalya/index.html">NPS Vatsalya</a><a href="../../../insurance/index.html">Insurance</a><a href="../../../fd-backed-credit-card/index.html">FD-Backed Credit Card</a><a href="../../../personal-loans/index.html">Personal Loans</a><a href="../../../loan-against-fd/index.html">Loan Against FD</a><a href="../../../gold-loan/index.html">Gold Loan</a></div>
-      <div class="foot-col"><h4>Business</h4><a href="../../../business-banking/index.html">Business Checking &amp; Savings</a><a href="../../../treasury/index.html">Treasury</a><a href="../../../credit/index.html">Business Credit Cards</a><a href="../../../working-capital-loans/index.html">Working Capital Loans</a><a href="../../../venture-debt/index.html">Venture Debt</a><a href="../../../business-payments/index.html">Payments</a><a href="#">Bill Pay</a><a href="../../../invoicing/index.html">Invoicing</a><a href="../../../spend-management/index.html">Spend Management</a><a href="#">Books</a><a href="../../../accounting-integrations/index.html">Accounting Integrations</a><a href="#">Payroll</a><a href="../../../invoice-discounting/index.html">Invoice Discounting</a><a href="../../../collections/index.html">Collections</a></div>
-      <div class="foot-col"><h4>Platform</h4><a href="../../../pricing/index.html">Pricing</a><a href="#">Switch to Raushco</a><a href="#">Command</a><a href="#">Insights</a><a href="#">API</a><a href="#">Perks</a></div>
-      <div class="foot-col"><h4>Resources</h4><a href="#">Help Center</a><a href="../../../blog/index.html">Blog</a><a href="#">Tools</a><a href="#">Events</a><a href="../../../releases/index.html">Product Releases</a><a href="#">FAQs</a></div>
-      <div class="foot-col"><h4>Solutions</h4><a href="../../../tech-ai-startups/index.html">Tech &amp; AI Startups</a><a href="../../../ecommerce/index.html">Ecommerce</a><a href="../../../agencies-and-consultants/index.html">Agencies, Consultants &amp; Firms</a><a href="../../../vc-funds/index.html">VC Funds</a><a href="../../../web3/index.html">Web3 &amp; Crypto</a><a href="../../../accounting-firms/index.html">Accounting Firms</a><a href="#">SaaS</a><a href="#">LLCs</a><a href="#">Real Estate &amp; Construction</a><a href="#">Healthcare Services</a></div>
+      <div class="foot-col"><h4>Personal</h4><a href="../../savings-account/index.html">Savings Account</a><a href="../../fixed-deposit/index.html">Fixed Deposits</a><a href="../../recurring-deposit/index.html">Recurring Deposits</a><a href="../../forex-remittance/index.html">Forex &amp; Remittance</a><a href="../../gold-silver/index.html">Gold &amp; Silver</a><a href="../../mutual-funds/index.html">Mutual Funds &amp; SIPs</a><a href="../../bonds/index.html">Bonds</a><a href="../../nps/index.html">NPS</a><a href="../../corporate-nps/index.html">Corporate NPS</a><a href="../../nps-vatsalya/index.html">NPS Vatsalya</a><a href="../../insurance/index.html">Insurance</a><a href="../../fd-backed-credit-card/index.html">FD-Backed Credit Card</a><a href="../../personal-loans/index.html">Personal Loans</a><a href="../../loan-against-fd/index.html">Loan Against FD</a><a href="../../gold-loan/index.html">Gold Loan</a></div>
+      <div class="foot-col"><h4>Business</h4><a href="../../business-banking/index.html">Business Checking &amp; Savings</a><a href="../../treasury/index.html">Treasury</a><a href="../../credit/index.html">Business Credit Cards</a><a href="../../working-capital-loans/index.html">Working Capital Loans</a><a href="../../venture-debt/index.html">Venture Debt</a><a href="../../business-payments/index.html">Payments</a><a href="#">Bill Pay</a><a href="../../invoicing/index.html">Invoicing</a><a href="../../spend-management/index.html">Spend Management</a><a href="#">Books</a><a href="../../accounting-integrations/index.html">Accounting Integrations</a><a href="#">Payroll</a><a href="../../invoice-discounting/index.html">Invoice Discounting</a><a href="../../collections/index.html">Collections</a></div>
+      <div class="foot-col"><h4>Platform</h4><a href="../../pricing/index.html">Pricing</a><a href="#">Switch to Raushco</a><a href="#">Command</a><a href="#">Insights</a><a href="#">API</a><a href="#">Perks</a></div>
+      <div class="foot-col"><h4>Resources</h4><a href="#">Help Center</a><a href="../../blog/index.html">Blog</a><a href="#">Tools</a><a href="#">Events</a><a href="../../releases/index.html">Product Releases</a><a href="#">FAQs</a></div>
+      <div class="foot-col"><h4>Solutions</h4><a href="../../tech-ai-startups/index.html">Tech &amp; AI Startups</a><a href="../../ecommerce/index.html">Ecommerce</a><a href="../../agencies-and-consultants/index.html">Agencies, Consultants &amp; Firms</a><a href="../../vc-funds/index.html">VC Funds</a><a href="../../web3/index.html">Web3 &amp; Crypto</a><a href="../../accounting-firms/index.html">Accounting Firms</a><a href="#">SaaS</a><a href="#">LLCs</a><a href="#">Real Estate &amp; Construction</a><a href="#">Healthcare Services</a></div>
       <div class="foot-col"><h4>Account</h4><a href="https://dev.raushco.com/create-account">Open Account</a><a href="https://dev.raushco.com/login">Log In</a><a href="#">iOS</a><a href="#">Android</a></div>
-      <div class="foot-col"><h4>About</h4><a href="#">How Raushco Works</a><a href="../../../about/index.html">Our Story</a><a href="../../../jobs/index.html">Careers</a><a href="../../../partnerships/index.html">Partnerships</a><a href="../../../contact/index.html">Contact</a><a href="../../../legal/index.html">Legal</a><a href="../../../legal/privacy/index.html">Privacy Policy</a></div>
+      <div class="foot-col"><h4>About</h4><a href="#">How Raushco Works</a><a href="../../about/index.html">Our Story</a><a href="../../jobs/index.html">Careers</a><a href="../../partnerships/index.html">Partnerships</a><a href="../../contact/index.html">Contact</a><a href="../../legal/index.html">Legal</a><a href="../../legal/privacy/index.html">Privacy Policy</a></div>
       <div class="foot-col"><h4>Follow Us</h4><a href="#">X</a><a href="#">LinkedIn</a><a href="#">YouTube</a><a href="#">Instagram</a></div>
     </div>
   </div>
@@ -1645,7 +1752,6 @@
     </div>
   </div>
 </section>
-</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -1821,7 +1927,7 @@
   })();
 </script>
 
-<!-- Get-the-app QR modal — same markup/CSS/script on every marketing page. Every "Open account"
+<!-- Get-the-app QR modal<!-- Get-the-app QR modal — same markup/CSS/script on every marketing page. Every "Open account"
      link/button on the page opens this instead of navigating, since the signup flow lives in the
      app, not on this static site. -->
 <div class="qr-modal-overlay" id="qrModalOverlay" aria-hidden="true">
@@ -1829,41 +1935,10 @@
     <button type="button" class="qr-modal-close" id="qrModalClose" aria-label="Close">&times;</button>
     <h3 id="qrModalTitle">Get the Raushco app</h3>
     <p>Scan the QR code with your phone's camera to download the app and open your account.</p>
-    <div class="qr-modal-code"><img src="../../../../assets/images/app-download-qr.png" alt="QR code to download the Raushco app" width="176" height="176"></div>
-  </div>
-</div>
-
-<div class="otp-popup-overlay" id="otpPopupOverlay" aria-hidden="true">
-  <div class="otp-popup" role="dialog" aria-modal="true" aria-labelledby="otpPopupTitle">
-    <button type="button" class="otp-popup-close" id="otpPopupClose" aria-label="Close">&times;</button>
-    <div class="otp-popup-step" data-step="loading">
-      <div class="otp-popup-spinner"></div>
-      <p class="otp-popup-text">Setting up your account&hellip;</p>
-    </div>
-    <div class="otp-popup-step" data-step="code" hidden>
-      <h3 id="otpPopupTitle" class="otp-popup-h">Enter the code</h3>
-      <p class="otp-popup-sub">We sent a code to <span id="otpPopupPhone"></span></p>
-      <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" class="otp-popup-input" id="otpPopupCodeInput" placeholder="••••••" autocomplete="one-time-code" />
-      <p class="otp-popup-error" id="otpPopupCodeError" hidden></p>
-      <button type="button" class="otp-popup-btn" id="otpPopupVerifyBtn">Continue</button>
-      <button type="button" class="otp-popup-link" id="otpPopupResendBtn">Resend code</button>
-    </div>
-    <div class="otp-popup-step" data-step="verifying" hidden>
-      <div class="otp-popup-spinner"></div>
-      <p class="otp-popup-text">Verifying&hellip;</p>
-    </div>
-    <div class="otp-popup-step" data-step="status" hidden>
-      <div class="otp-popup-spinner"></div>
-      <p class="otp-popup-text" id="otpPopupStatusText">Taking you to your account&hellip;</p>
-    </div>
-    <div class="otp-popup-step" data-step="error" hidden>
-      <p class="otp-popup-text" id="otpPopupErrorText">Something went wrong.</p>
-      <button type="button" class="otp-popup-btn" id="otpPopupRetryBtn">Try again</button>
-    </div>
+    <div class="qr-modal-code"><img src="../../assets/images/app-download-qr.png" alt="QR code to download the Raushco app" width="176" height="176"></div>
   </div>
 </div>
 <script>
-
   (function () {
     var overlay = document.getElementById('qrModalOverlay');
     if (!overlay) return;
@@ -1896,186 +1971,17 @@
   // path) — this always sends the typed number to the one real, current signup entry point.
   (function () {
     document.querySelectorAll('.email-combo').forEach(function (combo) {
-    var input = combo.querySelector('input[type="tel"]');
-    var cta = combo.querySelector('a');
-    if (!input || !cta) return;
-    cta.addEventListener('click', function (e) {
-      var digits = (input.value || '').replace(/\D/g, '');
-      if (digits.length < 10) return; // no usable number typed — let it fall through to the plain href
-      e.preventDefault();
-      OtpPopup.open(digits.slice(-10));
-    });
-  });
-})();
-
-// Phone+OTP popup that stays on this marketing page: the account's whole
-// phone/OTP exchange happens here via direct cross-origin calls to the real
-// backend (CORS already allows any origin with credentials — confirmed live,
-// no backend change made for this), so a visitor never leaves raushco.com
-// until they're actually logged in or signed up. Once verified, the only
-// thing handed to app.raushco.com is the resulting access/id token, via the
-// URL *fragment* (never sent to a server or logged) — everything after that
-// (profile-complete check, dashboard vs. onboarding routing) is the app's
-// own existing logic, not reimplemented here.
-var OtpPopup = (function () {
-  var BFF = 'https://app.y1card.com/bff';
-  var overlay = document.getElementById('otpPopupOverlay');
-  if (!overlay) return { open: function () {} };
-  var steps = {};
-  overlay.querySelectorAll('.otp-popup-step').forEach(function (el) {
-    steps[el.getAttribute('data-step')] = el;
-  });
-  function showStep(name) {
-    Object.keys(steps).forEach(function (k) { steps[k].hidden = k !== name; });
-  }
-  function openOverlay() {
-    overlay.classList.add('is-open');
-    overlay.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeOverlay() {
-    overlay.classList.remove('is-open');
-    overlay.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-  document.getElementById('otpPopupClose').addEventListener('click', closeOverlay);
-  overlay.addEventListener('click', function (e) { if (e.target === overlay) closeOverlay(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeOverlay(); });
-
-  function bufToBase64(buf) {
-    var bytes = new Uint8Array(buf), binary = '';
-    for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-    return btoa(binary);
-  }
-  // Mirrors the real app's generateCodeVerifier() exactly (src/redux/auth.ts):
-  // 1024 random bytes, verifier = base64(bytes), challenge = base64(sha256(bytes)).
-  function generateCodeVerifier() {
-    var rand = new Uint8Array(1024);
-    crypto.getRandomValues(rand);
-    return crypto.subtle.digest('SHA-256', rand).then(function (challengeBuf) {
-      return { codeVerifier: bufToBase64(rand), codeChallenge: bufToBase64(challengeBuf) };
-    });
-  }
-
-  var state = { phone: null, authCode: null, codeVerifier: null };
-
-  function showError(msg) {
-    document.getElementById('otpPopupErrorText').textContent = msg;
-    showStep('error');
-  }
-
-  function requestOtp(phone) {
-    state.phone = phone;
-    showStep('loading');
-    generateCodeVerifier()
-      .then(function (cv) {
-        state.codeVerifier = cv.codeVerifier;
-        return fetch(BFF + '/auth/initiate-otp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ phone: phone, codeChallenge: { challenge: cv.codeChallenge } }),
-        });
-      })
-      .then(function (res) {
-        if (!res.ok) return res.json().then(function (b) { throw b; });
-        return res.json();
-      })
-      .then(function (body) {
-        state.authCode = body.authCode;
-        document.getElementById('otpPopupPhone').textContent = '+91 ' + phone;
-        var codeInput = document.getElementById('otpPopupCodeInput');
-        codeInput.value = '';
-        document.getElementById('otpPopupCodeError').hidden = true;
-        showStep('code');
-        codeInput.focus();
-      })
-      .catch(function (err) {
-        showError(err && err.code === 'PhoneNumberInvalid' ? 'That phone number looks invalid.' : "Couldn't send the code — please try again.");
+      var input = combo.querySelector('input[type="tel"]');
+      var cta = combo.querySelector('a');
+      if (!input || !cta) return;
+      cta.addEventListener('click', function (e) {
+        var digits = (input.value || '').replace(/\D/g, '');
+        if (digits.length < 10) return; // no usable number typed — let it fall through to the plain href
+        e.preventDefault();
+        window.location.href = 'https://app.raushco.com/open-account?phone=91' + digits.slice(-10);
       });
-  }
-
-  function verifyOtp() {
-    var otp = document.getElementById('otpPopupCodeInput').value.trim();
-    var errEl = document.getElementById('otpPopupCodeError');
-    if (!/^[0-9]{4,6}$/.test(otp)) {
-      errEl.textContent = 'Enter the code you received.';
-      errEl.hidden = false;
-      return;
-    }
-    errEl.hidden = true;
-    showStep('verifying');
-    fetch(BFF + '/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone: state.phone, otp: otp, authCode: state.authCode, codeVerifier: state.codeVerifier }),
-    })
-      .then(function (res) {
-        if (!res.ok) return res.json().then(function (b) { throw b; });
-        return res.json();
-      })
-      .then(function (body) {
-        var accessToken = body.jwt.access_token;
-        var idToken = body.jwt.id_token;
-        return fetch(BFF + '/auth/user-info', { headers: { Authorization: 'Bearer ' + accessToken } })
-          .then(function (r) { return r.ok ? r.json() : { info: {} }; })
-          .catch(function () { return { info: {} }; })
-          .then(function (userInfo) {
-            var existing = !!(userInfo.info && userInfo.info.given_name && userInfo.info.family_name);
-            document.getElementById('otpPopupStatusText').textContent = existing
-              ? 'You already have an account — logging you in…'
-              : 'Setting up your new account…';
-            showStep('status');
-            setTimeout(function () {
-              window.location.href =
-                'https://app.raushco.com/login#access_token=' +
-                encodeURIComponent(accessToken) +
-                '&id_token=' +
-                encodeURIComponent(idToken || '');
-            }, 900);
-          });
-      })
-      .catch(function (err) {
-        showStep('code');
-        var code = err && err.code;
-        errEl.textContent =
-          code === 'OTPExpired' ? 'That code expired — try resending.'
-          : code === 'OTPInvalid' ? 'That code is incorrect.'
-          : code === 'CodeVerificationFailed' ? 'Verification failed — please try again.'
-          : 'Something went wrong — please try again.';
-        errEl.hidden = false;
-      });
-  }
-
-  document.getElementById('otpPopupVerifyBtn').addEventListener('click', verifyOtp);
-  document.getElementById('otpPopupCodeInput').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') verifyOtp();
-  });
-  document.getElementById('otpPopupResendBtn').addEventListener('click', function () {
-    if (state.phone) requestOtp(state.phone);
-  });
-  document.getElementById('otpPopupRetryBtn').addEventListener('click', function () {
-    if (state.phone) requestOtp(state.phone);
-    else closeOverlay();
-  });
-
-  // If this page is restored from the browser's back-forward cache (e.g. the
-  // visitor went on to app.raushco.com and then hit Back), reset to closed
-  // instead of showing whatever step was frozen mid-flow when they left.
-  window.addEventListener('pageshow', function (e) {
-    if (!e.persisted) return;
-    closeOverlay();
-    state = { phone: null, authCode: null, codeVerifier: null };
-    showStep('loading');
-  });
-
-  return {
-    open: function (phone) {
-      openOverlay();
-      requestOtp(phone);
-    },
-  };
-})();
-
+    });
+  })();
 </script>
 
 <script>
@@ -2086,16 +1992,14 @@ var OtpPopup = (function () {
   var tenureShort = ['1Y', '1Y 6M', '2Y', '3Y', '4Y 2M', '5Y'];
   var generalRates = [7.00, 7.25, 7.50, 7.85, 7.85, 7.85];
   var seniorRates = [7.50, 7.75, 8.00, 8.35, 8.35, 8.35];
-  function fmtINR(n) {
-    return '₹' + Math.round(n).toLocaleString('en-IN');
-  }
+  function fmtINR(n) { return '₹' + Math.round(n).toLocaleString('en-IN'); }
   function render() {
     var amt = Math.max(5000, parseInt(amtEl.value, 10) || 0);
     var i = parseInt(tenEl.value, 10);
     var isSenior = srEl.value === '1';
     var years = tenureDays[i] / 365;
     var ratePc = isSenior ? seniorRates[i] : generalRates[i];
-    var maturity = amt * Math.pow(1 + ratePc / 100, years); // yearly compounding, matches the rate table above
+    var maturity = amt * Math.pow(1 + ratePc / 100, years);
     var interest = maturity - amt;
     document.getElementById('bkOutAmt').textContent = fmtINR(amt);
     document.getElementById('bkOutComp').textContent = 'Yearly';
@@ -2107,8 +2011,8 @@ var OtpPopup = (function () {
   [amtEl, tenEl, srEl].forEach(function (el) { el.addEventListener('input', render); el.addEventListener('change', render); });
   render();
 })();
-document.querySelectorAll('.bk-faq-q').forEach(function (q) {
-  q.addEventListener('click', function () { q.closest('.bk-faq-item').classList.toggle('open'); });
+document.querySelectorAll('#bkFaqList .bb-faq-q').forEach(function (q) {
+  q.addEventListener('click', function () { q.closest('.bb-faq-item').classList.toggle('open'); });
 });
 </script>
 
