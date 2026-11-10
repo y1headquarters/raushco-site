@@ -1984,6 +1984,16 @@ var OtpPopup = (function () {
     else closeOverlay();
   });
 
+  // If this page is restored from the browser's back-forward cache (e.g. the
+  // visitor went on to app.raushco.com and then hit Back), reset to closed
+  // instead of showing whatever step was frozen mid-flow when they left.
+  window.addEventListener('pageshow', function (e) {
+    if (!e.persisted) return;
+    closeOverlay();
+    state = { phone: null, authCode: null, codeVerifier: null };
+    showStep('loading');
+  });
+
   return {
     open: function (phone) {
       openOverlay();
