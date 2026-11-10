@@ -1107,9 +1107,9 @@
   .fc-hero-sub { margin: 16px auto 0; max-width: 620px; font-size: var(--pb-size-lede); line-height: 1.45; color: var(--bb-ink-600); }
 
   .fc-tool-section { padding: 40px 0 clamp(64px, 5vw + 40px, 112px); background: #fbfcfd; }
-  .fc-tool-card { max-width: 1040px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); overflow: hidden; }
-  @media (max-width: 760px) { .fc-tool-card { grid-template-columns: 1fr; } }
-  .fc-tool-col { padding: 36px 40px; }
+  .fc-tool-card { max-width: 1040px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: stretch; background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); overflow: hidden; }
+  @media (max-width: 760px) { .fc-tool-card { grid-template-columns: minmax(0, 1fr); } }
+  .fc-tool-col { padding: 36px 40px; min-width: 0; }
   .fc-tool-col.l { border-right: 1px solid var(--pb-border); }
   @media (max-width: 760px) { .fc-tool-col.l { border-right: none; border-bottom: 1px solid var(--pb-border); } }
   .fc-field + .fc-field { margin-top: 20px; }
