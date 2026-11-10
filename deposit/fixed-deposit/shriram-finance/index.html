@@ -1130,6 +1130,39 @@
   .bk-cta-band h2 { color: #fff; margin-bottom: 8px; font-size: 24px; }
   .bk-cta-band p { color: rgba(255,255,255,.55); margin-bottom: 24px; font-size: 15px; }
 
+  /* Homepage's own footer/disclaimer classes (business-banking's footer uses
+     different, shorter ones) — pulled in so this page's footer matches
+     raushco.com's exactly, per explicit request: one consistent footer
+     across all marketing pages. */
+  footer[data-theme="dark"], section[data-theme="dark"] { background: #171721; color: #fff; }
+  footer[data-theme="dark"] .brand { color: #fff; }
+  .foot-brand { margin-bottom: 56px; }
+  .foot-brand .brand { margin-bottom: 12px; }
+  .foot-tag { font-size: 13.5px; color: rgba(255,255,255,.5); max-width: 28ch; line-height: 1.5; }
+  .foot-grid-m { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 40px; row-gap: 80px; align-items: start; padding-bottom: 56px; }
+  .foot-col { display: grid; row-gap: 8px; align-items: start; }
+  .foot-col h4 { font-size: 16px; line-height: 1.4; font-weight: 400; color: #C3C3CC; text-transform: none; letter-spacing: normal; margin: 0 0 2px; }
+  .foot-col a { font-size: 16px; line-height: 1.25; font-weight: 420; color: #EDEDF3; text-decoration: none; }
+  .foot-col a:hover { color: #C3C3CC; text-decoration: underline; text-decoration-color: #C3C3CC; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+  .foot-disclaimers .wrap { margin-top: 64px; border-top: 1px solid rgba(255,255,255,.14); padding: 32px 24px 64px; }
+  .disc-grid-m { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 0; row-gap: 20px; }
+  .disc-grid-m h2 { grid-column: span 4; font-size: 12px; line-height: 1.4; font-weight: 400; color: #EDEDF3; }
+  .disc-content-m { grid-column: span 8; font-size: 12px; line-height: 1.4; color: #EDEDF3; }
+  .disc-content-m > p, .disc-content-m > ol { margin: 0 0 20px; }
+  .disc-content-m > *:last-child { margin-bottom: 0; }
+  .disc-content-m ol { list-style: decimal outside; padding-left: 16px; }
+  .disc-content-m li { margin-bottom: 20px; }
+  .disc-content-m li:last-child { margin-bottom: 0; }
+  .disc-content-m li p + p { margin-top: 20px; }
+  .disc-content-m strong { font-weight: 600; }
+  .disc-copyright { color: #C3C3CC; }
+  @media (max-width: 760px) {
+    .foot-grid-m { grid-template-columns: 1fr 1fr; }
+    .disc-grid-m { grid-template-columns: 1fr; }
+    .disc-grid-m h2, .disc-grid-m .disc-content-m { grid-column: 1 / -1; }
+  }
+
+
 </style>
 </head>
 <body>
@@ -1530,68 +1563,58 @@
   </section>
 </div>
 </main>
-  <footer class="dp">
-    <div class="wrap">
-      <div class="foot-grid">
-        <div class="foot-col">
-          <a href="../index.html#top" style="margin-bottom:12px; display:inline-flex;">
-            <img src="../../../../assets/brand/Subtract.png" alt="Raushco" style="filter:brightness(0) invert(1); width:28px; height:28px;">
-          </a>
-        </div>
-        <div class="foot-col">
-          <h5>Banking</h5>
-          <a href="../../../../personal-banking/index.html">Personal banking</a>
-          <a href="../index.html#product">Goals</a>
-          <a href="../index.html#product">Fixed &amp; recurring deposits</a>
-          <a href="../index.html#product">Gold &amp; silver</a>
-          <a href="../index.html#product">FD-backed credit card</a>
-        </div>
-        <div class="foot-col">
-          <h5>Platform</h5>
-          <a href="../../../../pricing/index.html">Pricing</a>
-          <a href="../index.html#product">Bill pay</a>
-          <a href="../index.html#product">Tax filing</a>
-        </div>
-        <div class="foot-col">
-          <h5>Resources</h5>
-          <a href="../index.html#resources">Help center</a>
-          <a href="../index.html#security">Security</a>
-          <a href="../../../../blog/index.html">Blog</a>
-          <a href="../index.html#guides">Guides</a>
-        </div>
-        <div class="foot-col">
-          <h5>Company</h5>
-          <a href="../../../../about/index.html">About</a>
-          <a href="../../../../jobs/index.html">Careers</a>
-          <a href="../../../../partnerships/index.html">Partners</a>
-          <a href="../../../../contact/index.html">Contact</a>
-        </div>
-      </div>
-      <div class="foot-bottom">
-        <span>© 2026 Raushco. All rights reserved.</span>
-        <span style="display:flex; gap:20px;">
-          <a href="../../../../legal/privacy/index.html">Privacy</a>
-          <a href="../index.html#terms">Terms</a>
-        </span>
-      </div>
+  <footer data-theme="dark">
+  <div class="wrap">
+    <div class="foot-brand">
+      <a class="brand" href="#top"><img class="mk" src="../../../assets/brand/Subtract.png" alt="Raushco"> Raushco</a>
+      <p class="foot-tag">Banking, credit cards, treasury, and finance ops in one platform.</p>
     </div>
-  </footer>
+    <!-- Mercury's real footer: one 4-col grid that auto-wraps into 2 rows of 8 category columns
+         (not 2 hand-coded rows) — row-gap:80px/column-gap:40px, DOM order below reads row-major
+         (Banking…Finance Ops, then Solutions…Follow Us) same as theirs. -->
+    <div class="foot-grid-m">
+      <div class="foot-col"><h4>Personal</h4><a href="../../../savings-account/index.html">Savings Account</a><a href="../../../fixed-deposit/index.html">Fixed Deposits</a><a href="../../../recurring-deposit/index.html">Recurring Deposits</a><a href="../../../forex-remittance/index.html">Forex &amp; Remittance</a><a href="../../../gold-silver/index.html">Gold &amp; Silver</a><a href="../../../mutual-funds/index.html">Mutual Funds &amp; SIPs</a><a href="../../../bonds/index.html">Bonds</a><a href="../../../nps/index.html">NPS</a><a href="../../../corporate-nps/index.html">Corporate NPS</a><a href="../../../nps-vatsalya/index.html">NPS Vatsalya</a><a href="../../../insurance/index.html">Insurance</a><a href="../../../fd-backed-credit-card/index.html">FD-Backed Credit Card</a><a href="../../../personal-loans/index.html">Personal Loans</a><a href="../../../loan-against-fd/index.html">Loan Against FD</a><a href="../../../gold-loan/index.html">Gold Loan</a></div>
+      <div class="foot-col"><h4>Business</h4><a href="../../../business-banking/index.html">Business Checking &amp; Savings</a><a href="../../../treasury/index.html">Treasury</a><a href="../../../credit/index.html">Business Credit Cards</a><a href="../../../working-capital-loans/index.html">Working Capital Loans</a><a href="../../../venture-debt/index.html">Venture Debt</a><a href="../../../business-payments/index.html">Payments</a><a href="#">Bill Pay</a><a href="../../../invoicing/index.html">Invoicing</a><a href="../../../spend-management/index.html">Spend Management</a><a href="#">Books</a><a href="../../../accounting-integrations/index.html">Accounting Integrations</a><a href="#">Payroll</a><a href="../../../invoice-discounting/index.html">Invoice Discounting</a><a href="../../../collections/index.html">Collections</a></div>
+      <div class="foot-col"><h4>Platform</h4><a href="../../../pricing/index.html">Pricing</a><a href="#">Switch to Raushco</a><a href="#">Command</a><a href="#">Insights</a><a href="#">API</a><a href="#">Perks</a></div>
+      <div class="foot-col"><h4>Resources</h4><a href="#">Help Center</a><a href="../../../blog/index.html">Blog</a><a href="#">Tools</a><a href="#">Events</a><a href="../../../releases/index.html">Product Releases</a><a href="#">FAQs</a></div>
+      <div class="foot-col"><h4>Solutions</h4><a href="../../../tech-ai-startups/index.html">Tech &amp; AI Startups</a><a href="../../../ecommerce/index.html">Ecommerce</a><a href="../../../agencies-and-consultants/index.html">Agencies, Consultants &amp; Firms</a><a href="../../../vc-funds/index.html">VC Funds</a><a href="../../../web3/index.html">Web3 &amp; Crypto</a><a href="../../../accounting-firms/index.html">Accounting Firms</a><a href="#">SaaS</a><a href="#">LLCs</a><a href="#">Real Estate &amp; Construction</a><a href="#">Healthcare Services</a></div>
+      <div class="foot-col"><h4>Account</h4><a href="https://dev.raushco.com/create-account">Open Account</a><a href="https://dev.raushco.com/login">Log In</a><a href="#">iOS</a><a href="#">Android</a></div>
+      <div class="foot-col"><h4>About</h4><a href="#">How Raushco Works</a><a href="../../../about/index.html">Our Story</a><a href="../../../jobs/index.html">Careers</a><a href="../../../partnerships/index.html">Partnerships</a><a href="../../../contact/index.html">Contact</a><a href="../../../legal/index.html">Legal</a><a href="../../../legal/privacy/index.html">Privacy Policy</a></div>
+      <div class="foot-col"><h4>Follow Us</h4><a href="#">X</a><a href="#">LinkedIn</a><a href="#">YouTube</a><a href="#">Instagram</a></div>
+    </div>
+  </div>
+</footer>
 
-  <section class="disclaimer-section">
-    <div class="wrap disc-layout">
-      <h5>Disclaimers and footnotes</h5>
-      <div class="disclaimers">
-        <p>Raushco is a fintech platform, not a bank. Deposit and card products are provided through our partner banks and NBFCs, as applicable.</p>
+<!-- Disclaimers and footnotes — a separate <section>, same #171721 band, immediately after
+     </footer> (mirrors mercury's real DOM: this legal block is a sibling of <footer>, not nested
+     inside it). Content below is 100% Raushco-specific, reusing only facts already established
+     elsewhere in this project (treasury/business-banking/venture-debt/credit/gold-loan/personal-loans
+     footnotes + this page's own "11+ partner banks" stat and "7.00% APY" copy) — none of mercury's
+     actual partner-bank names, entity IDs, or figures. -->
+<section class="foot-disclaimers" data-theme="dark">
+  <div class="wrap">
+    <div class="disc-grid-m">
+      <h2>Disclaimers and footnotes</h2>
+      <div class="disc-content-m">
+        <p>Raushco is a fintech platform, not a bank. Deposit and card products are provided through our partner banks and NBFCs, as applicable, and are governed by each partner's own terms.</p>
         <ol>
-          <li id="fn-bb-free">"Free" refers to the account itself; card issuance, FX, and other usage-based fees may still apply as disclosed in pricing.</li>
-          <li id="fn-bb-dicgc">DICGC deposit insurance applies only to deposits held with DICGC-member banks, up to the standard per-depositor, per-bank limit; it does not apply to NBFC-issued deposits.</li>
-          <li id="fn-bb-cards">Card issuance and limits are subject to underwriting by the issuing partner bank or NBFC.</li>
-          <li id="fn-bb-rtp">Real-time payments (UPI/IMPS) depend on the receiving bank and payment rail being available at the time of transfer.</li>
-          <li id="fn-bb-cashback">1.5% cashback is indicative, applies to eligible card spend only, and is subject to the issuing partner's own terms.</li>
+          <li id="fn-ft-dicgc">Raushco is not a bank and does not itself hold customer deposits. Savings, current, and fixed-deposit balances are held with our partner banks, and <strong>DICGC deposit insurance applies only to deposits held with DICGC-member banks, up to the standard per-depositor, per-bank limit</strong>; it does not apply to NBFC-issued deposits or to balances held with a partner NBFC. Where a product sweeps funds across more than one partner bank, insurance is calculated separately at each bank, not on the combined balance.</li>
+          <li id="fn-ft-treasury">
+            <p>The yield shown for Treasury by Raushco is a blended, indicative rate across the partner banks and NBFCs in the sweep network at the time of publishing, weighted by how a typical balance is allocated across them. It is set by each partner, not by Raushco, and is variable and <strong>subject to change without notice</strong>; past yield is not a guarantee of future yield, and the rate you actually earn depends on which partners are live for your account, your balance tier, and how long funds stay swept with each partner.</p>
+            <p>Funds swept under Treasury are held as deposits at the underlying partner banks, not with Raushco, and DICGC insurance applies at each partner bank up to the standard per-depositor, per-bank limit, calculated separately per bank rather than on the combined swept balance. A sweep allocation to a partner NBFC, where offered, is <strong>not a bank deposit and is not DICGC-insured</strong>; any such allocation is identified as an NBFC placement before you opt in.</p>
+          </li>
+          <li id="fn-ft-lending">Venture debt and working capital loans available through Raushco are originated and underwritten by our partner NBFC, not by Raushco itself. Working capital loans are unsecured and underwritten against your business's own cash flow; venture debt loan size, tenure, and approval are not guaranteed and depend on the partner NBFC's own eligibility review.</li>
+          <li id="fn-ft-card">The Raushco Card is issued by our partner bank pursuant to a license from Mastercard; card issuance and credit limits are subject to underwriting by that issuing partner, and eligibility criteria are set by the partner, not by Raushco. Cashback of up to 1.5% on eligible card spend is indicative, applies only to spend categories the issuing partner designates as eligible, and is credited on the schedule the partner publishes; <strong>cashback may be reduced, capped, or withdrawn if your account is closed or not in good standing</strong>. The FD-backed credit card is secured against a fixed deposit held with the issuing partner; its limit is set as a percentage of that FD's value and is not a guarantee of a higher unsecured limit later.</li>
+          <li id="fn-ft-rails">Real-time transfers over UPI and IMPS depend on the receiving bank and that payment rail being available at the time of transfer; NEFT and RTGS settle on the same business day rather than instantly, and timing for all rails can vary around bank holidays or maintenance windows.</li>
+          <li id="fn-ft-rm">Dedicated relationship managers and capital advisors are available to business accounts on eligible plans and balance tiers; availability varies by plan.</li>
+          <li id="fn-ft-partners">The "11+ partner banks &amp; NBFCs" figure reflects partners integrated with Raushco as of this page's last publish date, across savings, deposits, gold loans, and lending combined; not every partner is available for every product or in every state.</li>
+          <li id="fn-ft-apy">Annual Percentage Yield (APY) of up to 7.00% on personal savings reflects the rate in effect as of this page's last publish date and is offered through our partner bank; it is a <strong>variable rate</strong> that may change at any time without prior notice.</li>
         </ol>
+        <p class="disc-copyright">© 2026 Raushco. All rights reserved.</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
