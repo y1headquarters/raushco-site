@@ -422,15 +422,15 @@
   .play-toggle:hover { background: rgba(175,178,206,.28); }
   .play-toggle:active { background: rgba(175,178,206,.33); }
   .play-toggle svg { height: 16px; width: auto; display: block; }
-  .play-toggle svg.pt-play { position: relative; right: -4px; } /* optical re-center of the play triangle, matches mercury's relative -right-1 */
+  .play-toggle svg.pt-play { position: relative; right: -6px; } /* optical re-center of the play triangle — re-measured by rendering the icon at several offsets and comparing visually; -4px (mercury's own literal -right-1) still read left-heavy at our size, -6px centers it */
   /* Matches the measured "main bright panel" (400px), not the taller outer envelope (648px, the figure
      that included mercury's extra peeking-panel elements below, which we don't have) — .value-visual
      stays 648px for correct row vertical-centering, this is just the actual visible card.
      No left inset: real-browser pixel-detection (not just computed-style) found mercury's own visible
      card edge sits flush with .value-visual's own box (~767px) — a prior margin-left:33px here pushed
      the card and the play-button both ~33px too far right. Do not re-add it. */
-  .panel-stack { position: relative; height: 400px; }
-  .panel { position: absolute; inset: 0; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.1); border-right: none; border-radius: 8px 0 0 8px; overflow: hidden; pointer-events: none; opacity: 0; filter: blur(10px); transition: opacity .4s var(--ease-out-mercury), filter .4s var(--ease-out-mercury); }
+  .panel-stack { position: relative; height: 520px; } /* taller — closer to .value-visual's own 648px envelope, still leaving room so the stack doesn't crowd it */
+  .panel { position: absolute; inset: 0; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.1); border-right: none; border-radius: 12px 0 0 12px; overflow: hidden; pointer-events: none; opacity: 0; filter: blur(10px); transition: opacity .4s var(--ease-out-mercury), filter .4s var(--ease-out-mercury); } /* 12px = mercury's own --ds-border-radius-large token (confirmed from their live CSS, same one the auth card uses), not the smaller 8px guess */
   .panel.active { opacity: 1; filter: blur(0); pointer-events: auto; }
   /* Top edge fades into the panel rather than cutting hard — matches the real product-tour cards */
   /* Source recordings capture Mercury's whole page (card floating in their own dark margins) —
