@@ -669,8 +669,9 @@
   .foot-more { margin-top: 40px; border-top: 1px solid rgba(255,255,255,.12); padding-top: 24px; }
   .foot-more summary { cursor: pointer; font-size: 14px; color: #C3C3CC; list-style: none; display: inline-flex; align-items: center; gap: 6px; user-select: none; }
   .foot-more summary::-webkit-details-marker { display: none; }
-  .foot-more summary .car { font-size: 11px; transition: transform .2s; display: inline-block; }
-  .foot-more[open] summary .car { transform: rotate(180deg); }
+  .foot-more summary .car { color: #C3C3CC; display: inline-flex; }
+  .foot-more summary .car svg { display: block; transition: transform .2s var(--ease-snap); }
+  .foot-more[open] summary .car svg { transform: rotate(180deg); }
   .foot-more-body { margin-top: 24px; display: flex; flex-direction: column; gap: 24px; }
   .foot-more-cat h5 { font-size: 12px; color: #C3C3CC; margin: 0 0 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .04em; }
   .foot-more-cat p { font-size: 13px; line-height: 2; color: rgba(237,237,243,.6); margin: 0; }
@@ -1469,7 +1470,7 @@
       <div class="foot-col"><h4>Follow Us</h4><a href="#">X</a><a href="#">LinkedIn</a><a href="#">YouTube</a><a href="#">Instagram</a></div>
     </div>
     <details class="foot-more">
-      <summary>More <span class="car">&#9662;</span></summary>
+      <summary>More <span class="car"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></summary>
       <div class="foot-more-body">
         <div class="foot-more-cat">
           <h5>Fixed Deposit</h5>
