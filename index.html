@@ -769,6 +769,21 @@
     .email-tip { left: 50%; transform: translate(-50%,-4px); width: 280px; }
     .email-field:focus-within .email-tip { transform: translate(-50%,0); }
   }
+
+  /* Get-the-app QR modal — self-contained (no dependency on page-level CSS tokens), so this exact
+     block can be copy-pasted onto every marketing page unchanged. Opened by every "Log in"
+     link/button sitewide (wired by text content, not by class, in the matching script block —
+     see qr-modal-overlay's companion <script>). */
+  .qr-modal-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10,10,14,.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .25s cubic-bezier(.2,1,.4,1), visibility .25s; padding: 24px; }
+  .qr-modal-overlay.is-open { opacity: 1; visibility: visible; }
+  .qr-modal { position: relative; background: #1E1E2A; border: 1px solid rgba(175,178,206,.36); border-radius: 24px; padding: 44px 36px 36px; max-width: 340px; width: 100%; text-align: center; color: #fff; transform: scale(.94); transition: transform .25s cubic-bezier(.2,1,.4,1); box-shadow: 0 24px 60px -14px rgba(0,0,0,.45); font-family: inherit; }
+  .qr-modal-overlay.is-open .qr-modal { transform: none; }
+  .qr-modal-close { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 50%; background: rgba(255,255,255,.08); border: none; color: #fff; font-size: 18px; line-height: 1; cursor: pointer; display: grid; place-items: center; transition: background .2s; padding: 0; }
+  .qr-modal-close:hover { background: rgba(255,255,255,.16); }
+  .qr-modal h3 { font-size: 21px; font-weight: 600; letter-spacing: -.02em; margin: 0 0 8px; }
+  .qr-modal p { font-size: 14px; color: rgba(255,255,255,.65); line-height: 1.5; margin: 0 0 22px; }
+  .qr-modal-code { display: inline-block; background: #fff; border-radius: 16px; padding: 14px; line-height: 0; }
+  .qr-modal-code img { display: block; width: 176px; height: 176px; }
 </style>
 </head>
 <body>
@@ -2357,6 +2372,53 @@
   }
   wireAccordion('[data-acc-fast]', 'accVisualFast');
   wireAccordion('[data-acc-fees]', 'accVisualFees');
+</script>
+
+<!-- Get-the-app QR modal — same markup/CSS/script on every marketing page, see the CSS block
+     above for why it's self-contained. Every "Open account" link/button on the page opens this
+     instead of navigating, since the signup flow lives in the app, not on this static site. -->
+<div class="qr-modal-overlay" id="qrModalOverlay" aria-hidden="true">
+  <div class="qr-modal" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle">
+    <button type="button" class="qr-modal-close" id="qrModalClose" aria-label="Close">&times;</button>
+    <h3 id="qrModalTitle">Get the Raushco app</h3>
+    <p>Scan the QR code with your phone's camera to download the app and open your account.</p>
+    <div class="qr-modal-code"><img src="assets/images/app-download-qr.png" alt="QR code to download the Raushco app" width="176" height="176"></div>
+  </div>
+</div>
+<script>
+  (function () {
+    var overlay = document.getElementById('qrModalOverlay');
+    if (!overlay) return;
+    var closeBtn = document.getElementById('qrModalClose');
+    function openModal(e) { if (e) e.preventDefault(); overlay.classList.add('is-open'); overlay.setAttribute('aria-hidden', 'false'); document.body.style.overflow = 'hidden'; }
+    function closeModal() { overlay.classList.remove('is-open'); overlay.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
+    document.querySelectorAll('a, button').forEach(function (el) {
+      if (el.id === 'qrModalClose') return;
+      var t = (el.textContent || '').trim().toLowerCase();
+      if (t === 'log in' || t === 'login') el.addEventListener('click', openModal);
+    });
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function (e) { if (e.target === overlay) closeModal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+  })();
+  // Hero phone pill: "Open account" hands the typed number to the app's own OTP page via a query
+  // param, instead of a bare link — the app itself (same-origin as the backend) sends the actual
+  // OTP once it loads pre-filled, so this static site never needs its own CORS-exposed API call.
+  (function () {
+    document.querySelectorAll('.email-combo').forEach(function (combo) {
+      var input = combo.querySelector('input[type="tel"]');
+      var cta = combo.querySelector('a.btn-purple');
+      if (!input || !cta) return;
+      cta.addEventListener('click', function (e) {
+        var digits = (input.value || '').replace(/\D/g, '');
+        if (digits.length < 10) return; // no usable number typed — let it fall through to the plain href
+        e.preventDefault();
+        var base = cta.getAttribute('href') || 'https://app.raushco.com/auth/initiate-otp';
+        var sep = base.indexOf('?') === -1 ? '?' : '&';
+        window.location.href = base + sep + 'phone=91' + digits.slice(-10);
+      });
+    });
+  })();
 </script>
 </body>
 </html>
