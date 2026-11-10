@@ -84,6 +84,11 @@
     --pb-ease-transform: cubic-bezier(.2,.4,.2,1);
     --pb-ease-snap: cubic-bezier(.16,0,.13,1);
     --pb-ease-pop: cubic-bezier(.2,1,.4,1);
+    /* mercury.com's own dedicated theme-crossfade curve (--theme-transition-ease in their real
+       compiled CSS, confirmed .5s/cubic-bezier(0,0,.6,1)) — kept as its own token rather than
+       reused off --pb-ease-snap, matching how mercury itself keeps it separate from
+       general-purpose UI easing (same split as index.html's --ease-theme). */
+    --pb-ease-theme: cubic-bezier(0,0,.6,1);
 
     --pb-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --pb-serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
@@ -230,13 +235,14 @@
 
   /* Mega-menu — click to open, not hover; closes on outside click. */
   .nav-item { position: relative; }
-  .nav-item.open .nav-drop-trigger { background: rgba(120,126,150,.3); }
+  .nav-item.open .nav-drop-trigger { background: #424962; }
   .nav-item.open .caret svg { transform: rotate(180deg); }
   .mega-menu { position: fixed; left: 0; right: 0; top: 72px; background: #fff; border: 1px solid var(--pb-border); border-radius: 0 0 16px 16px; overflow: hidden; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity .2s var(--pb-ease-snap), transform .2s var(--pb-ease-snap), visibility 0s .2s; z-index: 55; text-align: left; }
   .nav[data-theme="dark"] .mega-menu { background: #1e1e2a; border-color: rgba(255,255,255,.1); }
   .nav-item.open .mega-menu { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+  /* Nav itself matches the open dropdown's color, regardless of scroll/theme state (mirrors index.html) */
   .nav:has(.nav-item.open) { background: #fff !important; border-color: transparent; }
-  .nav[data-theme="dark"]:has(.nav-item.open) { background: #1e1e2a !important; border-color: transparent; }
+  .nav[data-theme="dark"]:has(.nav-item.open) { background: #23232F !important; border-color: transparent; }
   .mega-grid { display: grid; grid-template-columns: 1.25fr repeat(4, 1fr); column-gap: 40px; max-width: 1240px; margin: 0 auto; padding: 40px 36px; }
   .mega-grid-3 { grid-template-columns: repeat(3, 1fr); row-gap: 32px; }
   .mega-grid-4 { grid-template-columns: repeat(4, 1fr); row-gap: 32px; }
@@ -486,7 +492,10 @@
      same half-step (confirmed live: ~rgb(246,245,242) page vs ~rgb(238,237,233)
      baked into the image, i.e. beige-100 vs beige-150). */
   .acc-section { position: relative; background: var(--pb-base-100); color: var(--pb-base-700);
-    transition: background-color .4s var(--pb-ease-snap), color .4s var(--pb-ease-snap); }
+    /* .5s / cubic-bezier(0,0,.6,1), not --pb-ease-snap — this is the body[data-theme] cross-fade,
+       confirmed as mercury.com's own dedicated (slower, more lingering) curve for exactly this
+       transition, measured off their real compiled CSS, not their general-purpose UI easing. */
+    transition: background-color .5s var(--pb-ease-theme), color .5s var(--pb-ease-theme); }
   /* Retargets the SAME --pb-base-* indirection every component here already
      reads from (see :root's comment) while <body data-theme="dark">, set by
      the nav's own observer — not a separate mechanism, the identical flag at
