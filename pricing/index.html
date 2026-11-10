@@ -1121,6 +1121,27 @@
   .qr-modal p { font-size: 14px; font-weight: 400; color: #6b7280; line-height: 1.45; margin: 0 0 22px; }
   .qr-modal-code { display: inline-block; background: #f6f7f9; border-radius: 16px; padding: 14px; line-height: 0; }
   .qr-modal-code img { display: block; width: 176px; height: 176px; }
+
+  .otp-popup-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10,10,14,.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .25s cubic-bezier(.2,1,.4,1), visibility .25s; padding: 24px; }
+  .otp-popup-overlay.is-open { opacity: 1; visibility: visible; }
+  .otp-popup { position: relative; background: #ffffff; border-radius: 24px; padding: 40px 32px 32px; max-width: 360px; width: 100%; text-align: center; color: #0c1024; transform: scale(.94); transition: transform .25s cubic-bezier(.2,1,.4,1); box-shadow: 0 24px 60px -14px rgba(0,0,0,.28); font-family: inherit; }
+  .otp-popup-overlay.is-open .otp-popup { transform: none; }
+  .otp-popup-close { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 50%; background: #f6f7f9; border: 1px solid rgba(0,0,0,.08); color: #0c1024; font-size: 18px; line-height: 1; cursor: pointer; display: grid; place-items: center; transition: background .2s; padding: 0; }
+  .otp-popup-close:hover { background: #ececef; }
+  .otp-popup-h { font-size: 20px; font-weight: 700; letter-spacing: -.01em; margin: 0 0 6px; color: #0c1024; }
+  .otp-popup-sub { font-size: 14px; font-weight: 400; color: #6b7280; line-height: 1.45; margin: 0 0 20px; }
+  .otp-popup-text { font-size: 14px; font-weight: 400; color: #535461; line-height: 1.45; margin: 14px 0 0; }
+  .otp-popup-spinner { width: 28px; height: 28px; margin: 4px auto 0; border-radius: 50%; border: 3px solid rgba(112,115,147,.16); border-top-color: #061b89; animation: otp-popup-spin .8s linear infinite; }
+  @keyframes otp-popup-spin { to { transform: rotate(360deg); } }
+  .otp-popup-input { width: 100%; box-sizing: border-box; height: 48px; border: 1px solid rgba(112,115,147,.25); border-radius: 10px; text-align: center; font-size: 20px; letter-spacing: 6px; font-family: inherit; color: #0c1024; outline: none; margin-bottom: 10px; background: #fbfcfd; }
+  .otp-popup-input:focus { border-color: #061b89; box-shadow: 0 0 0 1px #061b89 inset; }
+  .otp-popup-error { font-size: 13px; color: #c0392b; margin: 0 0 10px; min-height: 16px; }
+  .otp-popup-btn { width: 100%; height: 48px; border: 0; border-radius: 999px; background: #061b89; color: #fff; font-size: 15px; font-weight: 600; letter-spacing: .2px; cursor: pointer; margin-top: 4px; transition: background .15s; }
+  .otp-popup-btn:disabled { opacity: .5; cursor: not-allowed; }
+  .otp-popup-btn:hover:not(:disabled) { background: #0a2199; }
+  .otp-popup-link { display: block; margin: 14px auto 0; border: 0; background: transparent; color: #061b89; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: underline; padding: 4px; }
+  .otp-popup-step[hidden] { display: none; }
+
 </style>
 </head>
 <body>
@@ -1961,7 +1982,38 @@
     <div class="qr-modal-code"><img src="../assets/images/app-download-qr.png" alt="QR code to download the Raushco app" width="176" height="176"></div>
   </div>
 </div>
+
+<div class="otp-popup-overlay" id="otpPopupOverlay" aria-hidden="true">
+  <div class="otp-popup" role="dialog" aria-modal="true" aria-labelledby="otpPopupTitle">
+    <button type="button" class="otp-popup-close" id="otpPopupClose" aria-label="Close">&times;</button>
+    <div class="otp-popup-step" data-step="loading">
+      <div class="otp-popup-spinner"></div>
+      <p class="otp-popup-text">Setting up your account&hellip;</p>
+    </div>
+    <div class="otp-popup-step" data-step="code" hidden>
+      <h3 id="otpPopupTitle" class="otp-popup-h">Enter the code</h3>
+      <p class="otp-popup-sub">We sent a code to <span id="otpPopupPhone"></span></p>
+      <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" class="otp-popup-input" id="otpPopupCodeInput" placeholder="••••••" autocomplete="one-time-code" />
+      <p class="otp-popup-error" id="otpPopupCodeError" hidden></p>
+      <button type="button" class="otp-popup-btn" id="otpPopupVerifyBtn">Continue</button>
+      <button type="button" class="otp-popup-link" id="otpPopupResendBtn">Resend code</button>
+    </div>
+    <div class="otp-popup-step" data-step="verifying" hidden>
+      <div class="otp-popup-spinner"></div>
+      <p class="otp-popup-text">Verifying&hellip;</p>
+    </div>
+    <div class="otp-popup-step" data-step="status" hidden>
+      <div class="otp-popup-spinner"></div>
+      <p class="otp-popup-text" id="otpPopupStatusText">Taking you to your account&hellip;</p>
+    </div>
+    <div class="otp-popup-step" data-step="error" hidden>
+      <p class="otp-popup-text" id="otpPopupErrorText">Something went wrong.</p>
+      <button type="button" class="otp-popup-btn" id="otpPopupRetryBtn">Try again</button>
+    </div>
+  </div>
+</div>
 <script>
+
   (function () {
     var overlay = document.getElementById('qrModalOverlay');
     if (!overlay) return;
@@ -1994,17 +2046,176 @@
   // path) — this always sends the typed number to the one real, current signup entry point.
   (function () {
     document.querySelectorAll('.email-combo').forEach(function (combo) {
-      var input = combo.querySelector('input[type="tel"]');
-      var cta = combo.querySelector('a');
-      if (!input || !cta) return;
-      cta.addEventListener('click', function (e) {
-        var digits = (input.value || '').replace(/\D/g, '');
-        if (digits.length < 10) return; // no usable number typed — let it fall through to the plain href
-        e.preventDefault();
-        window.location.href = 'https://app.raushco.com/open-account?phone=91' + digits.slice(-10);
-      });
+    var input = combo.querySelector('input[type="tel"]');
+    var cta = combo.querySelector('a');
+    if (!input || !cta) return;
+    cta.addEventListener('click', function (e) {
+      var digits = (input.value || '').replace(/\D/g, '');
+      if (digits.length < 10) return; // no usable number typed — let it fall through to the plain href
+      e.preventDefault();
+      OtpPopup.open(digits.slice(-10));
     });
-  })();
+  });
+})();
+
+// Phone+OTP popup that stays on this marketing page: the account's whole
+// phone/OTP exchange happens here via direct cross-origin calls to the real
+// backend (CORS already allows any origin with credentials — confirmed live,
+// no backend change made for this), so a visitor never leaves raushco.com
+// until they're actually logged in or signed up. Once verified, the only
+// thing handed to app.raushco.com is the resulting access/id token, via the
+// URL *fragment* (never sent to a server or logged) — everything after that
+// (profile-complete check, dashboard vs. onboarding routing) is the app's
+// own existing logic, not reimplemented here.
+var OtpPopup = (function () {
+  var BFF = 'https://app.y1card.com/bff';
+  var overlay = document.getElementById('otpPopupOverlay');
+  if (!overlay) return { open: function () {} };
+  var steps = {};
+  overlay.querySelectorAll('.otp-popup-step').forEach(function (el) {
+    steps[el.getAttribute('data-step')] = el;
+  });
+  function showStep(name) {
+    Object.keys(steps).forEach(function (k) { steps[k].hidden = k !== name; });
+  }
+  function openOverlay() {
+    overlay.classList.add('is-open');
+    overlay.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeOverlay() {
+    overlay.classList.remove('is-open');
+    overlay.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('otpPopupClose').addEventListener('click', closeOverlay);
+  overlay.addEventListener('click', function (e) { if (e.target === overlay) closeOverlay(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeOverlay(); });
+
+  function bufToBase64(buf) {
+    var bytes = new Uint8Array(buf), binary = '';
+    for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+    return btoa(binary);
+  }
+  // Mirrors the real app's generateCodeVerifier() exactly (src/redux/auth.ts):
+  // 1024 random bytes, verifier = base64(bytes), challenge = base64(sha256(bytes)).
+  function generateCodeVerifier() {
+    var rand = new Uint8Array(1024);
+    crypto.getRandomValues(rand);
+    return crypto.subtle.digest('SHA-256', rand).then(function (challengeBuf) {
+      return { codeVerifier: bufToBase64(rand), codeChallenge: bufToBase64(challengeBuf) };
+    });
+  }
+
+  var state = { phone: null, authCode: null, codeVerifier: null };
+
+  function showError(msg) {
+    document.getElementById('otpPopupErrorText').textContent = msg;
+    showStep('error');
+  }
+
+  function requestOtp(phone) {
+    state.phone = phone;
+    showStep('loading');
+    generateCodeVerifier()
+      .then(function (cv) {
+        state.codeVerifier = cv.codeVerifier;
+        return fetch(BFF + '/auth/initiate-otp', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ phone: phone, codeChallenge: { challenge: cv.codeChallenge } }),
+        });
+      })
+      .then(function (res) {
+        if (!res.ok) return res.json().then(function (b) { throw b; });
+        return res.json();
+      })
+      .then(function (body) {
+        state.authCode = body.authCode;
+        document.getElementById('otpPopupPhone').textContent = '+91 ' + phone;
+        var codeInput = document.getElementById('otpPopupCodeInput');
+        codeInput.value = '';
+        document.getElementById('otpPopupCodeError').hidden = true;
+        showStep('code');
+        codeInput.focus();
+      })
+      .catch(function (err) {
+        showError(err && err.code === 'PhoneNumberInvalid' ? 'That phone number looks invalid.' : "Couldn't send the code — please try again.");
+      });
+  }
+
+  function verifyOtp() {
+    var otp = document.getElementById('otpPopupCodeInput').value.trim();
+    var errEl = document.getElementById('otpPopupCodeError');
+    if (!/^[0-9]{4,6}$/.test(otp)) {
+      errEl.textContent = 'Enter the code you received.';
+      errEl.hidden = false;
+      return;
+    }
+    errEl.hidden = true;
+    showStep('verifying');
+    fetch(BFF + '/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ phone: state.phone, otp: otp, authCode: state.authCode, codeVerifier: state.codeVerifier }),
+    })
+      .then(function (res) {
+        if (!res.ok) return res.json().then(function (b) { throw b; });
+        return res.json();
+      })
+      .then(function (body) {
+        var accessToken = body.jwt.access_token;
+        var idToken = body.jwt.id_token;
+        return fetch(BFF + '/auth/user-info', { headers: { Authorization: 'Bearer ' + accessToken } })
+          .then(function (r) { return r.ok ? r.json() : { info: {} }; })
+          .catch(function () { return { info: {} }; })
+          .then(function (userInfo) {
+            var existing = !!(userInfo.info && userInfo.info.given_name && userInfo.info.family_name);
+            document.getElementById('otpPopupStatusText').textContent = existing
+              ? 'You already have an account — logging you in…'
+              : 'Setting up your new account…';
+            showStep('status');
+            setTimeout(function () {
+              window.location.href =
+                'https://app.raushco.com/login#access_token=' +
+                encodeURIComponent(accessToken) +
+                '&id_token=' +
+                encodeURIComponent(idToken || '');
+            }, 900);
+          });
+      })
+      .catch(function (err) {
+        showStep('code');
+        var code = err && err.code;
+        errEl.textContent =
+          code === 'OTPExpired' ? 'That code expired — try resending.'
+          : code === 'OTPInvalid' ? 'That code is incorrect.'
+          : code === 'CodeVerificationFailed' ? 'Verification failed — please try again.'
+          : 'Something went wrong — please try again.';
+        errEl.hidden = false;
+      });
+  }
+
+  document.getElementById('otpPopupVerifyBtn').addEventListener('click', verifyOtp);
+  document.getElementById('otpPopupCodeInput').addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') verifyOtp();
+  });
+  document.getElementById('otpPopupResendBtn').addEventListener('click', function () {
+    if (state.phone) requestOtp(state.phone);
+  });
+  document.getElementById('otpPopupRetryBtn').addEventListener('click', function () {
+    if (state.phone) requestOtp(state.phone);
+    else closeOverlay();
+  });
+
+  return {
+    open: function (phone) {
+      openOverlay();
+      requestOtp(phone);
+    },
+  };
+})();
+
 </script>
 </body>
 </html>
