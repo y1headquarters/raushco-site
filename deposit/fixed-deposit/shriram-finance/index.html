@@ -1046,22 +1046,14 @@
 
   .bk-page { background: #fff; padding: 48px 0 0; }
   body { background: #fff; }
-  .bk-layout { max-width: 1200px; margin: 0 auto; padding: 0 40px 80px; display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: start; }
+  .bk-layout { max-width: 1200px; margin: 0 auto; padding: 0 40px 80px; display: grid; grid-template-columns: 1fr 380px; gap: 40px; }
   @media (max-width: 900px) { .bk-layout { grid-template-columns: 1fr; padding: 0 20px 56px; } }
 
-  /* Banner: our own texture standing in for the bank photo stablemoney shows here */
   .bk-banner-wrap { position: relative; margin-bottom: 44px; }
-  .bk-banner { position: relative; aspect-ratio: 2.4/1; border-radius: var(--pb-radius-xl); overflow: hidden; background:
-      radial-gradient(ellipse 80% 80% at 15% 20%, rgba(82,102,235,.55) 0%, transparent 55%),
-      radial-gradient(ellipse 70% 70% at 85% 80%, rgba(156,180,232,.4) 0%, transparent 55%),
-      linear-gradient(135deg, #1b1f3a 0%, #262b52 100%); }
-  .bk-banner-grain { position: absolute; inset: 0; opacity: .12; mix-blend-mode: overlay; pointer-events: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    animation: bkGrain .25s steps(1) infinite; }
-  @keyframes bkGrain { 0%, 100% { opacity: .10; } 50% { opacity: .15; } 75% { opacity: .12; } }
-  @media (prefers-reduced-motion: reduce) { .bk-banner-grain { animation: none; } }
+  .bk-banner { position: relative; aspect-ratio: 2.4/1; border-radius: var(--pb-radius-xl); overflow: hidden; background: var(--pb-beige-150); }
+  .bk-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
   .bk-logo-plate { position: absolute; left: 24px; bottom: -28px; width: 72px; height: 72px; border-radius: var(--pb-radius-l); background: #fff; z-index: 2;
-    display: flex; align-items: center; justify-content: center; padding: 12px; box-shadow: var(--pb-card-shadow); z-index: 2; }
+    display: flex; align-items: center; justify-content: center; padding: 12px; border: 1px solid var(--pb-border); }
   .bk-logo-plate img { max-width: 100%; max-height: 100%; }
 
   .bk-identity { margin: 48px 0 20px; }
@@ -1094,8 +1086,13 @@
   .bk-fact .v { font-size: 15px; font-weight: 600; color: var(--pb-base-900); }
   .bk-fine { margin-top: 18px; font-size: 12.5px; color: var(--pb-base-500); line-height: 1.55; }
 
+  .bk-highlights { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 28px; }
+  .bk-highlight { background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); padding: 18px 16px; }
+  .bk-highlight img { width: 32px; height: 32px; display: block; margin-bottom: 12px; }
+  .bk-highlight span { font-size: 13.5px; color: var(--pb-base-900); font-weight: 500; line-height: 1.4; display: block; }
+
   /* Calculator — sticky right column */
-  .bk-calc { position: sticky; top: 96px; background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-xl); padding: 26px; box-shadow: var(--pb-card-shadow); }
+  .bk-calc { position: sticky; top: 96px; background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-xl); padding: 26px; }
   .bk-calc-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
   .bk-calc-field label { display: block; font-size: 12px; color: var(--pb-base-500); margin-bottom: 6px; }
   .bk-calc-field input, .bk-calc-field select { width: 100%; box-sizing: border-box; height: 42px; padding: 0 12px; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-m); font-family: inherit; font-size: 14.5px; color: var(--pb-base-900); background: #fff; }
@@ -1387,7 +1384,7 @@
 
       <div class="bk-banner-wrap">
         <div class="bk-banner">
-          <div class="bk-banner-grain" aria-hidden="true"></div>
+          <img src="../../../assets/images/bank-banners/ShriramBanner.webp" alt="Shriram Finance branch signage">
         </div>
         <div class="bk-logo-plate"><img src="../../../assets/logos/SHRIRAM_LOGO.png" alt="Shriram Finance"></div>
       </div>
@@ -1402,7 +1399,13 @@
       </div>
 
       <section class="bk-section">
-        <p class="bk-section-sub">Rates and tenure below are live from Shriram Finance via our Fixerra partner integration, cross-checked against stablemoney.in’s own published numbers (the two currently agree). Banner above is a generated texture, not a Shriram Finance photo.</p>
+        <p class="bk-section-sub">Rates and tenure below are live from Shriram Finance via our Fixerra partner integration.</p>
+        <div class="bk-highlights">
+          <div class="bk-highlight"><img src="https://images.fixerra.in/illustrations/RBI@3x.png" alt=""><span>All investments are regulated by RBI</span></div>
+          <div class="bk-highlight"><img src="https://images.fixerra.in/illustrations/Senior@3x.png" alt=""><span>Senior citizens get up to 0.50% extra</span></div>
+          <div class="bk-highlight"><img src="https://images.fixerra.in/illustrations/Women@3x.png" alt=""><span>Women get up to 0.05% extra</span></div>
+          <div class="bk-highlight"><img src="https://images.fixerra.in/illustrations/Bank@3x.png" alt=""><span>Maturity amount credited directly to your bank</span></div>
+        </div>
         <table class="bk-rate-table">
           <thead><tr><th>Tenure</th><th>General</th><th>Senior citizen</th></tr></thead>
           <tbody>
@@ -1426,18 +1429,17 @@
       <section class="bk-section">
         <h2>About Shriram Finance</h2>
         <div class="bk-about-grid">
-          <div class="bk-about-stat"><div class="n">90 lakh</div><div class="l">Customers served</div></div>
-          <div class="bk-about-stat"><div class="n">3,220+</div><div class="l">Branches</div></div>
-          <div class="bk-about-stat"><div class="n">50+ yrs</div><div class="l">In business (since 1974)</div></div>
+          <div class="bk-about-stat"><div class="n">82.2 lakh</div><div class="l">Customers served</div></div>
+          <div class="bk-about-stat"><div class="n">3,000+</div><div class="l">Branches</div></div>
+          <div class="bk-about-stat"><div class="n">₹2.3L cr</div><div class="l">Assets under management</div></div>
         </div>
         <div class="bk-about-text">
-          <p>Shriram Finance is one of India’s larger NBFCs, built mainly around commercial-vehicle and retail lending, with roots going back to 1974. It’s registered with the RBI and runs a nationwide branch network rather than operating purely online.</p>
+          <p>Shriram Finance is one of India’s larger NBFCs, founded in 1974, with assets under management of over ₹2.3 lakh crores and a workforce of more than 75,000 across 3,000+ branches.</p>
           <p>As an NBFC, its fixed deposits sit outside DICGC’s ₹5 lakh bank-deposit insurance — that cover only extends to banks. In its place, independent agencies rate Shriram’s FDs directly:</p>
         </div>
         <div class="bk-rating-row">
-          <span class="bk-rating-pill">CRISIL AA+/Stable</span>
-          <span class="bk-rating-pill">ICRA AA+ (Stable)</span>
-          <span class="bk-rating-pill">IND AA+/Stable</span>
+          <span class="bk-rating-pill">CRISIL AAA/Stable</span>
+          <span class="bk-rating-pill">ICRA AAA/Stable</span>
         </div>
       </section>
 
@@ -1445,20 +1447,36 @@
         <h2>Frequently asked questions</h2>
         <div id="bkFaqList">
           <div class="bk-faq-item open" data-bkfaq="0">
-            <button class="bk-faq-q"><span>Is my money safe with Shriram Finance?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>Shriram Finance is an RBI-registered NBFC with over 50 years in business. Independent rating agencies grade its fixed deposits directly — CRISIL AA+/Stable, ICRA AA+ (Stable), and IND AA+/Stable — all in the “high safety” band.</p></div></div>
+            <button class="bk-faq-q"><span>Is my Shriram FD insured? Is it safe?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>No. Shriram Finance is an NBFC — FDs with it aren’t covered by DICGC and aren’t guaranteed by RBI. They’re rated by credit rating agencies instead, and Shriram’s FD is rated AAA/Stable by both CRISIL and ICRA.</p></div></div>
           </div>
           <div class="bk-faq-item" data-bkfaq="1">
-            <button class="bk-faq-q"><span>How do I know my FD is actually booked?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>You get an FD receipt by email as soon as booking completes, with your FDR number, customer ID, and maturity details — and it stays saved in your Raushco app for whenever you need it.</p></div></div>
+            <button class="bk-faq-q"><span>What’s the minimum and maximum amount and tenure?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>Minimum ₹5,000 in multiples of ₹1,000, maximum ₹10 crore, tenure from 12 to 60 months.</p></div></div>
           </div>
           <div class="bk-faq-item" data-bkfaq="2">
-            <button class="bk-faq-q"><span>Where does my money actually go?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>Straight to Shriram Finance. Raushco doesn’t pool or hold your deposit — we just make it easy to compare partner rates and book from one account; your FD receipt comes directly from Shriram.</p></div></div>
+            <button class="bk-faq-q"><span>How does Shriram compound interest?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>Shriram compounds interest monthly. The rate shown is the equivalent yearly rate, already including that monthly compounding. You can take the interest monthly, quarterly, half-yearly, yearly, or all at maturity.</p></div></div>
           </div>
           <div class="bk-faq-item" data-bkfaq="3">
-            <button class="bk-faq-q"><span>Is this FD covered by deposit insurance?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>No — DICGC’s ₹5 lakh insurance only applies to bank deposits, and Shriram Finance is an NBFC, not a bank. Its safety instead rests on independent credit ratings (CRISIL AA+, ICRA AA+, IND AA+) and a 50-year operating history.</p></div></div>
+            <button class="bk-faq-q"><span>Can I withdraw early, and what does it cost?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>Yes, after a 3-month lock-in, with no penalty on the principal. Before 3 months: not allowed, except on the depositor’s death. 3–6 months: principal only, no interest. 6–12 months: 3 percentage points below the 12-month rate. After 12 months: 2 percentage points below the rate for the time held. Money is credited within 7 working days.</p></div></div>
+          </div>
+          <div class="bk-faq-item" data-bkfaq="4">
+            <button class="bk-faq-q"><span>How do I get my FD receipt, and what if I lose it?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>An e-receipt is sent to your registered email as soon as booking completes. If you lose it, a duplicate can be issued once you raise a request with the required documents.</p></div></div>
+          </div>
+          <div class="bk-faq-item" data-bkfaq="5">
+            <button class="bk-faq-q"><span>Can I book a Shriram FD jointly with someone?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>No. Joint holding isn’t available for Shriram Finance FDs — only individuals can book, and payment must come from a bank account in that same person’s name.</p></div></div>
+          </div>
+          <div class="bk-faq-item" data-bkfaq="6">
+            <button class="bk-faq-q"><span>How much TDS does Shriram deduct, and how do I avoid it?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>10% TDS once your interest from Shriram crosses ₹10,000 in a year. Submit Form 15G/15H to avoid it — you’ll get a link to do this online after booking.</p></div></div>
+          </div>
+          <div class="bk-faq-item" data-bkfaq="7">
+            <button class="bk-faq-q"><span>Where does my money actually go?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>Straight to Shriram Finance. Raushco doesn’t pool or hold your deposit — we just make it easy to open and track it from your account; your FD receipt comes directly from Shriram.</p></div></div>
           </div>
         </div>
       </section>
