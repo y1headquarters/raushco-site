@@ -1141,8 +1141,38 @@
   .fc-tag.lean { color: #166534; background: rgba(22,101,52,.1); }
   .fc-tag.fat { color: #9a3412; background: rgba(154,52,18,.1); }
   .fc-tag.coast { color: var(--pb-purple-700); background: rgba(82,102,235,.1); }
+
+  /* Bar chart — year-by-year (or side-by-side) breakdown. Validated
+     2-color categorical pair (deltaE 35 normal-vision, 29+ CVD both
+     axes): purple for the base/invested amount, orange for growth. */
+  .fc-chart-wrap { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--pb-border); }
+  .fc-chart-legend { display: flex; gap: 18px; margin-bottom: 16px; font-size: 12.5px; color: var(--pb-base-600); }
+  .fc-chart-legend-item { display: flex; align-items: center; gap: 6px; }
+  .fc-chart-legend-item i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+  .fc-chart-legend-item i.c1 { background: var(--pb-purple-600); }
+  .fc-chart-legend-item i.c2 { background: #eb6834; }
+  .fc-chart { display: flex; align-items: flex-end; justify-content: space-between; gap: 4px; height: 140px; }
+  .fc-chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; min-width: 0; }
+  .fc-chart-bar { width: 100%; max-width: 28px; height: 100%; display: flex; flex-direction: column-reverse; }
+  .fc-chart-group { width: 100%; height: 100%; display: flex; align-items: flex-end; justify-content: center; gap: 3px; }
+  .fc-chart-group .fc-chart-bar2 { flex: 1; max-width: 18px; border-radius: 4px 4px 0 0; }
+  .fc-chart-seg { width: 100%; }
+  .fc-chart-labels { display: flex; justify-content: space-between; gap: 4px; margin-top: 10px; }
+  .fc-chart-label { flex: 1; text-align: center; font-size: 10.5px; color: var(--pb-base-500); min-width: 0; }
   .fc-tag.old { color: var(--pb-base-700); background: var(--pb-base-100); }
   .fc-tag.new { color: var(--pb-purple-700); background: rgba(82,102,235,.1); }
+
+  /* NPS retirement-split + HRA three-way comparison — bespoke, non-chart bars */
+  .fc-split-bar { display: flex; width: 100%; height: 40px; border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
+  .fc-split-seg { display: flex; align-items: center; padding: 0 12px; font-size: 13px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; }
+  .fc-split-labels { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--pb-base-600); }
+  .fc-split-labels .v { font-weight: 600; color: var(--bb-ink-900); }
+  .fc-compare-rows { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
+  .fc-compare-row .fc-compare-label { display: flex; justify-content: space-between; font-size: 13px; color: var(--pb-base-600); margin-bottom: 6px; }
+  .fc-compare-row .fc-compare-label .v { font-weight: 600; color: var(--bb-ink-900); font-variant-numeric: tabular-nums; }
+  .fc-compare-track { height: 8px; border-radius: 999px; background: var(--pb-base-100); overflow: hidden; }
+  .fc-compare-fill { height: 100%; border-radius: 999px; background: var(--pb-purple-300, #b7bff6); }
+  .fc-compare-fill.min { background: #eb6834; }
 
   .fc-section { padding: clamp(56px, 5vw + 32px, 96px) 0; }
   .fc-section .wrap { max-width: 900px; }
@@ -1425,7 +1455,7 @@
           
           <div class="fc-field">
             <label for="npsAmount">Monthly contribution <span class="fc-unit">₹</span></label>
-            <input type="number" id="npsAmount" min="500" step="500" value="10000">
+            <input type="number" id="npsAmount" min="500" step="500" value="5000">
           </div>
           <div class="fc-row2">
             <div class="fc-field">
@@ -1443,22 +1473,35 @@
               <input type="number" id="npsReturn" min="1" max="20" step="0.5" value="10">
             </div>
             <div class="fc-field">
-              <label for="npsAnnuityPct">Used for annuity <span class="fc-unit">%</span></label>
+              <label for="npsAnnuityPct">% allocated for pension <span class="fc-unit">%</span></label>
               <input type="number" id="npsAnnuityPct" min="40" max="100" value="40">
             </div>
+          </div>
+          <div class="fc-field">
+            <label for="npsDrawPct">% of pension drawn per year <span class="fc-unit">%</span></label>
+            <input type="number" id="npsDrawPct" min="1" max="15" step="0.5" value="6">
           </div>
           <a class="btn btn-primary" href="../index.html">Explore more tools</a>
         </div>
         <div class="fc-tool-col">
           
-          <div class="fc-result-head">Corpus at retirement</div>
-          <div class="fc-result-headline" id="npsOutCorpus">₹0</div>
-          <div class="fc-result-sub">before splitting into lump sum and annuity</div>
+          <div class="fc-result-head" id="npsPensionHead">Monthly pension from age 60</div>
+          <div class="fc-result-headline" id="npsOutPension">₹0</div>
+          <div class="fc-result-sub" id="npsOutPensionExact">₹0</div>
           <div class="fc-rows">
-            <div class="fc-rowline"><span class="l">Invested amount</span><span class="v" id="npsOutInvested">₹0</span></div>
-            <div class="fc-rowline"><span class="l">Tax-free lump sum</span><span class="v" id="npsOutLumpsum">₹0</span></div>
-            <div class="fc-rowline"><span class="l">Annuity purchase amount</span><span class="v" id="npsOutAnnuity">₹0</span></div>
-            <div class="fc-rowline"><span class="l">Est. monthly pension*</span><span class="v" id="npsOutPension">₹0</span></div>
+            <div class="fc-rowline"><span class="l">Corpus at retirement</span><span class="v" id="npsOutCorpus">₹0</span></div>
+            <div class="fc-rowline"><span class="l">You invest</span><span class="v" id="npsOutInvested">₹0</span></div>
+            <div class="fc-rowline"><span class="l">Interest earned</span><span class="v" id="npsOutInterest">₹0</span></div>
+            <div class="fc-rowline"><span class="l">Pension lasts</span><span class="v" id="npsOutLasts">0 yrs</span></div>
+          </div>
+          <div class="fc-chart-wrap">
+            <div class="fc-result-head" style="margin-bottom:12px;">Corpus split at retirement</div>
+            <div class="fc-split-bar" id="npsSplitBar"></div>
+            <div class="fc-split-labels">
+              <span>Buys your pension <span class="v" id="npsOutAnnuity">₹0</span></span>
+              <span>Tax-free lump sum <span class="v" id="npsOutLumpsum">₹0</span></span>
+            </div>
+            <p class="fc-result-sub" style="margin-top:16px;" id="npsOutTaxSaved"></p>
           </div>
         </div>
       </div>
@@ -1471,7 +1514,7 @@
       <div class="fc-points reveal">
         <div class="fc-point"><h3>Accumulation phase</h3><p>Your monthly contributions compound at your expected return until retirement, using the same future-value-of-an-annuity method as a SIP — NPS is, at its core, a long-horizon SIP into market-linked funds.</p></div>
         <div class="fc-point"><h3>The mandatory split at retirement</h3><p>By rule, at least 40% of your corpus must go toward buying an annuity (a regular pension); the rest can be withdrawn as a tax-free lump sum. You can choose to annuitize more than 40% if you want a bigger pension.</p></div>
-        <div class="fc-point"><h3>Why the pension figure is an estimate</h3><p>Annuity rates are set by insurance companies and change over time — we assume a representative 6% annual payout on your annuity amount, clearly marked with an asterisk, since no two annuity providers quote exactly the same rate.</p></div>
+        <div class="fc-point"><h3>Why the pension figure is an estimate</h3><p>Annuity rates are set by insurance companies and change over time — enter whatever annual payout rate your chosen annuity plan actually quotes in "% of pension drawn per year"; we default to 6% since no two providers quote exactly the same rate.</p></div>
         <div class="fc-point"><h3>Tax benefits</h3><p>NPS contributions get deductions under Section 80CCD, including an extra ₹50,000 under 80CCD(1B) over and above the regular 80C limit — this calculator doesn't estimate the tax saving itself, only the corpus and pension.</p></div>
       </div>
     </div>
@@ -1814,16 +1857,77 @@
 </script>
 
 <script>
+function fcFmt(n) {
+  var sign = n < 0 ? '-' : '';
+  n = Math.abs(n);
+  if (n >= 10000000) return sign + '₹' + (n / 10000000).toFixed(2) + ' Cr';
+  if (n >= 100000) return sign + '₹' + (n / 100000).toFixed(2) + ' L';
+  if (n >= 1000) return sign + '₹' + (n / 1000).toFixed(1) + ' K';
+  return sign + '₹' + Math.round(n).toLocaleString('en-IN');
+}
+function fcRenderChart(containerId, opts) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  var categories = opts.categories, series = opts.series, mode = opts.mode || 'stacked';
+  if (mode === 'area') { fcRenderArea(el, categories, series[0]); return; }
+  var totals = categories.map(function (_, idx) {
+    if (mode === 'grouped' || mode === 'single') {
+      return Math.max.apply(null, series.map(function (s) { return s.values[idx] || 0; }));
+    }
+    return series.reduce(function (sum, s) { return sum + (s.values[idx] || 0); }, 0);
+  });
+  var maxVal = Math.max.apply(null, totals.concat([1]));
+  var legendHtml = series.length > 1 ? '<div class="fc-chart-legend">' + series.map(function (s) {
+    return '<div class="fc-chart-legend-item"><i style="background:' + s.color + '"></i>' + s.name + '</div>';
+  }).join('') + '</div>' : '';
+  var barsHtml = categories.map(function (cat, idx) {
+    if (mode === 'grouped') {
+      var groupBars = series.map(function (s) {
+        var v = s.values[idx] || 0, h = Math.max(2, (v / maxVal) * 100);
+        return '<div class="fc-chart-bar2" style="height:' + h + '%;background:' + s.color + ';" title="' + s.name + ': ' + fcFmt(v) + '"></div>';
+      }).join('');
+      return '<div class="fc-chart-col"><div class="fc-chart-group">' + groupBars + '</div></div>';
+    }
+    if (mode === 'single') {
+      var v0 = (series[0].values[idx] || 0), h0 = Math.max(2, (v0 / maxVal) * 100);
+      return '<div class="fc-chart-col"><div class="fc-chart-bar" style="max-width:56px;"><div class="fc-chart-seg" style="height:' + h0 + '%;background:' + series[0].color + ';border-radius:4px 4px 0 0;" title="' + fcFmt(v0) + '"></div></div></div>';
+    }
+    var segs = series.map(function (s, si) {
+      var v = s.values[idx] || 0, h = (v / maxVal) * 100, isTop = si === series.length - 1;
+      return '<div class="fc-chart-seg" style="height:' + h + '%;background:' + s.color + ';' + (isTop ? 'border-radius:4px 4px 0 0;' : 'margin-bottom:2px;') + '" title="' + s.name + ': ' + fcFmt(v) + '"></div>';
+    }).join('');
+    return '<div class="fc-chart-col"><div class="fc-chart-bar">' + segs + '</div></div>';
+  }).join('');
+  var labelsHtml = '<div class="fc-chart-labels">' + categories.map(function (c) { return '<div class="fc-chart-label">' + c + '</div>'; }).join('') + '</div>';
+  el.innerHTML = legendHtml + '<div class="fc-chart">' + barsHtml + '</div>' + labelsHtml;
+}
+function fcRenderArea(el, categories, s) {
+  var w = 600, h = 140, pad = 4;
+  var maxVal = Math.max.apply(null, s.values.concat([1])) * 1.08;
+  var n = categories.length;
+  var pts = s.values.map(function (v, i) {
+    var x = n > 1 ? (i / (n - 1)) * (w - 2 * pad) + pad : w / 2;
+    var y = h - pad - (v / maxVal) * (h - 2 * pad);
+    return [x, y];
+  });
+  var line = pts.map(function (p, i) { return (i === 0 ? 'M' : 'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' ');
+  var area = line + ' L' + pts[pts.length - 1][0].toFixed(1) + ',' + (h - pad) + ' L' + pts[0][0].toFixed(1) + ',' + (h - pad) + ' Z';
+  var svg = '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none" style="width:100%;height:140px;overflow:visible;display:block;">' +
+    '<path d="' + area + '" fill="' + s.color + '" fill-opacity="0.16"></path>' +
+    '<path d="' + line + '" fill="none" stroke="' + s.color + '" stroke-width="2" vector-effect="non-scaling-stroke"></path>' +
+    '</svg>';
+  var labelsHtml = '<div class="fc-chart-labels">' + categories.map(function (c) { return '<div class="fc-chart-label">' + c + '</div>'; }).join('') + '</div>';
+  el.innerHTML = '<div class="fc-chart" style="align-items:stretch;">' + svg + '</div>' + labelsHtml;
+}
 (function () {
 
-  var els = { amt: document.getElementById('npsAmount'), age: document.getElementById('npsAge'), retireAge: document.getElementById('npsRetireAge'), ret: document.getElementById('npsReturn'), ann: document.getElementById('npsAnnuityPct') };
+  var els = { amt: document.getElementById('npsAmount'), age: document.getElementById('npsAge'), retireAge: document.getElementById('npsRetireAge'), ret: document.getElementById('npsReturn'), ann: document.getElementById('npsAnnuityPct'), draw: document.getElementById('npsDrawPct') };
   if (!els.amt) return;
   function fmtCr(n) {
     if (n >= 10000000) return '₹' + (n / 10000000).toFixed(2) + ' Cr';
     if (n >= 100000) return '₹' + (n / 100000).toFixed(2) + ' L';
     return '₹' + Math.round(n).toLocaleString('en-IN');
   }
-  var ASSUMED_ANNUITY_RATE = 0.06;
   function render() {
     var P = Math.max(0, parseFloat(els.amt.value) || 0);
     var age = parseFloat(els.age.value) || 0;
@@ -1831,17 +1935,29 @@
     var years = retireAge - age;
     var annualReturn = (parseFloat(els.ret.value) || 0) / 100;
     var annuityPct = Math.min(100, Math.max(40, parseFloat(els.ann.value) || 40)) / 100;
-    var i = annualReturn / 12, n = years * 12;
+    var drawPct = Math.max(0.1, parseFloat(els.draw.value) || 6) / 100;
+    var i = annualReturn / 12, n = Math.round(years * 12);
     var corpus = i > 0 ? P * ((Math.pow(1 + i, n) - 1) / i) * (1 + i) : P * n;
     var invested = P * n;
     var annuityAmt = corpus * annuityPct;
     var lumpsum = corpus - annuityAmt;
-    var monthlyPension = (annuityAmt * ASSUMED_ANNUITY_RATE) / 12;
+    var monthlyPension = (annuityAmt * drawPct) / 12;
+    var lastsYears = monthlyPension > 0 ? annuityAmt / (monthlyPension * 12) : 0;
+    var taxSaved = Math.min(P * 12, 50000) * years * 0.30;
+    document.getElementById('npsPensionHead').textContent = 'Monthly pension from age ' + retireAge;
+    document.getElementById('npsOutPension').textContent = fmtCr(monthlyPension);
+    document.getElementById('npsOutPensionExact').textContent = '₹' + Math.round(monthlyPension).toLocaleString('en-IN');
     document.getElementById('npsOutCorpus').textContent = fmtCr(corpus);
     document.getElementById('npsOutInvested').textContent = fmtCr(invested);
+    document.getElementById('npsOutInterest').textContent = fmtCr(Math.max(0, corpus - invested));
+    document.getElementById('npsOutLasts').textContent = lastsYears.toFixed(1) + ' yrs';
     document.getElementById('npsOutLumpsum').textContent = fmtCr(lumpsum);
     document.getElementById('npsOutAnnuity').textContent = fmtCr(annuityAmt);
-    document.getElementById('npsOutPension').textContent = fmtCr(monthlyPension) + '*';
+    document.getElementById('npsOutTaxSaved').textContent = 'Total taxes you could save under Section 80(CCD): ' + fmtCr(taxSaved) + ' (assuming a 30% tax slab, capped at ₹50,000/yr of extra NPS contribution under 80CCD(1B))';
+    var annuityPctDisplay = Math.round(annuityPct * 100), lumpPctDisplay = 100 - annuityPctDisplay;
+    document.getElementById('npsSplitBar').innerHTML =
+      '<div class="fc-split-seg" style="width:' + annuityPctDisplay + '%;background:#eb6834;">Pension ' + annuityPctDisplay + '%</div>' +
+      '<div class="fc-split-seg" style="width:' + lumpPctDisplay + '%;background:var(--pb-purple-600);">Lump sum ' + lumpPctDisplay + '%</div>';
   }
   Object.keys(els).forEach(function (k) { els[k].addEventListener('input', render); });
   render();

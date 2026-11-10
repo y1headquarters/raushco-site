@@ -1141,8 +1141,38 @@
   .fc-tag.lean { color: #166534; background: rgba(22,101,52,.1); }
   .fc-tag.fat { color: #9a3412; background: rgba(154,52,18,.1); }
   .fc-tag.coast { color: var(--pb-purple-700); background: rgba(82,102,235,.1); }
+
+  /* Bar chart — year-by-year (or side-by-side) breakdown. Validated
+     2-color categorical pair (deltaE 35 normal-vision, 29+ CVD both
+     axes): purple for the base/invested amount, orange for growth. */
+  .fc-chart-wrap { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--pb-border); }
+  .fc-chart-legend { display: flex; gap: 18px; margin-bottom: 16px; font-size: 12.5px; color: var(--pb-base-600); }
+  .fc-chart-legend-item { display: flex; align-items: center; gap: 6px; }
+  .fc-chart-legend-item i { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+  .fc-chart-legend-item i.c1 { background: var(--pb-purple-600); }
+  .fc-chart-legend-item i.c2 { background: #eb6834; }
+  .fc-chart { display: flex; align-items: flex-end; justify-content: space-between; gap: 4px; height: 140px; }
+  .fc-chart-col { flex: 1; display: flex; flex-direction: column; align-items: center; height: 100%; justify-content: flex-end; min-width: 0; }
+  .fc-chart-bar { width: 100%; max-width: 28px; height: 100%; display: flex; flex-direction: column-reverse; }
+  .fc-chart-group { width: 100%; height: 100%; display: flex; align-items: flex-end; justify-content: center; gap: 3px; }
+  .fc-chart-group .fc-chart-bar2 { flex: 1; max-width: 18px; border-radius: 4px 4px 0 0; }
+  .fc-chart-seg { width: 100%; }
+  .fc-chart-labels { display: flex; justify-content: space-between; gap: 4px; margin-top: 10px; }
+  .fc-chart-label { flex: 1; text-align: center; font-size: 10.5px; color: var(--pb-base-500); min-width: 0; }
   .fc-tag.old { color: var(--pb-base-700); background: var(--pb-base-100); }
   .fc-tag.new { color: var(--pb-purple-700); background: rgba(82,102,235,.1); }
+
+  /* NPS retirement-split + HRA three-way comparison — bespoke, non-chart bars */
+  .fc-split-bar { display: flex; width: 100%; height: 40px; border-radius: 8px; overflow: hidden; margin-bottom: 10px; }
+  .fc-split-seg { display: flex; align-items: center; padding: 0 12px; font-size: 13px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; }
+  .fc-split-labels { display: flex; justify-content: space-between; font-size: 12.5px; color: var(--pb-base-600); }
+  .fc-split-labels .v { font-weight: 600; color: var(--bb-ink-900); }
+  .fc-compare-rows { display: flex; flex-direction: column; gap: 14px; margin-top: 4px; }
+  .fc-compare-row .fc-compare-label { display: flex; justify-content: space-between; font-size: 13px; color: var(--pb-base-600); margin-bottom: 6px; }
+  .fc-compare-row .fc-compare-label .v { font-weight: 600; color: var(--bb-ink-900); font-variant-numeric: tabular-nums; }
+  .fc-compare-track { height: 8px; border-radius: 999px; background: var(--pb-base-100); overflow: hidden; }
+  .fc-compare-fill { height: 100%; border-radius: 999px; background: var(--pb-purple-300, #b7bff6); }
+  .fc-compare-fill.min { background: #eb6834; }
 
   .fc-section { padding: clamp(56px, 5vw + 32px, 96px) 0; }
   .fc-section .wrap { max-width: 900px; }
@@ -1424,36 +1454,50 @@
         <div class="fc-tool-col l">
           
           <div class="fc-field">
-            <label for="hraBasic">Basic salary + DA, annual <span class="fc-unit">₹</span></label>
-            <input type="number" id="hraBasic" min="0" step="10000" value="600000">
+            <label for="hraBasic">Basic salary + DA (annual) <span class="fc-unit">₹</span></label>
+            <input type="number" id="hraBasic" min="0" step="10000" value="468000">
           </div>
           <div class="fc-field">
-            <label for="hraReceived">HRA received, annual <span class="fc-unit">₹</span></label>
-            <input type="number" id="hraReceived" min="0" step="5000" value="240000">
+            <label for="hraReceived">HRA received (annual) <span class="fc-unit">₹</span></label>
+            <input type="number" id="hraReceived" min="0" step="5000" value="108000">
           </div>
           <div class="fc-field">
-            <label for="hraRent">Rent paid, annual <span class="fc-unit">₹</span></label>
-            <input type="number" id="hraRent" min="0" step="5000" value="300000">
+            <label for="hraRent">Total rent paid (annual) <span class="fc-unit">₹</span></label>
+            <input type="number" id="hraRent" min="0" step="5000" value="240000">
           </div>
           <div class="fc-field">
-            <label for="hraMetro">City type</label>
-            <select id="hraMetro">
-              <option value="1">Metro (Delhi, Mumbai, Kolkata, Chennai, Bengaluru, Hyderabad)</option>
-              <option value="0">Non-metro</option>
-            </select>
+            <label>Do you live in Delhi, Mumbai, Kolkata, Chennai, Bengaluru, Hyderabad, Pune or Ahmedabad?</label>
+            <div style="display:flex; gap:20px; margin-top:4px;">
+              <label style="display:flex; align-items:center; gap:6px; font-size:14px; color:var(--bb-ink-900); font-weight:400;"><input type="radio" name="hraMetro" value="1"> Yes</label>
+              <label style="display:flex; align-items:center; gap:6px; font-size:14px; color:var(--bb-ink-900); font-weight:400;"><input type="radio" name="hraMetro" value="0" checked> No</label>
+            </div>
           </div>
           <a class="btn btn-primary" href="../index.html">Explore more tools</a>
         </div>
         <div class="fc-tool-col">
           
-          <div class="fc-result-head">HRA exemption</div>
+          <div class="fc-result-head">Exempt from tax</div>
           <div class="fc-result-headline" id="hraOutExempt">₹0</div>
-          <div class="fc-result-sub">the tax-free portion of your HRA</div>
           <div class="fc-rows">
             <div class="fc-rowline"><span class="l">HRA received</span><span class="v" id="hraOutReceived">₹0</span></div>
-            <div class="fc-rowline"><span class="l">Rent paid − 10% of basic</span><span class="v" id="hraOutRentRule">₹0</span></div>
-            <div class="fc-rowline"><span class="l">50%/40% of basic (city rule)</span><span class="v" id="hraOutPctRule">₹0</span></div>
             <div class="fc-rowline"><span class="l">Taxable HRA</span><span class="v" id="hraOutTaxable">₹0</span></div>
+          </div>
+          <div class="fc-chart-wrap">
+            <div class="fc-result-head" style="margin-bottom:14px;">Your exemption is the smallest of these three</div>
+            <div class="fc-compare-rows">
+              <div class="fc-compare-row">
+                <div class="fc-compare-label"><span>HRA your employer pays</span><span class="v" id="hraOutReceived2">₹0</span></div>
+                <div class="fc-compare-track"><div class="fc-compare-fill" id="hraBar1"></div></div>
+              </div>
+              <div class="fc-compare-row">
+                <div class="fc-compare-label"><span>Rent paid minus 10% of basic</span><span class="v" id="hraOutRentRule">₹0</span></div>
+                <div class="fc-compare-track"><div class="fc-compare-fill" id="hraBar2"></div></div>
+              </div>
+              <div class="fc-compare-row">
+                <div class="fc-compare-label"><span>40%/50% of basic + DA</span><span class="v" id="hraOutPctRule">₹0</span></div>
+                <div class="fc-compare-track"><div class="fc-compare-fill" id="hraBar3"></div></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1809,9 +1853,72 @@
 </script>
 
 <script>
+function fcFmt(n) {
+  var sign = n < 0 ? '-' : '';
+  n = Math.abs(n);
+  if (n >= 10000000) return sign + '₹' + (n / 10000000).toFixed(2) + ' Cr';
+  if (n >= 100000) return sign + '₹' + (n / 100000).toFixed(2) + ' L';
+  if (n >= 1000) return sign + '₹' + (n / 1000).toFixed(1) + ' K';
+  return sign + '₹' + Math.round(n).toLocaleString('en-IN');
+}
+function fcRenderChart(containerId, opts) {
+  var el = document.getElementById(containerId);
+  if (!el) return;
+  var categories = opts.categories, series = opts.series, mode = opts.mode || 'stacked';
+  if (mode === 'area') { fcRenderArea(el, categories, series[0]); return; }
+  var totals = categories.map(function (_, idx) {
+    if (mode === 'grouped' || mode === 'single') {
+      return Math.max.apply(null, series.map(function (s) { return s.values[idx] || 0; }));
+    }
+    return series.reduce(function (sum, s) { return sum + (s.values[idx] || 0); }, 0);
+  });
+  var maxVal = Math.max.apply(null, totals.concat([1]));
+  var legendHtml = series.length > 1 ? '<div class="fc-chart-legend">' + series.map(function (s) {
+    return '<div class="fc-chart-legend-item"><i style="background:' + s.color + '"></i>' + s.name + '</div>';
+  }).join('') + '</div>' : '';
+  var barsHtml = categories.map(function (cat, idx) {
+    if (mode === 'grouped') {
+      var groupBars = series.map(function (s) {
+        var v = s.values[idx] || 0, h = Math.max(2, (v / maxVal) * 100);
+        return '<div class="fc-chart-bar2" style="height:' + h + '%;background:' + s.color + ';" title="' + s.name + ': ' + fcFmt(v) + '"></div>';
+      }).join('');
+      return '<div class="fc-chart-col"><div class="fc-chart-group">' + groupBars + '</div></div>';
+    }
+    if (mode === 'single') {
+      var v0 = (series[0].values[idx] || 0), h0 = Math.max(2, (v0 / maxVal) * 100);
+      return '<div class="fc-chart-col"><div class="fc-chart-bar" style="max-width:56px;"><div class="fc-chart-seg" style="height:' + h0 + '%;background:' + series[0].color + ';border-radius:4px 4px 0 0;" title="' + fcFmt(v0) + '"></div></div></div>';
+    }
+    var segs = series.map(function (s, si) {
+      var v = s.values[idx] || 0, h = (v / maxVal) * 100, isTop = si === series.length - 1;
+      return '<div class="fc-chart-seg" style="height:' + h + '%;background:' + s.color + ';' + (isTop ? 'border-radius:4px 4px 0 0;' : 'margin-bottom:2px;') + '" title="' + s.name + ': ' + fcFmt(v) + '"></div>';
+    }).join('');
+    return '<div class="fc-chart-col"><div class="fc-chart-bar">' + segs + '</div></div>';
+  }).join('');
+  var labelsHtml = '<div class="fc-chart-labels">' + categories.map(function (c) { return '<div class="fc-chart-label">' + c + '</div>'; }).join('') + '</div>';
+  el.innerHTML = legendHtml + '<div class="fc-chart">' + barsHtml + '</div>' + labelsHtml;
+}
+function fcRenderArea(el, categories, s) {
+  var w = 600, h = 140, pad = 4;
+  var maxVal = Math.max.apply(null, s.values.concat([1])) * 1.08;
+  var n = categories.length;
+  var pts = s.values.map(function (v, i) {
+    var x = n > 1 ? (i / (n - 1)) * (w - 2 * pad) + pad : w / 2;
+    var y = h - pad - (v / maxVal) * (h - 2 * pad);
+    return [x, y];
+  });
+  var line = pts.map(function (p, i) { return (i === 0 ? 'M' : 'L') + p[0].toFixed(1) + ',' + p[1].toFixed(1); }).join(' ');
+  var area = line + ' L' + pts[pts.length - 1][0].toFixed(1) + ',' + (h - pad) + ' L' + pts[0][0].toFixed(1) + ',' + (h - pad) + ' Z';
+  var svg = '<svg viewBox="0 0 ' + w + ' ' + h + '" preserveAspectRatio="none" style="width:100%;height:140px;overflow:visible;display:block;">' +
+    '<path d="' + area + '" fill="' + s.color + '" fill-opacity="0.16"></path>' +
+    '<path d="' + line + '" fill="none" stroke="' + s.color + '" stroke-width="2" vector-effect="non-scaling-stroke"></path>' +
+    '</svg>';
+  var labelsHtml = '<div class="fc-chart-labels">' + categories.map(function (c) { return '<div class="fc-chart-label">' + c + '</div>'; }).join('') + '</div>';
+  el.innerHTML = '<div class="fc-chart" style="align-items:stretch;">' + svg + '</div>' + labelsHtml;
+}
 (function () {
 
-  var els = { basic: document.getElementById('hraBasic'), received: document.getElementById('hraReceived'), rent: document.getElementById('hraRent'), metro: document.getElementById('hraMetro') };
+  var els = { basic: document.getElementById('hraBasic'), received: document.getElementById('hraReceived'), rent: document.getElementById('hraRent') };
+  var metroRadios = document.querySelectorAll('input[name="hraMetro"]');
   if (!els.basic) return;
   function fmtCr(n) {
     if (n >= 10000000) return '₹' + (n / 10000000).toFixed(2) + ' Cr';
@@ -1822,18 +1929,27 @@
     var basic = Math.max(0, parseFloat(els.basic.value) || 0);
     var received = Math.max(0, parseFloat(els.received.value) || 0);
     var rent = Math.max(0, parseFloat(els.rent.value) || 0);
-    var isMetro = els.metro.value === '1';
+    var isMetro = document.querySelector('input[name="hraMetro"]:checked').value === '1';
     var rentRule = Math.max(0, rent - 0.1 * basic);
     var pctRule = (isMetro ? 0.5 : 0.4) * basic;
     var exempt = Math.min(received, rentRule, pctRule);
     var taxable = Math.max(0, received - exempt);
     document.getElementById('hraOutExempt').textContent = fmtCr(exempt);
     document.getElementById('hraOutReceived').textContent = fmtCr(received);
+    document.getElementById('hraOutReceived2').textContent = fmtCr(received);
     document.getElementById('hraOutRentRule').textContent = fmtCr(rentRule);
     document.getElementById('hraOutPctRule').textContent = fmtCr(pctRule);
     document.getElementById('hraOutTaxable').textContent = fmtCr(taxable);
+    var maxBar = Math.max(received, rentRule, pctRule, 1);
+    var bars = [['hraBar1', received], ['hraBar2', rentRule], ['hraBar3', pctRule]];
+    bars.forEach(function (pair) {
+      var el2 = document.getElementById(pair[0]);
+      el2.style.width = Math.max(2, (pair[1] / maxBar) * 100) + '%';
+      el2.className = 'fc-compare-fill' + (pair[1] === exempt ? ' min' : '');
+    });
   }
-  Object.keys(els).forEach(function (k) { els[k].addEventListener('input', render); els[k].addEventListener('change', render); });
+  Object.keys(els).forEach(function (k) { els[k].addEventListener('input', render); });
+  metroRadios.forEach(function (r) { r.addEventListener('change', render); });
   render();
 
 })();
