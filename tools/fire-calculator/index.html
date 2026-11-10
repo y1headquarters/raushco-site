@@ -1112,7 +1112,10 @@
   .fc-tool-col { padding: 36px 40px; min-width: 0; }
   .fc-tool-col.l { border-right: 1px solid var(--pb-border); }
   @media (max-width: 760px) { .fc-tool-col.l { border-right: none; border-bottom: 1px solid var(--pb-border); } }
-  .fc-field + .fc-field { margin-top: 20px; }
+  .fc-tool-col > .fc-field + .fc-field,
+  .fc-tool-col > .fc-field + .fc-row2,
+  .fc-tool-col > .fc-row2 + .fc-field,
+  .fc-tool-col > .fc-row2 + .fc-row2 { margin-top: 20px; }
   .fc-field label { display: flex; justify-content: space-between; align-items: baseline; font-size: 13.5px; color: var(--pb-base-600); margin-bottom: 8px; }
   .fc-field label .fc-unit { font-size: 12px; color: var(--pb-base-500); }
   .fc-field input { width: 100%; box-sizing: border-box; height: 46px; padding: 0 14px; border: 1px solid var(--pb-border-input); border-radius: var(--pb-radius-m); font-family: inherit; font-size: 15px; color: var(--bb-ink-900); background: #fff; }
