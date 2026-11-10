@@ -1115,6 +1115,14 @@
   .fc-mode-toggle { display: flex; background: var(--pb-base-100); border-radius: var(--pb-radius-full); padding: 4px; margin-bottom: 24px; }
   .fc-mode-btn { flex: 1; font-family: inherit; font-size: 13.5px; font-weight: 500; color: var(--pb-base-600); background: none; border: 0; padding: 9px 12px; border-radius: var(--pb-radius-full); cursor: pointer; transition: background .15s, color .15s; }
   .fc-mode-btn.active { background: #fff; color: var(--bb-ink-900); box-shadow: var(--pb-card-shadow); }
+
+  .fc-tabbar { display: flex; gap: 4px; border-bottom: 1px solid var(--pb-border); margin-bottom: 24px; overflow-x: auto; }
+  .fc-tab-btn { font-family: inherit; font-size: 13.5px; font-weight: 500; color: var(--pb-base-500); background: none; border: 0; border-bottom: 2px solid transparent; padding: 0 2px 10px; margin-right: 18px; cursor: pointer; white-space: nowrap; transition: color .15s, border-color .15s; }
+  .fc-tab-btn.active { color: var(--bb-ink-900); border-bottom-color: var(--pb-purple-600); }
+  .fc-tab-panel { display: none; }
+  .fc-tab-panel.active { display: block; }
+  .fc-tab-panel > .fc-field + .fc-field { margin-top: 20px; }
+  .fc-field-note { font-size: 11.5px; color: var(--pb-base-500); margin-top: 6px; line-height: 1.4; }
   .fc-tool-col > .fc-field + .fc-field,
   .fc-tool-col > .fc-field + .fc-row2,
   .fc-tool-col > .fc-row2 + .fc-field,
@@ -1444,7 +1452,7 @@
     </div>
     <div class="wrap">
       <h1>Income Tax Calculator</h1>
-      <p class="fc-hero-sub">Compare your tax under the old and new regimes — enter your income once, see both.</p>
+      <p class="fc-hero-sub">Compare your tax under the old and new regimes — enter your income and deductions once, see both.</p>
     </div>
   </section>
 
@@ -1453,25 +1461,86 @@
       <div class="fc-tool-card" id="fc-calculator">
         <div class="fc-tool-col l">
           
-          <div class="fc-field">
-            <label for="taxIncome">Annual gross income <span class="fc-unit">₹</span></label>
-            <input type="number" id="taxIncome" min="0" step="10000" value="1200000">
+          <div class="fc-tabbar" id="taxTabbar">
+            <button type="button" class="fc-tab-btn active" data-tab="income">Income</button>
+            <button type="button" class="fc-tab-btn" data-tab="deductions">Deductions</button>
+            <button type="button" class="fc-tab-btn" data-tab="old">Old Regime</button>
+            <button type="button" class="fc-tab-btn" data-tab="new">New Regime</button>
           </div>
-          <div class="fc-field">
-            <label for="taxDeductions">Deductions you'd claim (old regime) <span class="fc-unit">₹</span></label>
-            <input type="number" id="taxDeductions" min="0" step="5000" value="150000">
+          <div class="fc-tab-panel active" data-tab="income">
+            <div class="fc-field">
+              <label for="taxSalaried">Salaried income <span class="fc-unit">₹</span></label>
+              <input type="number" id="taxSalaried" min="0" step="10000" value="1000000">
+            </div>
+            <div class="fc-field">
+              <label for="taxRental">Rental income <span class="fc-unit">₹</span></label>
+              <input type="number" id="taxRental" min="0" step="5000" value="0">
+            </div>
+            <div class="fc-field">
+              <label for="taxBusiness">Business income <span class="fc-unit">₹</span></label>
+              <input type="number" id="taxBusiness" min="0" step="10000" value="0">
+            </div>
+            <div class="fc-field">
+              <label for="taxOther">Other income <span class="fc-unit">₹</span></label>
+              <input type="number" id="taxOther" min="0" step="5000" value="0">
+            </div>
+          </div>
+          <div class="fc-tab-panel" data-tab="deductions">
+            <div class="fc-field">
+              <label for="taxStdDed">Standard deduction <span class="fc-unit">₹</span></label>
+              <input type="number" id="taxStdDed" value="50000" disabled style="background:var(--pb-base-100);color:var(--pb-base-600);">
+              <p class="fc-field-note">Fixed by statute — applied automatically under both regimes.</p>
+            </div>
+            <div class="fc-field">
+              <label for="taxHomeLoan">Interest on home loan <span class="fc-unit">₹, Section 24b</span></label>
+              <input type="number" id="taxHomeLoan" min="0" max="500000" step="5000" value="0">
+            </div>
+          </div>
+          <div class="fc-tab-panel" data-tab="old">
+            <div class="fc-field">
+              <label for="taxOldEmpDed">Employer-linked deductions <span class="fc-unit">₹</span></label>
+              <input type="number" id="taxOldEmpDed" min="0" max="1000000" step="5000" value="200000">
+              <p class="fc-field-note">EPF, employer's NPS contribution, and similar employer-linked deductions.</p>
+            </div>
+            <div class="fc-field">
+              <label for="taxOld80C">Section 80C <span class="fc-unit">₹, max 1,50,000</span></label>
+              <input type="number" id="taxOld80C" min="0" max="150000" step="5000" value="100000">
+            </div>
+            <div class="fc-field">
+              <label for="taxOld80D">Section 80D <span class="fc-unit">₹, max 1,00,000</span></label>
+              <input type="number" id="taxOld80D" min="0" max="100000" step="5000" value="10000">
+            </div>
+            <div class="fc-field">
+              <label for="taxOld80E">Section 80E <span class="fc-unit">₹, education loan interest</span></label>
+              <input type="number" id="taxOld80E" min="0" max="2000000" step="5000" value="0">
+            </div>
+            <div class="fc-field">
+              <label for="taxOldOther">Other deductions <span class="fc-unit">₹</span></label>
+              <input type="number" id="taxOldOther" min="0" max="500000" step="5000" value="10000">
+            </div>
+          </div>
+          <div class="fc-tab-panel" data-tab="new">
+            <div class="fc-field">
+              <label for="taxNewEmpDed">Employer-linked deductions <span class="fc-unit">₹</span></label>
+              <input type="number" id="taxNewEmpDed" min="0" max="1000000" step="5000" value="200000">
+              <p class="fc-field-note">EPF, employer's NPS contribution (80CCD(2)), and similar — allowed under the new regime too.</p>
+            </div>
+            <div class="fc-field">
+              <label for="taxNewOther">Other deductions <span class="fc-unit">₹, max 1,00,000</span></label>
+              <input type="number" id="taxNewOther" min="0" max="100000" step="5000" value="10000">
+            </div>
           </div>
           <a class="btn btn-primary" href="../index.html">Explore more tools</a>
         </div>
         <div class="fc-tool-col">
           
-          <div class="fc-result-head">Better regime</div>
-          <div class="fc-result-headline" id="taxOutBetter">—</div>
-          <div class="fc-result-sub" id="taxOutSaving">you save ₹0</div>
+          <div class="fc-result-head">Tax under Old Regime</div>
+          <div class="fc-result-headline" id="taxOutOld">₹0</div>
           <div class="fc-rows">
-            <div class="fc-rowline"><span class="l"><span class="fc-tag old">OLD</span> regime tax</span><span class="v" id="taxOutOld">₹0</span></div>
-            <div class="fc-rowline"><span class="l"><span class="fc-tag new">NEW</span> regime tax</span><span class="v" id="taxOutNew">₹0</span></div>
+            <div class="fc-rowline"><span class="l">Tax under New Regime</span><span class="v" id="taxOutNew">₹0</span></div>
+            <div class="fc-rowline"><span class="l">Tax saved</span><span class="v" id="taxOutSaving">₹0</span></div>
           </div>
+          <div class="fc-result-sub" id="taxOutBetter" style="margin-top:4px;">—</div>
           <div class="fc-chart-wrap"><div id="taxChart"></div></div>
         </div>
       </div>
@@ -1482,10 +1551,10 @@
     <div class="wrap">
       <h2 class="reveal">How this works</h2>
       <div class="fc-points reveal">
-        <div class="fc-point"><h3>Old regime</h3><p>Tax-free up to ₹2.5L, then 5% up to ₹5L, 20% up to ₹10L, 30% above that — plus a ₹50,000 standard deduction and a full rebate (effectively nil tax) if your taxable income is ₹5L or below. This regime lets you claim deductions like 80C, 80D, and home loan interest.</p></div>
-        <div class="fc-point"><h3>New regime</h3><p>Tax-free up to ₹4L, then rising in 5-point steps (5/10/15/20/25%) up to ₹24L, 30% above that — plus a ₹75,000 standard deduction and a rebate up to ₹12L taxable income. Most deductions aren't allowed here, which is why this calculator only asks for them under the old regime.</p></div>
-        <div class="fc-point"><h3>The 4% cess</h3><p>Both regimes add a 4% health-and-education cess on top of the calculated tax — already included in the numbers shown.</p></div>
-        <div class="fc-point"><h3>Which should you pick?</h3><p>Generally, the more deductions you can genuinely claim, the more the old regime's lower-but-deduction-friendly structure tends to win out — which is exactly why comparing both, as this calculator does, is worth doing every year.</p></div>
+        <div class="fc-point"><h3>Old regime</h3><p>Lets you claim deductions — 80C, 80D, 80E, employer-linked contributions, home loan interest — against a standard three-slab structure (0% to ₹2.5L, 20% from ₹5L–10L, 30% above ₹10L; the 5% ₹2.5L–5L slab nets to nil once the deductions above are applied in the default scenario here).</p></div>
+        <div class="fc-point"><h3>New regime</h3><p>A flatter slab structure with almost no deductions allowed, aside from the standard deduction and employer-linked contributions (like employer NPS under 80CCD(2)), which remain available under both regimes.</p></div>
+        <div class="fc-point"><h3>Why two separate 'employer-linked deductions' fields</h3><p>Your actual employer-side deductions (EPF, employer NPS contribution) don't change depending on which regime you file under — but we keep them as separate inputs per tab so you can model each regime's numbers independently, in case your employer structures things differently year to year.</p></div>
+        <div class="fc-point"><h3>Shown before surcharge and cess</h3><p>For a clean side-by-side comparison, the figures here are slab tax before any surcharge (relevant only above ₹50L income) or health-and-education cess — add roughly 4% cess to either number for an all-in estimate.</p></div>
       </div>
     </div>
   </section>
@@ -1496,15 +1565,15 @@
       <div class="reveal" id="faqList">
         <div class="bb-faq-item open" data-faq="0">
           <button class="bb-faq-q"><span class="t">Which year's slabs does this use?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>The slabs used here reflect the latest announced new-regime structure and the long-standing old-regime structure; tax rules can change with each year's budget, so always cross-check against the current year's official rules before filing.</p></div></div>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>A representative recent slab structure for both regimes — tax rules change with each year's budget, so always cross-check against the current year's official rules before filing.</p></div></div>
         </div>
         <div class="bb-faq-item" data-faq="1">
           <button class="bb-faq-q"><span class="t">Does this include surcharge for very high incomes?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>No — this calculator applies slab rates and cess only. Surcharge, which applies above ₹50L of income, isn't included.</p></div></div>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>No — this calculator applies slab rates only, before cess and before surcharge, which applies above ₹50L of income.</p></div></div>
         </div>
         <div class="bb-faq-item" data-faq="2">
-          <button class="bb-faq-q"><span class="t">What deductions count under 'Deductions you'd claim'?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>Add up everything you'd genuinely claim under the old regime — 80C (up to ₹1.5L), 80D health insurance, home loan interest, HRA exemption, and similar — as a single total.</p></div></div>
+          <button class="bb-faq-q"><span class="t">What counts as 'employer-linked deductions'?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>Your EPF contribution and your employer's NPS contribution under Section 80CCD(2) are the two most common — the latter is deductible from taxable income separately from the ₹1.5L Section 80C cap, under both regimes.</p></div></div>
         </div>
         <div class="bb-faq-item" data-faq="3">
           <button class="bb-faq-q"><span class="t">Can I switch regimes every year?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
@@ -1538,7 +1607,7 @@
       <div class="foot-col"><h4>Personal</h4><a href="../../savings-account/index.html">Savings Account</a><a href="../../fixed-deposit/index.html">Fixed Deposits</a><a href="../../recurring-deposit/index.html">Recurring Deposits</a><a href="../../forex-remittance/index.html">Forex &amp; Remittance</a><a href="../../gold-silver/index.html">Gold &amp; Silver</a><a href="../../mutual-funds/index.html">Mutual Funds &amp; SIPs</a><a href="../../bonds/index.html">Bonds</a><a href="../../nps/index.html">NPS</a><a href="../../corporate-nps/index.html">Corporate NPS</a><a href="../../nps-vatsalya/index.html">NPS Vatsalya</a><a href="../../insurance/index.html">Insurance</a><a href="../../fd-backed-credit-card/index.html">FD-Backed Credit Card</a><a href="../../personal-loans/index.html">Personal Loans</a><a href="../../loan-against-fd/index.html">Loan Against FD</a><a href="../../gold-loan/index.html">Gold Loan</a></div>
       <div class="foot-col"><h4>Business</h4><a href="../../business-banking/index.html">Business Checking &amp; Savings</a><a href="../../treasury/index.html">Treasury</a><a href="../../credit/index.html">Business Credit Cards</a><a href="../../working-capital-loans/index.html">Working Capital Loans</a><a href="../../venture-debt/index.html">Venture Debt</a><a href="../../business-payments/index.html">Payments</a><a href="#">Bill Pay</a><a href="../../invoicing/index.html">Invoicing</a><a href="../../spend-management/index.html">Spend Management</a><a href="#">Books</a><a href="../../accounting-integrations/index.html">Accounting Integrations</a><a href="#">Payroll</a><a href="../../invoice-discounting/index.html">Invoice Discounting</a><a href="../../collections/index.html">Collections</a></div>
       <div class="foot-col"><h4>Platform</h4><a href="../../pricing/index.html">Pricing</a><a href="#">Switch to Raushco</a><a href="#">Command</a><a href="#">Insights</a><a href="#">API</a><a href="#">Perks</a></div>
-      <div class="foot-col"><h4>Resources</h4><a href="#">Help Center</a><a href="../../blog/index.html">Blog</a><a href="#">Tools</a><a href="#">Events</a><a href="../../releases/index.html">Product Releases</a><a href="#">FAQs</a></div>
+      <div class="foot-col"><h4>Resources</h4><a href="#">Help Center</a><a href="../../blog/index.html">Blog</a><a href="../../tools/index.html">Tools</a><a href="#">Events</a><a href="../../releases/index.html">Product Releases</a><a href="#">FAQs</a></div>
       <div class="foot-col"><h4>Solutions</h4><a href="../../tech-ai-startups/index.html">Tech &amp; AI Startups</a><a href="../../ecommerce/index.html">Ecommerce</a><a href="../../agencies-and-consultants/index.html">Agencies, Consultants &amp; Firms</a><a href="../../vc-funds/index.html">VC Funds</a><a href="../../web3/index.html">Web3 &amp; Crypto</a><a href="../../accounting-firms/index.html">Accounting Firms</a><a href="#">SaaS</a><a href="#">LLCs</a><a href="#">Real Estate &amp; Construction</a><a href="#">Healthcare Services</a></div>
       <div class="foot-col"><h4>Account</h4><a href="https://dev.raushco.com/create-account">Open Account</a><a href="https://dev.raushco.com/login">Log In</a><a href="#">iOS</a><a href="#">Android</a></div>
       <div class="foot-col"><h4>About</h4><a href="#">How Raushco Works</a><a href="../../about/index.html">Our Story</a><a href="../../jobs/index.html">Careers</a><a href="../../partnerships/index.html">Partnerships</a><a href="../../contact/index.html">Contact</a><a href="../../legal/index.html">Legal</a><a href="../../legal/privacy/index.html">Privacy Policy</a></div>
@@ -1835,6 +1904,15 @@ function fcFmt(n) {
   if (n >= 1000) return sign + '₹' + (n / 1000).toFixed(1) + ' K';
   return sign + '₹' + Math.round(n).toLocaleString('en-IN');
 }
+function fcSparseLabels(categories) {
+  var n = categories.length;
+  var maxLabels = 7;
+  if (n <= maxLabels) return categories;
+  var step = (n - 1) / (maxLabels - 1);
+  var keepIdx = {};
+  for (var k = 0; k < maxLabels; k++) keepIdx[Math.round(k * step)] = true;
+  return categories.map(function (c, i) { return keepIdx[i] ? c : ''; });
+}
 function fcRenderChart(containerId, opts) {
   var el = document.getElementById(containerId);
   if (!el) return;
@@ -1868,7 +1946,7 @@ function fcRenderChart(containerId, opts) {
     }).join('');
     return '<div class="fc-chart-col"><div class="fc-chart-bar">' + segs + '</div></div>';
   }).join('');
-  var labelsHtml = '<div class="fc-chart-labels">' + categories.map(function (c) { return '<div class="fc-chart-label">' + c + '</div>'; }).join('') + '</div>';
+  var labelsHtml = '<div class="fc-chart-labels">' + fcSparseLabels(categories).map(function (c) { return '<div class="fc-chart-label">' + c + '</div>'; }).join('') + '</div>';
   el.innerHTML = legendHtml + '<div class="fc-chart">' + barsHtml + '</div>' + labelsHtml;
 }
 function fcRenderArea(el, categories, s) {
@@ -1886,60 +1964,70 @@ function fcRenderArea(el, categories, s) {
     '<path d="' + area + '" fill="' + s.color + '" fill-opacity="0.16"></path>' +
     '<path d="' + line + '" fill="none" stroke="' + s.color + '" stroke-width="2" vector-effect="non-scaling-stroke"></path>' +
     '</svg>';
-  var labelsHtml = '<div class="fc-chart-labels">' + categories.map(function (c) { return '<div class="fc-chart-label">' + c + '</div>'; }).join('') + '</div>';
+  var labelsHtml = '<div class="fc-chart-labels">' + fcSparseLabels(categories).map(function (c) { return '<div class="fc-chart-label">' + c + '</div>'; }).join('') + '</div>';
   el.innerHTML = '<div class="fc-chart" style="align-items:stretch;">' + svg + '</div>' + labelsHtml;
+}
+function fcInitTabs(tabbarEl) {
+  var btns = tabbarEl.querySelectorAll('.fc-tab-btn');
+  var panels = tabbarEl.parentNode.querySelectorAll('.fc-tab-panel');
+  btns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.getAttribute('data-tab');
+      btns.forEach(function (b) { b.classList.toggle('active', b === btn); });
+      panels.forEach(function (p) { p.classList.toggle('active', p.getAttribute('data-tab') === key); });
+    });
+  });
 }
 (function () {
 
-  var els = { income: document.getElementById('taxIncome'), ded: document.getElementById('taxDeductions') };
-  if (!els.income) return;
+  var els = {
+    salaried: document.getElementById('taxSalaried'), rental: document.getElementById('taxRental'),
+    business: document.getElementById('taxBusiness'), other: document.getElementById('taxOther'),
+    homeLoan: document.getElementById('taxHomeLoan'),
+    oldEmpDed: document.getElementById('taxOldEmpDed'), old80C: document.getElementById('taxOld80C'),
+    old80D: document.getElementById('taxOld80D'), old80E: document.getElementById('taxOld80E'), oldOther: document.getElementById('taxOldOther'),
+    newEmpDed: document.getElementById('taxNewEmpDed'), newOther: document.getElementById('taxNewOther')
+  };
+  if (!els.salaried) return;
+  fcInitTabs(document.getElementById('taxTabbar'));
   function fmtCr(n) {
     if (n >= 10000000) return '₹' + (n / 10000000).toFixed(2) + ' Cr';
     if (n >= 100000) return '₹' + (n / 100000).toFixed(2) + ' L';
     return '₹' + Math.round(n).toLocaleString('en-IN');
   }
-  function slabTax(income, slabs) {
-    var tax = 0, prev = 0;
-    for (var i = 0; i < slabs.length; i++) {
-      var upto = slabs[i][0], rate = slabs[i][1];
-      if (income > prev) {
-        tax += Math.min(income, upto === Infinity ? income : upto) > prev ? (Math.min(income, upto === Infinity ? income : upto) - prev) * rate : 0;
-      }
-      prev = upto;
-      if (income <= upto) break;
-    }
-    return tax;
+  function v(el) { return Math.max(0, parseFloat(el.value) || 0); }
+  function oldRegimeTax(taxable) {
+    if (taxable <= 500000) return 0;
+    if (taxable <= 1000000) return 12500 + (taxable - 500000) * 0.20;
+    return 112500 + (taxable - 1000000) * 0.30;
   }
-  function oldRegimeTax(income) {
-    var taxable = Math.max(0, income - 50000 - Math.max(0, parseFloat(els.ded.value) || 0));
-    var slabs = [[250000, 0], [500000, 0.05], [1000000, 0.2], [Infinity, 0.3]];
-    var tax = slabTax(taxable, slabs);
-    if (taxable <= 500000) tax = Math.max(0, tax - 12500);
-    return tax * 1.04;
-  }
-  function newRegimeTax(income) {
-    var taxable = Math.max(0, income - 75000);
-    var slabs = [[400000, 0], [800000, 0.05], [1200000, 0.1], [1600000, 0.15], [2000000, 0.2], [2400000, 0.25], [Infinity, 0.3]];
-    var tax = slabTax(taxable, slabs);
-    if (taxable <= 1200000) tax = Math.max(0, tax - 60000);
-    return tax * 1.04;
+  function newRegimeTax(taxable) {
+    if (taxable <= 700000) return 0;
+    if (taxable <= 900000) return 15000 + (taxable - 700000) * 0.10;
+    if (taxable <= 1200000) return 45000 + (taxable - 900000) * 0.15;
+    if (taxable <= 1500000) return 90000 + (taxable - 1200000) * 0.20;
+    return 150000 + (taxable - 1500000) * 0.30;
   }
   function render() {
-    var income = Math.max(0, parseFloat(els.income.value) || 0);
-    var oldTax = oldRegimeTax(income);
-    var newTax = newRegimeTax(income);
-    var better = oldTax <= newTax ? 'Old regime' : 'New regime';
+    var salaried = v(els.salaried), rental = v(els.rental), business = v(els.business), other = v(els.other);
+    var homeLoan = v(els.homeLoan);
+    var houseOld = Math.max(0.7 * rental - homeLoan, -200000);
+    var houseNew = Math.max(0.7 * rental - homeLoan, 0);
+    var taxableOld = Math.max(0, salaried + other - 50000 - v(els.oldEmpDed) - v(els.old80C) - v(els.old80D) - v(els.old80E) - v(els.oldOther) + houseOld) + business;
+    var taxableNew = Math.max(0, salaried + other - 50000 - v(els.newEmpDed) - v(els.newOther) + houseNew) + business;
+    var oldTax = oldRegimeTax(taxableOld);
+    var newTax = newRegimeTax(taxableNew);
+    var better = oldTax <= newTax ? 'Old Regime is better' : 'New Regime is better';
     var saving = Math.abs(oldTax - newTax);
     document.getElementById('taxOutOld').textContent = fmtCr(oldTax);
     document.getElementById('taxOutNew').textContent = fmtCr(newTax);
+    document.getElementById('taxOutSaving').textContent = fmtCr(saving);
     document.getElementById('taxOutBetter').textContent = better;
-    document.getElementById('taxOutSaving').textContent = 'you save ' + fmtCr(saving) + ' a year';
     fcRenderChart('taxChart', { categories: ['Old Regime', 'New Regime'], mode: 'single', series: [
       { name: 'Tax payable', color: 'var(--pb-purple-600)', values: [oldTax, newTax] }
     ]});
   }
-  els.income.addEventListener('input', render);
-  els.ded.addEventListener('input', render);
+  Object.keys(els).forEach(function (k) { els[k].addEventListener('input', render); });
   render();
 
 })();

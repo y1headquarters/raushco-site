@@ -1115,6 +1115,14 @@
   .fc-mode-toggle { display: flex; background: var(--pb-base-100); border-radius: var(--pb-radius-full); padding: 4px; margin-bottom: 24px; }
   .fc-mode-btn { flex: 1; font-family: inherit; font-size: 13.5px; font-weight: 500; color: var(--pb-base-600); background: none; border: 0; padding: 9px 12px; border-radius: var(--pb-radius-full); cursor: pointer; transition: background .15s, color .15s; }
   .fc-mode-btn.active { background: #fff; color: var(--bb-ink-900); box-shadow: var(--pb-card-shadow); }
+
+  .fc-tabbar { display: flex; gap: 4px; border-bottom: 1px solid var(--pb-border); margin-bottom: 24px; overflow-x: auto; }
+  .fc-tab-btn { font-family: inherit; font-size: 13.5px; font-weight: 500; color: var(--pb-base-500); background: none; border: 0; border-bottom: 2px solid transparent; padding: 0 2px 10px; margin-right: 18px; cursor: pointer; white-space: nowrap; transition: color .15s, border-color .15s; }
+  .fc-tab-btn.active { color: var(--bb-ink-900); border-bottom-color: var(--pb-purple-600); }
+  .fc-tab-panel { display: none; }
+  .fc-tab-panel.active { display: block; }
+  .fc-tab-panel > .fc-field + .fc-field { margin-top: 20px; }
+  .fc-field-note { font-size: 11.5px; color: var(--pb-base-500); margin-top: 6px; line-height: 1.4; }
   .fc-tool-col > .fc-field + .fc-field,
   .fc-tool-col > .fc-field + .fc-row2,
   .fc-tool-col > .fc-row2 + .fc-field,
@@ -1550,7 +1558,7 @@
       <div class="foot-col"><h4>Personal</h4><a href="../../savings-account/index.html">Savings Account</a><a href="../../fixed-deposit/index.html">Fixed Deposits</a><a href="../../recurring-deposit/index.html">Recurring Deposits</a><a href="../../forex-remittance/index.html">Forex &amp; Remittance</a><a href="../../gold-silver/index.html">Gold &amp; Silver</a><a href="../../mutual-funds/index.html">Mutual Funds &amp; SIPs</a><a href="../../bonds/index.html">Bonds</a><a href="../../nps/index.html">NPS</a><a href="../../corporate-nps/index.html">Corporate NPS</a><a href="../../nps-vatsalya/index.html">NPS Vatsalya</a><a href="../../insurance/index.html">Insurance</a><a href="../../fd-backed-credit-card/index.html">FD-Backed Credit Card</a><a href="../../personal-loans/index.html">Personal Loans</a><a href="../../loan-against-fd/index.html">Loan Against FD</a><a href="../../gold-loan/index.html">Gold Loan</a></div>
       <div class="foot-col"><h4>Business</h4><a href="../../business-banking/index.html">Business Checking &amp; Savings</a><a href="../../treasury/index.html">Treasury</a><a href="../../credit/index.html">Business Credit Cards</a><a href="../../working-capital-loans/index.html">Working Capital Loans</a><a href="../../venture-debt/index.html">Venture Debt</a><a href="../../business-payments/index.html">Payments</a><a href="#">Bill Pay</a><a href="../../invoicing/index.html">Invoicing</a><a href="../../spend-management/index.html">Spend Management</a><a href="#">Books</a><a href="../../accounting-integrations/index.html">Accounting Integrations</a><a href="#">Payroll</a><a href="../../invoice-discounting/index.html">Invoice Discounting</a><a href="../../collections/index.html">Collections</a></div>
       <div class="foot-col"><h4>Platform</h4><a href="../../pricing/index.html">Pricing</a><a href="#">Switch to Raushco</a><a href="#">Command</a><a href="#">Insights</a><a href="#">API</a><a href="#">Perks</a></div>
-      <div class="foot-col"><h4>Resources</h4><a href="#">Help Center</a><a href="../../blog/index.html">Blog</a><a href="#">Tools</a><a href="#">Events</a><a href="../../releases/index.html">Product Releases</a><a href="#">FAQs</a></div>
+      <div class="foot-col"><h4>Resources</h4><a href="#">Help Center</a><a href="../../blog/index.html">Blog</a><a href="../../tools/index.html">Tools</a><a href="#">Events</a><a href="../../releases/index.html">Product Releases</a><a href="#">FAQs</a></div>
       <div class="foot-col"><h4>Solutions</h4><a href="../../tech-ai-startups/index.html">Tech &amp; AI Startups</a><a href="../../ecommerce/index.html">Ecommerce</a><a href="../../agencies-and-consultants/index.html">Agencies, Consultants &amp; Firms</a><a href="../../vc-funds/index.html">VC Funds</a><a href="../../web3/index.html">Web3 &amp; Crypto</a><a href="../../accounting-firms/index.html">Accounting Firms</a><a href="#">SaaS</a><a href="#">LLCs</a><a href="#">Real Estate &amp; Construction</a><a href="#">Healthcare Services</a></div>
       <div class="foot-col"><h4>Account</h4><a href="https://dev.raushco.com/create-account">Open Account</a><a href="https://dev.raushco.com/login">Log In</a><a href="#">iOS</a><a href="#">Android</a></div>
       <div class="foot-col"><h4>About</h4><a href="#">How Raushco Works</a><a href="../../about/index.html">Our Story</a><a href="../../jobs/index.html">Careers</a><a href="../../partnerships/index.html">Partnerships</a><a href="../../contact/index.html">Contact</a><a href="../../legal/index.html">Legal</a><a href="../../legal/privacy/index.html">Privacy Policy</a></div>
@@ -1847,6 +1855,15 @@ function fcFmt(n) {
   if (n >= 1000) return sign + '₹' + (n / 1000).toFixed(1) + ' K';
   return sign + '₹' + Math.round(n).toLocaleString('en-IN');
 }
+function fcSparseLabels(categories) {
+  var n = categories.length;
+  var maxLabels = 7;
+  if (n <= maxLabels) return categories;
+  var step = (n - 1) / (maxLabels - 1);
+  var keepIdx = {};
+  for (var k = 0; k < maxLabels; k++) keepIdx[Math.round(k * step)] = true;
+  return categories.map(function (c, i) { return keepIdx[i] ? c : ''; });
+}
 function fcRenderChart(containerId, opts) {
   var el = document.getElementById(containerId);
   if (!el) return;
@@ -1880,7 +1897,7 @@ function fcRenderChart(containerId, opts) {
     }).join('');
     return '<div class="fc-chart-col"><div class="fc-chart-bar">' + segs + '</div></div>';
   }).join('');
-  var labelsHtml = '<div class="fc-chart-labels">' + categories.map(function (c) { return '<div class="fc-chart-label">' + c + '</div>'; }).join('') + '</div>';
+  var labelsHtml = '<div class="fc-chart-labels">' + fcSparseLabels(categories).map(function (c) { return '<div class="fc-chart-label">' + c + '</div>'; }).join('') + '</div>';
   el.innerHTML = legendHtml + '<div class="fc-chart">' + barsHtml + '</div>' + labelsHtml;
 }
 function fcRenderArea(el, categories, s) {
@@ -1898,8 +1915,19 @@ function fcRenderArea(el, categories, s) {
     '<path d="' + area + '" fill="' + s.color + '" fill-opacity="0.16"></path>' +
     '<path d="' + line + '" fill="none" stroke="' + s.color + '" stroke-width="2" vector-effect="non-scaling-stroke"></path>' +
     '</svg>';
-  var labelsHtml = '<div class="fc-chart-labels">' + categories.map(function (c) { return '<div class="fc-chart-label">' + c + '</div>'; }).join('') + '</div>';
+  var labelsHtml = '<div class="fc-chart-labels">' + fcSparseLabels(categories).map(function (c) { return '<div class="fc-chart-label">' + c + '</div>'; }).join('') + '</div>';
   el.innerHTML = '<div class="fc-chart" style="align-items:stretch;">' + svg + '</div>' + labelsHtml;
+}
+function fcInitTabs(tabbarEl) {
+  var btns = tabbarEl.querySelectorAll('.fc-tab-btn');
+  var panels = tabbarEl.parentNode.querySelectorAll('.fc-tab-panel');
+  btns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var key = btn.getAttribute('data-tab');
+      btns.forEach(function (b) { b.classList.toggle('active', b === btn); });
+      panels.forEach(function (p) { p.classList.toggle('active', p.getAttribute('data-tab') === key); });
+    });
+  });
 }
 (function () {
 
