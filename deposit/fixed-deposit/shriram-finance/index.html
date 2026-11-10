@@ -808,103 +808,101 @@
 
 
   /* ============================================================
-     Bank detail page — new component set. Reuses the site's existing
-     Mercury-derived tokens (--pb-purple-600 etc., defined earlier in this
-     same stylesheet) rather than inventing a second palette.
+     Bank detail page — two-column layout (content + sticky calculator),
+     matching the structural pattern of stablemoney.in's own per-bank
+     pages (banner, logo, name/badges, rate table, calculator alongside),
+     rebuilt on this site's real tokens. The one thing deliberately NOT
+     reused from that reference is imagery: the banner below is a
+     generated gradient + grain texture, never a bank photo.
      ============================================================ */
 
-  /* Hero: dark + a procedural grain texture (same technique as the
-     homepage's own .hero-grain — animated noise via CSS, not an image),
-     explicitly in place of any bank-sourced banner/photo. */
-  .bk-hero { position: relative; margin-top: -73px; padding: calc(96px + 73px) 0 72px; background:
-      radial-gradient(ellipse 70% 60% at 22% 15%, rgba(82,102,235,.22) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 50% at 85% 85%, rgba(82,102,235,.14) 0%, transparent 60%),
-      #10101a; overflow: hidden; }
-  .bk-hero-grain { position: absolute; inset: 0; opacity: .05; mix-blend-mode: overlay; pointer-events: none;
+  .bk-page { background: #f5f4fd; padding: 48px 0 0; }
+  .bk-layout { max-width: 1200px; margin: 0 auto; padding: 0 40px 80px; display: grid; grid-template-columns: 1fr 380px; gap: 40px; align-items: start; }
+  @media (max-width: 900px) { .bk-layout { grid-template-columns: 1fr; padding: 0 20px 56px; } }
+
+  /* Banner: our own texture standing in for the bank photo stablemoney shows here */
+  .bk-banner-wrap { position: relative; margin-bottom: 44px; }
+  .bk-banner { position: relative; aspect-ratio: 2.4/1; border-radius: var(--r-xl); overflow: hidden; background:
+      radial-gradient(ellipse 80% 80% at 15% 20%, rgba(82,102,235,.55) 0%, transparent 55%),
+      radial-gradient(ellipse 70% 70% at 85% 80%, rgba(156,180,232,.4) 0%, transparent 55%),
+      linear-gradient(135deg, #1b1f3a 0%, #262b52 100%); }
+  .bk-banner-grain { position: absolute; inset: 0; opacity: .12; mix-blend-mode: overlay; pointer-events: none;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     animation: bkGrain .25s steps(1) infinite; }
-  @keyframes bkGrain { 0%, 100% { opacity: .04; } 50% { opacity: .07; } 75% { opacity: .05; } }
-  @media (prefers-reduced-motion: reduce) { .bk-hero-grain { animation: none; } }
-  .bk-hero-inner { position: relative; z-index: 1; max-width: 1240px; margin: 0 auto; padding: 0 40px; }
-  @media (max-width: 640px) { .bk-hero-inner { padding: 0 20px; } }
-  .bk-hero-top { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-bottom: 28px; }
-  .bk-logo-plate { width: 64px; height: 64px; border-radius: 16px; background: #fff; display: flex; align-items: center;
-    justify-content: center; padding: 10px; flex: 0 0 auto; box-shadow: 0 0 2px rgba(175,178,206,.4), 0 1px 4px rgba(4,4,52,.2); }
+  @keyframes bkGrain { 0%, 100% { opacity: .10; } 50% { opacity: .15; } 75% { opacity: .12; } }
+  @media (prefers-reduced-motion: reduce) { .bk-banner-grain { animation: none; } }
+  .bk-logo-plate { position: absolute; left: 24px; bottom: -28px; width: 72px; height: 72px; border-radius: var(--r-lg); background: #fff; z-index: 2;
+    display: flex; align-items: center; justify-content: center; padding: 12px; box-shadow: var(--shadow-md); z-index: 2; }
   .bk-logo-plate img { max-width: 100%; max-height: 100%; }
-  .bk-hero-name { font-size: 15px; font-weight: 600; color: rgba(255,255,255,.55); margin: 0 0 4px; text-transform: uppercase; letter-spacing: .06em; }
-  .bk-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; padding: 5px 12px 5px 10px; border-radius: 999px; }
-  .bk-badge-partner { background: rgba(82,102,235,.18); color: #b8c2ff; border: 1px solid rgba(82,102,235,.4); }
-  .bk-badge-partner::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #7c8bff; }
-  .bk-badge-comingsoon { background: rgba(175,178,206,.12); color: rgba(255,255,255,.65); border: 1px solid rgba(175,178,206,.28); }
-  .bk-badge-nonpartner { background: rgba(255,255,255,.06); color: rgba(255,255,255,.5); border: 1px solid rgba(255,255,255,.14); }
-  .bk-hero h1 { color: #fff; font-size: clamp(2rem, 1.3rem + 2.6vw, 3.2rem); font-weight: 500; line-height: 1.08; letter-spacing: -.02em; margin: 0 0 16px; max-width: 18ch; }
-  .bk-hero-sub { color: rgba(255,255,255,.62); font-size: 17px; line-height: 1.55; max-width: 56ch; margin: 0 0 32px; }
-  .bk-hero-stats { display: flex; gap: 32px; flex-wrap: wrap; margin-bottom: 36px; }
-  .bk-hero-stat .n { font-size: 30px; font-weight: 600; color: #fff; letter-spacing: -.01em; font-variant-numeric: tabular-nums; }
-  .bk-hero-stat .n span { font-size: 17px; font-weight: 500; color: rgba(255,255,255,.5); }
-  .bk-hero-stat .l { font-size: 13px; color: rgba(255,255,255,.45); margin-top: 2px; }
-  .bk-hero-cta { display: flex; gap: 10px; flex-wrap: wrap; }
-  .bk-hero-cta .btn-purple { height: 44px; padding: 0 28px; }
-  .bk-hero-cta .btn-line { height: 44px; padding: 0 22px; border-color: rgba(255,255,255,.22); color: #fff; }
-  .bk-hero-cta .btn-line:hover { border-color: rgba(255,255,255,.5); }
-  .bk-source-note { margin-top: 28px; font-size: 12px; color: rgba(255,255,255,.35); max-width: 60ch; line-height: 1.5; }
 
-  /* Content sections sit on the site's standard beige surface */
-  .bk-section { padding: 64px 0; }
-  .bk-section + .bk-section { border-top: 1px solid var(--line); }
-  .bk-section h2 { font-size: clamp(1.5rem, 1.2rem + 1vw, 2.1rem); font-weight: 560; margin: 0 0 10px; }
-  .bk-section-sub { color: var(--ink-2); font-size: 15px; margin: 0 0 32px; max-width: 64ch; }
+  .bk-identity { margin: 48px 0 20px; }
+  .bk-identity h1 { font-size: clamp(1.6rem, 1.2rem + 1.4vw, 2.1rem); font-weight: 560; letter-spacing: -.015em; color: var(--ink); margin: 0 0 8px; }
+  .bk-badge-row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .bk-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 4px 0; color: var(--muted); }
+  .bk-badge-dot { display: inline-flex; align-items: center; gap: 6px; font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+  .bk-badge-partner { color: var(--purple); }
+  .bk-badge-partner::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--purple); display: inline-block; }
+  .bk-badge-comingsoon { color: var(--faint); }
+  .bk-badge-comingsoon::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--faint); display: inline-block; }
+  .bk-badge-sep { color: var(--line); }
+
+  .bk-section { padding: 36px 0; border-top: 1px solid var(--line); }
+  .bk-section:first-of-type { border-top: none; padding-top: 12px; }
+  .bk-section h2 { font-size: 20px; font-weight: 600; color: var(--ink); margin: 0 0 6px; }
+  .bk-section-sub { color: var(--muted); font-size: 14.5px; margin: 0 0 24px; max-width: 64ch; line-height: 1.5; }
 
   /* Rate table */
-  .bk-rate-table { width: 100%; max-width: 760px; border-collapse: collapse; background: #fff; border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .bk-rate-table { width: 100%; border-collapse: collapse; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
   .bk-rate-table th, .bk-rate-table td { padding: 14px 18px; text-align: left; font-size: 15px; }
-  .bk-rate-table thead th { background: var(--wash); font-size: 12px; text-transform: uppercase; letter-spacing: .05em; color: var(--muted); font-weight: 600; }
+  .bk-rate-table thead th { background: var(--surface-2); font-size: 11.5px; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
   .bk-rate-table tbody tr { border-top: 1px solid var(--line); }
-  .bk-rate-table tbody tr.bk-best { background: rgba(82,102,235,.05); }
+  .bk-rate-table tbody tr.bk-best { background: rgba(82,102,235,.06); }
   .bk-rate-table td.rate { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--ink); }
-  .bk-tag { display: inline-block; font-size: 10.5px; font-weight: 700; letter-spacing: .04em; color: #fff; background: var(--purple); padding: 2px 8px; border-radius: 999px; margin-left: 8px; vertical-align: middle; }
-  .bk-fact-grid { margin-top: 28px; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1px; max-width: 760px; background: var(--line); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
-  .bk-fact { background: #fff; padding: 18px 20px; }
-  .bk-fact .l { font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
-  .bk-fact .v { font-size: 16px; font-weight: 600; color: var(--ink); }
-  .bk-fine { margin-top: 20px; font-size: 13px; color: var(--muted); max-width: 72ch; line-height: 1.55; }
+  .bk-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .04em; color: #fff; background: var(--purple); padding: 2px 8px; border-radius: 999px; margin-left: 8px; vertical-align: middle; }
+  .bk-fact-grid { margin-top: 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: var(--r-lg); overflow: hidden; }
+  .bk-fact { background: var(--surface); padding: 16px 18px; }
+  .bk-fact .l { font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+  .bk-fact .v { font-size: 15px; font-weight: 600; color: var(--ink); }
+  .bk-fine { margin-top: 18px; font-size: 12.5px; color: var(--muted); line-height: 1.55; }
 
-  /* Calculator */
-  .bk-calc { max-width: 560px; background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 32px; box-shadow: var(--shadow-md); }
-  .bk-calc-row { margin-bottom: 22px; }
-  .bk-calc-row label { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-2); margin-bottom: 8px; }
-  .bk-calc-row label .val { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .bk-calc-row input[type="range"] { width: 100%; accent-color: var(--purple); }
-  .bk-calc-toggle { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--ink-2); margin-bottom: 22px; }
-  .bk-calc-toggle input { accent-color: var(--purple); width: 18px; height: 18px; }
-  .bk-calc-result { border-top: 1px solid var(--line); padding-top: 22px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-  .bk-calc-result .r { }
-  .bk-calc-result .r .l { font-size: 12.5px; color: var(--muted); margin-bottom: 4px; }
-  .bk-calc-result .r .v { font-size: 22px; font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
-  .bk-calc-result .r.hl .v { color: var(--purple); }
+  /* Calculator — sticky right column */
+  .bk-calc { position: sticky; top: 96px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-xl); padding: 26px; box-shadow: var(--shadow-sm); }
+  .bk-calc-inputs { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; }
+  .bk-calc-field label { display: block; font-size: 12px; color: var(--muted); margin-bottom: 6px; }
+  .bk-calc-field input, .bk-calc-field select { width: 100%; box-sizing: border-box; height: 42px; padding: 0 12px; border: 1px solid var(--line); border-radius: var(--r-md); font-family: inherit; font-size: 14.5px; color: var(--ink); background: var(--surface); }
+  .bk-calc-field input:focus, .bk-calc-field select:focus { outline: none; border-color: var(--purple); }
+  .bk-calc-field.full { grid-column: 1 / -1; }
+  .bk-calc-divider { height: 1px; background: var(--line); margin: 18px 0; }
+  .bk-calc-rows { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+  .bk-calc-rowline { display: flex; justify-content: space-between; align-items: baseline; font-size: 13.5px; }
+  .bk-calc-rowline .l { color: var(--muted); }
+  .bk-calc-rowline .v { font-weight: 600; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .bk-calc-rowline.hl .v { color: var(--purple); font-size: 16px; }
+  .bk-calc-rowline.hl .l { font-weight: 500; color: var(--ink-2); }
+  .bk-calc .btn-purple { width: 100%; justify-content: center; height: 46px; }
 
   /* About stats */
-  .bk-about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 20px; max-width: 900px; margin-bottom: 32px; }
-  .bk-about-stat .n { font-size: 32px; font-weight: 600; color: var(--ink); letter-spacing: -.01em; }
-  .bk-about-stat .l { font-size: 13.5px; color: var(--ink-2); margin-top: 2px; }
-  .bk-about-text { max-width: 72ch; color: var(--ink-2); font-size: 15.5px; line-height: 1.65; }
+  .bk-about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 18px; margin-bottom: 24px; }
+  .bk-about-stat .n { font-size: 28px; font-weight: 600; color: var(--ink); letter-spacing: -.01em; }
+  .bk-about-stat .l { font-size: 13px; color: var(--ink-2); margin-top: 2px; }
+  .bk-about-text { color: var(--ink-2); font-size: 15px; line-height: 1.65; }
   .bk-about-text p { margin-bottom: 14px; }
-  .bk-rating-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
-  .bk-rating-pill { font-size: 13px; font-weight: 600; color: var(--ink); background: var(--wash); border: 1px solid var(--line); padding: 6px 14px; border-radius: 999px; }
+  .bk-rating-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
+  .bk-rating-pill { font-size: 12.5px; font-weight: 600; color: var(--ink); background: var(--surface-2); border: 1px solid var(--line); padding: 6px 14px; border-radius: 999px; }
 
-  /* FAQ (same visual language as bb-faq-item elsewhere on the site) */
+  /* FAQ */
   .bk-faq-item { border-top: 1px solid var(--line); }
   .bk-faq-item:last-child { border-bottom: 1px solid var(--line); }
-  .bk-faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 20px 4px; background: none; border: 0; text-align: left; font-size: 16px; font-weight: 550; color: var(--ink); cursor: pointer; font-family: inherit; }
-  .bk-faq-chevron { flex: 0 0 auto; width: 20px; height: 20px; color: var(--muted); transition: transform .25s var(--ease-pop); }
+  .bk-faq-q { width: 100%; display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 18px 2px; background: none; border: 0; text-align: left; font-size: 15px; font-weight: 550; color: var(--ink); cursor: pointer; font-family: inherit; }
+  .bk-faq-chevron { flex: 0 0 auto; width: 18px; height: 18px; color: var(--muted); transition: transform .25s var(--ease-pop); }
   .bk-faq-item.open .bk-faq-chevron { transform: rotate(180deg); }
   .bk-faq-a { max-height: 0; overflow: hidden; transition: max-height .3s var(--ease-pop); }
   .bk-faq-item.open .bk-faq-a { max-height: 480px; }
-  .bk-faq-a-inner { padding: 0 4px 20px; font-size: 14.5px; color: var(--ink-2); line-height: 1.6; max-width: 72ch; }
+  .bk-faq-a-inner { padding: 0 2px 18px; font-size: 14px; color: var(--ink-2); line-height: 1.6; max-width: 68ch; }
 
-  .bk-cta-band { background: #14141b; padding: 64px 0; text-align: center; }
-  .bk-cta-band h2 { color: #fff; margin-bottom: 10px; }
-  .bk-cta-band p { color: rgba(255,255,255,.55); margin-bottom: 28px; }
+  .bk-cta-band { background: #14141b; padding: 56px 0; text-align: center; }
+  .bk-cta-band h2 { color: #fff; margin-bottom: 8px; font-size: 24px; }
+  .bk-cta-band p { color: rgba(255,255,255,.55); margin-bottom: 24px; font-size: 15px; }
 
 </style>
 </head>
@@ -1212,130 +1210,136 @@
 </header>
 
 <main>
-<section class="bk-hero" id="top">
-  <div class="bk-hero-grain" aria-hidden="true"></div>
-  <div class="bk-hero-inner">
-    <div class="bk-hero-top">
-      <div class="bk-logo-plate"><img src="../../../assets/logos/SHRIRAM_LOGO.png" alt="Shriram Finance"></div>
-      <div>
-        <p class="bk-hero-name">Fixed Deposit</p>
-        <span class="bk-badge bk-badge-partner">Our partner bank</span>
-      </div>
-    </div>
-    <h1>Shriram Finance Fixed Deposit</h1>
-    <p class="bk-hero-sub">An RBI-registered NBFC and a Raushco partner — open an FD directly through your Raushco account, with live rates pulled straight from Shriram Finance.</p>
-    <div class="bk-hero-stats">
-      <div class="bk-hero-stat"><div class="n">8.35<span>%</span></div><div class="l">Best rate (senior citizen, 3–5 yr)</div></div>
-      <div class="bk-hero-stat"><div class="n">7.85<span>%</span></div><div class="l">Best rate (general, 3–5 yr)</div></div>
-      <div class="bk-hero-stat"><div class="n">₹5,000</div><div class="l">Minimum investment</div></div>
-    </div>
-    <div class="bk-hero-cta">
-      <a class="btn btn-purple" href="https://app.raushco.com/open-account">Open account</a>
-      <a class="btn btn-line" href="#bk-calculator">Calculate returns</a>
-    </div>
-    <p class="bk-source-note">Rates and tenure shown below are live from Shriram Finance via our Fixerra partner integration, cross-checked against this page’s own rate card. Background decoration is a generated texture, not a Shriram Finance image.</p>
-  </div>
-</section>
+<div class="bk-page" id="top">
+  <div class="bk-layout">
+    <div class="bk-col-main">
 
-<section class="bk-section">
-  <div class="wrap">
-    <h2>Interest rates</h2>
-    <p class="bk-section-sub">Live from Shriram Finance (Fixerra partner API) — not stablemoney.in’s published numbers, though the two currently agree. Annual (yearly) compounding shown; monthly, quarterly, and half-yearly payout options are also available at every tenure.</p>
-    <table class="bk-rate-table">
-      <thead><tr><th>Tenure</th><th>General</th><th>Senior citizen</th></tr></thead>
-      <tbody>
-        <tr><td>1 year</td><td class="rate">7.00%</td><td class="rate">7.50%</td></tr>
-        <tr><td>1 year 6 months</td><td class="rate">7.25%</td><td class="rate">7.75%</td></tr>
-        <tr><td>2 years</td><td class="rate">7.50%</td><td class="rate">8.00%</td></tr>
-        <tr class="bk-best"><td>3 years<span class="bk-tag">BEST RATE</span></td><td class="rate">7.85%</td><td class="rate">8.35%</td></tr>
-        <tr><td>4 years 2 months</td><td class="rate">7.85%</td><td class="rate">8.35%</td></tr>
-        <tr><td>5 years</td><td class="rate">7.85%</td><td class="rate">8.35%</td></tr>
-      </tbody>
-    </table>
-    <div class="bk-fact-grid">
-      <div class="bk-fact"><div class="l">Minimum investment</div><div class="v">₹5,000</div></div>
-      <div class="bk-fact"><div class="l">Compounding</div><div class="v">Yearly (also avail. monthly/quarterly/half-yearly)</div></div>
-      <div class="bk-fact"><div class="l">Payout</div><div class="v">At maturity or periodic</div></div>
-      <div class="bk-fact"><div class="l">DICGC insurance</div><div class="v">Not applicable (NBFC, not a bank)</div></div>
-    </div>
-    <p class="bk-fine">Premature withdrawal: no penalty on the principal. Withdrawing in months 3–6 forfeits interest entirely; in months 6–12 the rate drops 3 percentage points below the 12-month rate; after 12 months it drops 2 percentage points below the rate for the held tenure. Settlement takes 3–5 working days after you confirm the foreclosure by email.</p>
-  </div>
-</section>
+      <div class="bk-banner-wrap">
+        <div class="bk-banner">
+          <div class="bk-banner-grain" aria-hidden="true"></div>
+        </div>
+        <div class="bk-logo-plate"><img src="../../../assets/logos/SHRIRAM_LOGO.png" alt="Shriram Finance"></div>
+      </div>
 
-<section class="bk-section" id="bk-calculator">
-  <div class="wrap">
-    <h2>FD calculator</h2>
-    <p class="bk-section-sub">Estimate your maturity amount at Shriram Finance’s current rates.</p>
-    <div class="bk-calc">
-      <div class="bk-calc-row">
-        <label>Investment amount <span class="val" id="bkAmtVal">₹1,00,000</span></label>
-        <input type="range" id="bkAmt" min="5000" max="10000000" step="5000" value="100000">
+      <div class="bk-identity">
+        <h1>Shriram Finance</h1>
+        <div class="bk-badge-row">
+          <span class="bk-badge">RBI-registered NBFC</span>
+          <span class="bk-badge-sep">&middot;</span>
+          <span class="bk-badge-dot bk-badge-partner">Our partner bank</span>
+        </div>
       </div>
-      <div class="bk-calc-row">
-        <label>Tenure <span class="val" id="bkTenureVal">3 years</span></label>
-        <input type="range" id="bkTenure" min="0" max="5" step="1" value="3">
-      </div>
-      <label class="bk-calc-toggle"><input type="checkbox" id="bkSenior"> I’m a senior citizen</label>
-      <div class="bk-calc-result">
-        <div class="r"><div class="l">Interest earned</div><div class="v" id="bkInterest">₹24,230</div></div>
-        <div class="r hl"><div class="l">Maturity value</div><div class="v" id="bkMaturity">₹1,24,230</div></div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="bk-section">
-  <div class="wrap">
-    <h2>About Shriram Finance</h2>
-    <div class="bk-about-grid">
-      <div class="bk-about-stat"><div class="n">90 lakh</div><div class="l">Customers served</div></div>
-      <div class="bk-about-stat"><div class="n">3,220+</div><div class="l">Branches</div></div>
-      <div class="bk-about-stat"><div class="n">1974</div><div class="l">Founded</div></div>
-    </div>
-    <div class="bk-about-text">
-      <p>Shriram Finance Limited (SFL) is a non-banking financial company (NBFC) in India that is considered trustworthy and has been serving investors for over 43 years. Shriram is RBI-registered with revenues of over ₹6,000 crores.</p>
-      <p>Deposits with Shriram Finance are not covered under the ₹5 lakh DICGC insurance, which applies to scheduled bank deposits — that protection only extends to banks, not NBFCs. Shriram Finance is a well-established NBFC with a strong track record, and leans on independent credit ratings instead:</p>
-    </div>
-    <div class="bk-rating-row">
-      <span class="bk-rating-pill">CRISIL AA+/Stable</span>
-      <span class="bk-rating-pill">ICRA AA+ (Stable)</span>
-      <span class="bk-rating-pill">IND AA+/Stable</span>
-    </div>
-  </div>
-</section>
+      <section class="bk-section">
+        <p class="bk-section-sub">Rates and tenure below are live from Shriram Finance via our Fixerra partner integration, cross-checked against stablemoney.in’s own published numbers (the two currently agree). Banner above is a generated texture, not a Shriram Finance photo.</p>
+        <table class="bk-rate-table">
+          <thead><tr><th>Tenure</th><th>General</th><th>Senior citizen</th></tr></thead>
+          <tbody>
+            <tr><td>1 year</td><td class="rate">7.00%</td><td class="rate">7.50%</td></tr>
+            <tr><td>1 year 6 months</td><td class="rate">7.25%</td><td class="rate">7.75%</td></tr>
+            <tr><td>2 years</td><td class="rate">7.50%</td><td class="rate">8.00%</td></tr>
+            <tr class="bk-best"><td>3 years<span class="bk-tag">BEST RATE</span></td><td class="rate">7.85%</td><td class="rate">8.35%</td></tr>
+            <tr><td>4 years 2 months</td><td class="rate">7.85%</td><td class="rate">8.35%</td></tr>
+            <tr><td>5 years</td><td class="rate">7.85%</td><td class="rate">8.35%</td></tr>
+          </tbody>
+        </table>
+        <div class="bk-fact-grid">
+          <div class="bk-fact"><div class="l">Minimum investment</div><div class="v">₹5,000</div></div>
+          <div class="bk-fact"><div class="l">Compounding</div><div class="v">Yearly (also monthly/quarterly/half-yearly)</div></div>
+          <div class="bk-fact"><div class="l">Payout</div><div class="v">At maturity or periodic</div></div>
+          <div class="bk-fact"><div class="l">DICGC insurance</div><div class="v">Not applicable (NBFC, not a bank)</div></div>
+        </div>
+        <p class="bk-fine">Premature withdrawal: no penalty on the principal. Withdrawing in months 3–6 forfeits interest entirely; in months 6–12 the rate drops 3 percentage points below the 12-month rate; after 12 months it drops 2 percentage points below the rate for the held tenure. Settlement takes 3–5 working days after you confirm the foreclosure by email.</p>
+      </section>
 
-<section class="bk-section">
-  <div class="wrap">
-    <h2>Frequently asked questions</h2>
-    <div id="bkFaqList">
-      <div class="bk-faq-item open" data-bkfaq="0">
-        <button class="bk-faq-q"><span>Is it safe to invest in an FD with Shriram Finance?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-        <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>Shriram Finance Limited (SFL) is an NBFC that has been serving investors for over 43 years. SFL has received several ratings that indicate a high degree of safety for investors, including CRISIL AA+/Stable for its non-convertible debentures, and ICRA AA+ (Stable) and IND AA+/Stable for its fixed deposits specifically.</p></div></div>
-      </div>
-      <div class="bk-faq-item" data-bkfaq="1">
-        <button class="bk-faq-q"><span>How will I receive confirmation that my FD is booked?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-        <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>Once your FD is booked successfully, you’ll get the FD receipt on your registered email, carrying your FDR number, customer ID, and maturity amount. It’s also accessible directly in the Raushco app at any time.</p></div></div>
-      </div>
-      <div class="bk-faq-item" data-bkfaq="2">
-        <button class="bk-faq-q"><span>Where does my investment actually go?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-        <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>Raushco is a platform that lets you invest directly with our partner banks and NBFCs. When you open an FD with Shriram Finance through Raushco, your money goes directly to Shriram Finance, and you receive your FD receipt from them — Raushco never pools or holds your deposit.</p></div></div>
-      </div>
-      <div class="bk-faq-item" data-bkfaq="3">
-        <button class="bk-faq-q"><span>Does the ₹5 lakh deposit insurance cover my investment?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
-        <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>No — DICGC’s ₹5 lakh insurance only covers deposits at scheduled banks, and Shriram Finance is an NBFC, not a bank. Instead, Shriram’s safety is backed by independent credit ratings (CRISIL AA+, ICRA AA+, IND AA+) and a 43-year operating track record.</p></div></div>
-      </div>
+      <section class="bk-section">
+        <h2>About Shriram Finance</h2>
+        <div class="bk-about-grid">
+          <div class="bk-about-stat"><div class="n">90 lakh</div><div class="l">Customers served</div></div>
+          <div class="bk-about-stat"><div class="n">3,220+</div><div class="l">Branches</div></div>
+          <div class="bk-about-stat"><div class="n">50+ yrs</div><div class="l">In business (since 1974)</div></div>
+        </div>
+        <div class="bk-about-text">
+          <p>Shriram Finance is one of India’s larger NBFCs, built mainly around commercial-vehicle and retail lending, with roots going back to 1974. It’s registered with the RBI and runs a nationwide branch network rather than operating purely online.</p>
+          <p>As an NBFC, its fixed deposits sit outside DICGC’s ₹5 lakh bank-deposit insurance — that cover only extends to banks. In its place, independent agencies rate Shriram’s FDs directly:</p>
+        </div>
+        <div class="bk-rating-row">
+          <span class="bk-rating-pill">CRISIL AA+/Stable</span>
+          <span class="bk-rating-pill">ICRA AA+ (Stable)</span>
+          <span class="bk-rating-pill">IND AA+/Stable</span>
+        </div>
+      </section>
+
+      <section class="bk-section">
+        <h2>Frequently asked questions</h2>
+        <div id="bkFaqList">
+          <div class="bk-faq-item open" data-bkfaq="0">
+            <button class="bk-faq-q"><span>Is my money safe with Shriram Finance?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>Shriram Finance is an RBI-registered NBFC with over 50 years in business. Independent rating agencies grade its fixed deposits directly — CRISIL AA+/Stable, ICRA AA+ (Stable), and IND AA+/Stable — all in the “high safety” band.</p></div></div>
+          </div>
+          <div class="bk-faq-item" data-bkfaq="1">
+            <button class="bk-faq-q"><span>How do I know my FD is actually booked?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>You get an FD receipt by email as soon as booking completes, with your FDR number, customer ID, and maturity details — and it stays saved in your Raushco app for whenever you need it.</p></div></div>
+          </div>
+          <div class="bk-faq-item" data-bkfaq="2">
+            <button class="bk-faq-q"><span>Where does my money actually go?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>Straight to Shriram Finance. Raushco doesn’t pool or hold your deposit — we just make it easy to compare partner rates and book from one account; your FD receipt comes directly from Shriram.</p></div></div>
+          </div>
+          <div class="bk-faq-item" data-bkfaq="3">
+            <button class="bk-faq-q"><span>Is this FD covered by deposit insurance?</span><svg class="bk-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+            <div class="bk-faq-a"><div class="bk-faq-a-inner"><p>No — DICGC’s ₹5 lakh insurance only applies to bank deposits, and Shriram Finance is an NBFC, not a bank. Its safety instead rests on independent credit ratings (CRISIL AA+, ICRA AA+, IND AA+) and a 50-year operating history.</p></div></div>
+          </div>
+        </div>
+      </section>
+
     </div>
-  </div>
-</section>
 
-<section class="bk-cta-band">
-  <div class="wrap">
-    <h2>Open your Shriram Finance FD in minutes</h2>
-    <p>One Raushco account, live partner rates, no separate sign-up with the bank.</p>
-    <a class="btn btn-purple btn-lg" href="https://app.raushco.com/open-account">Open account</a>
-  </div>
-</section>
+    <aside class="bk-col-side">
+      <div class="bk-calc" id="bk-calculator">
+        <div class="bk-calc-inputs">
+          <div class="bk-calc-field">
+            <label for="bkAmt">Amount</label>
+            <input type="number" id="bkAmt" min="5000" max="100000000" step="5000" value="100000">
+          </div>
+          <div class="bk-calc-field">
+            <label for="bkSenior">Sr. Citizen</label>
+            <select id="bkSenior"><option value="0">No</option><option value="1">Yes</option></select>
+          </div>
+          <div class="bk-calc-field full">
+            <label for="bkTenure">Interest rate and tenure</label>
+            <select id="bkTenure">
+              <option value="0">1Y (7.00%)</option>
+              <option value="1">1Y 6M (7.25%)</option>
+              <option value="2">2Y (7.50%)</option>
+              <option value="3" selected>3Y (7.85%)</option>
+              <option value="4">4Y 2M (7.85%)</option>
+              <option value="5">5Y (7.85%)</option>
+            </select>
+          </div>
+        </div>
+        <div class="bk-calc-divider"></div>
+        <div class="bk-calc-rows">
+          <div class="bk-calc-rowline"><span class="l">Investment amount</span><span class="v" id="bkOutAmt">₹1,00,000</span></div>
+          <div class="bk-calc-rowline"><span class="l">Compounding</span><span class="v" id="bkOutComp">Yearly</span></div>
+          <div class="bk-calc-rowline"><span class="l">FD rate applicable</span><span class="v" id="bkOutRate">7.85%</span></div>
+          <div class="bk-calc-rowline"><span class="l">FD tenure</span><span class="v" id="bkOutTenure">3Y</span></div>
+          <div class="bk-calc-rowline hl"><span class="l">Maturity amount</span><span class="v" id="bkMaturity">₹1,24,230</span></div>
+          <div class="bk-calc-rowline"><span class="l">Interest earned</span><span class="v" id="bkInterest">₹24,230</span></div>
+        </div>
+        <a class="btn btn-purple" href="https://app.raushco.com/open-account">Open account</a>
+      </div>
+    </aside>
 
+  </div>
+
+  <section class="bk-cta-band">
+    <div class="wrap">
+      <h2>Open your Shriram Finance FD in minutes</h2>
+      <p>One Raushco account, live partner rates, no separate sign-up with the bank.</p>
+      <a class="btn btn-purple btn-lg" href="https://app.raushco.com/open-account">Open account</a>
+    </div>
+  </section>
+</div>
 </main>
 <footer data-theme="dark">
   <div class="wrap">
@@ -2557,25 +2561,28 @@ var OtpPopup = (function () {
   var amtEl = document.getElementById('bkAmt'), tenEl = document.getElementById('bkTenure'), srEl = document.getElementById('bkSenior');
   if (!amtEl) return;
   var tenureDays = [365, 547, 730, 1095, 1521, 1825];
-  var tenureLabels = ['1 year', '1 year 6 months', '2 years', '3 years', '4 years 2 months', '5 years'];
+  var tenureShort = ['1Y', '1Y 6M', '2Y', '3Y', '4Y 2M', '5Y'];
   var generalRates = [7.00, 7.25, 7.50, 7.85, 7.85, 7.85];
   var seniorRates = [7.50, 7.75, 8.00, 8.35, 8.35, 8.35];
   function fmtINR(n) {
     return '₹' + Math.round(n).toLocaleString('en-IN');
   }
   function render() {
-    var amt = parseInt(amtEl.value, 10);
+    var amt = Math.max(5000, parseInt(amtEl.value, 10) || 0);
     var i = parseInt(tenEl.value, 10);
+    var isSenior = srEl.value === '1';
     var years = tenureDays[i] / 365;
-    var rate = (srEl.checked ? seniorRates[i] : generalRates[i]) / 100;
-    var maturity = amt * Math.pow(1 + rate, years); // yearly compounding, matches Fixerra's chosen frequency
+    var ratePc = isSenior ? seniorRates[i] : generalRates[i];
+    var maturity = amt * Math.pow(1 + ratePc / 100, years); // yearly compounding, matches the rate table above
     var interest = maturity - amt;
-    document.getElementById('bkAmtVal').textContent = fmtINR(amt);
-    document.getElementById('bkTenureVal').textContent = tenureLabels[i];
+    document.getElementById('bkOutAmt').textContent = fmtINR(amt);
+    document.getElementById('bkOutComp').textContent = 'Yearly';
+    document.getElementById('bkOutRate').textContent = ratePc.toFixed(2) + '%';
+    document.getElementById('bkOutTenure').textContent = tenureShort[i];
     document.getElementById('bkInterest').textContent = fmtINR(interest);
     document.getElementById('bkMaturity').textContent = fmtINR(maturity);
   }
-  [amtEl, tenEl, srEl].forEach(function (el) { el.addEventListener('input', render); });
+  [amtEl, tenEl, srEl].forEach(function (el) { el.addEventListener('input', render); el.addEventListener('change', render); });
   render();
 })();
 document.querySelectorAll('.bk-faq-q').forEach(function (q) {
