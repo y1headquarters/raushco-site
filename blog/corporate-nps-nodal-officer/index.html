@@ -818,6 +818,13 @@
   .bl-hero h1 { font-size: var(--bb-size-hero); font-weight: 480; line-height: 1.04; letter-spacing: -.02em; color: var(--bb-ink-900); max-width: 18ch; margin: 0 auto; }
   .bl-hero h1 em { font-family: var(--pb-serif, Georgia, serif); font-style: italic; font-weight: 400; color: var(--pb-purple-600); }
 
+  .bl-breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 13px; color: var(--pb-base-600); margin: 0 auto; max-width: 1240px; padding: 20px 40px 0; }
+  .bl-breadcrumb a { color: var(--pb-base-600); text-decoration: none; display: flex; align-items: center; }
+  .bl-breadcrumb a:hover { color: var(--bb-ink-900); text-decoration: underline; }
+  .bl-breadcrumb .bl-crumb-sep { color: var(--pb-border); }
+  .bl-breadcrumb .bl-crumb-current { color: var(--bb-ink-900); font-weight: 500; }
+  .bl-breadcrumb .bl-crumb-home svg { width: 15px; height: 15px; display: block; }
+
   .bl-toolbar { max-width: 1240px; margin: 32px auto 0; padding: 0 40px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; }
   .bl-search { font-family: inherit; font-size: 14px; color: var(--bb-ink-900); background: #fff; border: 1px solid var(--pb-border); border-radius: 999px; padding: 10px 18px; min-width: 220px; }
   .bl-search:focus { outline: none; border-color: var(--pb-border-focus); }
@@ -1137,9 +1144,10 @@
   </nav>
 
 <main>
+  <nav class="bl-breadcrumb" aria-label="Breadcrumb"><a class="bl-crumb-home" href="../../index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1v-9"/></svg></a><span class="bl-crumb-sep">/</span><a href="../index.html">Blog</a><span class="bl-crumb-sep">/</span><a href="../index.html">Topics</a><span class="bl-crumb-sep">/</span><a href="../corporate-nps/index.html">Corporate NPS</a><span class="bl-crumb-sep">/</span><span class="bl-crumb-current">What a Nodal Officer Actually Does in Corporate NPS</span></nav>
   <article>
     <div class="bl-art-hero">
-      <a class="bl-cat" href="../index.html" style="text-decoration:none;">Corporate NPS</a>
+      <a class="bl-cat" href="../corporate-nps/index.html" style="text-decoration:none;">Corporate NPS</a>
       <h1 class="reveal">What a Nodal Officer Actually Does in Corporate NPS</h1>
       <p class="bl-dek reveal">The person who turns a Corporate NPS tie-up from a paper arrangement into contributions that actually land in employee accounts.</p>
       <div class="bl-byline-row reveal">

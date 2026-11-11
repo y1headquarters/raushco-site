@@ -818,6 +818,13 @@
   .bl-hero h1 { font-size: var(--bb-size-hero); font-weight: 480; line-height: 1.04; letter-spacing: -.02em; color: var(--bb-ink-900); max-width: 18ch; margin: 0 auto; }
   .bl-hero h1 em { font-family: var(--pb-serif, Georgia, serif); font-style: italic; font-weight: 400; color: var(--pb-purple-600); }
 
+  .bl-breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 13px; color: var(--pb-base-600); margin: 0 auto; max-width: 1240px; padding: 20px 40px 0; }
+  .bl-breadcrumb a { color: var(--pb-base-600); text-decoration: none; display: flex; align-items: center; }
+  .bl-breadcrumb a:hover { color: var(--bb-ink-900); text-decoration: underline; }
+  .bl-breadcrumb .bl-crumb-sep { color: var(--pb-border); }
+  .bl-breadcrumb .bl-crumb-current { color: var(--bb-ink-900); font-weight: 500; }
+  .bl-breadcrumb .bl-crumb-home svg { width: 15px; height: 15px; display: block; }
+
   .bl-toolbar { max-width: 1240px; margin: 32px auto 0; padding: 0 40px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; }
   .bl-search { font-family: inherit; font-size: 14px; color: var(--bb-ink-900); background: #fff; border: 1px solid var(--pb-border); border-radius: 999px; padding: 10px 18px; min-width: 220px; }
   .bl-search:focus { outline: none; border-color: var(--pb-border-focus); }
@@ -1138,13 +1145,14 @@
 
 <main>
   <section class="bl-hero" id="top">
+    <nav class="bl-breadcrumb" aria-label="Breadcrumb"><a class="bl-crumb-home" href="../index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1v-9"/></svg></a><span class="bl-crumb-sep">/</span><span class="bl-crumb-current">Blog</span></nav>
     <div class="wrap">
       <h1>Resources and guidance for <em>confident savers</em></h1>
       <p class="fc-hero-sub" style="margin:16px auto 0;max-width:560px;font-size:var(--pb-size-lede);color:var(--bb-ink-600);">Plain-language writing on NPS, retirement planning, tax, and the everyday decisions that compound.</p>
     </div>
     <div class="bl-toolbar">
       <input type="search" class="bl-search" id="blSearch" placeholder="Search articles">
-      <button type="button" class="bl-topic active" data-cat="all">All</button><button type="button" class="bl-topic" data-cat="Bonds & Debentures">Bonds & Debentures</button><button type="button" class="bl-topic" data-cat="Corporate NPS">Corporate NPS</button><button type="button" class="bl-topic" data-cat="Credit & CIBIL">Credit & CIBIL</button><button type="button" class="bl-topic" data-cat="Credit Cards">Credit Cards</button><button type="button" class="bl-topic" data-cat="ETFs & Index Investing">ETFs & Index Investing</button><button type="button" class="bl-topic" data-cat="Fixed Deposits & Recurring Deposits">Fixed Deposits & Recurring Deposits</button><button type="button" class="bl-topic" data-cat="Gold & Silver Investing">Gold & Silver Investing</button><button type="button" class="bl-topic" data-cat="Guides">Guides</button><button type="button" class="bl-topic" data-cat="Identity Documents">Identity Documents</button><button type="button" class="bl-topic" data-cat="Mutual Funds">Mutual Funds</button><button type="button" class="bl-topic" data-cat="NPS Vatsalya">NPS Vatsalya</button><button type="button" class="bl-topic" data-cat="Personal Finance">Personal Finance</button><button type="button" class="bl-topic" data-cat="Regulatory & Industry">Regulatory & Industry</button><button type="button" class="bl-topic" data-cat="Retirement Planning">Retirement Planning</button><button type="button" class="bl-topic" data-cat="SIP & Systematic Investing">SIP & Systematic Investing</button><button type="button" class="bl-topic" data-cat="Stocks & Trading">Stocks & Trading</button><button type="button" class="bl-topic" data-cat="Tax">Tax</button>
+      <button type="button" class="bl-topic active" data-cat="all">All</button><a class="bl-topic" href="bonds-debentures/index.html">Bonds & Debentures</a><a class="bl-topic" href="corporate-nps/index.html">Corporate NPS</a><a class="bl-topic" href="credit-cibil/index.html">Credit & CIBIL</a><a class="bl-topic" href="credit-cards/index.html">Credit Cards</a><a class="bl-topic" href="etfs-index-investing/index.html">ETFs & Index Investing</a><a class="bl-topic" href="fixed-deposits-recurring-deposits/index.html">Fixed Deposits & Recurring Deposits</a><a class="bl-topic" href="gold-silver-investing/index.html">Gold & Silver Investing</a><a class="bl-topic" href="guides/index.html">Guides</a><a class="bl-topic" href="identity-documents/index.html">Identity Documents</a><a class="bl-topic" href="mutual-funds/index.html">Mutual Funds</a><a class="bl-topic" href="nps-vatsalya/index.html">NPS Vatsalya</a><a class="bl-topic" href="personal-finance/index.html">Personal Finance</a><a class="bl-topic" href="regulatory-industry/index.html">Regulatory & Industry</a><a class="bl-topic" href="retirement-planning/index.html">Retirement Planning</a><a class="bl-topic" href="sip-systematic-investing/index.html">SIP & Systematic Investing</a><a class="bl-topic" href="stocks-trading/index.html">Stocks & Trading</a><a class="bl-topic" href="tax/index.html">Tax</a>
     </div>
   </section>
 
@@ -1391,6 +1399,20 @@
           <span class="bl-cat">Tax</span>
           <h3>Is Gratuity Taxable? What The Rules Actually Say</h3>
           <p>Gratuity isn't automatically tax-free. The exemption depends on who employs you, whether the Gratuity Act covers you, and a formula most people never check.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+        <a class="bl-card" href="cess-on-income-tax-explained/index.html" data-cat="Tax">
+          <div class="bl-card-img-wrap"><img src="../assets/images/blog/tax.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Tax</span>
+          <h3>What Is Cess on Income Tax, and How It's Calculated</h3>
+          <p>Cess isn't a tax on your income — it's a tax on your tax, and the order you calculate it in changes the final number.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+        <a class="bl-card" href="huf-tax-saving-structure/index.html" data-cat="Tax">
+          <div class="bl-card-img-wrap"><img src="../assets/images/blog/tax.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Tax</span>
+          <h3>HUF: The Tax Entity Hiding in Your Family Tree</h3>
+          <p>Indian law already created a second taxpayer out of your family the day you were born into it — most people just never bother to register it.</p>
           <span class="bl-by">By Saket Raushan</span>
         </a>
       </div>
@@ -2212,17 +2234,14 @@
 <script>
 (function () {
   var search = document.getElementById('blSearch');
-  var topics = document.querySelectorAll('.bl-topic');
   var groups = document.querySelectorAll('[data-group]');
   function apply() {
     var q = (search.value || '').toLowerCase();
-    var activeCat = document.querySelector('.bl-topic.active').getAttribute('data-cat');
     groups.forEach(function (g) {
       var anyVisible = false;
       g.querySelectorAll('.bl-card').forEach(function (card) {
-        var cat = card.getAttribute('data-cat');
         var text = card.textContent.toLowerCase();
-        var show = (activeCat === 'all' || cat === activeCat) && (!q || text.indexOf(q) !== -1);
+        var show = !q || text.indexOf(q) !== -1;
         card.style.display = show ? '' : 'none';
         if (show) anyVisible = true;
       });
@@ -2230,12 +2249,6 @@
     });
   }
   search.addEventListener('input', apply);
-  topics.forEach(function (btn) {
-    btn.addEventListener('click', function () {
-      topics.forEach(function (b) { b.classList.toggle('active', b === btn); });
-      apply();
-    });
-  });
 })();
 </script>
 </body>

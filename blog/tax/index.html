@@ -818,6 +818,13 @@
   .bl-hero h1 { font-size: var(--bb-size-hero); font-weight: 480; line-height: 1.04; letter-spacing: -.02em; color: var(--bb-ink-900); max-width: 18ch; margin: 0 auto; }
   .bl-hero h1 em { font-family: var(--pb-serif, Georgia, serif); font-style: italic; font-weight: 400; color: var(--pb-purple-600); }
 
+  .bl-breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; font-size: 13px; color: var(--pb-base-600); margin: 0 auto; max-width: 1240px; padding: 20px 40px 0; }
+  .bl-breadcrumb a { color: var(--pb-base-600); text-decoration: none; display: flex; align-items: center; }
+  .bl-breadcrumb a:hover { color: var(--bb-ink-900); text-decoration: underline; }
+  .bl-breadcrumb .bl-crumb-sep { color: var(--pb-border); }
+  .bl-breadcrumb .bl-crumb-current { color: var(--bb-ink-900); font-weight: 500; }
+  .bl-breadcrumb .bl-crumb-home svg { width: 15px; height: 15px; display: block; }
+
   .bl-toolbar { max-width: 1240px; margin: 32px auto 0; padding: 0 40px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; }
   .bl-search { font-family: inherit; font-size: 14px; color: var(--bb-ink-900); background: #fff; border: 1px solid var(--pb-border); border-radius: 999px; padding: 10px 18px; min-width: 220px; }
   .bl-search:focus { outline: none; border-color: var(--pb-border-focus); }
@@ -1138,10 +1145,10 @@
 
 <main>
   <section class="bl-hero" id="top">
+    <nav class="bl-breadcrumb" aria-label="Breadcrumb"><a class="bl-crumb-home" href="../../index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h3v-6h6v6h3a1 1 0 0 0 1-1v-9"/></svg></a><span class="bl-crumb-sep">/</span><a href="../index.html">Blog</a><span class="bl-crumb-sep">/</span><a href="../index.html">Topics</a><span class="bl-crumb-sep">/</span><span class="bl-crumb-current">Tax</span></nav>
     <div class="wrap">
-      <a href="../index.html" style="display:inline-block;margin-bottom:16px;font-size:13.5px;color:var(--pb-purple-600);text-decoration:none;">&larr; All articles</a>
       <h1>Tax</h1>
-      <p class="fc-hero-sub" style="margin:16px auto 0;max-width:560px;font-size:var(--pb-size-lede);color:var(--bb-ink-600);">6 articles on tax.</p>
+      <p class="fc-hero-sub" style="margin:16px auto 0;max-width:560px;font-size:var(--pb-size-lede);color:var(--bb-ink-600);">12 articles on tax.</p>
     </div>
   </section>
 
@@ -1188,6 +1195,48 @@
           <span class="bl-cat">Tax</span>
           <h3>Is Gratuity Taxable? What The Rules Actually Say</h3>
           <p>Gratuity isn't automatically tax-free. The exemption depends on who employs you, whether the Gratuity Act covers you, and a formula most people never check.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+        <a class="bl-card" href="../cess-on-income-tax-explained/index.html" data-cat="Tax">
+          <div class="bl-card-img-wrap"><img src="../../assets/images/blog/tax.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Tax</span>
+          <h3>What Is Cess on Income Tax, and How It's Calculated</h3>
+          <p>Cess isn't a tax on your income — it's a tax on your tax, and the order you calculate it in changes the final number.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+        <a class="bl-card" href="../huf-tax-saving-structure/index.html" data-cat="Tax">
+          <div class="bl-card-img-wrap"><img src="../../assets/images/blog/tax.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Tax</span>
+          <h3>HUF: The Tax Entity Hiding in Your Family Tree</h3>
+          <p>Indian law already created a second taxpayer out of your family the day you were born into it — most people just never bother to register it.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+        <a class="bl-card" href="../capital-gains-tax-ltcg-vs-stcg/index.html" data-cat="Tax">
+          <div class="bl-card-img-wrap"><img src="../../assets/images/blog/tax.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Tax</span>
+          <h3>LTCG vs STCG: How India Taxes Your Gains Now</h3>
+          <p>A stock held 365 days and one held 366 days face different tax regimes entirely — and that same one-day logic, scaled up, now governs property, gold, and debt funds too.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+        <a class="bl-card" href="../tax-planning-vs-avoidance-vs-evasion/index.html" data-cat="Tax">
+          <div class="bl-card-img-wrap"><img src="../../assets/images/blog/tax.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Tax</span>
+          <h3>Tax Planning, Avoidance, Evasion: The Real Dividing Lines</h3>
+          <p>Three taxpayers can all end up paying less tax — only one of them is doing anything the law actually permits.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+        <a class="bl-card" href="../nri-inheritance-tax-india/index.html" data-cat="Tax">
+          <div class="bl-card-img-wrap"><img src="../../assets/images/blog/tax.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Tax</span>
+          <h3>Does India Tax Inheritance? What NRIs Get Wrong</h3>
+          <p>India scrapped inheritance tax in 1985, but that fact alone leaves most NRIs unprepared for what happens the moment they try to sell what they inherited.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+        <a class="bl-card" href="../foreign-remittance-tax-tcs-lrs/index.html" data-cat="Tax">
+          <div class="bl-card-img-wrap"><img src="../../assets/images/blog/tax.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Tax</span>
+          <h3>Tax on Foreign Remittances: TCS and the LRS Limit Explained</h3>
+          <p>Sending money abroad under India's $250,000 scheme now triggers very different tax bills depending on why you're sending it — and most of that money isn't even a tax, just a deposit you collect back later.</p>
           <span class="bl-by">By Saket Raushan</span>
         </a>
       </div>
