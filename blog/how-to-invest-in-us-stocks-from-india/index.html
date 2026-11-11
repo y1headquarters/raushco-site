@@ -814,7 +814,61 @@
   /* ============================================================
      Blog — shared components (index + article).
      ============================================================ */
-  .bl-hero { position: relative; margin-top: -73px; background: #fbfcfd; padding: calc(64px + 73px) 0 40px; text-align: center; }
+  /* Blog-pages-only minimal nav — logo + Log in/Open account, no mega
+     menus and no burger. The site-wide rule that hides .nav-cta under
+     980px (in favor of a burger) doesn't apply here: there's no burger
+     to replace it with, so we keep the CTA visible at every width,
+     exactly like the reference blog's own minimal blog-nav does. Two
+     classes beats the shared one-class rule on specificity, so this
+     wins regardless of the cascade's declaration order. */
+  .bl-nav .nav-cta { display: flex; }
+  @media (max-width: 420px) { .bl-nav .nav-cta { gap: 6px; } .bl-nav .nav-cta .btn { padding: 0 14px; font-size: 13.5px; } }
+
+  /* Secondary blog section bar — sits directly under the main site nav on
+     every blog page (index, category, article), same placement/mechanism as
+     the reference blog's own section-nav row: a row of plain text links. */
+  /* relative + z-index so this bar stays above .bl-hero, which pulls itself
+     up with a negative margin on index/category pages to sit under the
+     (elevated, z-index:60) main nav — without this it paints underneath. */
+  .bl-subnav { position: relative; z-index: 55; border-bottom: 1px solid var(--pb-border); background: #fff; }
+  .bl-subnav-inner { max-width: 1240px; margin: 0 auto; padding: 0 40px; height: 48px; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; column-gap: 32px; }
+  .bl-subnav-left { justify-self: stretch; min-width: 0; overflow: hidden; }
+  .bl-subnav-center { justify-self: center; }
+  .bl-subnav-right { justify-self: end; display: flex; align-items: center; gap: 20px; }
+  .bl-subnav-center ul { display: flex; align-items: center; gap: 40px; list-style: none; margin: 0; padding: 0; }
+  .bl-subnav a { font-size: 14px; font-weight: 500; color: var(--bb-ink-900); text-decoration: none; }
+  .bl-subnav a:hover { text-decoration: underline; text-underline-offset: 3px; }
+  .bl-subnav-topics-wrap { position: relative; }
+  .bl-subnav-topics { display: flex; align-items: center; gap: 4px; font: inherit; font-size: 14px; font-weight: 500; color: var(--bb-ink-900); background: none; border: none; padding: 0; cursor: pointer; }
+  .bl-subnav-topics svg { width: 14px; height: 14px; transition: transform .15s ease; }
+  .bl-subnav-topics-wrap.open .bl-subnav-topics svg { transform: rotate(180deg); }
+  .bl-subnav-search svg { width: 16px; height: 16px; display: block; }
+
+  /* Topics dropdown panel — click-to-open off the subnav's "Topics"
+     control, same interaction (click, not hover) as the reference
+     blog's own Topics control. Lists every built category, 2 columns,
+     each link going straight to that category's archive page. */
+  .bl-topics-panel { display: none; position: absolute; top: calc(100% + 13px); right: -40px; width: 420px; max-width: calc(100vw - 48px); background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-m); box-shadow: 0 16px 40px rgba(20,20,30,.14); padding: 28px 32px; z-index: 70; text-align: left; }
+  .bl-subnav-topics-wrap.open .bl-topics-panel { display: block; }
+  .bl-topics-panel-label { display: block; font-size: 12.5px; font-weight: 600; color: var(--pb-base-500); text-transform: uppercase; letter-spacing: .02em; margin-bottom: 18px; }
+  .bl-topics-cols { display: grid; grid-template-columns: 1fr 1fr; column-gap: 28px; margin-bottom: 22px; }
+  .bl-topics-cols ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 11px; }
+  .bl-topics-cols a { font-size: 14.5px; font-weight: 500; color: var(--bb-ink-900); text-decoration: none; }
+  .bl-topics-cols a:hover { color: var(--pb-purple-600); text-decoration: underline; text-underline-offset: 3px; }
+  /* a.bl-topics-browse (tag + class), not just .bl-topics-browse, so this
+     beats the earlier ".bl-subnav a" rule's color on specificity — that
+     selector's extra type-selector point otherwise wins over a lone class
+     regardless of source order, leaving this unreadable (dark on dark). */
+  a.bl-topics-browse { display: inline-flex; align-items: center; font-size: 13.5px; font-weight: 500; color: #fff; background: var(--bb-ink-900); border-radius: 999px; padding: 10px 18px; text-decoration: none; }
+  a.bl-topics-browse:hover { background: var(--pb-purple-600); color: #fff; }
+  /* breadcrumb reused in the subnav's left slot — reset its standalone
+     (full-width, padded) look down to an inline strip that fits a 48px bar */
+  .bl-subnav-left .bl-breadcrumb { margin: 0; max-width: none; padding: 0; flex-wrap: nowrap; min-width: 0; }
+  .bl-subnav-left .bl-crumb-sep, .bl-subnav-left .bl-crumb-home, .bl-subnav-left .bl-breadcrumb > a { flex: 0 0 auto; }
+  .bl-subnav-left .bl-crumb-current { flex: 0 1 auto; min-width: 0; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; }
+  @media (max-width: 760px) { .bl-subnav { display: none; } }
+
+  .bl-hero { position: relative; margin-top: -121px; background: #fbfcfd; padding: calc(64px + 121px) 0 40px; text-align: center; }
   .bl-hero h1 { font-size: var(--bb-size-hero); font-weight: 480; line-height: 1.04; letter-spacing: -.02em; color: var(--bb-ink-900); max-width: 18ch; margin: 0 auto; }
   .bl-hero h1 em { font-family: var(--pb-serif, Georgia, serif); font-style: italic; font-weight: 400; color: var(--pb-purple-600); }
 
@@ -825,12 +879,20 @@
   .bl-breadcrumb .bl-crumb-current { color: var(--bb-ink-900); font-weight: 500; }
   .bl-breadcrumb .bl-crumb-home svg { width: 15px; height: 15px; display: block; }
 
-  .bl-toolbar { max-width: 1240px; margin: 32px auto 0; padding: 0 40px; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; }
-  .bl-search { font-family: inherit; font-size: 14px; color: var(--bb-ink-900); background: #fff; border: 1px solid var(--pb-border); border-radius: 999px; padding: 10px 18px; min-width: 220px; }
-  .bl-search:focus { outline: none; border-color: var(--pb-border-focus); }
-  .bl-topic { font-family: inherit; font-size: 13.5px; font-weight: 500; color: var(--pb-base-600); background: #fff; border: 1px solid var(--pb-border); padding: 8px 16px; border-radius: 999px; cursor: pointer; transition: color .15s, border-color .15s, background .15s; }
-  .bl-topic:hover { color: var(--bb-ink-900); border-color: var(--pb-base-400); }
-  .bl-topic.active { color: #fff; background: var(--pb-purple-600); border-color: var(--pb-purple-600); }
+  /* Featured row — immediately under the index hero, matching the
+     reference blog's own asymmetric layout there: one large card on the
+     left (cover image, eyebrow, serif headline, dek, byline) and two
+     smaller cards side by side on the right (cover image, eyebrow, serif
+     headline, byline — no dek on the smaller ones, confirmed live). */
+  .bl-featured { padding: 48px 0 8px; background: #fbfcfd; }
+  .bl-featured-grid { max-width: 1240px; margin: 0 auto; padding: 0 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+  .bl-featured-side { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .bl-feat-card { display: block; text-decoration: none; color: inherit; }
+  .bl-feat-lg h3 { font-family: var(--pb-serif, Georgia, serif); font-size: clamp(22px, 1.4vw + 16px, 30px); font-weight: 500; line-height: 1.2; color: var(--bb-ink-900); margin: 14px 0 10px; }
+  .bl-feat-lg p { font-size: 15.5px; line-height: 1.55; color: var(--pb-base-600); margin: 0 0 10px; }
+  .bl-feat-sm h3 { font-family: var(--pb-serif, Georgia, serif); font-size: 19px; font-weight: 500; line-height: 1.3; color: var(--bb-ink-900); margin: 10px 0 8px; }
+  @media (max-width: 1024px) { .bl-featured-grid { grid-template-columns: 1fr; gap: 32px; } }
+  @media (max-width: 560px) { .bl-featured-side { grid-template-columns: 1fr; } }
 
   .bl-section { padding: 40px 0 clamp(80px, 6vw + 48px, 144px); background: #fbfcfd; }
   .bl-group { max-width: 1240px; margin: 0 auto 72px; }
@@ -843,7 +905,7 @@
   .bl-card { display: block; text-decoration: none; color: inherit; }
   .bl-card-img-wrap { aspect-ratio: 16/9; overflow: hidden; margin-bottom: 14px; background: var(--pb-base-100); }
   .bl-card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 0; }
-  .bl-cat { display: block; font-size: 13px; font-weight: 500; color: var(--pb-purple-600); text-transform: uppercase; letter-spacing: .02em; margin-bottom: 8px; }
+  .bl-cat { display: block; font-size: 13px; font-weight: 500; color: var(--bb-ink-900); text-transform: uppercase; letter-spacing: .02em; margin-bottom: 8px; }
   .bl-card h3 { font-family: var(--pb-serif, Georgia, serif); font-size: 20px; font-weight: 500; line-height: 1.25; color: var(--bb-ink-900); margin: 0 0 8px; }
   .bl-card p { font-size: 15px; line-height: 1.55; color: var(--pb-base-600); margin: 0 0 10px; }
   .bl-by { font-size: 13.5px; color: var(--pb-base-500); }
@@ -855,24 +917,27 @@
   .bl-newsletter input[type=email] { flex: 1; font-family: inherit; font-size: 14px; padding: 11px 16px; border: 1px solid var(--pb-border-input); border-radius: 999px; }
   .bl-newsletter input[type=email]:focus { outline: none; border-color: var(--pb-border-focus); }
 
-  /* ---- Article page ---- */
-  .bl-art-hero { max-width: 760px; margin: 0 auto; padding: calc(56px + 73px) 40px 0; text-align: center; }
+  /* ---- Article page ----
+     Anatomy/order matches the reference blog's real article template:
+     category -> h1 -> dek -> hero image -> divider -> [byline sidebar | body]
+     two-column grid -> about-the-author -> tags -> share -> related reads. */
+  .bl-art-hero { max-width: 760px; margin: 0 auto; padding: calc(56px + 73px + 48px) 40px 0; text-align: center; }
   .bl-art-hero h1 { font-family: var(--pb-serif, Georgia, serif); font-size: clamp(32px, 2.6vw + 20px, 46px); font-weight: 500; line-height: 1.12; letter-spacing: -.01em; color: var(--bb-ink-900); margin: 10px 0 18px; }
-  .bl-dek { font-family: var(--pb-serif, Georgia, serif); font-size: 19px; line-height: 1.3; color: var(--bb-ink-900); margin: 0 0 28px; }
-  .bl-byline-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px 24px; padding: 20px 0 24px; border-top: 1px solid var(--pb-border); text-align: left; }
-  .bl-byline { display: flex; align-items: center; gap: 10px; }
-  .bl-byline-av { width: 40px; height: 40px; border-radius: 999px; background: var(--pb-purple-600); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; flex-shrink: 0; }
-  .bl-byline-name { font-size: 14px; font-weight: 600; color: var(--bb-ink-900); }
-  .bl-byline-role { font-size: 12.5px; color: var(--pb-base-500); }
-  .bl-byline-date { font-size: 12.5px; color: var(--pb-base-500); margin-top: 2px; }
-  .bl-share { display: flex; align-items: center; gap: 14px; }
+  .bl-dek { font-family: var(--pb-serif, Georgia, serif); font-size: 19px; line-height: 1.3; color: var(--bb-ink-900); margin: 0; }
+  .bl-art-hero-img { max-width: 900px; margin: 32px auto 0; aspect-ratio: 16/9; overflow: hidden; border-radius: 0; background: var(--pb-base-100); }
+  .bl-art-hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+  .bl-art-main { max-width: 1120px; margin: 0 auto; padding: 32px 40px 0; display: grid; grid-template-columns: 220px 1fr; gap: 8px 64px; border-top: 1px solid var(--pb-border); }
+  .bl-byline-col { text-align: left; }
+  .bl-byline-by { font-size: 14px; font-weight: 600; color: var(--bb-ink-900); margin: 0 0 6px; }
+  .bl-byline-role { font-size: 13px; line-height: 1.4; color: var(--pb-base-500); margin: 0 0 16px; }
+  .bl-byline-date { font-size: 13px; color: var(--pb-base-500); margin: 0 0 16px; }
+  .bl-share { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
   .bl-share a { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 999px; border: 1px solid var(--pb-border); color: var(--pb-base-600); transition: color .15s, border-color .15s; }
   .bl-share a:hover { color: var(--pb-purple-600); border-color: var(--pb-purple-600); }
   .bl-share svg { width: 15px; height: 15px; }
-  .bl-art-hero-img { max-width: 900px; margin: 8px auto 0; aspect-ratio: 16/9; overflow: hidden; border-radius: 0; background: var(--pb-base-100); }
-  .bl-art-hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-  .bl-art-body { max-width: 680px; margin: 48px auto 0; padding: 0 40px; font-family: var(--pb-serif, Georgia, serif); font-size: 18px; line-height: 1.5; color: var(--bb-ink-900); }
+  .bl-art-body { max-width: 680px; margin: 0; padding: 0; font-family: var(--pb-serif, Georgia, serif); font-size: 18px; line-height: 1.5; color: var(--bb-ink-900); }
   .bl-art-body h2 { font-family: var(--pb-font); font-size: 26px; font-weight: 500; letter-spacing: .01em; line-height: 1.2; color: var(--bb-ink-900); margin: 44px 0 18px; }
   .bl-art-body p { margin: 0 0 22px; }
   .bl-art-body ul, .bl-art-body ol { margin: 0 0 22px; padding-left: 24px; }
@@ -883,11 +948,31 @@
   sup.fn { font-size: .55em; margin-left: 2px; position: relative; top: -.3em; font-family: var(--pb-font); }
   sup.fn a.fn-link { counter-increment: fn; color: inherit; opacity: .6; text-decoration: underline; text-underline-offset: 2px; }
   sup.fn a.fn-link::before { content: counter(fn); }
-  .bl-footnotes { max-width: 680px; margin: 48px auto 0; padding: 24px 40px 0; border-top: 1px solid var(--pb-border); font-size: 13px; line-height: 1.6; color: var(--pb-base-600); counter-reset: fn; }
+  .bl-footnotes { max-width: 680px; margin: 48px 0 0; padding: 24px 0 0; border-top: 1px solid var(--pb-border); font-size: 13px; line-height: 1.6; color: var(--pb-base-600); counter-reset: fn; }
   .bl-footnotes li { margin-bottom: 10px; }
   .bl-footnotes li::marker { font-variant-numeric: tabular-nums; }
 
-  .bl-tags { max-width: 680px; margin: 40px auto 0; padding: 0 40px; display: flex; flex-wrap: wrap; gap: 8px; }
+  .bl-about-author { max-width: 680px; margin: 44px 0 0; padding: 24px 0 0; border-top: 1px solid var(--pb-border); }
+  .bl-about-author h3 { font-size: 14px; font-weight: 600; color: var(--bb-ink-900); margin: 0 0 10px; text-transform: uppercase; letter-spacing: .02em; }
+  .bl-about-author .bl-aa-name { font-family: var(--pb-serif, Georgia, serif); font-size: 16px; font-weight: 500; color: var(--bb-ink-900); margin: 0 0 4px; }
+  .bl-about-author .bl-aa-role { font-size: 13.5px; color: var(--pb-base-500); }
+
+  .bl-share-end { max-width: 680px; margin: 40px 0 0; }
+  .bl-share-end h3 { font-size: 14px; font-weight: 600; color: var(--bb-ink-900); margin: 0 0 12px; text-transform: uppercase; letter-spacing: .02em; }
+
+  @media (max-width: 900px) {
+    .bl-art-main { grid-template-columns: 1fr; gap: 24px; }
+    .bl-byline-col { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 16px; }
+    .bl-byline-by, .bl-byline-role, .bl-byline-date { margin: 0; }
+  }
+  @media (max-width: 760px) {
+    /* .bl-subnav is display:none below this width, so it isn't in flow —
+       knock the 48px subnav clearance back off the hero top-padding. */
+    .bl-hero { margin-top: -73px; padding: calc(64px + 73px) 0 40px; }
+    .bl-art-hero { padding: calc(56px + 73px) 20px 0; }
+  }
+
+  .bl-tags { max-width: 680px; margin: 40px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
   .bl-tag { font-size: 12.5px; color: var(--pb-base-600); background: var(--pb-base-100); border-radius: 999px; padding: 6px 14px; text-decoration: none; }
   .bl-tag:hover { color: var(--bb-ink-900); }
 
@@ -900,276 +985,30 @@
 </head>
 <body>
 
-<nav class="nav"<nav class="nav" id="nav" data-theme="dark">
-    <div class="nav-inner">
-      <a class="brand" href="https://raushco.com/"><img class="mk" src="../../assets/brand/Subtract.png" alt="Raushco"> Raushco</a>
-      <div class="nav-links">
-        <div class="nav-item">
-          <a href="#" class="nav-drop-trigger">Personal <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-          <div class="mega-menu">
-            <div class="mega-grid mega-grid-4">
-              <div class="mega-col">
-                <h4>Banking</h4>
-                <p>Everyday accounts and money movement.</p>
-                <span class="mega-label">Products</span>
-                <a href="../../savings-account/index.html">Savings Account</a>
-                <a href="../../fixed-deposit/index.html">Fixed Deposits</a>
-                <a href="../../recurring-deposit/index.html">Recurring Deposits</a>
-                <a href="../../forex-remittance/index.html">Forex &amp; Remittance</a>
-              </div>
-              <div class="mega-col">
-                <h4>Investments</h4>
-                <p>Grow your money beyond a savings rate.</p>
-                <span class="mega-label">Products</span>
-                <a href="../../gold-silver/index.html">Gold &amp; Silver</a>
-                <a href="../../mutual-funds/index.html">Mutual Funds &amp; SIPs</a>
-                <a href="../../bonds/index.html">Bonds</a>
-              </div>
-              <div class="mega-col">
-                <h4>Retirement &amp; Insurance</h4>
-                <p>Plan for later, and protect what you have.</p>
-                <span class="mega-label">Products</span>
-                <a href="../../nps/index.html">NPS</a>
-                <a href="../../corporate-nps/index.html">Corporate NPS</a>
-                <a href="../../nps-vatsalya/index.html">NPS Vatsalya</a>
-                <a href="../../insurance/index.html">Insurance</a>
-              </div>
-              <div class="mega-col">
-                <h4>Credit &amp; Loans</h4>
-                <p>Spend and borrow against what you already have.</p>
-                <span class="mega-label">Products</span>
-                <a href="../../fd-backed-credit-card/index.html">FD-Backed Credit Card</a>
-                <a href="../../personal-loans/index.html">Personal Loans</a>
-                <a href="../../loan-against-fd/index.html">Loan Against FD</a>
-                <a href="../../gold-loan/index.html">Gold Loan</a>
-              </div>
-            </div>
-            <a class="mega-foot" href="../../personal-banking/index.html">
-              <span><h4>Personal Banking <span class="arrow">&rarr;</span></h4><p>A smarter way to manage, move, and grow your personal finances.</p></span>
-            </a>
-          </div>
-        </div>
-        <div class="nav-item">
-          <a href="#" class="nav-drop-trigger">Business <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-          <div class="mega-menu">
-            <div class="mega-grid">
-              <div class="mega-feature">
-                <h4>Business Banking</h4>
-                <p>Manage your business finances at every stage of growth.</p>
-                <div class="mega-feature-item"><h5>Books</h5><p>AI-powered accounting software</p></div>
-                <div class="mega-feature-item"><h5>Payroll</h5><p>Pay your team, file taxes</p></div>
-                <a class="mega-cta" href="https://app.raushco.com/auth/initiate-otp">Try the demo <span class="arrow">&#8599;</span></a>
-              </div>
-              <div class="mega-col">
-                <h4>Banking &amp; More</h4>
-                <p>Apply for business accounts, earn yield, and access capital.</p>
-                <span class="mega-label">Products</span>
-                <a href="../../business-banking/index.html">Checking &amp; Savings</a>
-                <a href="../../working-capital-loans/index.html">Working Capital Loans</a>
-                <a href="../../venture-debt/index.html">Venture Debt</a>
-                <a href="../../treasury/index.html">Treasury</a>
-              </div>
-              <div class="mega-col">
-                <h4>Cards &amp; Expense Management</h4>
-                <p>Issue cards instantly and control team and vendor spend.</p>
-                <span class="mega-label">Products</span>
-                <a href="../../credit/index.html">Business Credit Cards</a>
-                <a href="../../spend-management/index.html">Spend Management</a>
-              </div>
-              <div class="mega-col">
-                <h4>Payments &amp; Invoicing</h4>
-                <p>Send payments, create invoices, and sync your accounting tools.</p>
-                <span class="mega-label">Products</span>
-                <a href="../../business-payments/index.html">Payments</a>
-                <a href="../../invoicing/index.html">Invoicing</a>
-                <a href="../../accounting-integrations/index.html">Accounting Automations</a>
-                <a href="../../invoice-discounting/index.html">Invoice Discounting</a>
-                <a href="../../collections/index.html">Collections</a>
-              </div>
-              <div class="mega-col">
-                <h4>Intelligence</h4>
-                <p>Leverage AI to understand and manage your finances.</p>
-                <span class="mega-label">Products</span>
-                <a href="#">Command</a>
-                <a href="#">Insights</a>
-                <a href="#">API</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="nav-item">
-          <a href="#" class="nav-drop-trigger">Solutions <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-          <div class="mega-menu">
-            <div class="mega-grid mega-grid-3">
-              <a class="mega-col" href="../../tech-ai-startups/index.html">
-                <h4>Tech</h4><p>Spend less time on money management and more time building.</p>
-              </a>
-              <a class="mega-col" href="../../vc-funds/index.html">
-                <h4>VC Funds</h4><p>Manage investments in all your portfolio companies in one place.</p>
-              </a>
-              <a class="mega-col" href="../../ecommerce/index.html">
-                <h4>Ecommerce</h4><p>Get everything you need to grow your brand at every stage.</p>
-              </a>
-              <a class="mega-col" href="../../web3/index.html">
-                <h4>Crypto</h4><p>Run everything from a fast, compliant hub built for the speed of crypto.</p>
-              </a>
-              <a class="mega-col" href="../../agencies-and-consultants/index.html">
-                <h4>Agencies, Consultants &amp; Firms</h4><p>Simplify your finances across every client and project.</p>
-              </a>
-              <a class="mega-col" href="../../accounting-firms/index.html">
-                <h4>Accounting Firms</h4><p>Bring clarity to your clients and efficiency to your firm.</p>
-              </a>
-              <div class="mega-col mega-col-more">
-                <span class="mega-label" style="margin-top:0">&amp; More</span>
-                <a href="#">SaaS</a>
-                <a href="#">LLCs</a>
-                <a href="#">Life Science</a>
-                <a href="#">Climate</a>
-                <a href="#">Real Estate &amp; Construction</a>
-                <a href="#">Healthcare Services</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="nav-item">
-          <a href="#" class="nav-drop-trigger">Resources <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-          <div class="mega-menu">
-            <div class="mega-grid mega-grid-3">
-              <div class="mega-col">
-                <a class="mega-head-link" href="../../blog/index.html"><h4>Blog</h4><p>Practical resources, insights, and inspiration.</p></a>
-                <span class="mega-label">Jump to</span>
-                <a href="#">Starting A Business</a>
-                <a href="#">Scaling &amp; Growing</a>
-                <a href="#">Stories</a>
-                <a href="#">Company News</a>
-              </div>
-              <div class="mega-col">
-                <h4>Perks</h4><p>Deals on the top software picks for growing businesses.</p>
-                <span class="mega-label">Jump to</span>
-                <a href="#">Startup Bundle</a>
-                <a href="#">Growth Bundle</a>
-                <a href="#">Ecommerce Bundle</a>
-              </div>
-              <div class="mega-col">
-                <h4>Tools</h4><p>Free calculators, templates, and databases.</p>
-                <span class="mega-label">Jump to</span>
-                <a href="#">Investor Database</a>
-                <a href="#">SAFE Generator</a>
-                <a href="#">Burn Rate Calculator</a>
-              </div>
-            </div>
-            <a class="mega-foot" href="../../releases/index.html"><span><h4>Product Releases <span class="arrow">&rarr;</span></h4></span></a>
-          </div>
-        </div>
-        <div class="nav-item">
-          <a href="#" class="nav-drop-trigger">About <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-          <div class="mega-menu">
-            <div class="mega-grid mega-grid-3">
-              <a class="mega-col" href="../../about/index.html">
-                <h4>Our Story</h4><p>The vision behind Raushco and the people helping to shape the future of banking.</p>
-              </a>
-              <div class="mega-col">
-                <span class="mega-label" style="margin-top:0">Connect</span>
-                <a href="#">Events</a>
-                <a href="../../partnerships/index.html">Partnerships</a>
-                <a href="../../jobs/index.html">Careers</a>
-              </div>
-              <div class="mega-col">
-                <span class="mega-label" style="margin-top:0">Support</span>
-                <a href="#">Help Center &#8599;</a>
-                <a href="#">FAQs</a>
-                <a href="#">Switch to Raushco</a>
-              </div>
-            </div>
-            <a class="mega-foot" href="../../contact/index.html"><span><h4>Contact us <span class="arrow">&rarr;</span></h4></span></a>
-          </div>
-        </div>
-        <a href="../../pricing/index.html">Pricing</a>
-      </div>
-      <div class="nav-cta">
+<nav class="nav bl-nav" id="nav" data-theme="dark"><div class="nav-inner"><a class="brand" href="https://raushco.com/"><img class="mk" src="../../assets/brand/Subtract.png" alt="Raushco"> Raushco</a><div class="nav-cta">
         <a class="btn btn-ghost" href="https://dev.raushco.com/login">Log in</a>
         <a class="btn btn-primary" href="https://dev.raushco.com/create-account">Open account</a>
-      </div>
-      <button class="nav-burger" id="navBurger" aria-label="Menu">&#9776;</button>
-    </div>
-    <div class="nav-menu" id="navMenu">
-      <span class="mega-label" style="margin:12px 0 8px;">Personal</span>
-      <a href="../../savings-account/index.html">Savings Account</a>
-      <a href="../../fixed-deposit/index.html">Fixed Deposits</a>
-      <a href="../../recurring-deposit/index.html">Recurring Deposits</a>
-      <a href="../../forex-remittance/index.html">Forex &amp; Remittance</a>
-      <a href="../../gold-silver/index.html">Gold &amp; Silver</a>
-      <a href="../../mutual-funds/index.html">Mutual Funds &amp; SIPs</a>
-      <a href="../../bonds/index.html">Bonds</a>
-      <a href="../../nps/index.html">NPS</a>
-      <a href="../../corporate-nps/index.html">Corporate NPS</a>
-      <a href="../../nps-vatsalya/index.html">NPS Vatsalya</a>
-      <a href="../../insurance/index.html">Insurance</a>
-      <a href="../../fd-backed-credit-card/index.html">FD-Backed Credit Card</a>
-      <a href="../../personal-loans/index.html">Personal Loans</a>
-      <a href="../../loan-against-fd/index.html">Loan Against FD</a>
-      <a href="../../gold-loan/index.html">Gold Loan</a>
-      <a href="../../personal-banking/index.html">Personal Banking</a>
-      <span class="mega-label" style="margin:12px 0 8px;">Business</span>
-      <a href="../../business-banking/index.html">Checking &amp; Savings</a>
-      <a href="../../working-capital-loans/index.html">Working Capital Loans</a>
-      <a href="../../venture-debt/index.html">Venture Debt</a>
-      <a href="../../treasury/index.html">Treasury</a>
-      <a href="../../credit/index.html">Business Credit Cards</a>
-      <a href="../../spend-management/index.html">Spend Management</a>
-      <a href="../../business-payments/index.html">Payments</a>
-      <a href="../../invoicing/index.html">Invoicing</a>
-      <a href="../../accounting-integrations/index.html">Accounting Automations</a>
-      <a href="../../invoice-discounting/index.html">Invoice Discounting</a>
-      <a href="../../collections/index.html">Collections</a>
-      <span class="mega-label" style="margin:12px 0 8px;">Solutions</span>
-      <a href="../../tech-ai-startups/index.html">Tech &amp; AI Startups</a>
-      <a href="../../vc-funds/index.html">VC Funds</a>
-      <a href="../../ecommerce/index.html">Ecommerce</a>
-      <a href="../../web3/index.html">Web3 &amp; Crypto</a>
-      <a href="../../agencies-and-consultants/index.html">Agencies &amp; Consultants</a>
-      <a href="../../accounting-firms/index.html">Accounting Firms</a>
-      <span class="mega-label" style="margin:12px 0 8px;">Resources</span>
-      <a href="../../blog/index.html">Blog</a>
-      <a href="../../releases/index.html">Product Releases</a>
-      <span class="mega-label" style="margin:12px 0 8px;">About</span>
-      <a href="../../about/index.html">Company</a>
-      <a href="../../jobs/index.html">Careers</a>
-      <a href="../../partnerships/index.html">Partnerships</a>
-      <a href="../../contact/index.html">Contact us</a>
-      <a href="../../pricing/index.html">Pricing</a>
-      <a class="btn btn-ghost" href="https://dev.raushco.com/login">Log in</a>
-      <a class="btn btn-primary" href="https://dev.raushco.com/create-account">Open account</a>
-    </div>
-  </nav>
+      </div></div></nav>
+<div class="bl-subnav"><div class="bl-subnav-inner"><div class="bl-subnav-left"><nav class="bl-breadcrumb" aria-label="Breadcrumb"><a class="bl-crumb-home" aria-label="Home" href="../../index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg></a><span class="bl-crumb-sep">/</span><a href="../index.html">Blog</a><span class="bl-crumb-sep">/</span><a href="../index.html">Topics</a><span class="bl-crumb-sep">/</span><a href="../stocks-trading/index.html">Stocks & Trading</a><span class="bl-crumb-sep">/</span><span class="bl-crumb-current">The Real Playbook for Buying US Stocks From India</span></nav></div><div class="bl-subnav-center"><ul><li><a href="../index.html">Library</a></li><li><a href="../index.html">Magmaven</a></li><li><a href="../index.html">Inside Raushco</a></li></ul></div><div class="bl-subnav-right"><div class="bl-subnav-topics-wrap"><button type="button" class="bl-subnav-topics" id="blTopicsBtn" aria-expanded="false" aria-controls="blTopicsPanel">Topics <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button><div class="bl-topics-panel" id="blTopicsPanel"><span class="bl-topics-panel-label">Topics</span><div class="bl-topics-cols"><ul><li><a href="../bonds-debentures/index.html">Bonds & Debentures</a></li><li><a href="../corporate-nps/index.html">Corporate NPS</a></li><li><a href="../credit-cibil/index.html">Credit & CIBIL</a></li><li><a href="../credit-cards/index.html">Credit Cards</a></li><li><a href="../etfs-index-investing/index.html">ETFs & Index Investing</a></li><li><a href="../fixed-deposits-recurring-deposits/index.html">Fixed Deposits & Recurring Deposits</a></li><li><a href="../gold-silver-investing/index.html">Gold & Silver Investing</a></li><li><a href="../guides/index.html">Guides</a></li><li><a href="../identity-documents/index.html">Identity Documents</a></li></ul><ul><li><a href="../mutual-funds/index.html">Mutual Funds</a></li><li><a href="../nps-vatsalya/index.html">NPS Vatsalya</a></li><li><a href="../personal-finance/index.html">Personal Finance</a></li><li><a href="../provident-fund-pension/index.html">Provident Fund & Pension</a></li><li><a href="../regulatory-industry/index.html">Regulatory & Industry</a></li><li><a href="../retirement-planning/index.html">Retirement Planning</a></li><li><a href="../sip-systematic-investing/index.html">SIP & Systematic Investing</a></li><li><a href="../stocks-trading/index.html">Stocks & Trading</a></li><li><a href="../tax/index.html">Tax</a></li></ul></div><a class="bl-topics-browse" href="../index.html">Browse all articles</a></div></div><a class="bl-subnav-search" href="../index.html" aria-label="Search articles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></a></div></div></div>
 
 <main>
-  <nav class="bl-breadcrumb" aria-label="Breadcrumb"><a class="bl-crumb-home" aria-label="Home" href="../../index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg></a><span class="bl-crumb-sep">/</span><a href="../index.html">Blog</a><span class="bl-crumb-sep">/</span><a href="../index.html">Topics</a><span class="bl-crumb-sep">/</span><a href="../stocks-trading/index.html">Stocks & Trading</a><span class="bl-crumb-sep">/</span><span class="bl-crumb-current">The Real Playbook for Buying US Stocks From India</span></nav>
   <article>
     <div class="bl-art-hero">
       <a class="bl-cat" href="../stocks-trading/index.html" style="text-decoration:none;">Stocks & Trading</a>
       <h1 class="reveal">The Real Playbook for Buying US Stocks From India</h1>
       <p class="bl-dek reveal">Owning Apple or Nvidia from a Mumbai apartment is legal and fairly simple — but it runs through a remittance ceiling, a tax collected at source, and a capital gains regime that treats your Nasdaq shares nothing like your Nifty shares.</p>
-      <div class="bl-byline-row reveal">
-        <div class="bl-byline">
-          <div class="bl-byline-av">SR</div>
-          <div>
-            <div class="bl-byline-name">Saket Raushan</div>
-            <div class="bl-byline-role">Saket Raushan writes about personal finance and investing at Raushco.</div>
-            <div class="bl-byline-date">September 23, 2026</div>
-          </div>
-        </div>
-        <div class="bl-share">
-          <a href="#" aria-label="Share on X"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2h3.3l-7.2 8.2L23.5 22h-6.6l-5.2-6.8L5.8 22H2.5l7.7-8.8L1.5 2h6.8l4.7 6.2L18.9 2z"/></svg></a>
-          <a href="#" aria-label="Share on LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.78 2.66 4.78 6.12V21h-4v-5.6c0-1.34-.02-3.06-1.86-3.06-1.87 0-2.16 1.46-2.16 2.96V21H9z"/></svg></a>
-          <a href="#" aria-label="Share on Facebook"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8.5H16l.4-3H13.5V8.3c0-.87.24-1.46 1.5-1.46H16.5V4.2A20 20 0 0 0 14.2 4c-2.3 0-3.86 1.4-3.86 3.97V10.5H8v3h2.34V22z"/></svg></a>
-        </div>
-      </div>
     </div>
     <div class="bl-art-hero-img reveal"><img src="../../assets/images/blog/guides.jpg" alt=""></div>
 
-    <div class="bl-art-body reveal">
-      <p>Open a trading app in India, search "Apple," and nothing happens. That blank search result is usually where the idea of owning US stocks quietly dies — not because it's illegal, not because it's especially hard, but because nobody explains the plumbing underneath it. You cannot buy Apple or Nvidia the way you buy Reliance or TCS, through the same demat account with the same settlement cycle. You need a different pipe for the money, a central-bank ceiling on how much can flow through that pipe in a year, and a working theory of how two tax authorities will each take a bite of the same gain. None of this is exotic. It is, however, three separate systems that most people discover only after they've already sent money somewhere.</p>
+    <div class="bl-art-main reveal">
+      <div class="bl-byline-col">
+        <div class="bl-byline-by">By: Saket Raushan</div>
+        <div class="bl-byline-role">Saket Raushan writes about personal finance and investing at Raushco.</div>
+        <div class="bl-byline-date">September 23, 2026</div>
+        <div class="bl-share"><button type="button" class="bl-copy-link" data-href="https://raushco.com/blog/how-to-invest-in-us-stocks-from-india/" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l2.5-2.5a5 5 0 0 0-7.07-7.07L11 4.9"/><path d="M14 11a5 5 0 0 0-7.07 0l-2.5 2.5a5 5 0 0 0 7.07 7.07L13 19.1"/></svg></button><a href="https://facebook.com/sharer/sharer.php?u=https://raushco.com/blog/how-to-invest-in-us-stocks-from-india/" aria-label="Share on Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8.5H16l.4-3H13.5V8.3c0-.87.24-1.46 1.5-1.46H16.5V4.2A20 20 0 0 0 14.2 4c-2.3 0-3.86 1.4-3.86 3.97V10.5H8v3h2.34V22z"/></svg></a><a href="https://linkedin.com/sharing/share-offsite/?url=https://raushco.com/blog/how-to-invest-in-us-stocks-from-india/" aria-label="Share on LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.78 2.66 4.78 6.12V21h-4v-5.6c0-1.34-.02-3.06-1.86-3.06-1.87 0-2.16 1.46-2.16 2.96V21H9z"/></svg></a><a href="https://twitter.com/intent/tweet?url=https://raushco.com/blog/how-to-invest-in-us-stocks-from-india/" aria-label="Share on X" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2h3.3l-7.2 8.2L23.5 22h-6.6l-5.2-6.8L5.8 22H2.5l7.7-8.8L1.5 2h6.8l4.7 6.2L18.9 2z"/></svg></a></div>
+      </div>
+      <div class="bl-art-body">
+        <p>Open a trading app in India, search "Apple," and nothing happens. That blank search result is usually where the idea of owning US stocks quietly dies — not because it's illegal, not because it's especially hard, but because nobody explains the plumbing underneath it. You cannot buy Apple or Nvidia the way you buy Reliance or TCS, through the same demat account with the same settlement cycle. You need a different pipe for the money, a central-bank ceiling on how much can flow through that pipe in a year, and a working theory of how two tax authorities will each take a bite of the same gain. None of this is exotic. It is, however, three separate systems that most people discover only after they've already sent money somewhere.</p>
 
 <h2>The two routes that actually exist</h2>
 <p>There are really only two ways in. The direct route is opening an account with an international broker — either a standalone US brokerage that accepts Indian residents, or an Indian broker with a tie-up that routes your order to a US-registered partner. Either way, you end up holding individual shares in your own name, and every rupee you send has to travel under the Reserve Bank of India's Liberalised Remittance Scheme, LRS for short.<sup class="fn"><a href="#fn1" class="fn-link">1</a></sup> The indirect route skips the remittance question entirely: you buy an Indian mutual fund or ETF that itself holds US equities — a Nasdaq-100 fund, for instance — in rupees, through your existing demat account, with no LRS paperwork at all. You give up single-stock control and pay a fund's expense ratio, but you also give up a surprising amount of tax and compliance headache, which is the trade-off worth sitting with before you pick a side.</p>
@@ -1185,16 +1024,25 @@
 
 <h2>Capital gains: these are not treated like Indian equity</h2>
 <p>This is where most investors get tripped up, because intuition from Indian markets actively misleads here. Listed Indian shares get the familiar long-term capital gains treatment — 12.5% tax, only above a ₹1.25 lakh annual exemption, once held over 12 months. US stocks get none of that, because for Indian tax purposes they're treated under the same provisions as unlisted shares, not as listed equity, regardless of the fact that they trade on the Nasdaq every day. Hold them for 24 months or less and the gain is short-term, taxed at your ordinary slab rate, stacked on top of your salary income. Hold them longer than 24 months and it becomes long-term — taxed at a flat 12.5%, but with no indexation benefit and no exemption threshold, under Section 112 rather than the friendlier Section 112A that Indian-listed shares enjoy.<sup class="fn"><a href="#fn5" class="fn-link">5</a></sup> It's a meaningfully worse regime for short holding periods, which is reason enough to think in years, not months, once you're actually holding US names.</p>
+        <div class="bl-about-author reveal">
+      <h3>About the author</h3>
+      <div class="bl-aa-name">Saket Raushan</div>
+      <div class="bl-aa-role">Saket Raushan writes about personal finance and investing at Raushco.</div>
     </div>
-
-    <ol class="bl-footnotes reveal">
+        <ol class="bl-footnotes reveal">
       <li id="fn1">RBI Master Direction – Liberalised Remittance Scheme (LRS), Reserve Bank of India, FED Master Direction No. 7/2015-16 (as amended).</li>
       <li id="fn2">Income Tax Act, 1961, Section 206C(1G) – Tax Collected at Source on remittance under LRS.</li>
       <li id="fn3">Agreement Between the Government of the United States of America and the Government of India for the Avoidance of Double Taxation (India-US DTAA), Article 10 – Dividends.</li>
       <li id="fn4">Income Tax Act, 1961, Section 90 read with Rule 128, Income Tax Rules, 1962 – Foreign Tax Credit.</li>
       <li id="fn5">Income Tax Act, 1961, Section 112 (capital gains on unlisted/foreign shares) as amended by the Finance (No. 2) Act, 2024, distinguished from Section 112A (listed equity shares).</li>
     </ol>
-    <div class="bl-tags reveal"><span class="bl-tag">US stocks</span><span class="bl-tag">LRS</span><span class="bl-tag">international investing</span><span class="bl-tag">capital gains tax</span><span class="bl-tag">NRI taxation</span></div>
+        <div class="bl-tags reveal"><span class="bl-tag">US stocks</span><span class="bl-tag">LRS</span><span class="bl-tag">international investing</span><span class="bl-tag">capital gains tax</span><span class="bl-tag">NRI taxation</span></div>
+        <div class="bl-share-end reveal">
+      <h3>Share article</h3>
+      <div class="bl-share"><button type="button" class="bl-copy-link" data-href="https://raushco.com/blog/how-to-invest-in-us-stocks-from-india/" aria-label="Copy link"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.07 0l2.5-2.5a5 5 0 0 0-7.07-7.07L11 4.9"/><path d="M14 11a5 5 0 0 0-7.07 0l-2.5 2.5a5 5 0 0 0 7.07 7.07L13 19.1"/></svg></button><a href="https://facebook.com/sharer/sharer.php?u=https://raushco.com/blog/how-to-invest-in-us-stocks-from-india/" aria-label="Share on Facebook" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8.5H16l.4-3H13.5V8.3c0-.87.24-1.46 1.5-1.46H16.5V4.2A20 20 0 0 0 14.2 4c-2.3 0-3.86 1.4-3.86 3.97V10.5H8v3h2.34V22z"/></svg></a><a href="https://linkedin.com/sharing/share-offsite/?url=https://raushco.com/blog/how-to-invest-in-us-stocks-from-india/" aria-label="Share on LinkedIn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.84-2.05 3.78-2.05 4.04 0 4.78 2.66 4.78 6.12V21h-4v-5.6c0-1.34-.02-3.06-1.86-3.06-1.87 0-2.16 1.46-2.16 2.96V21H9z"/></svg></a><a href="https://twitter.com/intent/tweet?url=https://raushco.com/blog/how-to-invest-in-us-stocks-from-india/" aria-label="Share on X" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2h3.3l-7.2 8.2L23.5 22h-6.6l-5.2-6.8L5.8 22H2.5l7.7-8.8L1.5 2h6.8l4.7 6.2L18.9 2z"/></svg></a></div>
+    </div>
+      </div>
+    </div>
 
     <div class="bl-related reveal">
     <div class="bl-related-head"><h2>Related reads</h2><a href="../stocks-trading/index.html" style="color:var(--pb-purple-600);text-decoration:none;font-size:13.5px;">View all in Stocks & Trading</a></div>
@@ -1524,6 +1372,32 @@
       });
     });
   })();
+</script>
+<script>
+(function () {
+  document.querySelectorAll('.bl-copy-link').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var href = btn.getAttribute('data-href') || window.location.href;
+      if (navigator.clipboard) { navigator.clipboard.writeText(href).catch(function () {}); }
+    });
+  });
+})();
+</script>
+<script>
+(function () {
+  var wrap = document.querySelector('.bl-subnav-topics-wrap');
+  var btn = document.getElementById('blTopicsBtn');
+  if (!wrap || !btn) return;
+  function close() { wrap.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+  btn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    var willOpen = !wrap.classList.contains('open');
+    wrap.classList.toggle('open', willOpen);
+    btn.setAttribute('aria-expanded', String(willOpen));
+  });
+  document.addEventListener('click', function (e) { if (!wrap.contains(e.target)) close(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') close(); });
+})();
 </script>
 </body>
 </html>
