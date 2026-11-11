@@ -1104,11 +1104,6 @@
     doc.text('Powered by RAUSHCO', pageW / 2, footerY, { align: 'center' });
     doc.setTextColor.apply(doc, [0, 0, 0]);
 
-    doc.setFontSize(7.5);
-    doc.setTextColor(140);
-    doc.text('Generated with the Invoice Template at raushco.com — for reference only; please confirm your own invoicing and tax requirements.', margin, pageH - 12);
-    doc.setTextColor(0);
-
     var safeClient = (state.toName || 'client').replace(/[^a-z0-9]+/gi, '-').toLowerCase();
     var safeNumber = (state.invoiceNumber || 'invoice').replace(/[^a-z0-9]+/gi, '-').toLowerCase();
     doc.save('invoice-' + safeNumber + '-' + safeClient + '.pdf');
