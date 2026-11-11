@@ -233,10 +233,11 @@
   @media (max-width: 860px) { .fc-preview-cta { display: inline-block; } }
   @media (max-width: 760px) { .fc-subnav-inner { padding: 0 20px; } .fc-breadcrumb span:not([aria-current]) ~ a, .fc-breadcrumb a:first-child { display: none; } }
 
-  .fc-tool-section { background: #fbfcfd; }
+  .fc-tool-section { background: #fbfcfd; padding: 0; }
   .fc-tool-card { width: 100%; margin: 0; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: stretch; background: #fff; border: none; border-top: 1px solid var(--pb-border); border-radius: 0; overflow: hidden; min-height: calc(100vh - 72px - 56px); }
   @media (max-width: 860px) { .fc-tool-card { grid-template-columns: minmax(0, 1fr); min-height: 0; } }
   .fc-tool-col { padding: 36px 40px; min-width: 0; scroll-margin-top: 128px; }
+  #igPreviewCol { position: relative; background-image: linear-gradient(rgba(255,255,255,.72), rgba(255,255,255,.72)), url('../assets/images/tools/chloe-Cy-iXLfNyK0-unsplash.jpg'); background-size: cover; background-position: center; }
   .fc-tool-col.l { border-right: 1px solid var(--pb-border); }
   .fc-tool-col .sw-panel h4 { font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem); font-weight: 600; letter-spacing: -.01em; }
   @media (max-width: 860px) { .fc-tool-col.l { border-right: none; border-bottom: 1px solid var(--pb-border); } }
@@ -265,30 +266,26 @@
      from-to -> itemized table -> highlighted total -> notes -> footer
      anatomy used by virtually every invoicing tool, not any one product's
      specific design. */
-  .ig-invoice { position: relative; max-width: 480px; aspect-ratio: 210 / 297; margin: 0 auto; background: #fff; border: 1px solid var(--pb-border); border-radius: 0; padding: 44px 40px 32px; box-shadow: 0 10px 34px rgba(32,31,28,.09), 0 1px 3px rgba(32,31,28,.06); font-size: 13px; }
+  .ig-invoice { position: relative; display: flex; flex-direction: column; max-width: 480px; aspect-ratio: 210 / 297; margin: 0 auto; background: #fff; border: 1px solid var(--pb-border); border-radius: 0; padding: 44px 40px 32px; box-shadow: 0 10px 34px rgba(32,31,28,.09), 0 1px 3px rgba(32,31,28,.06); font-size: 13px; }
   .ig-invoice::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: var(--pb-purple-600); }
   .ig-invoice-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
   .ig-invoice-top h4 { font-size: 29px; font-weight: 700; letter-spacing: -.02em; color: var(--pb-base-900); }
-  .ig-invoice-logo { width: 34px; height: 34px; border-radius: 9px; background: var(--pb-neutral-1000); display: flex; align-items: center; justify-content: center; flex: 0 0 34px; }
-  .ig-invoice-logo img { width: 18px; height: 18px; filter: brightness(0) invert(1); }
-  .ig-invoice-meta { font-size: 11.5px; color: var(--pb-base-500); line-height: 1.7; padding-bottom: 20px; border-bottom: 1px solid var(--pb-border); margin-bottom: 22px; }
-  .ig-invoice-meta b { color: var(--pb-base-900); font-weight: 600; }
-  .ig-invoice-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding-bottom: 22px; border-bottom: 1px solid var(--pb-border); margin-bottom: 22px; }
+  .ig-invoice-logo { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; flex: 0 0 34px; }
+  .ig-invoice-logo img { width: 34px; height: 34px; display: block; }
+  .ig-invoice-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--pb-border); margin-bottom: 20px; }
+  .ig-invoice-cols3 { grid-template-columns: 1.1fr 1.1fr 1fr; }
   .ig-invoice-cols .lab { font-size: 10.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--pb-base-500); margin-bottom: 7px; display: block; }
-  .ig-invoice-cols .val { font-size: 13px; color: var(--pb-base-900); line-height: 1.6; }
+  .ig-invoice-cols .val { font-size: 12.5px; color: var(--pb-base-900); line-height: 1.6; }
+  .ig-detail-row { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; margin-top: 2px; }
+  .ig-detail-row .dl { color: var(--pb-base-500); }
+  .ig-detail-row .dv { color: var(--pb-base-900); font-weight: 500; text-align: right; }
   .ig-table { width: 100%; border-collapse: collapse; margin-top: 2px; }
-  .ig-table th { text-align: left; font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--pb-base-500); font-weight: 600; padding: 9px 8px; background: var(--pb-base-100); }
-  .ig-table th:first-child { border-radius: 6px 0 0 6px; }
-  .ig-table th:last-child { border-radius: 0 6px 6px 0; }
+  .ig-table th { text-align: left; font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--pb-base-500); font-weight: 600; padding: 0 8px 8px 0; border-bottom: 1px solid var(--pb-border); }
   .ig-table th.num, .ig-table td.num { text-align: right; }
-  .ig-table td { padding: 11px 8px; font-size: 12.5px; color: var(--pb-base-900); border-bottom: 1px solid var(--pb-border); vertical-align: top; }
-  .ig-table tfoot td { border-bottom: none; padding-top: 14px; }
-  .ig-table tfoot tr td { background: rgba(82,102,235,.07); font-weight: 700; font-size: 15px; padding: 13px 8px; border-radius: 6px; }
-  .ig-table tfoot tr td:first-child { border-radius: 6px 0 0 6px; }
-  .ig-table tfoot tr td:last-child { border-radius: 0 6px 6px 0; color: var(--pb-purple-700); }
-  .ig-notes { margin-top: 18px; font-size: 12px; color: var(--pb-base-600); background: var(--pb-base-100); border-left: 3px solid var(--pb-purple-600); border-radius: 0 var(--pb-radius-m) var(--pb-radius-m) 0; padding: 11px 14px; line-height: 1.6; }
-  .ig-notes-label { font-size: 10.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--pb-base-500); display: block; margin-bottom: 4px; }
-  .ig-invoice-footer { margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--pb-border); text-align: center; font-size: 10.5px; letter-spacing: .03em; color: var(--pb-base-400, #b7b5c9); }
+  .ig-table td { padding: 10px 8px 10px 0; font-size: 12.5px; color: var(--pb-base-900); border-bottom: 1px solid var(--pb-border); vertical-align: top; }
+  .ig-total-row { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 0; font-size: 19px; font-weight: 700; color: var(--pb-base-900); margin-bottom: 24px; }
+  .ig-terms-memo { border-top: 1px solid var(--pb-border); border-bottom: none; padding-top: 18px; margin-bottom: 0; }
+  .ig-invoice-footer { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--pb-border); text-align: center; font-size: 10.5px; letter-spacing: .03em; color: var(--pb-base-400, #b7b5c9); }
 
   .ig-running-total { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; padding: 12px 14px; background: var(--pb-base-100); border-radius: var(--pb-radius-m); font-size: 14px; color: var(--pb-base-900); }
   .ig-running-total strong { font-size: 18px; font-variant-numeric: tabular-nums; }
@@ -498,37 +495,43 @@
               <h4>Invoice</h4>
               <div class="ig-invoice-logo"><img src="../assets/brand/Subtract.png" alt=""></div>
             </div>
-            <div class="ig-invoice-meta" id="igMetaRow"></div>
-            <div class="ig-invoice-cols">
+            <div class="ig-invoice-cols ig-invoice-cols3">
               <div>
                 <span class="lab">From</span>
                 <div class="val" id="igColFrom"></div>
               </div>
               <div>
-                <span class="lab">Bill to</span>
+                <span class="lab">To</span>
                 <div class="val" id="igColTo"></div>
+              </div>
+              <div>
+                <span class="lab">Details</span>
+                <div class="ig-detail-row"><span class="dl">Invoice no.</span><span class="dv" id="igDetailNumber"></span></div>
+                <div class="ig-detail-row"><span class="dl">PO no.</span><span class="dv" id="igDetailPO"></span></div>
               </div>
             </div>
             <table class="ig-table">
               <thead>
                 <tr>
-                  <th>Description</th>
-                  <th class="num">Qty</th>
+                  <th>Item</th>
+                  <th class="num">Quantity</th>
                   <th class="num">Unit price</th>
                   <th class="num">Total</th>
                 </tr>
               </thead>
               <tbody id="igTableBody"></tbody>
-              <tfoot>
-                <tr>
-                  <td colspan="3">Total</td>
-                  <td class="num" id="igGrandTotal">₹0</td>
-                </tr>
-              </tfoot>
             </table>
-            <div class="ig-notes" id="igNotesPreview" style="display:none;">
-              <span class="ig-notes-label">Notes</span>
-              <span id="igNotesText"></span>
+            <div class="ig-total-row"><span>Total</span><span class="num" id="igGrandTotal">₹0</span></div>
+            <div class="ig-invoice-cols ig-terms-memo">
+              <div>
+                <span class="lab">Terms</span>
+                <div class="ig-detail-row"><span class="dl">Invoice date</span><span class="dv" id="igTermDate"></span></div>
+                <div class="ig-detail-row"><span class="dl">Due date</span><span class="dv" id="igTermDue"></span></div>
+              </div>
+              <div>
+                <span class="lab">Memo</span>
+                <div class="val" id="igMemoPreview">—</div>
+              </div>
             </div>
             <div class="ig-invoice-footer">Powered by RAUSHCO</div>
           </div>
@@ -683,13 +686,15 @@
     poNumber: document.getElementById('igPoNumber'),
     errors: document.getElementById('igErrors'),
     countBadge: document.getElementById('igCountBadge'),
-    metaRow: document.getElementById('igMetaRow'),
     colFrom: document.getElementById('igColFrom'),
     colTo: document.getElementById('igColTo'),
+    detailNumber: document.getElementById('igDetailNumber'),
+    detailPO: document.getElementById('igDetailPO'),
+    termDate: document.getElementById('igTermDate'),
+    termDue: document.getElementById('igTermDue'),
+    memoPreview: document.getElementById('igMemoPreview'),
     tableBody: document.getElementById('igTableBody'),
     grandTotal: document.getElementById('igGrandTotal'),
-    notesPreview: document.getElementById('igNotesPreview'),
-    notesText: document.getElementById('igNotesText'),
     indicator: document.getElementById('igIndicator'),
     backBtn: document.getElementById('igBackBtn'),
     nextBtn: document.getElementById('igNextBtn'),
@@ -840,11 +845,10 @@
     if (state.toEmail) toBits.push('<span style="font-size:11.5px;color:var(--pb-base-600);">' + SW.escapeHtml(state.toEmail) + '</span>');
     els.colTo.innerHTML = toBits.join('<br>');
 
-    var metaHtml = 'Invoice No. <b>' + SW.skelOr(state.invoiceNumber, 60) + '</b>' +
-      ' &nbsp;&middot;&nbsp; Date <b>' + SW.skelOr(state.invoiceDate ? fmtDateDisplay(state.invoiceDate) : '', 70) + '</b>' +
-      ' &nbsp;&middot;&nbsp; Due <b>' + SW.skelOr(state.dueDate ? fmtDateDisplay(state.dueDate) : '', 70) + '</b>';
-    if (state.poNumber) metaHtml += ' &nbsp;&middot;&nbsp; PO <b>' + SW.escapeHtml(state.poNumber) + '</b>';
-    els.metaRow.innerHTML = metaHtml;
+    els.detailNumber.innerHTML = SW.skelOr(state.invoiceNumber, 50);
+    els.detailPO.innerHTML = state.poNumber ? SW.escapeHtml(state.poNumber) : '<span class="sw-skel" style="width:50px;">&nbsp;</span>';
+    els.termDate.innerHTML = SW.skelOr(state.invoiceDate ? fmtDateDisplay(state.invoiceDate) : '', 60);
+    els.termDue.innerHTML = SW.skelOr(state.dueDate ? fmtDateDisplay(state.dueDate) : '', 60);
 
     // Line-item table.
     var bodyHtml = '';
@@ -860,12 +864,7 @@
     els.tableBody.innerHTML = bodyHtml;
     els.grandTotal.textContent = fmtINR(total);
 
-    if (state.notes) {
-      els.notesPreview.style.display = 'block';
-      els.notesText.textContent = state.notes;
-    } else {
-      els.notesPreview.style.display = 'none';
-    }
+    els.memoPreview.innerHTML = state.notes ? SW.escapeHtml(state.notes) : '<span class="sw-skel" style="width:100%;">&nbsp;</span>';
 
     // Step 4 review summary.
     els.reviewClient.textContent = state.toName || '—';
