@@ -148,8 +148,8 @@
   
   .nav:has(.nav-item.open) { background: #fff !important; border-color: transparent; }
   .nav[data-theme="dark"]:has(.nav-item.open) { background: #272735 !important; border-color: transparent; }
-  .nav.menu-open { background: #fff !important; border-color: transparent; }
-  .nav[data-theme="dark"].menu-open { background: #272735 !important; border-color: transparent; }
+  .nav.menu-open { background: rgba(255,255,255,.96) !important; border-color: transparent; }
+  .nav[data-theme="dark"].menu-open { background: rgba(20,20,27,.96) !important; border-color: transparent; }
   
   .mega-grid { display: grid; column-gap: 0; padding: 0; }
   .mega-grid-3 { grid-template-columns: repeat(3, 1fr); }
@@ -380,9 +380,9 @@
   .play-toggle:hover { background: rgba(175,178,206,.28); }
   .play-toggle:active { background: rgba(175,178,206,.33); }
   .play-toggle svg { height: 16px; width: auto; display: block; }
-  .play-toggle svg.pt-play { position: relative; right: -4px; } 
+  .play-toggle svg.pt-play { position: relative; }
   
-  .panel-stack { position: relative; height: 400px; }
+  .panel-stack { position: relative; height: 600px; }
   .panel { position: absolute; inset: 0; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.1); border-right: none; border-radius: 8px 0 0 8px; overflow: hidden; pointer-events: none; opacity: 0; filter: blur(10px); transition: opacity .4s var(--ease-out-soft), filter .4s var(--ease-out-soft); }
   .panel.active { opacity: 1; filter: blur(0); pointer-events: auto; }
   
@@ -660,16 +660,30 @@
     .stats-row { grid-template-columns: 1fr 1fr; }
     .testi-carousel { height: 380px; }
     .testi-slide { padding: 28px; }
-    .hero-form { flex-direction: column; align-items: stretch; }
+    .hero-form { flex-direction: row; flex-wrap: wrap; align-items: stretch; }
     .hero-form input, .email-field { width: 100%; }
     .hero-form .btn-lg { flex: 1; justify-content: center; }
     .hero-form > a.btn-purple, .hero-form > a.btn-line { display: inline-flex; }
-    .email-combo { flex-wrap: wrap; height: auto; padding: 8px; }
-    .email-combo .btn-purple { width: 100%; order: 3; justify-content: center; margin-top: 4px; }
-    .phone-chip { padding: 8px 12px 8px 10px; }
-    .email-combo input { max-width: none; }
+    /* Row 1: phone-chip + number input, as two separate pills (the .email-combo
+       wrapper that joins them into one seamless pill on desktop is dissolved
+       here via display:contents so each can size/wrap independently). Row 2:
+       Open account + Launch demo together, forced onto their own line by the
+       flex-basis:100% trick on the first row-2 item. */
+    .email-combo { display: contents; }
+    .phone-chip { flex: 0 0 auto; height: 48px; padding: 0 16px 0 14px; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; background: rgba(255,255,255,.1); backdrop-filter: blur(10px); }
+    .phone-chip::after { display: none; }
+    .email-field { flex: 1 1 auto; width: auto; min-width: 0; height: 48px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; background: rgba(255,255,255,.1); backdrop-filter: blur(10px); }
+    .email-combo input { max-width: none; width: 100%; height: 100%; padding-left: 16px; }
+    .email-combo .btn-purple { flex: 1 1 auto; order: 2; height: 48px; justify-content: center; }
+    .hero-demo-btn { flex: 1 1 auto; order: 3; height: 48px; justify-content: center; }
     .email-tip { left: 50%; transform: translate(-50%,-4px); width: 280px; }
     .email-field:focus-within .email-tip { transform: translate(-50%,0); }
+    h1.hero-h { font-size: 23px; max-width: 94vw; }
+    .hero-sub { font-size: 13px; line-height: 1.5; max-width: none; margin: 0 auto 26px; }
+    .value-split { padding: 0 24px; }
+    .value-copy h2 { text-align: left; }
+    .value-copy .link-underline { text-align: left; }
+    .value-visual { display: none; }
   }
 
   
