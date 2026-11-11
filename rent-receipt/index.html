@@ -263,7 +263,7 @@
   .rr-quick-btn:hover { background: var(--pb-base-150); border-color: var(--pb-base-400); }
   .rr-mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
   @media (max-width: 480px) { .rr-mode-grid { grid-template-columns: 1fr; } }
-  .rr-mode-card { position: relative; display: flex; gap: 10px; align-items: flex-start; border: 1px solid var(--pb-border); background: var(--pb-base-100); border-radius: var(--pb-radius-m); padding: 11px 13px; cursor: pointer; transition: border-color .15s, background .15s; }
+  .rr-mode-grid .rr-mode-card { position: relative; display: flex; justify-content: flex-start; gap: 10px; align-items: flex-start; border: 1px solid var(--pb-border); background: var(--pb-base-100); border-radius: var(--pb-radius-m); padding: 11px 13px; cursor: pointer; transition: border-color .15s, background .15s; text-align: left; }
   .rr-mode-card:hover { border-color: var(--pb-base-400); }
   .rr-mode-card.sel { border-color: var(--pb-purple-600); background: rgba(82,102,235,.06); }
   .rr-mode-card input { position: absolute; opacity: 0; width: 0; height: 0; }
