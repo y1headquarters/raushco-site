@@ -248,6 +248,13 @@
   .fc-field textarea { min-height: 64px; resize: vertical; line-height: 1.4; }
   .fc-field input:focus, .fc-field select:focus, .fc-field textarea:focus { outline: none; border-color: var(--pb-border-focus); }
   .fc-field-note { font-size: 11.5px; color: var(--pb-base-500); margin-top: 6px; line-height: 1.4; }
+  .ig-logo-upload { display: flex; align-items: center; gap: 12px; }
+  .ig-logo-preview { width: 44px; height: 44px; flex: 0 0 44px; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-m); display: flex; align-items: center; justify-content: center; overflow: hidden; background: var(--pb-base-100); }
+  .ig-logo-preview img { width: 100%; height: 100%; object-fit: contain; }
+  .ig-logo-placeholder { font-size: 18px; font-weight: 700; color: var(--pb-base-400, #b7b5c9); }
+  .ig-logo-btn { padding: 9px 16px; font-size: 13px; cursor: pointer; }
+  .ig-logo-remove { background: none; border: none; color: var(--pb-base-500); font-size: 13px; text-decoration: underline; cursor: pointer; padding: 0; }
+  .ig-logo-remove:hover { color: #b3261e; }
   .fc-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
   .fc-tool-col > .fc-field + .fc-field, .fc-tool-col > .fc-field + .fc-row2, .fc-tool-col > .fc-row2 + .fc-field, .fc-tool-col > .fc-row2 + .fc-row2 { margin-top: 28px; }
   .fc-tool-col .btn { width: 100%; margin-top: 24px; }
@@ -391,6 +398,17 @@
             <h4 style="margin-bottom:6px;">From &amp; To</h4>
             <p class="sw-step-sub">Your business details, and who you're billing.</p>
 
+            <div class="fc-field">
+              <label>Your logo <span class="fc-unit">optional</span></label>
+              <div class="ig-logo-upload">
+                <div class="ig-logo-preview" id="igLogoPreview"><span class="ig-logo-placeholder">R</span></div>
+                <label class="btn btn-ghost ig-logo-btn" for="igLogoInput">Upload logo</label>
+                <input type="file" id="igLogoInput" accept="image/png,image/jpeg" style="display:none;">
+                <button type="button" class="ig-logo-remove" id="igLogoRemove" style="display:none;">Remove</button>
+              </div>
+              <p class="fc-field-note">PNG or JPG, shown at the top of your invoice. Stays in your browser — never uploaded anywhere.</p>
+            </div>
+
             <div class="fc-field ig-field" data-field="fromName">
               <label for="igFromName">Your business name</label>
               <input class="input" type="text" id="igFromName" placeholder="e.g. Rareform Design Studio" autocomplete="off">
@@ -498,7 +516,7 @@
           <div class="ig-invoice" id="igInvoice">
             <div class="ig-invoice-top">
               <h4>Invoice</h4>
-              <div class="ig-invoice-logo"><img src="../assets/brand/Subtract.png" alt=""></div>
+              <div class="ig-invoice-logo" id="igInvoiceLogo"><img src="../assets/brand/Subtract.png" alt=""></div>
             </div>
             <div class="ig-invoice-cols ig-invoice-cols3">
               <div>
@@ -675,6 +693,10 @@
   'use strict';
 
   var els = {
+    logoInput: document.getElementById('igLogoInput'),
+    logoPreview: document.getElementById('igLogoPreview'),
+    logoRemove: document.getElementById('igLogoRemove'),
+    invoiceLogoBox: document.getElementById('igInvoiceLogo'),
     fromName: document.getElementById('igFromName'),
     fromEmail: document.getElementById('igFromEmail'),
     fromAddress: document.getElementById('igFromAddress'),
@@ -710,6 +732,28 @@
   };
 
   var wizard; // assigned once validate()/render()/generatePdf() below are defined
+  var logoDataUrl = null; // user-uploaded logo (data URL) — kept in memory only, never sent anywhere
+
+  els.logoInput.addEventListener('change', function () {
+    var file = els.logoInput.files && els.logoInput.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      logoDataUrl = reader.result;
+      els.logoPreview.innerHTML = '<img src="' + logoDataUrl + '" alt="">';
+      els.logoRemove.style.display = 'inline';
+      els.invoiceLogoBox.innerHTML = '<img src="' + logoDataUrl + '" alt="">';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  els.logoRemove.addEventListener('click', function () {
+    logoDataUrl = null;
+    els.logoInput.value = '';
+    els.logoPreview.innerHTML = '<span class="ig-logo-placeholder">R</span>';
+    els.logoRemove.style.display = 'none';
+    els.invoiceLogoBox.innerHTML = '<img src="../assets/brand/Subtract.png" alt="">';
+  });
 
   function fmtINR(n) {
     if (!isFinite(n)) return '₹0';
@@ -980,6 +1024,15 @@
     doc.setFontSize(20);
     doc.setTextColor.apply(doc, PDF_INK);
     doc.text('Invoice', margin, y);
+
+    if (logoDataUrl) {
+      var logoFormat = /^data:image\/png/.test(logoDataUrl) ? 'PNG' : 'JPEG';
+      var logoSize = 16;
+      try {
+        doc.addImage(logoDataUrl, logoFormat, pageW - margin - logoSize, y - logoSize + 5, logoSize, logoSize);
+      } catch (e) { /* unsupported image data — skip rather than break PDF generation */ }
+    }
+
     y += 14;
 
     // Three-column header: FROM / TO / DETAILS — same anatomy as the
