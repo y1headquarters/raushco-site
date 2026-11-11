@@ -105,7 +105,7 @@
   .nav[data-theme="dark"] { border-color: transparent; }
   .nav[data-theme="dark"].scrolled { border-color: rgba(255,255,255,.12); }
   .nav[data-theme="dark"].scrolled::before { background: #171721; backdrop-filter: saturate(180%) blur(16px); }
-  .nav[data-theme="dark"] .brand, .nav[data-theme="dark"] .nav-links a, .nav[data-theme="dark"] .btn-ghost, .nav[data-theme="dark"] .btn-line { color: #fff; }
+  .nav[data-theme="dark"] .brand, .nav[data-theme="dark"] .nav-links a, .nav[data-theme="dark"] .btn-ghost, .nav[data-theme="dark"] .btn-line, .nav[data-theme="dark"] .nav-menu a { color: #fff; }
   .nav:not([data-theme="dark"]) .brand .mk { filter: none; }
   
   footer[data-theme="dark"] .brand { color: #fff; }
@@ -309,7 +309,7 @@
   .hero-demo-btn { height: 38px; padding: 0 22px; }
   .hero-note-wrap { position: absolute; left: 0; right: 0; bottom: 32px; z-index: 1; padding: 0 24px; display: flex; justify-content: center; }
   .hero-note { display: inline-block; font-size: 12.5px; color: rgba(255,255,255,.8); white-space: nowrap; line-height: 1.5; background: rgba(20,20,27,.55); backdrop-filter: blur(10px); padding: 10px 20px; border-radius: 14px; }
-  @media (max-width: 760px) { .hero-note { white-space: normal; max-width: 90vw; text-align: center; } }
+  @media (max-width: 1023px) { .hero-note { white-space: normal; max-width: 90vw; text-align: center; } }
 
   
   .email-field { position: relative; }
@@ -418,7 +418,7 @@
     background: rgba(255,255,255,0.7); border-radius: 1px; pointer-events: none;
   }
   .gallery-rail {
-    width: 100%; margin: 0; position: relative; z-index: 2;
+    width: 100%; min-width: 0; margin: 0; position: relative; z-index: 2;
     overflow-x: auto; overflow-y: hidden;
     cursor: grab;
     -ms-overflow-style: none; scrollbar-width: none;
@@ -522,7 +522,7 @@
 
   
   .press-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
-  .press-c { background: var(--ink); border-radius: var(--r-md); padding: 26px; display: flex; flex-direction: column; }
+  .press-c { background: var(--ink); border-radius: var(--r-md); padding: 26px; display: flex; flex-direction: column; min-width: 0; }
   .press-c .outlet { font-size: 13px; font-weight: 700; letter-spacing: .02em; color: rgba(255,255,255,.4); margin-bottom: 14px; text-transform: uppercase; }
   .press-c p { font-size: 16px; font-weight: 500; letter-spacing: -.01em; line-height: 1.4; color: #EDEDF3; margin-bottom: 20px; }
   .press-c .btn-tonal { margin-top: auto; align-self: flex-start; }
