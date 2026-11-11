@@ -23,6 +23,12 @@
 @media (min-width: 640px) { .sw-label { display: inline; } }
 .sw-track { flex: 1; height: 1.5px; background: var(--pb-border); margin: 0 10px; min-width: 16px; }
 .sw-step.done + .sw-connector .sw-track, .sw-step.done ~ .sw-track { background: var(--pb-purple-300); }
+@media (max-width: 480px) {
+  .fc-breadcrumb { display: none; }
+  .fc-subnav-right { gap: 10px; }
+  .fc-subnav .sw-dot { width: 22px; height: 22px; flex-basis: 22px; font-size: 11px; }
+  .fc-subnav .sw-track { margin: 0 4px; min-width: 8px; }
+}
 
 .sw-panel { display: none; }
 .sw-panel.active { display: block; animation: sw-fade .25s var(--pb-ease-appear); }

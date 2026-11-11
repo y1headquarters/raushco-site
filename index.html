@@ -74,6 +74,15 @@
   .announce-close { position: absolute; right: 32px; top: 50%; transform: translateY(-50%); display: inline-flex; align-items: center; justify-content: center; background: none; border: 0; color: rgba(255,255,255,.5); cursor: pointer; line-height: 1; padding: 4px; }
   .announce-close:hover { color: #fff; }
   @media (prefers-reduced-motion: reduce) { .announce-chase span, .announce-link-dot { animation: none; } .announce-chase span { opacity: 0.6; } }
+  @media (max-width: 620px) {
+    .announce-row { justify-content: flex-start; padding-right: 44px; gap: 10px; }
+    .announce-chase { display: none; }
+    .announce-text { flex: 1 1 auto; min-width: 0; gap: 6px; }
+    .announce-text-dim { display: none; }
+    .announce-text-bright { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 12.5px; }
+    .announce-link { flex-shrink: 0; font-size: 12.5px; gap: 5px; }
+    .announce-close { right: 12px; }
+  }
 
   
   .rate-ticker { position: relative; display: flex; align-items: stretch; height: 44px; background: #15151B; border-top: 1px solid rgba(255,255,255,.07); border-bottom: 1px solid rgba(255,255,255,.07); overflow: hidden; }
@@ -139,6 +148,8 @@
   
   .nav:has(.nav-item.open) { background: #fff !important; border-color: transparent; }
   .nav[data-theme="dark"]:has(.nav-item.open) { background: #272735 !important; border-color: transparent; }
+  .nav.menu-open { background: #fff !important; border-color: transparent; }
+  .nav[data-theme="dark"].menu-open { background: #272735 !important; border-color: transparent; }
   
   .mega-grid { display: grid; column-gap: 0; padding: 0; }
   .mega-grid-3 { grid-template-columns: repeat(3, 1fr); }
@@ -224,6 +235,8 @@
   
   [data-theme="dark"] .btn-line { color: #fff; border-color: rgba(255,255,255,.3); background: rgba(255,255,255,.08); backdrop-filter: blur(10px); }
   [data-theme="dark"] .btn-line:hover { border-color: #fff; background: rgba(255,255,255,.14); }
+  [data-theme="light"] .btn-line { color: var(--ink); border-color: var(--line); background: transparent; backdrop-filter: none; }
+  [data-theme="light"] .btn-line:hover { border-color: var(--ink); background: rgba(0,0,0,.04); }
   .arrow { transition: transform .18s var(--ease-snap); }
   .btn:hover .arrow { transform: translateX(2px); }
 
@@ -232,8 +245,11 @@
   .hero { position: relative; margin-top: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; text-align: center; overflow: hidden; padding-top: calc(9vh + 160px); }
   .hero-bg { position: absolute; inset: 0; z-index: 0; background: #14161c url('assets/images/hero-raushco-tower.jpg') center 30% / cover no-repeat; }
   .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,.62) 0%, rgba(0,0,0,.15) 45%, rgba(0,0,0,.5) 100%); }
+  @media (max-width: 760px) {
+    .hero-bg::after { background: linear-gradient(0deg, rgba(0,0,0,.78) 0%, rgba(0,0,0,.72) 45%, rgba(0,0,0,.74) 100%); }
+  }
 
-  
+
   .hero-annotations { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
   .hn-dot {
     position: absolute; width: 10px; height: 10px; background: #FFFFFF;
@@ -284,6 +300,9 @@
   .hn-card.is-visible span { transition-delay: 0.37s; }
   .hn-card p { font-size: 11.5px; color: #5A5650; line-height: 1.5; margin: 0 0 10px; }
   .hn-card span { font-family: ui-monospace, 'SFMono-Regular', monospace; font-size: 10px; color: #9C968A; }
+  @media (max-width: 760px) {
+    .hero-annotations { display: none; }
+  }
   @media (prefers-reduced-motion: reduce) {
     .hn-dot { animation: none; opacity: 1; }
     .hn-line-svg, .hn-card, .hn-label { display: none; }
@@ -645,6 +664,10 @@
     .hero-form input, .email-field { width: 100%; }
     .hero-form .btn-lg { flex: 1; justify-content: center; }
     .hero-form > a.btn-purple, .hero-form > a.btn-line { display: inline-flex; }
+    .email-combo { flex-wrap: wrap; height: auto; padding: 8px; }
+    .email-combo .btn-purple { width: 100%; order: 3; justify-content: center; margin-top: 4px; }
+    .phone-chip { padding: 8px 12px 8px 10px; }
+    .email-combo input { max-width: none; }
     .email-tip { left: 50%; transform: translate(-50%,-4px); width: 280px; }
     .email-field:focus-within .email-tip { transform: translate(-50%,0); }
   }
