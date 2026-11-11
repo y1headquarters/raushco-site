@@ -276,8 +276,8 @@
   .ig-invoice { position: relative; display: flex; flex-direction: column; max-width: 480px; aspect-ratio: 210 / 297; margin: 0 auto; background: #fff; border: 1px solid var(--pb-border); border-radius: 0; padding: 40px 36px 28px; box-shadow: 0 10px 34px rgba(32,31,28,.09), 0 1px 3px rgba(32,31,28,.06); font-size: 12px; }
   .ig-invoice-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
   .ig-invoice-top h4 { font-size: 21px; font-weight: 500; letter-spacing: -.01em; color: var(--pb-base-900); }
-  .ig-invoice-logo { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; flex: 0 0 30px; }
-  .ig-invoice-logo img { width: 30px; height: 30px; display: block; }
+  .ig-invoice-logo { height: 30px; width: auto; max-width: 110px; display: flex; align-items: center; justify-content: flex-end; flex: 0 0 auto; }
+  .ig-invoice-logo img { height: 100%; width: auto; max-width: 110px; object-fit: contain; display: block; }
   .ig-invoice-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--pb-border); margin-bottom: 18px; }
   .ig-invoice-cols3 { grid-template-columns: 1fr 1fr 1.3fr; }
   .ig-invoice-cols .lab { font-size: 9.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--pb-base-500); margin-bottom: 6px; display: block; }
@@ -733,6 +733,7 @@
 
   var wizard; // assigned once validate()/render()/generatePdf() below are defined
   var logoDataUrl = null; // user-uploaded logo (data URL) — kept in memory only, never sent anywhere
+  var logoAspect = 1; // naturalWidth / naturalHeight, so the PDF can keep a rectangular logo's proportions
 
   els.logoInput.addEventListener('change', function () {
     var file = els.logoInput.files && els.logoInput.files[0];
@@ -740,6 +741,11 @@
     var reader = new FileReader();
     reader.onload = function () {
       logoDataUrl = reader.result;
+      var probe = new Image();
+      probe.onload = function () {
+        logoAspect = probe.naturalWidth / probe.naturalHeight || 1;
+      };
+      probe.src = logoDataUrl;
       els.logoPreview.innerHTML = '<img src="' + logoDataUrl + '" alt="">';
       els.logoRemove.style.display = 'inline';
       els.invoiceLogoBox.innerHTML = '<img src="' + logoDataUrl + '" alt="">';
@@ -749,6 +755,7 @@
 
   els.logoRemove.addEventListener('click', function () {
     logoDataUrl = null;
+    logoAspect = 1;
     els.logoInput.value = '';
     els.logoPreview.innerHTML = '<span class="ig-logo-placeholder">R</span>';
     els.logoRemove.style.display = 'none';
@@ -1027,9 +1034,13 @@
 
     if (logoDataUrl) {
       var logoFormat = /^data:image\/png/.test(logoDataUrl) ? 'PNG' : 'JPEG';
-      var logoSize = 16;
+      // Height stays fixed; width follows the logo's real aspect ratio
+      // (capped so a very wide logo doesn't run into the title) and the
+      // box grows leftward off the right margin, same as on screen.
+      var logoH = 14;
+      var logoW = Math.min(logoH * logoAspect, 46);
       try {
-        doc.addImage(logoDataUrl, logoFormat, pageW - margin - logoSize, y - logoSize + 5, logoSize, logoSize);
+        doc.addImage(logoDataUrl, logoFormat, pageW - margin - logoW, y - logoH + 4, logoW, logoH);
       } catch (e) { /* unsupported image data — skip rather than break PDF generation */ }
     }
 
