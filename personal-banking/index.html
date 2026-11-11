@@ -18,38 +18,28 @@
     font-weight: 400 600; font-style: normal; font-display: swap;
   }
 
-  /* ---------- Tokens -----------------------------------------------
-     Real values, re-extracted this round directly from mercury.com's
-     own compiled marketing CSS (not the dashboard app's), plus visual
-     confirmation against live screenshots of mercury.com/personal-
-     banking. Two real ramps: "beige" (warm — every regular content
-     section) and "neutral" (cool — hero + dashboard-app only), plus
-     "purple" which on THIS page belongs only to the footer/disclaimers
-     block, not "What's included" (corrected this round — it's beige). */
+  
   :root {
     --pb-purple-200: #c1c9fa;
     --pb-purple-300: #a7b6f8;
     --pb-purple-400: #9cb4e8;
-    --pb-purple-600: #5266eb;   /* primary accent, every theme */
-    --pb-purple-700: #4354c8;   /* hover */
+    --pb-purple-600: #5266eb;   
+    --pb-purple-700: #4354c8;   
     --pb-purple-800: #3442a6;
 
-    --pb-neutral-1000: #10101a; /* hero canvas */
+    --pb-neutral-1000: #10101a; 
     --pb-neutral-950: #171721;
 
     --pb-beige-50:  #fcfcfa;
     --pb-beige-100: #f6f5f2;
-    --pb-beige-150: #efeee9;    /* default section bg on this page */
+    --pb-beige-150: #efeee9;    
     --pb-beige-200: #e0ded7;
     --pb-beige-300: #c8c4b8;
     --pb-beige-500: #767165;
     --pb-beige-700: #3a3831;
     --pb-beige-900: #201f1c;
 
-    /* Shadowed onto the page below — every component references
-       --pb-base-*, so retargeting these is what moves the page from
-       cool-neutral to warm-beige site-wide. Hero + footer override
-       back to explicit colours locally. */
+    
     --pb-base-100: var(--pb-beige-100);
     --pb-base-150: var(--pb-beige-150);
     --pb-base-200: var(--pb-beige-200);
@@ -61,7 +51,7 @@
 
     --pb-green-600: #188554;
 
-    /* Dark-purple — footer + disclaimers ONLY on this page */
+    
     --pb-dp-bg: #181623;
     --pb-dp-bg-2: #1e1b2c;
     --pb-dp-border: rgba(255,255,255,.1);
@@ -84,21 +74,14 @@
     --pb-ease-transform: cubic-bezier(.2,.4,.2,1);
     --pb-ease-snap: cubic-bezier(.16,0,.13,1);
     --pb-ease-pop: cubic-bezier(.2,1,.4,1);
-    /* mercury.com's own dedicated theme-crossfade curve (--theme-transition-ease in their real
-       compiled CSS, confirmed .5s/cubic-bezier(0,0,.6,1)) — kept as its own token rather than
-       reused off --pb-ease-snap, matching how mercury itself keeps it separate from
-       general-purpose UI easing (same split as index.html's --ease-theme). */
+    
     --pb-ease-theme: cubic-bezier(0,0,.6,1);
 
     --pb-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     --pb-serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
     --pb-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
 
-    /* Real clamp pulled off mercury.com's own compiled CSS
-       (arcadia-display-3 — the exact tier the real H1 on this page
-       uses) widened slightly: live screenshots show the real hero
-       headline dominating the viewport more than this clamp alone
-       produces at common widths, so the max step is raised to match. */
+    
     --pb-size-hero: clamp(2.5rem, .4rem + 6.2vw, 7rem);
     --pb-size-module: clamp(1.875rem, 1.1rem + 3vw, 4.5rem);
     --pb-size-sub: clamp(1.25rem, 1.05rem + .5vw, 1.5rem);
@@ -140,7 +123,7 @@
   sup.fn a.fn-link { counter-increment: fn; color: inherit; opacity: .6; text-decoration: underline; text-underline-offset: 2px; }
   sup.fn a.fn-link::before { content: counter(fn); }
 
-  /* ---------- Buttons ---------- */
+  
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     font-family: var(--pb-font); font-weight: 500; font-size: 15px;
@@ -163,9 +146,7 @@
   .input:focus { border-color: var(--pb-border-focus); }
   .input::placeholder { color: var(--pb-base-500); }
 
-  /* Reusable frosted-pill form — hero reuses it on dark, closing CTA
-     reuses it on light. Button sits INSET inside the pill, not a
-     separate element beside it (confirmed from the real page). */
+  
   .frosted-form { display: flex; align-items: center; gap: 6px; max-width: 460px; margin: 0 auto;
     padding: 6px; border-radius: var(--pb-radius-full); }
   .frosted-form .input { flex: 1; background: transparent; border: none; padding-left: 16px; }
@@ -178,8 +159,7 @@
     .frosted-form.on-light .input { background: #fff; border-color: var(--pb-border-input); color: var(--pb-base-700); }
     .frosted-form .btn { width: 100%; } }
 
-  /* Email focus tooltip — appears while the field has focus, offering a
-     one-click marketing opt-out (matches the earlier Mercury-clone WIP). */
+  
   .email-field { position: relative; flex: 1; }
   .email-field .input { width: 100%; }
   .email-tip { position: absolute; top: calc(100% + 10px); left: 0; width: 300px; max-width: 80vw;
@@ -205,11 +185,7 @@
   .frosted-form.on-light .opt-out { color: var(--pb-base-900); }
   .frosted-form.on-light .opt-out .cbx-box { border-color: var(--pb-border-input); }
 
-  /* ---------- Nav — literal clone of the mercury-wip-reference nav
-     (deploy/website/mercury-clone-wip.html on dashboard-b2b, live at
-     test.raushco.com/mercury-wip-reference/): same classes, same
-     values, same two-axis scroll/theme system. Own logo + link targets
-     only. ---------- */
+  
   .nav { position: sticky; top: 0; z-index: 60; background: transparent; backdrop-filter: none; border-bottom: 1px solid transparent; transition: border-color .3s var(--pb-ease-snap), background .4s var(--pb-ease-snap), color .4s var(--pb-ease-snap), backdrop-filter .4s var(--pb-ease-snap); }
   .nav.scrolled { border-color: var(--pb-border); background: rgba(255,255,255,.85); backdrop-filter: saturate(180%) blur(16px); -webkit-backdrop-filter: saturate(180%) blur(16px); }
   .nav[data-theme="dark"] { background: transparent; border-color: transparent; }
@@ -233,14 +209,14 @@
   .nav[data-theme="dark"] .caret { color: rgba(255,255,255,.7); }
   .caret svg { transition: transform .2s var(--pb-ease-snap); display: block; }
 
-  /* Mega-menu — click to open, not hover; closes on outside click. */
+  
   .nav-item { position: relative; }
   .nav-item.open .nav-drop-trigger { background: #424962; }
   .nav-item.open .caret svg { transform: rotate(180deg); }
   .mega-menu { position: fixed; left: 0; right: 0; top: 72px; background: #fff; border: 1px solid var(--pb-border); border-radius: 0 0 16px 16px; overflow: hidden; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity .2s var(--pb-ease-snap), transform .2s var(--pb-ease-snap), visibility 0s .2s; z-index: 55; text-align: left; }
   .nav[data-theme="dark"] .mega-menu { background: #1e1e2a; border-color: rgba(255,255,255,.1); }
   .nav-item.open .mega-menu { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
-  /* Nav itself matches the open dropdown's color, regardless of scroll/theme state (mirrors index.html) */
+  
   .nav:has(.nav-item.open) { background: #fff !important; border-color: transparent; }
   .nav[data-theme="dark"]:has(.nav-item.open) { background: #23232F !important; border-color: transparent; }
   .mega-grid { display: grid; grid-template-columns: 1.25fr repeat(4, 1fr); column-gap: 40px; max-width: 1240px; margin: 0 auto; padding: 40px 36px; }
@@ -312,7 +288,7 @@
   .nav[data-theme="dark"] .nav-menu a { border-bottom-color: rgba(255,255,255,.1); }
   .nav-menu .btn { margin-top: 10px; justify-content: center; }
 
-  /* ---------- Section rhythm ---------- */
+  
   section { padding: clamp(64px, 5vw + 40px, 128px) 0; }
   .section-intro { max-width: 680px; margin: 0 0 56px; }
   .section-intro.centered { margin-inline: auto; text-align: center; }
@@ -320,58 +296,18 @@
   .section-intro h2 { margin-bottom: 16px; }
   .section-intro .lede { margin: 0 auto; }
 
-  /* ---------- Hero — matches the earlier Mercury-clone WIP's hero exactly
-     (deploy/website/mercury-clone-wip.html on dashboard-b2b, now live at
-     test.raushco.com/mercury-wip-reference/): full-bleed photo band, nav
-     pulled over it via negative margin, merged email pill + separate
-     "Launch demo" ghost button, disclosure pinned to the hero's bottom
-     edge. Same hero-mercury.png (verified non-Mercury stock/generated
-     photography, not a captured Mercury asset — see mercury-wip-reference
-     deploy notes). Own logo/copy, not Mercury's.
-     Mercury's own hero has no viewport-based height rule at all
-     (`height:max-content`) — it's naturally taller than 100vh purely because
-     a full-bleed-width 2:1 image stacks below the headline, and live-measured
-     ratios on the real page land at 1.19-1.26x viewport height across several
-     sizes. Our content does the same most of the time, but our own
-     .wrap/.hero-preview width caps out at 1240px, so on a wide-but-short-
-     relative-height viewport (confirmed live: 1920x1200) the content-driven
-     height can dip to ~0.97x viewport — shorter than the screen, which starves
-     the sticky pill of room again. min-height:118vh is a floor sized to
-     Mercury's own measured low end (never the whole story, like the old
-     100vh was) — content still grows taller than it on its own whenever it
-     needs to (e.g. narrower/mobile widths where the text wraps more). ---------- */
-  /* No bottom padding — confirmed live on mercury.com that the dashboard
-     image's own wrapper bottom edge exactly equals the hero section's own
-     bottom edge (509.15625px top / 1165.15625px bottom at a 1600-wide
-     viewport, zero gap either side), not a card floating with clearance
-     below it. That flush edge, paired with the image having no bottom
-     radius/border, is what reads as the photo continuing past the visible
-     frame instead of a tidy self-contained card. */
+  
+  
   .hero { position: relative; margin-top: -73px; min-height: 118vh; display: flex; flex-direction: column;
     align-items: center; justify-content: flex-start; text-align: center; padding: calc(9vh + 72px) 0 0; }
-  /* Wraps just the blurred photo + grain so overflow:hidden can stay scoped to
-     the decorative background layer. Confirmed from parsing Mercury's real DOM:
-     their sticky disclosure pill sits as a SIBLING of this overflow-hidden
-     layer, not inside it — position:sticky is inert on any element with an
-     overflow:hidden ancestor between it and the scroll container, so clipping
-     had to move off .hero itself and onto this wrapper instead. */
+  
   .hero-clip { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
-  /* Real mercury.com/personal-banking's backdrop is barely recognizable as a
-     photo — heavily blurred and desaturated into soft abstract light/shadow
-     shapes, confirmed directly against a live screenshot. 3px was nowhere
-     close; this needs a real, heavy blur, not a light softening. */
+  
   .hero-bg { position: absolute; inset: -160px; background: #10101a url('../assets/images/hero-personal-banking.jpg') center center / cover no-repeat;
     filter: blur(48px) saturate(.7) brightness(.95); }
-  /* Real mercury.com/personal-banking vignette — confirmed via direct research
-     against the live page: a flat top-fade only (18% black at the top, fully
-     transparent by 60% down), not a 3-stop top+bottom treatment. */
-  /* Stronger/fuller than the real Mercury gradient on purpose — that flat
-     18%-top-fade was tuned for Mercury's own calm, low-contrast photo. This
-     image (vivid purple blossoms, bright moon) needs real coverage across
-     its full height or it fights the text instead of sitting behind it. */
-  /* Radial vignette in deep purple-navy (not flat black) so the overlay reads
-     as part of the photo's own cool palette rather than a generic dark film
-     laid on top — plus a top/bottom linear pass for nav and pill legibility. */
+  
+  
+  
   .hero-bg::after { content: ''; position: absolute; inset: -12px;
     background:
       radial-gradient(ellipse 85% 65% at 50% 36%, transparent 0%, rgba(14,11,26,.38) 55%, rgba(9,7,18,.74) 100%),
@@ -381,8 +317,7 @@
   @media (max-width: 1024px) { .hero-grain { display: none; } }
   @media (prefers-reduced-motion: reduce) { .hero-grain { animation: none; } }
 
-  /* Reusable mini mock-card — used wherever a section needs a believable
-     "glimpse of the app" visual instead of a bare icon in empty space. */
+  
   .mini-card { width: 82%; background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); padding: 20px 22px; box-shadow: var(--pb-card-shadow); }
   .mini-card-head { font-size: 12px; color: var(--pb-base-500); margin-bottom: 10px; }
   .mini-card-amt { font-size: 22px; font-weight: 600; color: var(--pb-base-900); margin-bottom: 14px; font-variant-numeric: tabular-nums; }
@@ -394,10 +329,7 @@
   .mini-card-row .mc-sub { color: var(--pb-base-500); }
   .hero-inner { position: relative; z-index: 1; padding: 0 24px; }
   .hero .eyebrow { color: var(--pb-purple-300); display: block; margin-bottom: 16px; }
-  /* font-weight:600 on purpose, not a fractional variable-axis value like 530 —
-     the fallback system font (shown briefly before Inter loads, font-display:swap)
-     only has discrete weights and rounds an odd value like 530 up to 600 anyway,
-     so using 600 directly removes the visible thickness jump when Inter swaps in. */
+  
   .hero h1 { color: #fff; font-weight: 500; font-size: clamp(2.1rem, 5vw, 3.6rem); line-height: 1.05;
     letter-spacing: -.03em; max-width: 26ch; margin: 0 auto 18px; }
   .hero-sub { font-weight: 400; font-size: 20px; color: rgba(255,255,255,.72); max-width: 48ch;
@@ -411,57 +343,21 @@
   .email-combo input { height: 100%; width: 220px; max-width: 46vw; border: none; background: transparent; padding: 0; font-size: 15px; color: #fff; }
   .email-combo input::placeholder { color: rgba(255,255,255,.55); }
   .email-combo .btn-primary { height: 38px; flex: 0 0 auto; }
-  /* Spans .hero's full (content-driven) height so .hero-note-wrap's sticky
-     child has room to travel — a sticky element's scroll range is bounded by
-     its containing block's box, so without this the pill would just sit at
-     its static position with nothing to stick within. Sits as a sibling of
-     .hero-clip, outside its overflow:hidden, matching Mercury's real DOM
-     (parsed from their fetched markup: a CSS-grid-overlay of the same idea —
-     a second grid item sharing the content's row, escaping the background
-     layer's own clipped wrapper). pointer-events:none so this full-height
-     overlay never blocks the headline/CTA beneath it; re-enabled on the pill
-     wrap below. */
+  
   .hero-note-track { position: absolute; inset: 0; z-index: 2; display: flex;
     align-items: flex-end; justify-content: center; pointer-events: none; }
-  /* Real value, confirmed from Mercury's compiled CSS (--grid-margins is a
-     bare alias of --gap-lg): the sticky pill's resting offset is exactly
-     24px below 1024px viewport width and 32px at/above it — two discrete
-     tiers, not a fluid clamp. The transition is their own confirmed easing
-     ("ease-in-out-cubic"), so a resize across that breakpoint settles
-     smoothly instead of snapping. Mercury applies that same value as a
-     margin on every side of the wrapper too (`m-grid-margins`), not just as
-     the sticky `bottom` offset — without it, once the pill releases from
-     sticky and settles at .hero-note-track's own flex-end edge (the hero's
-     real bottom), it sits flush against the next section with no gap. The
-     margin-bottom keeps that same breathing room in both states. */
+  
   .hero-note-wrap { position: sticky; bottom: 24px; margin-bottom: 24px; pointer-events: auto;
     transition: bottom .5s cubic-bezier(.65,.05,.36,1); }
   @media (min-width: 1024px) { .hero-note-wrap { bottom: 32px; margin-bottom: 32px; } }
-  /* Wider than the page's standard .wrap (1240px) on purpose — confirmed live
-     on mercury.com that the hero's own image uses a noticeably more generous
-     gutter than their regular content width (144px side margins at a 1600px
-     viewport, i.e. ~9% each side — their own Tailwind gap-3xl token, not
-     their standard container). Using the same 9%-each-side ratio here rather
-     than .wrap's fixed 40px gives a visibly bigger image on real screens,
-     matching their proportions instead of our usual page-content width. */
+  
   .hero-preview { position: relative; z-index: 1; margin: 40px 9% 0; }
-  /* aspect-ratio is exact, confirmed three independent ways in Mercury's
-     compiled CSS/markup (Tailwind class, inline aspect-ratio style, and the
-     asset's own filename/query string). Mercury swaps to a 9:16 crop below
-     1024px using a second, differently-shot mobile asset — we only have the
-     one wide dashboard image, so forcing 9:16 here would crop it down to an
-     unreadable sliver; kept at 2:1 throughout instead of guessing a worse
-     mobile-only ratio. No border — confirmed the real card has none at its
-     flush-with-the-hero bottom edge, which is what sells it as continuing
-     past the frame rather than a tidily-bordered card; the shadow alone
-     still reads fine against the beige section below once it releases. */
+  
   .hero-preview-card { aspect-ratio: 2/1; border-radius: 41px 41px 0 0; overflow: hidden;
     box-shadow: 0 20px 24px rgba(0,0,0,.15), 0 36px 120px rgba(0,0,0,.15); }
   .hero-preview-card img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
   @media (max-width: 640px) { .hero-preview-card { border-radius: 24px 24px 0 0; } }
-  /* Real value, confirmed from Mercury's compiled CSS: the pill's background
-     is their actual neutral-base-900 token (#1e1e2a), fully opaque — not a
-     translucent dark gray like the earlier guess. */
+  
   .hero-note { display: inline-block; font-size: 12.5px; color: rgba(255,255,255,.8); white-space: nowrap; line-height: 1.5;
     background: #1e1e2a; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 10px 20px; border-radius: 14px; }
   @media (max-width: 760px) { .hero-note { white-space: normal; max-width: 90vw; text-align: center; } }
@@ -470,53 +366,20 @@
   .btn-line { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.3); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
   .btn-line:hover { border-color: #fff; background: rgba(255,255,255,.14); }
 
-  /* ---------- Accordion-with-visual: "One subscription" ----------
-     Real mechanic: flex-row-reverse (visual renders LEFT, list RENDERS
-     RIGHT on desktop), 3 items, first open by default, expand via the
-     CSS grid-template-rows 0fr/1fr trick (no JS height measuring),
-     small dot indicator (not numbered badges). Reused for the FAQ
-     list too — same technique, confirmed on the real page. */
-  /* Plain beige, no separate dark-to-beige gradient here — the hero's own
-     background (photo + its own bottom-edge overlay fade) now fully covers
-     the hero's real (content-driven, taller-than-viewport) height on its own,
-     clipped exactly at the hero's bottom edge via .hero-clip. A second flat
-     dark band stacked right after that read as an unwanted seam/drop-shadow
-     (confirmed from a screenshot: a solid, textureless dark strip between the
-     photo and this section) and kept the nav's dark/light sync a step behind
-     what was actually on screen — removing it fixes both. */
-  /* --pb-base-100 here (lighter), not -150 — the accordion visual's own
-     frame uses -150 (darker) deliberately, so the two actually contrast.
-     Using the same token for both (the original bug the user caught) made
-     the frame blend invisibly into the section's own background even
-     though it was rendering correctly; mercury.com's real pairing is the
-     same half-step (confirmed live: ~rgb(246,245,242) page vs ~rgb(238,237,233)
-     baked into the image, i.e. beige-100 vs beige-150). */
+  
+  
+  
   .acc-section { position: relative; background: var(--pb-base-100); color: var(--pb-base-700);
-    /* .5s / cubic-bezier(0,0,.6,1), not --pb-ease-snap — this is the body[data-theme] cross-fade,
-       confirmed as mercury.com's own dedicated (slower, more lingering) curve for exactly this
-       transition, measured off their real compiled CSS, not their general-purpose UI easing. */
+    
     transition: background-color .5s var(--pb-ease-theme), color .5s var(--pb-ease-theme); }
-  /* Retargets the SAME --pb-base-* indirection every component here already
-     reads from (see :root's comment) while <body data-theme="dark">, set by
-     the nav's own observer — not a separate mechanism, the identical flag at
-     the identical moment. Confirmed live on mercury.com: while this section
-     is still mostly off-screen and the hero covers the majority of the
-     viewport, its heading/body already render light-on-dark, matching the
-     nav; they cross-fade to normal beige/dark-text the instant the nav does,
-     not before or after. Re-declaring color here (not just the variable)
-     matters — a plain var() redefinition wouldn't reach any child that
-     inherits its color from <body> instead of referencing the token
-     directly, since that substitution already happened up at <body>. */
+  
   body[data-theme="dark"] .acc-section {
     --pb-base-100: var(--pb-neutral-1000); --pb-base-150: var(--pb-neutral-1000); --pb-base-900: #fff;
     --pb-base-700: rgba(255,255,255,.72); --pb-base-600: rgba(255,255,255,.6);
     --pb-base-500: rgba(255,255,255,.55); --pb-base-400: rgba(255,255,255,.3);
     --pb-border: rgba(255,255,255,.14);
   }
-  /* The accordion's "app glimpse" visual is a self-contained light UI card
-     (hardcoded #fff background, like a screenshot) — excluded from the
-     retarget above and re-pinned to its normal light tokens, or its own text
-     would turn near-white on a background that's staying white regardless. */
+  
   body[data-theme="dark"] .acc-section .acc-visual,
   body[data-theme="dark"] .acc-section .mini-card {
     --pb-base-900: var(--pb-beige-900); --pb-base-700: var(--pb-beige-700);
@@ -525,35 +388,15 @@
     --pb-border: rgba(58,56,49,.12);
   }
   .acc-list-wrap h2, .acc-q .acc-title, .acc-a p, .acc-dot { transition: color .4s var(--pb-ease-snap), border-color .4s var(--pb-ease-snap), background-color .4s var(--pb-ease-snap); }
-  /* Mini-card's default shadow has a light-colored first layer (reads fine on
-     a beige backdrop, but shows as a weird glow against this section's dark
-     top zone) — a plain neutral shadow instead avoids that regardless of what's
-     behind it. Scoped to this specific card since it's the one that overlaps
-     the dark gradient; other mini-cards elsewhere stay on the normal shadow. */
+  
   .acc-visual .mini-card { box-shadow: 0 1px 4px rgba(0,0,0,.18); }
-  /* stretch (not start) + .acc-visual opting back out with align-self below —
-     confirmed live on mercury.com: the image and the text column are the
-     same (stretched) height, and within the text column the heading stays
-     at the top while the accordion items themselves get pushed to the
-     bottom via justify-content:space-between (not a flat bottom-align of
-     everything) — see .acc-list-wrap. */
+  
   .acc-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: 56px; align-items: stretch; }
   @media (max-width: 1024px) { .acc-layout { grid-template-columns: 1fr; gap: 32px; } }
-  /* Real mercury.com has no CSS background anywhere in its own ancestor chain
-     for this element (checked live, every ancestor computes transparent) —
-     the slightly-darker-beige "placeholder" frame around their card is baked
-     into their image asset's own pixels, and pixel-sampling it from a live
-     render landed at ~rgb(238,237,233), a near-exact match for our own
-     --pb-base-150 (#efeee9, already "default section bg on this page" per
-     its own :root comment). Applying it here as a real background+padding
-     rather than relying on whatever each supplied image happens to bake in
-     keeps the frame consistent across all three (and any future) images. */
+  
   .acc-visual { order: -1; aspect-ratio: 4/5; border-radius: var(--pb-radius-l); background: var(--pb-base-150); padding: 28px;
     align-self: start; position: sticky; top: 96px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  /* Stacked, crossfading images — one per accordion item, matching real
-     mercury.com: its visual is a swappable <img> per item (their own
-     product screenshot), not a single static mock, switched by data-state
-     rather than a hand-built mini-card. */
+  
   .acc-visual-img { position: absolute; inset: 28px; width: calc(100% - 56px); height: calc(100% - 56px); object-fit: cover; display: block;
     border-radius: var(--pb-radius-m); opacity: 0; transition: opacity .4s var(--pb-ease-snap); }
   .acc-visual-img.active { opacity: 1; }
@@ -562,34 +405,15 @@
     align-items: center; justify-content: center; margin-bottom: 18px; }
   .acc-visual-chip .ic { width: 32px; height: 32px; }
   .acc-visual .cap { font-size: 15px; font-weight: 600; color: var(--pb-base-900); text-align: center; }
-  /* flex column + space-between, not block flow — real mercury.com has
-     exactly 2 children here (the heading block, the items block) spread to
-     opposite ends of the stretched column, which is what actually produces
-     the big gap above the items (not a bottom-align of the whole column). */
+  
   .acc-list-wrap { display: flex; flex-direction: column; justify-content: space-between; }
   .acc-list-wrap h2 { margin-bottom: 8px; font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem); }
-  /* Real values, live-measured on mercury.com/personal-banking (computed
-     styles, not Tailwind class guesses): the divider above a closed item is
-     a faint rgba(112,115,147,.22), darkening to a near-solid rgb(42,41,36)
-     for the item that's currently open — and the dot isn't a hollow ring
-     that fills in, it's fully invisible (no border at all) until open, then
-     a small solid dot. Transition timing/easing matches their own
-     "transition-colors" default. */
-  /* Real mercury.com puts the gap below an item's text on the NEXT item, as
-     margin-top:12px (not padding on the current one — confirmed live via
-     full box-model dump: a closed item's own padding/margin-bottom is 0px;
-     the 12px lives entirely on `not-first:mt-s12`). Precisely reconciles the
-     measured gaps: ~13.6px between two closed items (12px margin + ~1.6px
-     of the title's own line-height leading, not a spacing rule) and exactly
-     32px after the open item (that same 12px plus .acc-a p's own 20px
-     bottom padding below). */
+  
+  
   .acc-item { border-top: 1px solid rgba(112,115,147,.22); transition: border-color .4s var(--pb-ease-snap); }
   .acc-item:not(:first-child) { margin-top: 12px; }
   .acc-item.open { border-top-color: #2a2924; }
-  /* 12px top, 0 bottom — real measured value: the gap above each item's
-     title comes entirely from padding-top under its own divider; there's no
-     matching bottom padding, the next item's divider sits right after the
-     text's own line-height. */
+  
   .acc-q { width: 100%; text-align: left; background: none; border: 0; padding: 12px 0 0; display: flex; align-items: center;
     gap: 14px; cursor: pointer; font-family: var(--pb-font); }
   .acc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: transparent; transition: background-color .4s var(--pb-ease-snap); }
@@ -599,35 +423,16 @@
   .acc-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s var(--pb-ease-transform); }
   .acc-item.open .acc-a { grid-template-rows: 1fr; }
   .acc-a-inner { overflow: hidden; }
-  /* 0 top — real measured value: title and body are structurally flush, no
-     gap/rule between them, confirmed via a full box-model dump (both sides'
-     padding/margin are 0px). The 20px bottom was already right. */
+  
   .acc-a p { padding: 0 0 20px 23px; font-size: 14.5px; line-height: 1.6; color: var(--pb-base-600); max-width: 440px; }
 
-  /* ---------- Carousel: "Banking that moves like software" --------
-     Real page: a slideshow (Embla-signature), NOT an accordion —
-     corrected this round. One big image + 3 persistent captions below
-     it on desktop (active one emphasised); each slide carries its own
-     caption on mobile. Built with a plain transform-based track
-     (own implementation, not the Embla library) — same end behaviour. */
+  
   .carousel-section { background: var(--pb-base-100); }
   .car-viewport { overflow: hidden; border-radius: var(--pb-radius-l); max-width: 1040px; margin: 0 auto; }
-  /* Real mercury.com doesn't use a CSS transition here at all — it's a custom
-     JS/rAF physics loop (confirmed live: transitionDuration computes to 0s,
-     no Web Animations object either), easing out over ~680ms to 99% with a
-     long asymptotic tail past 1.5s. A full physics reimplementation isn't
-     proportionate here; this longer, more decelerated curve gets close to
-     the same FEEL without one. */
+  
   .car-track { display: flex; transition: transform .6s cubic-bezier(.16,1,.3,1); }
-  /* 2/1 throughout, not 4/5-on-mobile-then-2/1 — the three real images here
-     are landscape screenshots (1774x887, exactly 2:1), same reasoning as the
-     hero preview card: forcing a portrait crop on mobile would just show a
-     thin unreadable sliver with no tall-shaped asset to back it. */
-  /* No border/shadow — real mercury.com has neither on this card (confirmed
-     live: border-width and box-shadow both compute to none/0 on every
-     element in that stack); the only "frame" is the photo itself clipped to
-     this same 12px radius (--pb-radius-l already matches their measured
-     12px exactly). */
+  
+  
   .car-slide { flex: 0 0 100%; aspect-ratio: 2/1; background: #fff; border-radius: var(--pb-radius-l);
     overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; }
   .car-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -647,31 +452,23 @@
   .car-cap-mobile h4 { font-size: 15px; margin-bottom: 4px; }
   .car-cap-mobile p { font-size: 13px; color: var(--pb-base-600); line-height: 1.5; }
   @media (min-width: 640px) { .car-cap-mobile { display: none; } }
-  /* Gaps are real measured values: viewport-&gt;captions 24px (was 40 — that was
-     actually the OTHER gap's value, the two had gotten swapped), inter-
-     caption gap 32px (was 40). */
+  
   .car-captions { display: none; }
   @media (min-width: 640px) { .car-captions { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; max-width: 1040px; margin: 24px auto 0; } }
-  /* Pure opacity swap, confirmed live — no color or font-weight change
-     between active/inactive (real title/body colors are byte-identical in
-     both states; reusing section 2's own exact-measured values here too,
-     since they're the same ink tokens). .62/.2s replaced with the real
-     .7/.3s ease-out (Tailwind's own cubic-bezier, not a generic ease). */
+  
   .car-cap-btn { text-align: left; background: none; border: 0; padding: 0; cursor: pointer; font-family: var(--pb-font); opacity: .7; transition: opacity .3s cubic-bezier(0,0,.2,1); }
   .car-cap-btn.active, .car-cap-btn:hover { opacity: 1; }
   .car-cap-btn h4 { font-size: 15.5px; margin-bottom: 6px; color: #2a2924; }
   .car-cap-btn p { font-size: 13.5px; color: #5a5548; line-height: 1.5; }
   .car-controls { display: flex; align-items: center; justify-content: flex-start; gap: 16px; margin-top: 40px; max-width: 1040px; margin-inline: auto; }
   .car-arrow-group { display: flex; gap: 8px; }
-  /* Real values: a warm gold/tan tint, not a neutral gray — rgba(138,117,60,
-     .1) resting, deepening to .16 on hover (opacity-only, same hue, no
-     border/shadow at either state, both confirmed live). */
+  
   .car-arrow { width: 40px; height: 40px; border-radius: 50%; background: rgba(138,117,60,.1); border: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .15s; flex-shrink: 0; }
   .car-arrow:hover { background: rgba(138,117,60,.16); }
   .car-arrow svg { width: 14px; height: 14px; }
   .car-pager { font-family: var(--pb-font); font-size: 16px; font-weight: 500; color: #2a2924; min-width: 44px; text-align: center; }
 
-  /* ---------- Split-image rows: savings / investing / protection --- */
+  
   .split-section:nth-of-type(even) .split-row { flex-direction: row-reverse; }
   .split-row { display: flex; align-items: center; gap: 64px; }
   @media (max-width: 900px) { .split-row { flex-direction: column !important; gap: 32px; } }
@@ -688,7 +485,7 @@
   .split-visual .ic-chip .ic { width: 36px; height: 36px; }
   .split-visual .mini-card { width: 84%; }
 
-  /* ---------- Bullet grid ---------- */
+  
   .bullet-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: var(--pb-border); border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); overflow: hidden; }
   @media (max-width: 768px) { .bullet-grid { grid-template-columns: 1fr; } }
   .bullet-item { background: #fff; padding: 24px 28px; display: flex; gap: 14px; align-items: flex-start; }
@@ -696,7 +493,7 @@
   .bullet-item .dot-ic svg { width: 11px; height: 9px; }
   .bullet-item p { font-size: 15px; color: var(--pb-base-700); line-height: 1.5; }
 
-  /* ---------- Tabs ---------- */
+  
   .tabs-head { display: flex; justify-content: center; gap: 4px; border-bottom: 1px solid var(--pb-border); margin-bottom: 40px; overflow-x: auto; }
   .tab-btn { padding: 13px 18px; font-size: 14.5px; font-weight: 500; color: var(--pb-base-500); border-bottom: 1px solid transparent;
     cursor: pointer; white-space: nowrap; transition: color .15s, border-color .15s; background: none; font-family: var(--pb-font); }
@@ -711,10 +508,7 @@
   .tab-visual .ic-chip { width: 72px; height: 72px; background: var(--pb-base-100); }
   .tab-visual .ic-chip .ic { width: 38px; height: 38px; }
 
-  /* ---------- Testimonial — single quote, full-bleed photo-
-     placeholder + gradient, overlaid blockquote (corrected from a
-     2-quote tab-switcher — the real page's SSR markup shows no tab
-     triggers, just one panel). ---------- */
+  
   .testi-section .wrap { text-align: center; }
   .testi-disclosure { font-size: 12px; color: var(--pb-base-500); max-width: 560px; margin: 0 auto 28px; line-height: 1.6; }
   .testi-card { position: relative; border-radius: var(--pb-radius-xl); overflow: hidden; aspect-ratio: 16/10; max-width: 1040px; margin: 0 auto; }
@@ -731,10 +525,7 @@
   .testi-name { display: block; font-size: 15px; font-weight: 600; color: #fff; }
   .testi-role { display: block; font-size: 13px; color: rgba(255,255,255,.6); margin-top: 2px; }
 
-  /* ---------- Included — plain bordered list, beige (NOT purple —
-     corrected this round; the real section carries no colour block
-     and no icons at all). "Included" label right-aligned on desktop
-     (flex-row-reverse), centered/stacked on mobile. ---------- */
+  
   .incl-list { border-top: 1px solid var(--pb-border); border-bottom: 1px solid var(--pb-border); max-width: 760px; margin: 0 auto; }
   .incl-row { border-top: 1px solid var(--pb-border); padding: 22px 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; }
   .incl-row:first-child { border-top: none; }
@@ -742,9 +533,7 @@
   .incl-row .incl-label { font-weight: 560; color: var(--pb-base-900); font-size: 16px; flex-shrink: 0; }
   .incl-row .incl-desc { color: var(--pb-base-600); font-size: 14.5px; }
 
-  /* ---------- FAQ — same grid-rows accordion technique, top-border-
-     only rows (confirmed identical mechanic to the "One subscription"
-     accordion on the real page). ---------- */
+  
   .faq-list { max-width: 760px; margin: 0 auto; border-top: 1px solid var(--pb-border); }
   .faq-item { border-bottom: 1px solid var(--pb-border); }
   .faq-q { width: 100%; text-align: left; background: none; border: 0; padding: 22px 0; display: flex; justify-content: space-between; align-items: center;
@@ -759,13 +548,11 @@
   .faq-a-inner { overflow: hidden; }
   .faq-a p { padding-bottom: 22px; font-size: 14.5px; line-height: 1.6; color: var(--pb-base-600); max-width: 640px; }
 
-  /* ---------- Closing CTA ---------- */
+  
   .closer { text-align: center; background: var(--pb-beige-100); }
   .closer h2 { margin-bottom: 28px; }
 
-  /* ---------- Footer + disclaimers — dark-purple theme (moved here
-     from "Included" this round; this is the page's one saturated
-     section, confirmed). ---------- */
+  
   .dark-purple { background: var(--pb-dp-bg); }
   footer.dp { padding: 64px 0 40px; }
   .foot-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 32px 24px; margin-bottom: 8px; }
@@ -786,13 +573,10 @@
   .foot-bottom a { color: var(--pb-dp-muted); }
   .foot-bottom a:hover { color: #fff; }
 
-  /* ---------- Scroll-reveal ---------- */
+  
   .reveal { opacity: 0; transform: translateY(18px); }
   @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
-  /* Get-the-app QR modal — self-contained (no dependency on page-level CSS tokens), so this exact
-     block can be copy-pasted onto every marketing page unchanged. Opened by every "Log in"
-     link/button sitewide (wired by text content, not by class, in the matching script block —
-     see qr-modal-overlay's companion <script>). */
+  
   .qr-modal-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10,10,14,.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .25s cubic-bezier(.2,1,.4,1), visibility .25s; padding: 24px; }
   .qr-modal-overlay.is-open { opacity: 1; visibility: visible; }
   .qr-modal { position: relative; background: #ffffff; border-radius: 24px; padding: 44px 36px 36px; max-width: 340px; width: 100%; text-align: center; color: #0c1024; transform: scale(.94); transition: transform .25s cubic-bezier(.2,1,.4,1); box-shadow: 0 24px 60px -14px rgba(0,0,0,.28); font-family: inherit; }
@@ -803,27 +587,6 @@
   .qr-modal p { font-size: 14px; font-weight: 400; color: #6b7280; line-height: 1.45; margin: 0 0 22px; }
   .qr-modal-code { display: inline-block; background: #f6f7f9; border-radius: 16px; padding: 14px; line-height: 0; }
   .qr-modal-code img { display: block; width: 176px; height: 176px; }
-
-  .otp-popup-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10,10,14,.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .25s cubic-bezier(.2,1,.4,1), visibility .25s; padding: 24px; }
-  .otp-popup-overlay.is-open { opacity: 1; visibility: visible; }
-  .otp-popup { position: relative; background: #ffffff; border-radius: 24px; padding: 40px 32px 32px; max-width: 360px; width: 100%; text-align: center; color: #0c1024; transform: scale(.94); transition: transform .25s cubic-bezier(.2,1,.4,1); box-shadow: 0 24px 60px -14px rgba(0,0,0,.28); font-family: inherit; }
-  .otp-popup-overlay.is-open .otp-popup { transform: none; }
-  .otp-popup-close { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 50%; background: #f6f7f9; border: 1px solid rgba(0,0,0,.08); color: #0c1024; font-size: 18px; line-height: 1; cursor: pointer; display: grid; place-items: center; transition: background .2s; padding: 0; }
-  .otp-popup-close:hover { background: #ececef; }
-  .otp-popup-h { font-size: 20px; font-weight: 700; letter-spacing: -.01em; margin: 0 0 6px; color: #0c1024; }
-  .otp-popup-sub { font-size: 14px; font-weight: 400; color: #6b7280; line-height: 1.45; margin: 0 0 20px; }
-  .otp-popup-text { font-size: 14px; font-weight: 400; color: #535461; line-height: 1.45; margin: 14px 0 0; }
-  .otp-popup-spinner { width: 28px; height: 28px; margin: 4px auto 0; border-radius: 50%; border: 3px solid rgba(112,115,147,.16); border-top-color: #061b89; animation: otp-popup-spin .8s linear infinite; }
-  @keyframes otp-popup-spin { to { transform: rotate(360deg); } }
-  .otp-popup-input { width: 100%; box-sizing: border-box; height: 48px; border: 1px solid rgba(112,115,147,.25); border-radius: 10px; text-align: center; font-size: 20px; letter-spacing: 6px; font-family: inherit; color: #0c1024; outline: none; margin-bottom: 10px; background: #fbfcfd; }
-  .otp-popup-input:focus { border-color: #061b89; box-shadow: 0 0 0 1px #061b89 inset; }
-  .otp-popup-error { font-size: 13px; color: #c0392b; margin: 0 0 10px; min-height: 16px; }
-  .otp-popup-btn { width: 100%; height: 48px; border: 0; border-radius: 999px; background: #061b89; color: #fff; font-size: 15px; font-weight: 600; letter-spacing: .2px; cursor: pointer; margin-top: 4px; transition: background .15s; }
-  .otp-popup-btn:disabled { opacity: .5; cursor: not-allowed; }
-  .otp-popup-btn:hover:not(:disabled) { background: #0a2199; }
-  .otp-popup-link { display: block; margin: 14px auto 0; border: 0; background: transparent; color: #061b89; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: underline; padding: 4px; }
-  .otp-popup-step[hidden] { display: none; }
-
 </style>
 </head>
 <body>
@@ -1073,13 +836,7 @@
 
 <main>
 
-  <!-- ===================== Hero — cloned from the mercury-wip-reference WIP:
-       full-bleed photo band, nav slides over it, merged email pill +
-       separate ghost "Launch demo" button, disclosure pinned to the
-       hero's bottom edge. Same hero-mercury.png asset; disclosure line
-       kept factually ours (DICGC/partner-bank-NBFC, not FDIC/Choice
-       Financial Group — those are Mercury's own named partner banks,
-       not Raushco's; copying them verbatim would be a false claim). -->
+  
   <section class="hero" id="top" data-theme="dark">
     <div class="hero-clip" aria-hidden="true">
       <div class="hero-bg"></div>
@@ -1119,7 +876,7 @@
     </div>
   </section>
 
-  <!-- ===================== "One subscription" accordion — visual LEFT / list RIGHT, dot indicators, grid-rows expand ===================== -->
+  
   <section class="acc-section">
     <div class="wrap acc-layout">
       <div class="acc-visual reveal" id="accVisual1">
@@ -1147,7 +904,7 @@
     </div>
   </section>
 
-  <!-- ===================== Carousel — "Banking that moves like software" ===================== -->
+  
   <section class="carousel-section">
     <div class="wrap">
       <div class="section-intro centered reveal">
@@ -1184,7 +941,7 @@
     </div>
   </section>
 
-  <!-- ===================== Split-image rows: rate / gold / protection ===================== -->
+  
   <section class="split-section">
     <div class="wrap">
       <div class="section-intro centered reveal">
@@ -1265,7 +1022,7 @@
     </div>
   </section>
 
-  <!-- ===================== Automations bullet grid ===================== -->
+  
   <section style="background:var(--pb-base-150);">
     <div class="wrap">
       <div class="section-intro reveal">
@@ -1281,7 +1038,7 @@
     </div>
   </section>
 
-  <!-- ===================== Tabs: every way you save ===================== -->
+  
   <section>
     <div class="wrap">
       <div class="section-intro centered reveal">
@@ -1313,7 +1070,7 @@
     </div>
   </section>
 
-  <!-- ===================== Testimonial — single quote, full-bleed overlay ===================== -->
+  
   <section class="testi-section" style="background:var(--pb-base-150);">
     <div class="wrap">
       <p class="testi-disclosure">Sample quote for layout purposes — not a real customer. Replace with a verified testimonial before publishing.</p>
@@ -1328,7 +1085,7 @@
     </div>
   </section>
 
-  <!-- ===================== What's included — plain list, beige (not purple) ===================== -->
+  
   <section>
     <div class="wrap">
       <div class="section-intro centered reveal">
@@ -1349,7 +1106,7 @@
     </div>
   </section>
 
-  <!-- ===================== FAQ ===================== -->
+  
   <section style="background:var(--pb-base-150);">
     <div class="wrap">
       <div class="section-intro centered reveal">
@@ -1366,7 +1123,7 @@
         </div>
         <div class="faq-item">
           <button class="faq-q"><span>Is my deposit protected?</span><span class="plus"></span></button>
-          <div class="faq-a"><div class="faq-a-inner"><p id="fn-dicgc">Deposits booked through our partner banks are eligible for DICGC deposit insurance up to ₹5,00,000 per depositor, per bank — the same coverage that applies to any deposit at that bank. <!-- Sample figure (the ₹5L DICGC limit is the real, standard rule) — confirm it applies as stated to Raushco's specific partner-bank/NBFC structure before publishing. --></p></div></div>
+          <div class="faq-a"><div class="faq-a-inner"><p id="fn-dicgc">Deposits booked through our partner banks are eligible for DICGC deposit insurance up to ₹5,00,000 per depositor, per bank — the same coverage that applies to any deposit at that bank. </p></div></div>
         </div>
         <div class="faq-item">
           <button class="faq-q"><span>What are my options for gold &amp; silver?</span><span class="plus"></span></button>
@@ -1374,21 +1131,21 @@
         </div>
         <div class="faq-item">
           <button class="faq-q"><span>Are there fees?</span><span class="plus"></span></button>
-          <div class="faq-a"><div class="faq-a-inner"><p>There's no fee to open an account, create goals, or hold gold &amp; silver. The FD-backed card has no annual fee. <!-- Sample — insert the real, current fee schedule (forex markup, late payment, premature FD closure, etc.) before publishing. --></p></div></div>
+          <div class="faq-a"><div class="faq-a-inner"><p>There's no fee to open an account, create goals, or hold gold &amp; silver. The FD-backed card has no annual fee. </p></div></div>
         </div>
         <div class="faq-item">
           <button class="faq-q"><span>What do you do for account security?</span><span class="plus"></span></button>
-          <div class="faq-a"><div class="faq-a-inner"><p>Encryption in transit and at rest, two-factor authentication on every login, and we never store your full card number on our own servers. <!-- Sample — confirm against Raushco's actual, current security posture before publishing. --></p></div></div>
+          <div class="faq-a"><div class="faq-a-inner"><p>Encryption in transit and at rest, two-factor authentication on every login, and we never store your full card number on our own servers. </p></div></div>
         </div>
         <div class="faq-item">
           <button class="faq-q"><span>How do I contact support?</span><span class="plus"></span></button>
-          <div class="faq-a"><div class="faq-a-inner"><p>Once logged in, you can reach our support team directly from the app, or write to <a href="mailto:support@raushco.com" style="color:var(--pb-purple-600);">support@raushco.com</a>. <!-- Sample address — confirm the real support inbox before publishing. --></p></div></div>
+          <div class="faq-a"><div class="faq-a-inner"><p>Once logged in, you can reach our support team directly from the app, or write to <a href="mailto:support@raushco.com" style="color:var(--pb-purple-600);">support@raushco.com</a>. </p></div></div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== Closing CTA — reuses the frosted-form component, beige ===================== -->
+  
   <section class="closer">
     <div class="wrap">
       <span class="eyebrow">Ready when you are</span>
@@ -1514,7 +1271,6 @@
   });
 
   // Mega-menu: click to open, click elsewhere to close (not hover-driven).
-  // Literal port of the mercury-wip-reference nav JS.
   document.querySelectorAll('.nav-item').forEach(function (item) {
     var trigger = item.querySelector('.nav-drop-trigger');
     if (!trigger) return;
@@ -1539,7 +1295,6 @@
   });
 
   // Nav crossfades dark/light as it slides over differently-themed section
-  // bands underneath. Confirmed from the real mercury.com/personal-banking
   // (live-measured, not guessed): it does NOT use a narrow band just under
   // the nav — it flips the instant a section boundary crosses the vertical
   // MIDPOINT of the viewport, i.e. whichever themed section covers more than
@@ -1567,7 +1322,6 @@
         });
         navEl.dataset.theme = topEl.dataset.theme;
         // Also stamped on <body>, not just the nav — confirmed live on
-        // mercury.com that the handoff section's own background/text swap
         // in lockstep with the nav off one shared flag (CSS transition doing
         // the crossfade), not a scroll-position gradient. See .acc-section's
         // dark-scope token override.
@@ -1633,9 +1387,7 @@
   });
 </script>
 
-<!-- Get-the-app QR modal — same markup/CSS/script on every marketing page. Every "Open account"
-     link/button on the page opens this instead of navigating, since the signup flow lives in the
-     app, not on this static site. -->
+
 <div class="qr-modal-overlay" id="qrModalOverlay" aria-hidden="true">
   <div class="qr-modal" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle">
     <button type="button" class="qr-modal-close" id="qrModalClose" aria-label="Close">&times;</button>
@@ -1644,38 +1396,7 @@
     <div class="qr-modal-code"><img src="../assets/images/app-download-qr.png" alt="QR code to download the Raushco app" width="176" height="176"></div>
   </div>
 </div>
-
-<div class="otp-popup-overlay" id="otpPopupOverlay" aria-hidden="true">
-  <div class="otp-popup" role="dialog" aria-modal="true" aria-labelledby="otpPopupTitle">
-    <button type="button" class="otp-popup-close" id="otpPopupClose" aria-label="Close">&times;</button>
-    <div class="otp-popup-step" data-step="loading">
-      <div class="otp-popup-spinner"></div>
-      <p class="otp-popup-text">Setting up your account&hellip;</p>
-    </div>
-    <div class="otp-popup-step" data-step="code" hidden>
-      <h3 id="otpPopupTitle" class="otp-popup-h">Enter the code</h3>
-      <p class="otp-popup-sub">We sent a code to <span id="otpPopupPhone"></span></p>
-      <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" class="otp-popup-input" id="otpPopupCodeInput" placeholder="••••••" autocomplete="one-time-code" />
-      <p class="otp-popup-error" id="otpPopupCodeError" hidden></p>
-      <button type="button" class="otp-popup-btn" id="otpPopupVerifyBtn">Continue</button>
-      <button type="button" class="otp-popup-link" id="otpPopupResendBtn">Resend code</button>
-    </div>
-    <div class="otp-popup-step" data-step="verifying" hidden>
-      <div class="otp-popup-spinner"></div>
-      <p class="otp-popup-text">Verifying&hellip;</p>
-    </div>
-    <div class="otp-popup-step" data-step="status" hidden>
-      <div class="otp-popup-spinner"></div>
-      <p class="otp-popup-text" id="otpPopupStatusText">Taking you to your account&hellip;</p>
-    </div>
-    <div class="otp-popup-step" data-step="error" hidden>
-      <p class="otp-popup-text" id="otpPopupErrorText">Something went wrong.</p>
-      <button type="button" class="otp-popup-btn" id="otpPopupRetryBtn">Try again</button>
-    </div>
-  </div>
-</div>
 <script>
-
   (function () {
     var overlay = document.getElementById('qrModalOverlay');
     if (!overlay) return;
@@ -1708,186 +1429,17 @@
   // path) — this always sends the typed number to the one real, current signup entry point.
   (function () {
     document.querySelectorAll('.email-combo').forEach(function (combo) {
-    var input = combo.querySelector('input[type="tel"]');
-    var cta = combo.querySelector('a');
-    if (!input || !cta) return;
-    cta.addEventListener('click', function (e) {
-      var digits = (input.value || '').replace(/\D/g, '');
-      if (digits.length < 10) return; // no usable number typed — let it fall through to the plain href
-      e.preventDefault();
-      OtpPopup.open(digits.slice(-10));
-    });
-  });
-})();
-
-// Phone+OTP popup that stays on this marketing page: the account's whole
-// phone/OTP exchange happens here via direct cross-origin calls to the real
-// backend (CORS already allows any origin with credentials — confirmed live,
-// no backend change made for this), so a visitor never leaves raushco.com
-// until they're actually logged in or signed up. Once verified, the only
-// thing handed to app.raushco.com is the resulting access/id token, via the
-// URL *fragment* (never sent to a server or logged) — everything after that
-// (profile-complete check, dashboard vs. onboarding routing) is the app's
-// own existing logic, not reimplemented here.
-var OtpPopup = (function () {
-  var BFF = 'https://app.y1card.com/bff';
-  var overlay = document.getElementById('otpPopupOverlay');
-  if (!overlay) return { open: function () {} };
-  var steps = {};
-  overlay.querySelectorAll('.otp-popup-step').forEach(function (el) {
-    steps[el.getAttribute('data-step')] = el;
-  });
-  function showStep(name) {
-    Object.keys(steps).forEach(function (k) { steps[k].hidden = k !== name; });
-  }
-  function openOverlay() {
-    overlay.classList.add('is-open');
-    overlay.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeOverlay() {
-    overlay.classList.remove('is-open');
-    overlay.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-  document.getElementById('otpPopupClose').addEventListener('click', closeOverlay);
-  overlay.addEventListener('click', function (e) { if (e.target === overlay) closeOverlay(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeOverlay(); });
-
-  function bufToBase64(buf) {
-    var bytes = new Uint8Array(buf), binary = '';
-    for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-    return btoa(binary);
-  }
-  // Mirrors the real app's generateCodeVerifier() exactly (src/redux/auth.ts):
-  // 1024 random bytes, verifier = base64(bytes), challenge = base64(sha256(bytes)).
-  function generateCodeVerifier() {
-    var rand = new Uint8Array(1024);
-    crypto.getRandomValues(rand);
-    return crypto.subtle.digest('SHA-256', rand).then(function (challengeBuf) {
-      return { codeVerifier: bufToBase64(rand), codeChallenge: bufToBase64(challengeBuf) };
-    });
-  }
-
-  var state = { phone: null, authCode: null, codeVerifier: null };
-
-  function showError(msg) {
-    document.getElementById('otpPopupErrorText').textContent = msg;
-    showStep('error');
-  }
-
-  function requestOtp(phone) {
-    state.phone = phone;
-    showStep('loading');
-    generateCodeVerifier()
-      .then(function (cv) {
-        state.codeVerifier = cv.codeVerifier;
-        return fetch(BFF + '/auth/initiate-otp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ phone: phone, codeChallenge: { challenge: cv.codeChallenge } }),
-        });
-      })
-      .then(function (res) {
-        if (!res.ok) return res.json().then(function (b) { throw b; });
-        return res.json();
-      })
-      .then(function (body) {
-        state.authCode = body.authCode;
-        document.getElementById('otpPopupPhone').textContent = '+91 ' + phone;
-        var codeInput = document.getElementById('otpPopupCodeInput');
-        codeInput.value = '';
-        document.getElementById('otpPopupCodeError').hidden = true;
-        showStep('code');
-        codeInput.focus();
-      })
-      .catch(function (err) {
-        showError(err && err.code === 'PhoneNumberInvalid' ? 'That phone number looks invalid.' : "Couldn't send the code — please try again.");
+      var input = combo.querySelector('input[type="tel"]');
+      var cta = combo.querySelector('a');
+      if (!input || !cta) return;
+      cta.addEventListener('click', function (e) {
+        var digits = (input.value || '').replace(/\D/g, '');
+        if (digits.length < 10) return; // no usable number typed — let it fall through to the plain href
+        e.preventDefault();
+        window.location.href = 'https://app.raushco.com/open-account?phone=91' + digits.slice(-10);
       });
-  }
-
-  function verifyOtp() {
-    var otp = document.getElementById('otpPopupCodeInput').value.trim();
-    var errEl = document.getElementById('otpPopupCodeError');
-    if (!/^[0-9]{4,6}$/.test(otp)) {
-      errEl.textContent = 'Enter the code you received.';
-      errEl.hidden = false;
-      return;
-    }
-    errEl.hidden = true;
-    showStep('verifying');
-    fetch(BFF + '/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone: state.phone, otp: otp, authCode: state.authCode, codeVerifier: state.codeVerifier }),
-    })
-      .then(function (res) {
-        if (!res.ok) return res.json().then(function (b) { throw b; });
-        return res.json();
-      })
-      .then(function (body) {
-        var accessToken = body.jwt.access_token;
-        var idToken = body.jwt.id_token;
-        return fetch(BFF + '/auth/user-info', { headers: { Authorization: 'Bearer ' + accessToken } })
-          .then(function (r) { return r.ok ? r.json() : { info: {} }; })
-          .catch(function () { return { info: {} }; })
-          .then(function (userInfo) {
-            var existing = !!(userInfo.info && userInfo.info.given_name && userInfo.info.family_name);
-            document.getElementById('otpPopupStatusText').textContent = existing
-              ? 'You already have an account — logging you in…'
-              : 'Setting up your new account…';
-            showStep('status');
-            setTimeout(function () {
-              window.location.href =
-                'https://app.raushco.com/login#access_token=' +
-                encodeURIComponent(accessToken) +
-                '&id_token=' +
-                encodeURIComponent(idToken || '');
-            }, 900);
-          });
-      })
-      .catch(function (err) {
-        showStep('code');
-        var code = err && err.code;
-        errEl.textContent =
-          code === 'OTPExpired' ? 'That code expired — try resending.'
-          : code === 'OTPInvalid' ? 'That code is incorrect.'
-          : code === 'CodeVerificationFailed' ? 'Verification failed — please try again.'
-          : 'Something went wrong — please try again.';
-        errEl.hidden = false;
-      });
-  }
-
-  document.getElementById('otpPopupVerifyBtn').addEventListener('click', verifyOtp);
-  document.getElementById('otpPopupCodeInput').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') verifyOtp();
-  });
-  document.getElementById('otpPopupResendBtn').addEventListener('click', function () {
-    if (state.phone) requestOtp(state.phone);
-  });
-  document.getElementById('otpPopupRetryBtn').addEventListener('click', function () {
-    if (state.phone) requestOtp(state.phone);
-    else closeOverlay();
-  });
-
-  // If this page is restored from the browser's back-forward cache (e.g. the
-  // visitor went on to app.raushco.com and then hit Back), reset to closed
-  // instead of showing whatever step was frozen mid-flow when they left.
-  window.addEventListener('pageshow', function (e) {
-    if (!e.persisted) return;
-    closeOverlay();
-    state = { phone: null, authCode: null, codeVerifier: null };
-    showStep('loading');
-  });
-
-  return {
-    open: function (phone) {
-      openOverlay();
-      requestOtp(phone);
-    },
-  };
-})();
-
+    });
+  })();
 </script>
 </body>
 </html>

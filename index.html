@@ -10,13 +10,13 @@
 <meta name="description" content="Savings, credit, gold, retirement, and business banking, brought together under one Raushco account." />
 <style>
   :root {
-    /* Mercury's real neutral/purple-magic scale, pulled from their production CSS */
+    
     --canvas: #F6F5F2; --wash: #F4F5F9; --surface: #FFFFFF; --surface-2: #F4F5F9;
     --ink: #1E1E2A; --ink-2: #363644; --muted: #70707D; --faint: #9D9DA8;
     --purple: #5266EB; --purple-d: #4354C8; --lav: #9CB4E8;
     --blue: #77BECF; --orange: #FC9B6F; --green: #77C599;
     --line: #DDDDE5; --line-2: #EDEDF3; --mega-line-dark: rgba(175,178,206,.36);
-    /* Mercury's actual radius scale (rem-based: .25/.375/.5/.75/1/1.5/2/2.5rem) */
+    
     --r-sm: 6px; --r-md: 12px; --r-lg: 16px; --r-xl: 24px; --r-2xl: 32px; --r-3xl: 40px;
     --shadow-xs: 0 1px 2px rgba(20,18,45,.05);
     --shadow-sm: 0 1px 2px rgba(20,18,45,.04), 0 6px 16px rgba(20,18,45,.05);
@@ -27,7 +27,7 @@
     --ease-pop-out: cubic-bezier(.4,1,.2,1);
     --ease-enter: cubic-bezier(.6,0,.3,1);
     --ease-theme: cubic-bezier(0,0,.6,1);
-    --ease-out-mercury: cubic-bezier(0,0,.2,1);
+    --ease-out-soft: cubic-bezier(0,0,.2,1);
     --ease-gate: cubic-bezier(.4,0,.2,1);
     color-scheme: light;
   }
@@ -40,20 +40,11 @@
     font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
   }
-  /* Page-level background theme, off the SAME shared signal as .nav[data-theme] below (one
-     IntersectionObserver, one flag — not a second mechanism). Confirmed against mercury.com's
-     real compiled source (their "theme-switcher" module): the page background is not painted
-     per-<section> (most of their sections are transparent) and is not a scroll-position color
-     interpolation either — it's exactly this: a single shared element's background-color,
-     CSS-transitioned over --theme-transition-duration/-ease (their real values: .5s,
-     cubic-bezier(0,0,.6,1) — i.e. --ease-theme above), flipped by the IntersectionObserver at a
-     scroll threshold. Add more data-theme values here (anything other than "dark") and this
-     cross-fades the whole page the same way mercury's does; today every section on this page is
-     "dark" so this rule is wired but inert. */
+  
   body[data-theme="dark"] { background: #171721; }
   @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
   a { color: inherit; text-decoration: none; }
-  /* Global focus hygiene: no default browser ring anywhere, a consistent one only for keyboard focus */
+  
   a, button, input { outline: none; }
   .mega-foot:focus-visible, .nav-drop-trigger:focus-visible { outline: none; }
   a:focus-visible, button:focus-visible, input:focus-visible { outline: 2px solid rgba(255,255,255,.5); outline-offset: 2px; }
@@ -62,9 +53,8 @@
   p { margin: 0; }
   .em { color: var(--purple); }
 
-  /* ── Nav (72px, matches Mercury's --navbar-height) ── */
-  /* ── Announcement bar (ported from /raushan) — site-header is the fixed wrapper, .nav sits in
-     normal flow below it so dismissing the bar reflows the nav upward automatically. ── */
+  
+  
   .site-header { position: fixed; top: 0; left: 0; right: 0; z-index: 70; }
   .announce-bar { background: #1C1A16; color: #fff; font-size: 13.5px; }
   .announce-row { display: flex; align-items: center; justify-content: center; gap: 18px; height: 44px; position: relative; }
@@ -85,15 +75,7 @@
   .announce-close:hover { color: #fff; }
   @media (prefers-reduced-motion: reduce) { .announce-chase span, .announce-link-dot { animation: none; } .announce-chase span { opacity: 0.6; } }
 
-  /* ── Live rate ticker — sits between the announce bar and the nav, inside #siteHeader (see HTML
-     below), so it shares the header's fixed stacking context. The visual/motion mechanic is a UI
-     reference pulled from stablemoney.in's own "LiveTicker" component (fixed label segment +
-     continuous right-to-left scroll of a doubled item list, pause on hover/touch); it's
-     reimplemented here as a plain CSS transform animation rather than their hand-rolled
-     requestAnimationFrame loop — same seamless-loop result, but frame-rate independent and it
-     inherits the sitewide prefers-reduced-motion handling above for free. Every bank name/rate
-     below is Raushco's own already-established partner data (same facts as the `personas` array
-     further down this file) — nothing from stablemoney's own bank listings or rates. */
+  
   .rate-ticker { position: relative; display: flex; align-items: stretch; height: 44px; background: #15151B; border-top: 1px solid rgba(255,255,255,.07); border-bottom: 1px solid rgba(255,255,255,.07); overflow: hidden; }
   .rate-ticker-label { display: flex; align-items: center; flex: 0 0 auto; gap: 8px; padding: 0 20px; border-right: 1px solid rgba(255,255,255,.1); white-space: nowrap; }
   .rate-ticker-dot { width: 6px; height: 6px; flex-shrink: 0; background: var(--green); animation: rateDotPulse 1.8s ease-in-out infinite; }
@@ -114,69 +96,56 @@
   @media (prefers-reduced-motion: reduce) { .rate-ticker-track [data-dup] { display: none; } }
   @media (max-width: 620px) { .rate-ticker-label { padding: 0 14px; } .rate-ticker-label span { font-size: 9px; letter-spacing: .1em; } .rate-chip { padding: 0 18px; gap: 8px; } }
 
-  /* backdrop-filter must NOT live directly on #nav: a non-none backdrop-filter/filter/transform on an
-     element makes it a new containing block for its position:fixed descendants — and .mega-menu is a
-     fixed-position descendant of #nav. That silently reinterpreted the dropdown's viewport-relative
-     `top` offset as relative to #nav's own box instead, which sits 44px down whenever the announcement
-     bar is visible, producing a 44px gap under the dropdown exactly (and only) in that state. Moving
-     the blur onto a ::before pseudo-element keeps #nav itself free of any containing-block-creating
-     property, so .mega-menu's fixed positioning resolves against the viewport correctly again. */
+  
   .nav { position: relative; z-index: 60; border-bottom: 1px solid transparent; transition: color .5s var(--ease-theme), border-color .5s var(--ease-theme); }
   .nav::before { content: ''; position: absolute; inset: 0; z-index: -1; background: transparent; transition: background-color .5s var(--ease-theme), backdrop-filter .5s var(--ease-theme); }
   .nav.scrolled { border-color: var(--line); }
   .nav.scrolled::before { background: rgba(255,255,255,.85); backdrop-filter: saturate(180%) blur(16px); }
-  /* Nav crossfades dark↔light as it slides over differently-themed sections underneath (Mercury's scroll effect) */
+  
   .nav[data-theme="dark"] { border-color: transparent; }
   .nav[data-theme="dark"].scrolled { border-color: rgba(255,255,255,.12); }
   .nav[data-theme="dark"].scrolled::before { background: #171721; backdrop-filter: saturate(180%) blur(16px); }
   .nav[data-theme="dark"] .brand, .nav[data-theme="dark"] .nav-links a, .nav[data-theme="dark"] .btn-ghost, .nav[data-theme="dark"] .btn-line { color: #fff; }
   .nav:not([data-theme="dark"]) .brand .mk { filter: none; }
-  /* .brand's own color:var(--ink) directly matches the element, so it beats the footer's general
-     [data-theme="dark"]{color:#fff} inherited rule — needs its own explicit override, same as nav. */
+  
   footer[data-theme="dark"] .brand { color: #fff; }
   .nav[data-theme="dark"] .nav-links > a:hover, .nav[data-theme="dark"] .nav-links > .nav-item > a:hover { background: rgba(120,126,150,.35); color: #fff; }
   .nav[data-theme="dark"] .btn-ghost:hover { background: rgba(120,126,150,.35); }
   .nav[data-theme="dark"] .btn-line { border-color: rgba(255,255,255,.28); }
   .nav[data-theme="dark"] .btn-line:hover { border-color: #fff; }
-  /* Nav spans wider than the capped content column — closer to full-bleed, like the real one */
+  
   .nav-inner { position: relative; display: flex; align-items: center; justify-content: space-between; height: 72px; width: 100%; padding: 0 36px; }
   .brand { display: flex; align-items: center; gap: 10px; font-weight: 500; font-size: 17px; color: var(--ink); text-transform: uppercase; }
   .brand .mk { width: 26px; height: 26px; flex: 0 0 26px; filter: brightness(0) invert(1); transition: filter .25s; }
-  /* Absolutely centered on the full bar, independent of logo/button widths */
-  /* No transform here on purpose — a transformed ancestor creates a new containing block for
-     position:fixed descendants (the mega-menu), which broke its full-viewport positioning. */
+  
+  
   .nav-links { position: absolute; inset: 0; margin: auto; width: fit-content; height: fit-content; display: flex; align-items: center; gap: 2px; }
   .nav-links a { height: 38px; font-size: 14.5px; color: var(--ink-2); font-weight: 500; padding: 0 15px; border-radius: 999px; transition: color .15s var(--ease-snap), background .15s var(--ease-snap); display: inline-flex; align-items: center; gap: 5px; }
   .nav-links > a:hover, .nav-links > .nav-item > a:hover { color: var(--ink); background: #F3F2F8; }
   .nav-links .caret { font-size: 9px; color: var(--faint); }
   .nav[data-theme="dark"] .nav-links .caret { color: #fff; }
-  /* Extra specificity (matches personal-banking) so this beats .mega-col a's own dimming rule —
-     without it, dropdown links sit dimmed at rest instead of full white like the rest of the nav. */
+  
   .nav:not(.scrolled)[data-theme="dark"] .nav-links a, .nav[data-theme="dark"]:not(.scrolled) .nav-links a { color: #fff; }
   .nav-links .caret svg { transition: transform .2s var(--ease-snap); display: block; }
 
-  /* ── Products mega-menu ── */
+  
   .nav-item { position: relative; }
-  /* Hover-driven (Radix NavigationMenu model: open-delay 200ms, skip-delay 300ms when switching between
-     already-open items) — click-to-toggle and outside-click-to-close are kept as a fallback for touch/keyboard. */
+  
   .nav-item.open .nav-drop-trigger { background: #424962; }
   .nav-item.open .caret svg { transform: rotate(180deg); }
   .mega-menu { position: fixed; left: 0; right: 0; top: var(--mega-top, 72px); background: #fff; border: 1px solid var(--line); border-radius: 0 0 12px 12px; overflow: hidden; opacity: 0; visibility: hidden; transform-origin: top center; transform: scale(.96); transition: opacity .25s var(--ease-pop), transform .25s var(--ease-pop), visibility .175s var(--ease-gate); z-index: 55; text-align: left; }
   .nav[data-theme="dark"] .mega-menu { background: #272735; border-color: var(--mega-line-dark); }
   .nav-item.open .mega-menu { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
-  /* Nav itself matches the open dropdown's color, regardless of scroll/theme state */
+  
   .nav:has(.nav-item.open) { background: #fff !important; border-color: transparent; }
   .nav[data-theme="dark"]:has(.nav-item.open) { background: #272735 !important; border-color: transparent; }
-  /* Full-bleed to the panel's own edge, matching mercury's real grid exactly — no cap/centering.
-     Zero column-gap + uniform per-cell padding mirrors mercury's actual seam-divider model
-     (cells butt together, the border IS the gutter) instead of a gap-plus-floating-border. */
+  
   .mega-grid { display: grid; column-gap: 0; padding: 0; }
   .mega-grid-3 { grid-template-columns: repeat(3, 1fr); }
   .mega-grid-4 { grid-template-columns: repeat(4, 1fr); }
-  /* Business: single row of 5 (feature + 4 columns), not mercury's real 1+2x2 stack —
-     explicit, deliberate call to keep this dropdown shorter. Do not "fix" this back to 2x2. */
+  
   .mega-grid-business { grid-template-columns: 1.25fr repeat(4, 1fr); }
-  /* Solutions: a cell can internally flex-stack 2-3 heading+description groups (Tech/Ecommerce/Agencies) */
+  
   .mega-col-stack { display: flex; flex-direction: column; gap: 32px; }
   .mega-feature, .mega-col { border-right: 1px solid var(--line); padding: 32px; }
   .nav[data-theme="dark"] .mega-feature, .nav[data-theme="dark"] .mega-col { border-right-color: var(--mega-line-dark); }
@@ -197,9 +166,7 @@
   .mega-feature p, .mega-col p { font-size: 13.5px; color: var(--muted); line-height: 1.5; margin: 0; }
   .nav[data-theme="dark"] .mega-feature p, .nav[data-theme="dark"] .mega-col p { color: rgba(255,255,255,.5); }
   .mega-feature p { margin-bottom: 20px; }
-  /* `a.mega-cta` (not bare `.mega-cta`) on purpose: `.nav-links a` is .nav-links+a = (0,1,1), which
-     beat a bare `.mega-cta` (0,1,0) and silently overrode its padding/height with the plain nav-link's
-     38px/0 15px box. Adding the `a` ties the specificity and wins on source order instead. */
+  
   a.mega-cta { height: auto; display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--ink); background: rgba(0,0,0,.05); padding: 6px 16px; border-radius: 999px; transition: background .15s var(--ease-snap); }
   a.mega-cta:hover { background: rgba(0,0,0,.09); }
   .nav[data-theme="dark"] a.mega-cta { color: #fff; background: rgba(156,180,232,.2); }
@@ -216,10 +183,7 @@
   .mega-col a:hover { color: var(--ink); }
   .nav[data-theme="dark"] .mega-col a { color: rgba(255,255,255,.75); }
   .nav[data-theme="dark"] .mega-col a:hover { color: #fff; }
-  /* Rest is pinned to full white (line 136, kept from a prior pass — don't revert), which leaves no
-     headroom to brighten further on hover. Mercury's own link-hover is actually a slight DIM (not a
-     brighten) — rgb(237,237,243)→rgb(195,195,204) on their nearest equivalent — so this restores a
-     visible hover response in the same direction, without touching the protected rest color. */
+  
   .nav:not(.scrolled)[data-theme="dark"] .mega-col a:hover, .nav[data-theme="dark"]:not(.scrolled) .mega-col a:hover { color: rgba(255,255,255,.78); }
   .mega-col a::after { content: '\2192'; opacity: 0; transition: opacity .3s var(--ease-snap); }
   .mega-col a:hover::after { opacity: 1; }
@@ -239,11 +203,10 @@
   @media (max-width: 980px) { .mega-menu { display: none; } }
   .nav-cta { display: flex; align-items: center; gap: 10px; }
   .nav .btn-purple { height: 40px; padding: 0 20px; }
-  /* line-height:1.5 here (not the base .btn's tight line-height:1) so the text has the same visual
-     weight/generosity as Pricing/About beside it — still well clear of this 38px box, no clipping risk */
+  
   .nav .btn-ghost { height: 38px; line-height: 1.5; }
-  /* Mercury's buttons are true pills (radius = half the height), not rounded-rects */
-  .btn { display: inline-flex; align-items: center; gap: 7px; font-family: inherit; font-size: 16px; font-weight: 420; letter-spacing: normal; line-height: 1; border-radius: 999px; cursor: pointer; border: 1px solid transparent; white-space: nowrap; position: relative; overflow: hidden; padding: 11px 22px; transition: background-color .3s var(--ease-out-mercury), border-color .3s var(--ease-out-mercury), color .3s var(--ease-out-mercury); }
+  
+  .btn { display: inline-flex; align-items: center; gap: 7px; font-family: inherit; font-size: 16px; font-weight: 420; letter-spacing: normal; line-height: 1; border-radius: 999px; cursor: pointer; border: 1px solid transparent; white-space: nowrap; position: relative; overflow: hidden; padding: 11px 22px; transition: background-color .3s var(--ease-out-soft), border-color .3s var(--ease-out-soft), color .3s var(--ease-out-soft); }
   .btn:focus { outline: none; }
   .btn:focus-visible { outline: 2px solid rgba(82,102,235,.55); outline-offset: 2px; }
   .btn-ghost { background: transparent; color: var(--ink); padding: 0 15px; }
@@ -251,36 +214,25 @@
   .btn-line { background: transparent; color: var(--ink); padding: 8px 15px; border-color: var(--line); }
   .btn-line:hover { border-color: var(--ink); }
   .btn-lg { height: 38px; padding: 0 30px; font-size: 15px; }
-  /* Radial glow, not a flat fill — lighter periwinkle hotspot drifting slowly, matching the real button */
+  
   .btn-purple { background: var(--purple); color: #fff; }
   .btn-purple:hover { background: var(--purple-d); }
-  /* Filled tonal-lavender pill — mercury's real secondary/"Contact sales"-style button on dark
-     sections (bg-surface-emphasized). New class, kept separate from .btn-line so the unrelated
-     3-up-card CTAs ("Explore credit cards"/"Explore Treasury") that already use .btn-line elsewhere
-     on the page are untouched. */
+  
   .btn-tonal { background: rgba(156,180,232,.2); color: #fff; height: 40px; padding: 0 20px; }
   .btn-tonal:hover { background: rgba(156,180,232,.28); }
-  /* Frosted-glass variant for buttons/inputs sitting on a dark/photo section */
+  
   [data-theme="dark"] .btn-line { color: #fff; border-color: rgba(255,255,255,.3); background: rgba(255,255,255,.08); backdrop-filter: blur(10px); }
   [data-theme="dark"] .btn-line:hover { border-color: #fff; background: rgba(255,255,255,.14); }
   .arrow { transition: transform .18s var(--ease-snap); }
   .btn:hover .arrow { transform: translateX(2px); }
 
-  /* ── Hero: full-bleed dark/photo-style band, nothing but nav + headline + form ── */
-  /* Pull the hero up under the sticky nav's reserved 72px so the photo runs edge-to-edge behind the transparent nav.
-     160px = announce-bar(44) + rate-ticker(44) + nav(72) — the fixed header's full stacked height. */
+  
+  
   .hero { position: relative; margin-top: 0; min-height: 100vh; display: flex; flex-direction: column; align-items: center; text-align: center; overflow: hidden; padding-top: calc(9vh + 160px); }
   .hero-bg { position: absolute; inset: 0; z-index: 0; background: #14161c url('assets/images/hero-raushco-tower.jpg') center 30% / cover no-repeat; }
   .hero-bg::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,.62) 0%, rgba(0,0,0,.15) 45%, rgba(0,0,0,.5) 100%); }
 
-  /* ── Hero annotations: roaming square dots + connector lines + a reveal card, ported from
-     /raushan (same mechanism; /raushan uses hero-shimla.jpg, ours now uses
-     hero-raushco-tower.jpg — the dot waypoints are generic % positions, not tied to either
-     image's content, so this swaps cleanly). Each dot roams continuously along its own
-     multi-point path rather
-     than sitting still; waypoints are percentages of the hero box, not pixels, so they hold up
-     across viewport sizes. Path animation-delays are negative on purpose so each dot starts
-     partway along its path instead of all starting together at their anchor point. */
+  
   .hero-annotations { position: absolute; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
   .hn-dot {
     position: absolute; width: 10px; height: 10px; background: #FFFFFF;
@@ -310,10 +262,7 @@
     white-space: nowrap; opacity: 0; transition: opacity 0.4s ease;
   }
   .hn-label.is-visible { opacity: 1; }
-  /* The card's DOM box sits at its final position/size from the moment it opens — it never
-     scales. A clip-path: inset() window grows from a 10x10 square at the dot's exact position
-     out to the full box, so the title/body text is always rendered at real size, just
-     progressively unmasked. */
+  
   .hn-card {
     position: absolute; width: 260px;
     background: #F7F6F1; border-radius: 0; padding: 18px 20px;
@@ -343,9 +292,9 @@
   h1.hero-h { color: #EDEDF3; font-weight: 480; font-size: clamp(2.1rem, 5vw, 3.6rem); line-height: 1.1; letter-spacing: normal; max-width: 26ch; margin: 0 auto 18px; }
   .hero-sub { font-weight: 400; font-size: 20px; color: rgba(255,255,255,.72); max-width: 46ch; margin: 0 auto 30px; line-height: 1.5; letter-spacing: -.005em; }
   .hero-form { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; align-items: center; }
-  /* One merged pill: input + "Open account" embedded inside the same rounded container, like Mercury's */
+  
   .email-combo { display: flex; align-items: center; height: 48px; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; background: rgba(255,255,255,.1); backdrop-filter: blur(10px); padding: 5px; transition: border-color .15s var(--ease-snap), background .15s var(--ease-snap); }
-  /* Country chip (flag + dial code), ported from /raushan's hero-country-chip */
+  
   .phone-chip { position: relative; display: inline-flex; align-items: center; gap: 6px; flex-shrink: 0; padding: 8px 16px 8px 14px; }
   .phone-chip::after { content: ''; position: absolute; top: 8px; bottom: 8px; right: 0; width: 1px; background: rgba(255,255,255,.25); }
   .phone-chip img { width: 20px; height: 20px; border-radius: 50%; object-fit: cover; }
@@ -355,13 +304,13 @@
   .email-combo input::placeholder { color: rgba(255,255,255,.55); }
   .email-combo input:focus { outline: none; }
   .email-combo .btn-purple { height: 38px; flex: 0 0 auto; }
-  /* Matches the "Open account" button nested inside the phone-number pill exactly (38px), not the outer pill itself */
+  
   .hero-demo-btn { height: 38px; padding: 0 22px; }
   .hero-note-wrap { position: absolute; left: 0; right: 0; bottom: 32px; z-index: 1; padding: 0 24px; display: flex; justify-content: center; }
   .hero-note { display: inline-block; font-size: 12.5px; color: rgba(255,255,255,.8); white-space: nowrap; line-height: 1.5; background: rgba(20,20,27,.55); backdrop-filter: blur(10px); padding: 10px 20px; border-radius: 14px; }
   @media (max-width: 760px) { .hero-note { white-space: normal; max-width: 90vw; text-align: center; } }
 
-  /* Email focus tooltip */
+  
   .email-field { position: relative; }
   .email-tip { position: absolute; top: calc(100% + 8px); left: 0; width: 320px; max-width: 80vw; background: rgba(20,20,27,.94); backdrop-filter: blur(14px); border: 1px solid rgba(255,255,255,.12); border-radius: 14px; padding: 14px 16px; text-align: left; opacity: 0; transform: translateY(-4px); pointer-events: none; transition: opacity .18s var(--ease-snap), transform .18s var(--ease-snap); z-index: 20; box-shadow: 0 12px 32px rgba(0,0,0,.4); }
   .email-field:focus-within .email-tip { opacity: 1; transform: none; pointer-events: auto; }
@@ -374,29 +323,22 @@
   .opt-out .cbx:checked + .cbx-box { background: var(--purple); border-color: var(--purple); }
   .opt-out .cbx:checked + .cbx-box .cbx-check { opacity: 1; }
 
-  /* ── Sections ── */
+  
   .sec { padding: 104px 0; }
   .sec-head { max-width: 680px; margin: 0 auto 56px; text-align: center; }
   .sec-head.left { text-align: left; margin: 0 0 48px; max-width: 620px; border-top: 1px solid var(--line-2); padding-top: 32px; }
   .sec-head h2 { font-size: clamp(30px, 4.2vw, 46px); line-height: 1.05; letter-spacing: -.035em; }
   .sec-head p { font-size: 18px; color: var(--muted); line-height: 1.5; margin-top: 15px; }
 
-  /* ── "Everything you do with money" — auto-advancing tab list driving a swapping visual panel ── */
-  /* Full-bleed, not capped to the site's --maxw column — the video runs to the true right edge, like the real one */
+  
+  
   .value-pin-wrap { position: relative; height: 120vh; }
   .value-pin-inner { position: sticky; top: 0; height: 100vh; display: flex; align-items: center; overflow: hidden; }
   @media (max-width: 900px) {
     .value-pin-wrap { height: auto; }
     .value-pin-inner { position: static; height: auto; }
   }
-  /* Left edge aligns to where every other section's content starts: sitewide .wrap convention is
-     max-width:1200px (--maxw) centered + 24px padding, i.e. max(24px, (100vw-1200px)/2) — mirrored
-     here since .value-split has no nested .wrap. No padding-right: the right column is full-bleed to
-     the true viewport edge on purpose. (2026-11-10: removed a padding-right that mirrored the left
-     inset — it was based on a screenshot read of mercury's recorded video card, whose dead space around
-     the "card" is baked into the recording itself; mercury's real right-column DOM box measures
-     full-bleed past the true edge too, same as this one is meant to. That padding-right was costing
-     ~140px of width and was the actual reason both columns measured narrower than mercury's.) */
+  
   .value-split { display: grid; grid-template-columns: 496px 1fr; gap: 151px; align-items: center; padding-left: max(24px, calc((100vw - 1200px) / 2)); width: 100%; }
   .value-copy { padding-right: 64px; }
   .value-copy h2 { color: #fff; text-align: left; font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem); line-height: 1.15; letter-spacing: -.03em; margin-bottom: 36px; }
@@ -411,33 +353,23 @@
   .link-underline { display: inline-block; margin-top: 26px; font-size: 14.5px; font-weight: 600; color: #fff; text-decoration: underline; text-underline-offset: 4px; }
 
   .value-visual { position: relative; height: 648px; }
-  /* Icon, color, hover-reveal + transition timings pixel/behavior-matched to mercury.com's real
-     play/pause control (verified via live DOM capture: button-analysis.json, deep-dive-output.json,
-     verify-hover.js in scratchpad/mercury-research). Button sits inside .value-visual's bounds
-     (left:16/bottom:16, same as mercury's own offset) — not hanging below the card. */
-  /* appearance/padding/font reset — without this, the browser's default <button> chrome was fighting
-     the custom circular border (reading as a flat bar in places) and throwing off the icon's centering */
-  .play-toggle { all: unset; box-sizing: border-box; position: absolute; left: 16px; bottom: 16px; z-index: 5; width: 40px; height: 40px; border-radius: 50%; background: rgba(175,178,206,.2); border: 1px solid rgba(175,178,206,.36); color: #EDEDF3; display: grid; place-items: center; cursor: pointer; backdrop-filter: blur(20px); opacity: 0; line-height: 1; transition: opacity .2s var(--ease-out-mercury), background-color .3s var(--ease-out-mercury), border-color .3s var(--ease-out-mercury), color .3s var(--ease-out-mercury); }
+  
+  
+  .play-toggle { all: unset; box-sizing: border-box; position: absolute; left: 16px; bottom: 16px; z-index: 5; width: 40px; height: 40px; border-radius: 50%; background: rgba(175,178,206,.2); border: 1px solid rgba(175,178,206,.36); color: #EDEDF3; display: grid; place-items: center; cursor: pointer; backdrop-filter: blur(20px); opacity: 0; line-height: 1; transition: opacity .2s var(--ease-out-soft), background-color .3s var(--ease-out-soft), border-color .3s var(--ease-out-soft), color .3s var(--ease-out-soft); }
   .value-visual:hover .play-toggle, .value-visual:focus-within .play-toggle { opacity: 1; }
   .play-toggle:hover { background: rgba(175,178,206,.28); }
   .play-toggle:active { background: rgba(175,178,206,.33); }
   .play-toggle svg { height: 16px; width: auto; display: block; }
-  .play-toggle svg.pt-play { position: relative; right: -6px; } /* optical re-center of the play triangle — re-measured by rendering the icon at several offsets and comparing visually; -4px (mercury's own literal -right-1) still read left-heavy at our size, -6px centers it */
-  /* Matches the measured "main bright panel" (400px), not the taller outer envelope (648px, the figure
-     that included mercury's extra peeking-panel elements below, which we don't have) — .value-visual
-     stays 648px for correct row vertical-centering, this is just the actual visible card.
-     No left inset: real-browser pixel-detection (not just computed-style) found mercury's own visible
-     card edge sits flush with .value-visual's own box (~767px) — a prior margin-left:33px here pushed
-     the card and the play-button both ~33px too far right. Do not re-add it. */
-  .panel-stack { position: relative; height: 520px; } /* taller — closer to .value-visual's own 648px envelope, still leaving room so the stack doesn't crowd it */
-  .panel { position: absolute; inset: 0; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.1); border-right: none; border-radius: 12px 0 0 12px; overflow: hidden; pointer-events: none; opacity: 0; filter: blur(10px); transition: opacity .4s var(--ease-out-mercury), filter .4s var(--ease-out-mercury); } /* 12px = mercury's own --ds-border-radius-large token (confirmed from their live CSS, same one the auth card uses), not the smaller 8px guess */
+  .play-toggle svg.pt-play { position: relative; right: -4px; } 
+  
+  .panel-stack { position: relative; height: 400px; }
+  .panel { position: absolute; inset: 0; background: rgba(255,255,255,.035); border: 1px solid rgba(255,255,255,.1); border-right: none; border-radius: 8px 0 0 8px; overflow: hidden; pointer-events: none; opacity: 0; filter: blur(10px); transition: opacity .4s var(--ease-out-soft), filter .4s var(--ease-out-soft); }
   .panel.active { opacity: 1; filter: blur(0); pointer-events: auto; }
-  /* Top edge fades into the panel rather than cutting hard — matches the real product-tour cards */
-  /* Source recordings capture Mercury's whole page (card floating in their own dark margins) —
-     scale up to crop into just the card so it fills the frame instead of floating small in empty space. */
+  
+  
   .p-video { width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; display: block; transform: scale(2.3); transform-origin: 50% 20%; -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 14%); mask-image: linear-gradient(180deg, transparent 0%, #000 14%); }
 
-  /* ── "Loved by 300K+" — grayscale logo strip + a photo-testimonial carousel ── */
+  
   .logo-strip { display: flex; flex-wrap: wrap; gap: 30px 44px; justify-content: center; align-items: center; margin: 8px 0 60px; }
   .logo-strip span { font-size: 19px; font-weight: 700; letter-spacing: -.02em; color: rgba(255,255,255,.4); transition: color .2s var(--ease-snap); }
   .logo-strip span:hover { color: rgba(255,255,255,.75); }
@@ -454,11 +386,8 @@
   .dot { width: 22px; height: 3px; border-radius: 2px; background: rgba(255,255,255,.32); border: none; cursor: pointer; padding: 0; transition: background .2s var(--ease-snap), width .2s var(--ease-snap); }
   .dot.active { background: #fff; width: 32px; }
 
-  /* Feature cards w/ mini illustrations — no card frame on mercury's real equivalent (just image +
-     heading + paragraph stacked, sitting directly on the section backdrop), so the border/bg/radius/
-     hover-lift below were dropped rather than just retuned. Gradient placeholders kept (no real
-     product photography available) but given the image wrapper's own independent radius + 3:2 ratio. */
-  /* ── Partner gallery wall, ported verbatim from /raushan (same real partner logos/data) ── */
+  
+  
   .trust { background: #FFFFFF; padding: 0; overflow: hidden; position: relative; }
   .gallery-stage { position: relative; width: 100%; min-height: 830px; display: flex; align-items: center; overflow: hidden; }
   .trust-label {
@@ -517,13 +446,10 @@
   .quote-band p { font-size: 28px; font-weight: 480; letter-spacing: .015em; line-height: 1.2; color: var(--ink-2); margin-bottom: 32px; }
   .quote-band span { display: block; margin-top: 0; font-size: 16px; color: var(--faint); }
 
-  /* 3-up generic cards (speed / savings / operations reuse) */
-  /* Accordion-with-visual layout, ported from personal-banking's "One account. Endless ways to
-     put it to work." section — visual stack on one side, a single-open accordion list on the
-     other, CSS grid-template-rows (0fr/1fr) driving the expand/collapse height animation. */
+  
+  
   .acc-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: 56px; align-items: stretch; }
-  /* "Get started fast" mirrors the column widths too, so its visual card matches the other
-     section's size exactly — just flipped to the right instead of growing into the wider track. */
+  
   .acc-layout-mirror { grid-template-columns: 1.3fr 1fr; }
   @media (max-width: 1024px) { .acc-layout { grid-template-columns: 1fr; gap: 32px; } }
   .acc-visual { order: -1; aspect-ratio: 4/5; border-radius: var(--r-lg); background: rgba(0,0,0,.03); padding: 28px;
@@ -532,7 +458,7 @@
     border-radius: var(--r-md); opacity: 0; transition: opacity .4s var(--ease-snap); }
   .acc-visual-img.active { opacity: 1; }
   @media (max-width: 1024px) { .acc-visual { display: none; } }
-  /* "Get started fast" mirrors the default acc-layout order: visual goes right, list goes left. */
+  
   #accVisualFast { order: 1; }
   .acc-list-wrap { display: flex; flex-direction: column; justify-content: space-between; }
   .acc-list-wrap h2 { margin-bottom: 8px; }
@@ -549,7 +475,7 @@
   .acc-item.open .acc-a { grid-template-rows: 1fr; }
   .acc-a-inner { overflow: hidden; }
   .acc-a p { padding: 0 0 20px 22px; font-size: 14.5px; line-height: 1.6; color: var(--muted); max-width: 440px; }
-  /* Dark-ambient adaptation, matching the established body[data-theme="dark"] section:not([data-theme]) pattern */
+  
   body[data-theme="dark"] section:not([data-theme]) .acc-visual { background: rgba(255,255,255,.05); }
   body[data-theme="dark"] section:not([data-theme]) .acc-item { border-top-color: rgba(255,255,255,.14); }
   body[data-theme="dark"] section:not([data-theme]) .acc-item.open { border-top-color: #fff; }
@@ -558,8 +484,7 @@
   body[data-theme="dark"] section:not([data-theme]) .acc-a p { color: rgba(255,255,255,.55); }
 
   .card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  /* Ops section only: mercury's real "Run your business like a seasoned pro" grid is 2x2
-     (grid-cols-1 -> md:grid-cols-2), not 3-across — confirmed against mercury.com's live markup. */
+  
   .card-grid-2x2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 24px; }
   .card-3 { border: 1px solid var(--line); border-radius: var(--r-xl); padding: 28px; background: var(--surface); transition: transform .3s var(--ease-pop), box-shadow .3s var(--ease-pop); }
   .card-3:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
@@ -569,19 +494,15 @@
   .card-3 p { font-size: 14.5px; color: var(--muted); line-height: 1.55; }
   .sec-cta { text-align: center; margin-top: 40px; }
 
-  /* Stats band */
+  
   .stats-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 24px; text-align: center; margin-top: 12px; }
   .stats-row b { display: block; font-size: clamp(32px,4vw,48px); letter-spacing: -.03em; font-variant-numeric: tabular-nums; }
   .stats-row small { font-size: 13.5px; color: var(--muted); margin-top: 8px; display: block; }
 
-  /* Security */
-  /* Mercury's real equivalent is a 3-col grid of independent image-led cards (no shared "shield"
-     visual, no icon-chip list — verified live: the 3 real points use a fingerprint photo, a bar-graph
-     illustration, and a toggle-switches illustration, each 4:5). Gradient placeholders substitute for
-     the photography we don't have, sized/radiused to match (4:5, 12px). */
+  
+  
   .sec-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 40px; }
-  /* Book-cover card treatment, ported from /raushan's .gf-card system (same rug-*.jpg photos) —
-     a page peeks out and the photo tilts open in 3D on hover. */
+  
   .sec-card-img { position: relative; aspect-ratio: 4 / 5; perspective: 1400px; margin-bottom: 20px; }
   .sec-card-page { position: absolute; inset: 0; background: #F4F2EC; border-radius: 2px; box-shadow: 0 4px 14px rgba(0,0,0,.16), 0 0 4px rgba(0,0,0,.04); opacity: 0; transition: opacity .4s ease; }
   .sec-card-img:hover .sec-card-page { opacity: 1; }
@@ -598,20 +519,14 @@
   @media (prefers-reduced-motion: reduce) { .sec-card-photo, .sec-card-page, .sec-card-highlight { transition: none; } }
   .sec-card p { font-size: 14.5px; color: var(--muted); line-height: 1.5; }
 
-  /* Press — mercury's real section is a dark band (data-theme="dark", same #171721 token used
-     sitewide), filled non-bordered cards (not outlined), 12px radius not 24px, each ending in its
-     own "Read more" pill rather than nothing. */
+  
   .press-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 18px; }
   .press-c { background: var(--ink); border-radius: var(--r-md); padding: 26px; display: flex; flex-direction: column; }
   .press-c .outlet { font-size: 13px; font-weight: 700; letter-spacing: .02em; color: rgba(255,255,255,.4); margin-bottom: 14px; text-transform: uppercase; }
   .press-c p { font-size: 16px; font-weight: 500; letter-spacing: -.01em; line-height: 1.4; color: #EDEDF3; margin-bottom: 20px; }
   .press-c .btn-tonal { margin-top: auto; align-self: flex-start; }
 
-  /* Final CTA band — on mercury's real page this heading+buttons sit directly on the same flat dark
-     section as the "Mercury for business/personal" cards and the footer right below (no gradient
-     card, no radius, no box-shadow). Restructured from a `.wrap`-capped rounded card into a
-     full-bleed section + nested .wrap like every other section, so the dark background runs edge to
-     edge and reads as one continuous band straight through the offer-grid and footer after it. */
+  
   .cta-band { padding: 96px 0 80px; }
   .cta-inner { text-align: center; }
   .cta-inner h2 { font-size: clamp(29px, 4.4vw, 55px); line-height: 1.05; letter-spacing: .01em; margin-bottom: 14px; }
@@ -619,21 +534,13 @@
   .cta-btns { display: inline-flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
   .cta-btns .btn-purple { height: 40px; padding: 0 20px; font-size: 15.5px; }
 
-  /* Product offerings split — same continuous dark band as the CTA above and footer below;
-     --ink (#1E1E2A) doubles as mercury's real "one step lighter than the page bg" card fill. */
+  
   .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
   .offer { background: var(--ink); border-radius: var(--r-md); padding: 16px; }
   .offer h3 { font-size: 26px; letter-spacing: .01em; margin-bottom: 10px; color: #EDEDF3; }
   .offer p { font-size: 15px; font-weight: 360; color: rgba(255,255,255,.6); line-height: 1.55; margin-bottom: 22px; }
 
-  /* Footer — rebuilt to mercury.com's real, measured footer spec (Playwright capture against
-     live production, Nov 2026): a single 4-col CSS grid that auto-wraps into 2 rows (8 category
-     columns), not two hand-coded rows — column/row gaps, heading/link type, hover+focus-visible
-     treatment, and the "Disclaimers and footnotes" legal section's 4/12·8/12 label+content grid,
-     128px/1px/32px divider, and 20px vertical rhythm are all taken from mercury's own
-     getComputedStyle()/getBoundingClientRect() values at their 1024px content width, scaled by
-     ratio (not raw px) to our --maxw:1200px − 2×24px .wrap padding = 1152px. No border-top/color
-     seam between the two sections — same #171721 band, divider is whitespace + a hairline rule. */
+  
   footer { padding: 56px 0 0; }
   .foot-brand { margin-bottom: 56px; }
   .foot-brand .brand { margin-bottom: 12px; }
@@ -646,10 +553,7 @@
   .foot-col a:hover { color: #C3C3CC; text-decoration: underline; text-decoration-color: #C3C3CC; text-decoration-thickness: 1px; text-underline-offset: 4px; }
   .foot-col a:focus-visible { color: #C3C3CC; text-decoration: underline; text-decoration-color: #C3C3CC; text-decoration-thickness: 1px; text-underline-offset: 4px; outline: 2px solid #9CB4E8; outline-offset: 4px; }
 
-  /* Disclaimers and footnotes — a separate <section> immediately after </footer> in markup (matches
-     mercury's real structure exactly: it's not nested inside their <footer> either), same #171721
-     band via the existing section[data-theme="dark"] rule below, divider pulled 128px below the
-     link-grid's own bottom padding. */
+  
   .foot-disclaimers .wrap { margin-top: 128px; border-top: 1px solid #C3C3CC; padding: 32px 24px 64px; }
   .disc-grid-m { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 0; row-gap: 20px; }
   .disc-grid-m h2 { grid-column: span 4; font-size: 12px; line-height: 1.4; font-weight: 400; color: #EDEDF3; }
@@ -663,9 +567,7 @@
   .disc-content-m strong { font-weight: 600; }
   .disc-copyright { color: #C3C3CC; }
 
-  /* "More" — collapsible FD sitemap block, sits just below the foot-grid-m
-     columns (right under Solutions' own last item) and before the
-     disclaimers section. Same dark-footer tokens as the rest of the footer. */
+  
   .foot-more { margin-top: 40px; border-top: 1px solid rgba(255,255,255,.12); padding-top: 24px; }
   .foot-more summary { cursor: pointer; font-size: 14px; color: #C3C3CC; list-style: none; display: inline-flex; align-items: center; gap: 6px; user-select: none; }
   .foot-more summary::-webkit-details-marker { display: none; }
@@ -681,70 +583,31 @@
 
   .reveal { opacity: 0; transform: translateY(50px); transition: opacity .5s ease-out, transform .5s ease-out; }
   .reveal.in { opacity: 1; transform: none; }
-  /* Scoped alternative to .reveal's travel/easing, additive (class="reveal reveal-pop") so it only
-     applies where threaded on — testimonials section down to the footer. Sections above (hero,
-     value-split) keep the original .reveal behavior untouched, per scope. Matches the shorter
-     16px-travel + ease-pop "settle" used by every other Mercury-theme page in this repo
-     (nps-vatsalya, fd-backed-credit-card) instead of this page's 50px outlier. */
+  
   .reveal.reveal-pop { transform: translateY(16px) scale(.985); transition: opacity .5s var(--ease-pop), transform .5s var(--ease-pop); }
 
-  /* ── Full-bleed dark section bands ── */
+  
   section[data-theme="dark"], footer[data-theme="dark"] { background: #171721; color: #fff; }
-  /* Light sections must self-paint too, not just rely on ambient/body inheritance — confirmed via
-     live scroll testing that #security's tail (its last ~450px) otherwise shows the WRONG, dark
-     background while still on-screen the instant body's shared flag flips at the next section's
-     (#press) own trigger line, even though #security's own box hasn't scrolled past yet. #features
-     (the dark-side mirror case) never had this problem for the same reason this rule fixes it here:
-     it self-paints via the rule above instead of depending on the ambient flag's timing. */
+  
   section[data-theme="light"] { background: var(--canvas); color: var(--ink); }
   section[data-theme="dark"] .sec-head p { color: rgba(255,255,255,.6); }
   section[data-theme="dark"] .card-3 { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.12); }
   section[data-theme="dark"] .card-3 p { color: rgba(255,255,255,.55); }
   section[data-theme="dark"] .stats-row small { color: rgba(255,255,255,.55); }
-  /* #features' own hardcoded light-theme colors (.feat p / .quote-band p/span) don't auto-adapt to the
-     section-level color:#fff cascade, so they need explicit dark-theme overrides same as the rest. */
+  
   section[data-theme="dark"] .feat h3 { color: #EDEDF3; }
   section[data-theme="dark"] .feat p { color: #C3C3CC; }
   section[data-theme="dark"] .quote-band p { color: #EDEDF3; }
   section[data-theme="dark"] .quote-band span { color: rgba(255,255,255,.6); }
-  /* Sections with no background/data-theme of their own (e.g. "Stop losing money to fees") are
-     ambient — they show whatever color is currently on <body>, driven by the same scroll-flag as
-     the nav. Their text was never re-targeted for that state, so it stayed dark-on-dark once the
-     ambient background actually went dark. Mirrors the explicit-dark-section overrides above. */
+  
   body[data-theme="dark"] section:not([data-theme]) { background: #171721; color: #fff; transition: background-color .5s var(--ease-theme), color .5s var(--ease-theme); }
   body[data-theme="dark"] section:not([data-theme]) .sec-head p { color: rgba(255,255,255,.6); }
   body[data-theme="dark"] section:not([data-theme]) .card-3 { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.12); }
   body[data-theme="dark"] section:not([data-theme]) .card-3 p { color: rgba(255,255,255,.55); }
   body[data-theme="dark"] section:not([data-theme]) .feat-body p { color: #C3C3CC; }
-  /* Explicit owner call on the scroll-theme sequencing: #features ("Banking's been a headache...")
-     is the LAST DARK section — it keeps data-theme="dark" and must render dark for its own full
-     height, no exceptions. Right after it, the LIGHT stretch (beige, via --canvas) runs through the
-     trust/logo-wall div, "Get started fast" / "Stop losing money to fees" / #ops / #stats /
-     #security — the next dark section is #press ("Built on trust..."), which is where the
-     light→dark flip actually fires again.
-     IMPORTANT, non-obvious: the themeIO observer below LATCHES — on every callback it only
-     reassigns nav/body's theme when *some* [data-theme] element's midpoint is currently topmost;
-     when none is (e.g. the ~128px whitespace gap between </footer> and "Disclaimers and
-     footnotes"), it deliberately does nothing and holds the last value (that's the fix for a worse
-     bug: without latching, a tiny gap between two dark sections briefly flashed light). Latching
-     only works if there's an actual opposing marker to latch onto on BOTH sides of every stretch —
-     a run of page with zero [data-theme] elements in it would just inherit whatever was last set
-     and never change, no matter how long the run is. So every ambient section in the light stretch
-     (the trust div, both accordion sections, #ops, #stats, #security) carries an explicit
-     data-theme="light" of its own — there is no bare, unmarked section anywhere between #features
-     and #press any more. "light" now ALSO has its own CSS rule (section[data-theme="light"]
-     { background: var(--canvas); color: var(--ink); }, right above) — these sections self-paint
-     instead of depending on the ambient flag for their own visuals, same as data-theme="dark"
-     sections already did. That self-paint rule was added after a real bug: #security's own
-     trailing edge (while still on-screen) briefly showed the WRONG background, because the shared
-     flag flips the instant the viewport center crosses into #press — a different, nearby section —
-     not when #security itself actually scrolls out. Do NOT put data-theme="light" (or remove data-theme) on
-     #features itself to "fix" the latch — #features must stay dark per the owner, and the anchor
-     immediately after it (the trust div) is what the latch needs; do not re-add a per-ID forced
-     background or a stray data-theme="dark" to #ops/#stats/#security either. Do not change this
-     sequencing without re-checking with the owner first. */
+  
 
-  /* Nav hamburger — hidden on desktop, replaces links+CTA below the breakpoint */
+  
   .nav-burger { display: none; width: 34px; height: 34px; border: none; background: transparent; color: var(--ink); cursor: pointer; margin-left: auto; align-items: center; justify-content: center; font-size: 18px; }
   .nav[data-theme="dark"] .nav-burger { color: #fff; }
   .nav-menu { display: none; flex-direction: column; gap: 2px; padding: 8px 24px 20px; border-top: 1px solid var(--line-2); background: rgba(255,255,255,.96); backdrop-filter: blur(16px); }
@@ -766,8 +629,7 @@
     .value-visual { height: auto; }
     .panel-stack { height: 400px; margin-left: 0; }
     .testi-carousel { height: 440px; }
-    /* Mercury's own mobile behavior for both footer sections: link-grid to 2 cols (same gap
-       tokens), disclaimers' label+content to a single stacked column, label above content. */
+    
     .foot-grid-m { grid-template-columns: 1fr 1fr; }
     .disc-grid-m { grid-template-columns: 1fr; }
     .disc-grid-m h2, .disc-grid-m .disc-content-m { grid-column: 1 / -1; }
@@ -786,10 +648,7 @@
     .email-field:focus-within .email-tip { transform: translate(-50%,0); }
   }
 
-  /* Get-the-app QR modal — self-contained (no dependency on page-level CSS tokens), so this exact
-     block can be copy-pasted onto every marketing page unchanged. Opened by every "Log in"
-     link/button sitewide (wired by text content, not by class, in the matching script block —
-     see qr-modal-overlay's companion <script>). */
+  
   .qr-modal-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10,10,14,.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .25s cubic-bezier(.2,1,.4,1), visibility .25s; padding: 24px; }
   .qr-modal-overlay.is-open { opacity: 1; visibility: visible; }
   .qr-modal { position: relative; background: #ffffff; border-radius: 24px; padding: 44px 36px 36px; max-width: 340px; width: 100%; text-align: center; color: #0c1024; transform: scale(.94); transition: transform .25s cubic-bezier(.2,1,.4,1); box-shadow: 0 24px 60px -14px rgba(0,0,0,.28); font-family: inherit; }
@@ -800,27 +659,6 @@
   .qr-modal p { font-size: 14px; font-weight: 400; color: #6b7280; line-height: 1.45; margin: 0 0 22px; }
   .qr-modal-code { display: inline-block; background: #f6f7f9; border-radius: 16px; padding: 14px; line-height: 0; }
   .qr-modal-code img { display: block; width: 176px; height: 176px; }
-
-  .otp-popup-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10,10,14,.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .25s cubic-bezier(.2,1,.4,1), visibility .25s; padding: 24px; }
-  .otp-popup-overlay.is-open { opacity: 1; visibility: visible; }
-  .otp-popup { position: relative; background: #ffffff; border-radius: 24px; padding: 40px 32px 32px; max-width: 360px; width: 100%; text-align: center; color: #0c1024; transform: scale(.94); transition: transform .25s cubic-bezier(.2,1,.4,1); box-shadow: 0 24px 60px -14px rgba(0,0,0,.28); font-family: inherit; }
-  .otp-popup-overlay.is-open .otp-popup { transform: none; }
-  .otp-popup-close { position: absolute; top: 14px; right: 14px; width: 32px; height: 32px; border-radius: 50%; background: #f6f7f9; border: 1px solid rgba(0,0,0,.08); color: #0c1024; font-size: 18px; line-height: 1; cursor: pointer; display: grid; place-items: center; transition: background .2s; padding: 0; }
-  .otp-popup-close:hover { background: #ececef; }
-  .otp-popup-h { font-size: 20px; font-weight: 700; letter-spacing: -.01em; margin: 0 0 6px; color: #0c1024; }
-  .otp-popup-sub { font-size: 14px; font-weight: 400; color: #6b7280; line-height: 1.45; margin: 0 0 20px; }
-  .otp-popup-text { font-size: 14px; font-weight: 400; color: #535461; line-height: 1.45; margin: 14px 0 0; }
-  .otp-popup-spinner { width: 28px; height: 28px; margin: 4px auto 0; border-radius: 50%; border: 3px solid rgba(112,115,147,.16); border-top-color: #061b89; animation: otp-popup-spin .8s linear infinite; }
-  @keyframes otp-popup-spin { to { transform: rotate(360deg); } }
-  .otp-popup-input { width: 100%; box-sizing: border-box; height: 48px; border: 1px solid rgba(112,115,147,.25); border-radius: 10px; text-align: center; font-size: 20px; letter-spacing: 6px; font-family: inherit; color: #0c1024; outline: none; margin-bottom: 10px; background: #fbfcfd; }
-  .otp-popup-input:focus { border-color: #061b89; box-shadow: 0 0 0 1px #061b89 inset; }
-  .otp-popup-error { font-size: 13px; color: #c0392b; margin: 0 0 10px; min-height: 16px; }
-  .otp-popup-btn { width: 100%; height: 48px; border: 0; border-radius: 999px; background: #061b89; color: #fff; font-size: 15px; font-weight: 600; letter-spacing: .2px; cursor: pointer; margin-top: 4px; transition: background .15s; }
-  .otp-popup-btn:disabled { opacity: .5; cursor: not-allowed; }
-  .otp-popup-btn:hover:not(:disabled) { background: #0a2199; }
-  .otp-popup-link { display: block; margin: 14px auto 0; border: 0; background: transparent; color: #061b89; font-size: 13px; font-weight: 500; cursor: pointer; text-decoration: underline; padding: 4px; }
-  .otp-popup-step[hidden] { display: none; }
-
 </style>
 </head>
 <body>
@@ -1457,9 +1295,7 @@
       <a class="brand" href="#top"><img class="mk" src="assets/brand/Subtract.png" alt="Raushco"> Raushco</a>
       <p class="foot-tag">Banking, credit cards, treasury, and finance ops in one platform.</p>
     </div>
-    <!-- Mercury's real footer: one 4-col grid that auto-wraps into 2 rows of 8 category columns
-         (not 2 hand-coded rows) — row-gap:80px/column-gap:40px, DOM order below reads row-major
-         (Banking…Finance Ops, then Solutions…Follow Us) same as theirs. -->
+    
     <div class="foot-grid-m">
       <div class="foot-col"><h4>Personal</h4><a href="savings-account/index.html">Savings Account</a><a href="fixed-deposit/index.html">Fixed Deposits</a><a href="recurring-deposit/index.html">Recurring Deposits</a><a href="forex-remittance/index.html">Forex &amp; Remittance</a><a href="gold-silver/index.html">Gold &amp; Silver</a><a href="mutual-funds/index.html">Mutual Funds &amp; SIPs</a><a href="bonds/index.html">Bonds</a><a href="nps/index.html">NPS</a><a href="corporate-nps/index.html">Corporate NPS</a><a href="nps-vatsalya/index.html">NPS Vatsalya</a><a href="insurance/index.html">Insurance</a><a href="fd-backed-credit-card/index.html">FD-Backed Credit Card</a><a href="personal-loans/index.html">Personal Loans</a><a href="loan-against-fd/index.html">Loan Against FD</a><a href="gold-loan/index.html">Gold Loan</a></div>
       <div class="foot-col"><h4>Business</h4><a href="business-banking/index.html">Business Checking &amp; Savings</a><a href="treasury/index.html">Treasury</a><a href="credit/index.html">Business Credit Cards</a><a href="working-capital-loans/index.html">Working Capital Loans</a><a href="venture-debt/index.html">Venture Debt</a><a href="business-payments/index.html">Payments</a><a href="#">Bill Pay</a><a href="invoicing/index.html">Invoicing</a><a href="spend-management/index.html">Spend Management</a><a href="#">Books</a><a href="accounting-integrations/index.html">Accounting Integrations</a><a href="#">Payroll</a><a href="invoice-discounting/index.html">Invoice Discounting</a><a href="collections/index.html">Collections</a></div>
@@ -1490,12 +1326,7 @@
   </div>
 </footer>
 
-<!-- Disclaimers and footnotes — a separate <section>, same #171721 band, immediately after
-     </footer> (mirrors mercury's real DOM: this legal block is a sibling of <footer>, not nested
-     inside it). Content below is 100% Raushco-specific, reusing only facts already established
-     elsewhere in this project (treasury/business-banking/venture-debt/credit/gold-loan/personal-loans
-     footnotes + this page's own "11+ partner banks" stat and "7.00% APY" copy) — none of mercury's
-     actual partner-bank names, entity IDs, or figures. -->
+
 <section class="foot-disclaimers" data-theme="dark">
   <div class="wrap">
     <div class="disc-grid-m">
@@ -1607,7 +1438,6 @@
   // Nav AND page background crossfade dark/light off the same signal, as it slides over
   // differently-themed section bands underneath. rootMargin '-50% 0px -50% 0px' collapses the
   // observed root to a single line at the viewport's vertical midpoint — confirmed from
-  // mercury.com's real compiled source (their "theme-switcher" module passes this exact
   // observerOptions): it flips the instant a section boundary crosses mid-screen, i.e. whichever
   // themed section covers more than half the viewport wins. (Previously '-73px 0px -85% 0px', a
   // narrow band just under the nav — that geometry has a blind spot once two sections are both
@@ -1621,7 +1451,6 @@
     // section's midpoint scrolls past center with no next themed section's midpoint there yet
     // (e.g. a large gap/margin between two dark sections, or past the very last themed marker),
     // activeThemed is briefly/permanently empty — the flag must hold its last value, not clear.
-    // Mercury's real "theme-switcher" module (decoded from its shipped JS) works the same way:
     // it only ever calls setTheme() on isIntersecting===true, with no else-branch that un-sets
     // it. An unconditional "else delete" here is what caused a light flash/band to appear in
     // gaps between dark sections (e.g. the footer → disclaimers gap) even though both sides are
@@ -1634,7 +1463,6 @@
         if (y < topY) { topY = y; topEl = el; }
       });
       nav.dataset.theme = topEl.dataset.theme;
-      // Also stamped on <body> — mercury's real page background rides the identical flag, not a
       // separate scroll-linked mechanism. See body[data-theme="dark"] above.
       document.body.dataset.theme = topEl.dataset.theme;
     }
@@ -1642,7 +1470,6 @@
   document.querySelectorAll('[data-theme]:not(#nav)').forEach(function (el) { themeIO.observe(el); });
 
   // Click-driven tab list (left) driving a crossfading video panel (right).
-  // No auto-advance: mercury.com's real version has none — verified via a real
   // wheel-scroll through the whole section AND a 10s stationary wait, zero
   // spontaneous tab change either way.
   (function () {
@@ -1651,9 +1478,7 @@
     var tabs = root.querySelectorAll('.acc-tab');
     var panels = document.querySelectorAll('#panelStack .panel');
     var playBtn = document.getElementById('playToggle');
-    // Real Font Awesome 6 Solid "pause"/"play" glyphs, outerHTML-matched to mercury.com's own
     // button (button-analysis.json / deep-dive-output.json) — a full element swap on click, not a
-    // path morph: mercury's two icons use different viewBoxes, and measured svgOpacity/btnOpacity
     // stayed flat at 1 across 0–600ms post-click, i.e. no crossfade, no morph, no scale pulse.
     var ICON_PAUSE = '<svg aria-hidden="true" focusable="false" viewBox="0 0 320 512"><path fill="currentColor" d="M48 64C21.5 64 0 85.5 0 112L0 400c0 26.5 21.5 48 48 48l32 0c26.5 0 48-21.5 48-48l0-288c0-26.5-21.5-48-48-48L48 64zm192 0c-26.5 0-48 21.5-48 48l0 288c0 26.5 21.5 48 48 48l32 0c26.5 0 48-21.5 48-48l0-288c0-26.5-21.5-48-48-48l-32 0z"/></svg>';
     var ICON_PLAY = '<svg aria-hidden="true" focusable="false" viewBox="0 0 384 512" class="pt-play"><path fill="currentColor" d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80L0 432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg>';
@@ -2429,9 +2254,7 @@
   wireAccordion('[data-acc-fees]', 'accVisualFees');
 </script>
 
-<!-- Get-the-app QR modal — same markup/CSS/script on every marketing page, see the CSS block
-     above for why it's self-contained. Every "Open account" link/button on the page opens this
-     instead of navigating, since the signup flow lives in the app, not on this static site. -->
+
 <div class="qr-modal-overlay" id="qrModalOverlay" aria-hidden="true">
   <div class="qr-modal" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle">
     <button type="button" class="qr-modal-close" id="qrModalClose" aria-label="Close">&times;</button>
@@ -2440,38 +2263,7 @@
     <div class="qr-modal-code"><img src="assets/images/app-download-qr.png" alt="QR code to download the Raushco app" width="176" height="176"></div>
   </div>
 </div>
-
-<div class="otp-popup-overlay" id="otpPopupOverlay" aria-hidden="true">
-  <div class="otp-popup" role="dialog" aria-modal="true" aria-labelledby="otpPopupTitle">
-    <button type="button" class="otp-popup-close" id="otpPopupClose" aria-label="Close">&times;</button>
-    <div class="otp-popup-step" data-step="loading">
-      <div class="otp-popup-spinner"></div>
-      <p class="otp-popup-text">Setting up your account&hellip;</p>
-    </div>
-    <div class="otp-popup-step" data-step="code" hidden>
-      <h3 id="otpPopupTitle" class="otp-popup-h">Enter the code</h3>
-      <p class="otp-popup-sub">We sent a code to <span id="otpPopupPhone"></span></p>
-      <input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="6" class="otp-popup-input" id="otpPopupCodeInput" placeholder="••••••" autocomplete="one-time-code" />
-      <p class="otp-popup-error" id="otpPopupCodeError" hidden></p>
-      <button type="button" class="otp-popup-btn" id="otpPopupVerifyBtn">Continue</button>
-      <button type="button" class="otp-popup-link" id="otpPopupResendBtn">Resend code</button>
-    </div>
-    <div class="otp-popup-step" data-step="verifying" hidden>
-      <div class="otp-popup-spinner"></div>
-      <p class="otp-popup-text">Verifying&hellip;</p>
-    </div>
-    <div class="otp-popup-step" data-step="status" hidden>
-      <div class="otp-popup-spinner"></div>
-      <p class="otp-popup-text" id="otpPopupStatusText">Taking you to your account&hellip;</p>
-    </div>
-    <div class="otp-popup-step" data-step="error" hidden>
-      <p class="otp-popup-text" id="otpPopupErrorText">Something went wrong.</p>
-      <button type="button" class="otp-popup-btn" id="otpPopupRetryBtn">Try again</button>
-    </div>
-  </div>
-</div>
 <script>
-
   (function () {
     var overlay = document.getElementById('qrModalOverlay');
     if (!overlay) return;
@@ -2501,186 +2293,17 @@
   // OTP once it loads pre-filled, so this static site never needs its own CORS-exposed API call.
   (function () {
     document.querySelectorAll('.email-combo').forEach(function (combo) {
-    var input = combo.querySelector('input[type="tel"]');
-    var cta = combo.querySelector('a');
-    if (!input || !cta) return;
-    cta.addEventListener('click', function (e) {
-      var digits = (input.value || '').replace(/\D/g, '');
-      if (digits.length < 10) return; // no usable number typed — let it fall through to the plain href
-      e.preventDefault();
-      OtpPopup.open(digits.slice(-10));
-    });
-  });
-})();
-
-// Phone+OTP popup that stays on this marketing page: the account's whole
-// phone/OTP exchange happens here via direct cross-origin calls to the real
-// backend (CORS already allows any origin with credentials — confirmed live,
-// no backend change made for this), so a visitor never leaves raushco.com
-// until they're actually logged in or signed up. Once verified, the only
-// thing handed to app.raushco.com is the resulting access/id token, via the
-// URL *fragment* (never sent to a server or logged) — everything after that
-// (profile-complete check, dashboard vs. onboarding routing) is the app's
-// own existing logic, not reimplemented here.
-var OtpPopup = (function () {
-  var BFF = 'https://app.y1card.com/bff';
-  var overlay = document.getElementById('otpPopupOverlay');
-  if (!overlay) return { open: function () {} };
-  var steps = {};
-  overlay.querySelectorAll('.otp-popup-step').forEach(function (el) {
-    steps[el.getAttribute('data-step')] = el;
-  });
-  function showStep(name) {
-    Object.keys(steps).forEach(function (k) { steps[k].hidden = k !== name; });
-  }
-  function openOverlay() {
-    overlay.classList.add('is-open');
-    overlay.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
-  function closeOverlay() {
-    overlay.classList.remove('is-open');
-    overlay.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
-  document.getElementById('otpPopupClose').addEventListener('click', closeOverlay);
-  overlay.addEventListener('click', function (e) { if (e.target === overlay) closeOverlay(); });
-  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeOverlay(); });
-
-  function bufToBase64(buf) {
-    var bytes = new Uint8Array(buf), binary = '';
-    for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-    return btoa(binary);
-  }
-  // Mirrors the real app's generateCodeVerifier() exactly (src/redux/auth.ts):
-  // 1024 random bytes, verifier = base64(bytes), challenge = base64(sha256(bytes)).
-  function generateCodeVerifier() {
-    var rand = new Uint8Array(1024);
-    crypto.getRandomValues(rand);
-    return crypto.subtle.digest('SHA-256', rand).then(function (challengeBuf) {
-      return { codeVerifier: bufToBase64(rand), codeChallenge: bufToBase64(challengeBuf) };
-    });
-  }
-
-  var state = { phone: null, authCode: null, codeVerifier: null };
-
-  function showError(msg) {
-    document.getElementById('otpPopupErrorText').textContent = msg;
-    showStep('error');
-  }
-
-  function requestOtp(phone) {
-    state.phone = phone;
-    showStep('loading');
-    generateCodeVerifier()
-      .then(function (cv) {
-        state.codeVerifier = cv.codeVerifier;
-        return fetch(BFF + '/auth/initiate-otp', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ phone: phone, codeChallenge: { challenge: cv.codeChallenge } }),
-        });
-      })
-      .then(function (res) {
-        if (!res.ok) return res.json().then(function (b) { throw b; });
-        return res.json();
-      })
-      .then(function (body) {
-        state.authCode = body.authCode;
-        document.getElementById('otpPopupPhone').textContent = '+91 ' + phone;
-        var codeInput = document.getElementById('otpPopupCodeInput');
-        codeInput.value = '';
-        document.getElementById('otpPopupCodeError').hidden = true;
-        showStep('code');
-        codeInput.focus();
-      })
-      .catch(function (err) {
-        showError(err && err.code === 'PhoneNumberInvalid' ? 'That phone number looks invalid.' : "Couldn't send the code — please try again.");
+      var input = combo.querySelector('input[type="tel"]');
+      var cta = combo.querySelector('a');
+      if (!input || !cta) return;
+      cta.addEventListener('click', function (e) {
+        var digits = (input.value || '').replace(/\D/g, '');
+        if (digits.length < 10) return; // no usable number typed — let it fall through to the plain href
+        e.preventDefault();
+        window.location.href = 'https://app.raushco.com/open-account?phone=91' + digits.slice(-10);
       });
-  }
-
-  function verifyOtp() {
-    var otp = document.getElementById('otpPopupCodeInput').value.trim();
-    var errEl = document.getElementById('otpPopupCodeError');
-    if (!/^[0-9]{4,6}$/.test(otp)) {
-      errEl.textContent = 'Enter the code you received.';
-      errEl.hidden = false;
-      return;
-    }
-    errEl.hidden = true;
-    showStep('verifying');
-    fetch(BFF + '/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ phone: state.phone, otp: otp, authCode: state.authCode, codeVerifier: state.codeVerifier }),
-    })
-      .then(function (res) {
-        if (!res.ok) return res.json().then(function (b) { throw b; });
-        return res.json();
-      })
-      .then(function (body) {
-        var accessToken = body.jwt.access_token;
-        var idToken = body.jwt.id_token;
-        return fetch(BFF + '/auth/user-info', { headers: { Authorization: 'Bearer ' + accessToken } })
-          .then(function (r) { return r.ok ? r.json() : { info: {} }; })
-          .catch(function () { return { info: {} }; })
-          .then(function (userInfo) {
-            var existing = !!(userInfo.info && userInfo.info.given_name && userInfo.info.family_name);
-            document.getElementById('otpPopupStatusText').textContent = existing
-              ? 'You already have an account — logging you in…'
-              : 'Setting up your new account…';
-            showStep('status');
-            setTimeout(function () {
-              window.location.href =
-                'https://app.raushco.com/login#access_token=' +
-                encodeURIComponent(accessToken) +
-                '&id_token=' +
-                encodeURIComponent(idToken || '');
-            }, 900);
-          });
-      })
-      .catch(function (err) {
-        showStep('code');
-        var code = err && err.code;
-        errEl.textContent =
-          code === 'OTPExpired' ? 'That code expired — try resending.'
-          : code === 'OTPInvalid' ? 'That code is incorrect.'
-          : code === 'CodeVerificationFailed' ? 'Verification failed — please try again.'
-          : 'Something went wrong — please try again.';
-        errEl.hidden = false;
-      });
-  }
-
-  document.getElementById('otpPopupVerifyBtn').addEventListener('click', verifyOtp);
-  document.getElementById('otpPopupCodeInput').addEventListener('keydown', function (e) {
-    if (e.key === 'Enter') verifyOtp();
-  });
-  document.getElementById('otpPopupResendBtn').addEventListener('click', function () {
-    if (state.phone) requestOtp(state.phone);
-  });
-  document.getElementById('otpPopupRetryBtn').addEventListener('click', function () {
-    if (state.phone) requestOtp(state.phone);
-    else closeOverlay();
-  });
-
-  // If this page is restored from the browser's back-forward cache (e.g. the
-  // visitor went on to app.raushco.com and then hit Back), reset to closed
-  // instead of showing whatever step was frozen mid-flow when they left.
-  window.addEventListener('pageshow', function (e) {
-    if (!e.persisted) return;
-    closeOverlay();
-    state = { phone: null, authCode: null, codeVerifier: null };
-    showStep('loading');
-  });
-
-  return {
-    open: function (phone) {
-      openOverlay();
-      requestOtp(phone);
-    },
-  };
-})();
-
+    });
+  })();
 </script>
 </body>
 </html>

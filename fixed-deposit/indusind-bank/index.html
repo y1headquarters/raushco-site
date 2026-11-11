@@ -19,38 +19,28 @@
     font-weight: 400 600; font-style: normal; font-display: swap;
   }
 
-  /* ---------- Tokens -----------------------------------------------
-     Real values, re-extracted this round directly from mercury.com's
-     own compiled marketing CSS (not the dashboard app's), plus visual
-     confirmation against live screenshots of mercury.com/personal-
-     banking. Two real ramps: "beige" (warm — every regular content
-     section) and "neutral" (cool — hero + dashboard-app only), plus
-     "purple" which on THIS page belongs only to the footer/disclaimers
-     block, not "What's included" (corrected this round — it's beige). */
+  
   :root {
     --pb-purple-200: #c1c9fa;
     --pb-purple-300: #a7b6f8;
     --pb-purple-400: #9cb4e8;
-    --pb-purple-600: #5266eb;   /* primary accent, every theme */
-    --pb-purple-700: #4354c8;   /* hover */
+    --pb-purple-600: #5266eb;   
+    --pb-purple-700: #4354c8;   
     --pb-purple-800: #3442a6;
 
-    --pb-neutral-1000: #10101a; /* hero canvas */
+    --pb-neutral-1000: #10101a; 
     --pb-neutral-950: #171721;
 
     --pb-beige-50:  #fcfcfa;
     --pb-beige-100: #f6f5f2;
-    --pb-beige-150: #efeee9;    /* default section bg on this page */
+    --pb-beige-150: #efeee9;    
     --pb-beige-200: #e0ded7;
     --pb-beige-300: #c8c4b8;
     --pb-beige-500: #767165;
     --pb-beige-700: #3a3831;
     --pb-beige-900: #201f1c;
 
-    /* Shadowed onto the page below — every component references
-       --pb-base-*, so retargeting these is what moves the page from
-       cool-neutral to warm-beige site-wide. Hero + footer override
-       back to explicit colours locally. */
+    
     --pb-base-100: var(--pb-beige-100);
     --pb-base-150: var(--pb-beige-150);
     --pb-base-200: var(--pb-beige-200);
@@ -62,7 +52,7 @@
 
     --pb-green-600: #188554;
 
-    /* Dark-purple — footer + disclaimers ONLY on this page */
+    
     --pb-dp-bg: #181623;
     --pb-dp-bg-2: #1e1b2c;
     --pb-dp-border: rgba(255,255,255,.1);
@@ -90,11 +80,7 @@
     --pb-serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
     --pb-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
 
-    /* Real clamp pulled off mercury.com's own compiled CSS
-       (arcadia-display-3 — the exact tier the real H1 on this page
-       uses) widened slightly: live screenshots show the real hero
-       headline dominating the viewport more than this clamp alone
-       produces at common widths, so the max step is raised to match. */
+    
     --pb-size-hero: clamp(2.5rem, .4rem + 6.2vw, 7rem);
     --pb-size-module: clamp(1.875rem, 1.1rem + 3vw, 4.5rem);
     --pb-size-sub: clamp(1.25rem, 1.05rem + .5vw, 1.5rem);
@@ -136,7 +122,7 @@
   sup.fn a.fn-link { counter-increment: fn; color: inherit; opacity: .6; text-decoration: underline; text-underline-offset: 2px; }
   sup.fn a.fn-link::before { content: counter(fn); }
 
-  /* ---------- Buttons ---------- */
+  
   .btn {
     display: inline-flex; align-items: center; justify-content: center; gap: 8px;
     font-family: var(--pb-font); font-weight: 500; font-size: 15px;
@@ -159,9 +145,7 @@
   .input:focus { border-color: var(--pb-border-focus); }
   .input::placeholder { color: var(--pb-base-500); }
 
-  /* Reusable frosted-pill form — hero reuses it on dark, closing CTA
-     reuses it on light. Button sits INSET inside the pill, not a
-     separate element beside it (confirmed from the real page). */
+  
   .frosted-form { display: flex; align-items: center; gap: 6px; max-width: 460px; margin: 0 auto;
     padding: 6px; border-radius: var(--pb-radius-full); }
   .frosted-form .input { flex: 1; background: transparent; border: none; padding-left: 16px; }
@@ -174,8 +158,7 @@
     .frosted-form.on-light .input { background: #fff; border-color: var(--pb-border-input); color: var(--pb-base-700); }
     .frosted-form .btn { width: 100%; } }
 
-  /* Email focus tooltip — appears while the field has focus, offering a
-     one-click marketing opt-out (matches the earlier Mercury-clone WIP). */
+  
   .email-field { position: relative; flex: 1; }
   .email-field .input { width: 100%; }
   .email-tip { position: absolute; top: calc(100% + 10px); left: 0; width: 300px; max-width: 80vw;
@@ -201,11 +184,7 @@
   .frosted-form.on-light .opt-out { color: var(--pb-base-900); }
   .frosted-form.on-light .opt-out .cbx-box { border-color: var(--pb-border-input); }
 
-  /* ---------- Nav — literal clone of the mercury-wip-reference nav
-     (deploy/website/mercury-clone-wip.html on dashboard-b2b, live at
-     test.raushco.com/mercury-wip-reference/): same classes, same
-     values, same two-axis scroll/theme system. Own logo + link targets
-     only. ---------- */
+  
   .nav { position: sticky; top: 0; z-index: 60; background: transparent; backdrop-filter: none; border-bottom: 1px solid transparent; transition: border-color .3s var(--pb-ease-snap), background .4s var(--pb-ease-snap), color .4s var(--pb-ease-snap), backdrop-filter .4s var(--pb-ease-snap); }
   .nav.scrolled { border-color: var(--pb-border); background: rgba(255,255,255,.85); backdrop-filter: saturate(180%) blur(16px); -webkit-backdrop-filter: saturate(180%) blur(16px); }
   .nav[data-theme="dark"] { background: transparent; border-color: transparent; }
@@ -229,7 +208,7 @@
   .nav[data-theme="dark"] .caret { color: rgba(255,255,255,.7); }
   .caret svg { transition: transform .2s var(--pb-ease-snap); display: block; }
 
-  /* Mega-menu — click to open, not hover; closes on outside click. */
+  
   .nav-item { position: relative; }
   .nav-item.open .nav-drop-trigger { background: rgba(120,126,150,.3); }
   .nav-item.open .caret svg { transform: rotate(180deg); }
@@ -307,7 +286,7 @@
   .nav[data-theme="dark"] .nav-menu a { border-bottom-color: rgba(255,255,255,.1); }
   .nav-menu .btn { margin-top: 10px; justify-content: center; }
 
-  /* ---------- Section rhythm ---------- */
+  
   section { padding: clamp(64px, 5vw + 40px, 128px) 0; }
   .section-intro { max-width: 680px; margin: 0 0 56px; }
   .section-intro.centered { margin-inline: auto; text-align: center; }
@@ -315,58 +294,18 @@
   .section-intro h2 { margin-bottom: 16px; }
   .section-intro .lede { margin: 0 auto; }
 
-  /* ---------- Hero — matches the earlier Mercury-clone WIP's hero exactly
-     (deploy/website/mercury-clone-wip.html on dashboard-b2b, now live at
-     test.raushco.com/mercury-wip-reference/): full-bleed photo band, nav
-     pulled over it via negative margin, merged email pill + separate
-     "Launch demo" ghost button, disclosure pinned to the hero's bottom
-     edge. Same hero-mercury.png (verified non-Mercury stock/generated
-     photography, not a captured Mercury asset — see mercury-wip-reference
-     deploy notes). Own logo/copy, not Mercury's.
-     Mercury's own hero has no viewport-based height rule at all
-     (`height:max-content`) — it's naturally taller than 100vh purely because
-     a full-bleed-width 2:1 image stacks below the headline, and live-measured
-     ratios on the real page land at 1.19-1.26x viewport height across several
-     sizes. Our content does the same most of the time, but our own
-     .wrap/.hero-preview width caps out at 1240px, so on a wide-but-short-
-     relative-height viewport (confirmed live: 1920x1200) the content-driven
-     height can dip to ~0.97x viewport — shorter than the screen, which starves
-     the sticky pill of room again. min-height:118vh is a floor sized to
-     Mercury's own measured low end (never the whole story, like the old
-     100vh was) — content still grows taller than it on its own whenever it
-     needs to (e.g. narrower/mobile widths where the text wraps more). ---------- */
-  /* No bottom padding — confirmed live on mercury.com that the dashboard
-     image's own wrapper bottom edge exactly equals the hero section's own
-     bottom edge (509.15625px top / 1165.15625px bottom at a 1600-wide
-     viewport, zero gap either side), not a card floating with clearance
-     below it. That flush edge, paired with the image having no bottom
-     radius/border, is what reads as the photo continuing past the visible
-     frame instead of a tidy self-contained card. */
+  
+  
   .hero { position: relative; margin-top: -73px; min-height: 118vh; display: flex; flex-direction: column;
     align-items: center; justify-content: flex-start; text-align: center; padding: calc(9vh + 72px) 0 0; }
-  /* Wraps just the blurred photo + grain so overflow:hidden can stay scoped to
-     the decorative background layer. Confirmed from parsing Mercury's real DOM:
-     their sticky disclosure pill sits as a SIBLING of this overflow-hidden
-     layer, not inside it — position:sticky is inert on any element with an
-     overflow:hidden ancestor between it and the scroll container, so clipping
-     had to move off .hero itself and onto this wrapper instead. */
+  
   .hero-clip { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
-  /* Real mercury.com/personal-banking's backdrop is barely recognizable as a
-     photo — heavily blurred and desaturated into soft abstract light/shadow
-     shapes, confirmed directly against a live screenshot. 3px was nowhere
-     close; this needs a real, heavy blur, not a light softening. */
+  
   .hero-bg { position: absolute; inset: -160px; background: #10101a url('../../assets/images/hero-personal-banking.jpg') center center / cover no-repeat;
     filter: blur(48px) saturate(.7) brightness(.95); }
-  /* Real mercury.com/personal-banking vignette — confirmed via direct research
-     against the live page: a flat top-fade only (18% black at the top, fully
-     transparent by 60% down), not a 3-stop top+bottom treatment. */
-  /* Stronger/fuller than the real Mercury gradient on purpose — that flat
-     18%-top-fade was tuned for Mercury's own calm, low-contrast photo. This
-     image (vivid purple blossoms, bright moon) needs real coverage across
-     its full height or it fights the text instead of sitting behind it. */
-  /* Radial vignette in deep purple-navy (not flat black) so the overlay reads
-     as part of the photo's own cool palette rather than a generic dark film
-     laid on top — plus a top/bottom linear pass for nav and pill legibility. */
+  
+  
+  
   .hero-bg::after { content: ''; position: absolute; inset: -12px;
     background:
       radial-gradient(ellipse 85% 65% at 50% 36%, transparent 0%, rgba(14,11,26,.38) 55%, rgba(9,7,18,.74) 100%),
@@ -376,8 +315,7 @@
   @media (max-width: 1024px) { .hero-grain { display: none; } }
   @media (prefers-reduced-motion: reduce) { .hero-grain { animation: none; } }
 
-  /* Reusable mini mock-card — used wherever a section needs a believable
-     "glimpse of the app" visual instead of a bare icon in empty space. */
+  
   .mini-card { width: 82%; background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); padding: 20px 22px; box-shadow: var(--pb-card-shadow); }
   .mini-card-head { font-size: 12px; color: var(--pb-base-500); margin-bottom: 10px; }
   .mini-card-amt { font-size: 22px; font-weight: 600; color: var(--pb-base-900); margin-bottom: 14px; font-variant-numeric: tabular-nums; }
@@ -389,10 +327,7 @@
   .mini-card-row .mc-sub { color: var(--pb-base-500); }
   .hero-inner { position: relative; z-index: 1; padding: 0 24px; }
   .hero .eyebrow { color: var(--pb-purple-300); display: block; margin-bottom: 16px; }
-  /* font-weight:600 on purpose, not a fractional variable-axis value like 530 —
-     the fallback system font (shown briefly before Inter loads, font-display:swap)
-     only has discrete weights and rounds an odd value like 530 up to 600 anyway,
-     so using 600 directly removes the visible thickness jump when Inter swaps in. */
+  
   .hero h1 { color: #fff; font-weight: 500; font-size: clamp(2.1rem, 5vw, 3.6rem); line-height: 1.05;
     letter-spacing: -.03em; max-width: 26ch; margin: 0 auto 18px; }
   .hero-sub { font-weight: 400; font-size: 20px; color: rgba(255,255,255,.72); max-width: 48ch;
@@ -406,57 +341,21 @@
   .email-combo input { height: 100%; width: 220px; max-width: 46vw; border: none; background: transparent; padding: 0; font-size: 15px; color: #fff; }
   .email-combo input::placeholder { color: rgba(255,255,255,.55); }
   .email-combo .btn-primary { height: 38px; flex: 0 0 auto; }
-  /* Spans .hero's full (content-driven) height so .hero-note-wrap's sticky
-     child has room to travel — a sticky element's scroll range is bounded by
-     its containing block's box, so without this the pill would just sit at
-     its static position with nothing to stick within. Sits as a sibling of
-     .hero-clip, outside its overflow:hidden, matching Mercury's real DOM
-     (parsed from their fetched markup: a CSS-grid-overlay of the same idea —
-     a second grid item sharing the content's row, escaping the background
-     layer's own clipped wrapper). pointer-events:none so this full-height
-     overlay never blocks the headline/CTA beneath it; re-enabled on the pill
-     wrap below. */
+  
   .hero-note-track { position: absolute; inset: 0; z-index: 2; display: flex;
     align-items: flex-end; justify-content: center; pointer-events: none; }
-  /* Real value, confirmed from Mercury's compiled CSS (--grid-margins is a
-     bare alias of --gap-lg): the sticky pill's resting offset is exactly
-     24px below 1024px viewport width and 32px at/above it — two discrete
-     tiers, not a fluid clamp. The transition is their own confirmed easing
-     ("ease-in-out-cubic"), so a resize across that breakpoint settles
-     smoothly instead of snapping. Mercury applies that same value as a
-     margin on every side of the wrapper too (`m-grid-margins`), not just as
-     the sticky `bottom` offset — without it, once the pill releases from
-     sticky and settles at .hero-note-track's own flex-end edge (the hero's
-     real bottom), it sits flush against the next section with no gap. The
-     margin-bottom keeps that same breathing room in both states. */
+  
   .hero-note-wrap { position: sticky; bottom: 24px; margin-bottom: 24px; pointer-events: auto;
     transition: bottom .5s cubic-bezier(.65,.05,.36,1); }
   @media (min-width: 1024px) { .hero-note-wrap { bottom: 32px; margin-bottom: 32px; } }
-  /* Wider than the page's standard .wrap (1240px) on purpose — confirmed live
-     on mercury.com that the hero's own image uses a noticeably more generous
-     gutter than their regular content width (144px side margins at a 1600px
-     viewport, i.e. ~9% each side — their own Tailwind gap-3xl token, not
-     their standard container). Using the same 9%-each-side ratio here rather
-     than .wrap's fixed 40px gives a visibly bigger image on real screens,
-     matching their proportions instead of our usual page-content width. */
+  
   .hero-preview { position: relative; z-index: 1; margin: 40px 9% 0; }
-  /* aspect-ratio is exact, confirmed three independent ways in Mercury's
-     compiled CSS/markup (Tailwind class, inline aspect-ratio style, and the
-     asset's own filename/query string). Mercury swaps to a 9:16 crop below
-     1024px using a second, differently-shot mobile asset — we only have the
-     one wide dashboard image, so forcing 9:16 here would crop it down to an
-     unreadable sliver; kept at 2:1 throughout instead of guessing a worse
-     mobile-only ratio. No border — confirmed the real card has none at its
-     flush-with-the-hero bottom edge, which is what sells it as continuing
-     past the frame rather than a tidily-bordered card; the shadow alone
-     still reads fine against the beige section below once it releases. */
+  
   .hero-preview-card { aspect-ratio: 2/1; border-radius: 41px 41px 0 0; overflow: hidden;
     box-shadow: 0 20px 24px rgba(0,0,0,.15), 0 36px 120px rgba(0,0,0,.15); }
   .hero-preview-card img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
   @media (max-width: 640px) { .hero-preview-card { border-radius: 24px 24px 0 0; } }
-  /* Real value, confirmed from Mercury's compiled CSS: the pill's background
-     is their actual neutral-base-900 token (#1e1e2a), fully opaque — not a
-     translucent dark gray like the earlier guess. */
+  
   .hero-note { display: inline-block; font-size: 12.5px; color: rgba(255,255,255,.8); white-space: nowrap; line-height: 1.5;
     background: #1e1e2a; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); padding: 10px 20px; border-radius: 14px; }
   @media (max-width: 760px) { .hero-note { white-space: normal; max-width: 90vw; text-align: center; } }
@@ -465,50 +364,19 @@
   .btn-line { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,.3); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
   .btn-line:hover { border-color: #fff; background: rgba(255,255,255,.14); }
 
-  /* ---------- Accordion-with-visual: "One subscription" ----------
-     Real mechanic: flex-row-reverse (visual renders LEFT, list RENDERS
-     RIGHT on desktop), 3 items, first open by default, expand via the
-     CSS grid-template-rows 0fr/1fr trick (no JS height measuring),
-     small dot indicator (not numbered badges). Reused for the FAQ
-     list too — same technique, confirmed on the real page. */
-  /* Plain beige, no separate dark-to-beige gradient here — the hero's own
-     background (photo + its own bottom-edge overlay fade) now fully covers
-     the hero's real (content-driven, taller-than-viewport) height on its own,
-     clipped exactly at the hero's bottom edge via .hero-clip. A second flat
-     dark band stacked right after that read as an unwanted seam/drop-shadow
-     (confirmed from a screenshot: a solid, textureless dark strip between the
-     photo and this section) and kept the nav's dark/light sync a step behind
-     what was actually on screen — removing it fixes both. */
-  /* --pb-base-100 here (lighter), not -150 — the accordion visual's own
-     frame uses -150 (darker) deliberately, so the two actually contrast.
-     Using the same token for both (the original bug the user caught) made
-     the frame blend invisibly into the section's own background even
-     though it was rendering correctly; mercury.com's real pairing is the
-     same half-step (confirmed live: ~rgb(246,245,242) page vs ~rgb(238,237,233)
-     baked into the image, i.e. beige-100 vs beige-150). */
+  
+  
+  
   .acc-section { position: relative; background: var(--pb-base-100); color: var(--pb-base-700);
     transition: background-color .4s var(--pb-ease-snap), color .4s var(--pb-ease-snap); }
-  /* Retargets the SAME --pb-base-* indirection every component here already
-     reads from (see :root's comment) while <body data-theme="dark">, set by
-     the nav's own observer — not a separate mechanism, the identical flag at
-     the identical moment. Confirmed live on mercury.com: while this section
-     is still mostly off-screen and the hero covers the majority of the
-     viewport, its heading/body already render light-on-dark, matching the
-     nav; they cross-fade to normal beige/dark-text the instant the nav does,
-     not before or after. Re-declaring color here (not just the variable)
-     matters — a plain var() redefinition wouldn't reach any child that
-     inherits its color from <body> instead of referencing the token
-     directly, since that substitution already happened up at <body>. */
+  
   body[data-theme="dark"] .acc-section {
     --pb-base-100: var(--pb-neutral-1000); --pb-base-150: var(--pb-neutral-1000); --pb-base-900: #fff;
     --pb-base-700: rgba(255,255,255,.72); --pb-base-600: rgba(255,255,255,.6);
     --pb-base-500: rgba(255,255,255,.55); --pb-base-400: rgba(255,255,255,.3);
     --pb-border: rgba(255,255,255,.14);
   }
-  /* The accordion's "app glimpse" visual is a self-contained light UI card
-     (hardcoded #fff background, like a screenshot) — excluded from the
-     retarget above and re-pinned to its normal light tokens, or its own text
-     would turn near-white on a background that's staying white regardless. */
+  
   body[data-theme="dark"] .acc-section .acc-visual,
   body[data-theme="dark"] .acc-section .mini-card {
     --pb-base-900: var(--pb-beige-900); --pb-base-700: var(--pb-beige-700);
@@ -517,35 +385,15 @@
     --pb-border: rgba(58,56,49,.12);
   }
   .acc-list-wrap h2, .acc-q .acc-title, .acc-a p, .acc-dot { transition: color .4s var(--pb-ease-snap), border-color .4s var(--pb-ease-snap), background-color .4s var(--pb-ease-snap); }
-  /* Mini-card's default shadow has a light-colored first layer (reads fine on
-     a beige backdrop, but shows as a weird glow against this section's dark
-     top zone) — a plain neutral shadow instead avoids that regardless of what's
-     behind it. Scoped to this specific card since it's the one that overlaps
-     the dark gradient; other mini-cards elsewhere stay on the normal shadow. */
+  
   .acc-visual .mini-card { box-shadow: 0 1px 4px rgba(0,0,0,.18); }
-  /* stretch (not start) + .acc-visual opting back out with align-self below —
-     confirmed live on mercury.com: the image and the text column are the
-     same (stretched) height, and within the text column the heading stays
-     at the top while the accordion items themselves get pushed to the
-     bottom via justify-content:space-between (not a flat bottom-align of
-     everything) — see .acc-list-wrap. */
+  
   .acc-layout { display: grid; grid-template-columns: 1fr 1.3fr; gap: 56px; align-items: stretch; }
   @media (max-width: 1024px) { .acc-layout { grid-template-columns: 1fr; gap: 32px; } }
-  /* Real mercury.com has no CSS background anywhere in its own ancestor chain
-     for this element (checked live, every ancestor computes transparent) —
-     the slightly-darker-beige "placeholder" frame around their card is baked
-     into their image asset's own pixels, and pixel-sampling it from a live
-     render landed at ~rgb(238,237,233), a near-exact match for our own
-     --pb-base-150 (#efeee9, already "default section bg on this page" per
-     its own :root comment). Applying it here as a real background+padding
-     rather than relying on whatever each supplied image happens to bake in
-     keeps the frame consistent across all three (and any future) images. */
+  
   .acc-visual { order: -1; aspect-ratio: 4/5; border-radius: var(--pb-radius-l); background: var(--pb-base-150); padding: 28px;
     align-self: start; position: sticky; top: 96px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-  /* Stacked, crossfading images — one per accordion item, matching real
-     mercury.com: its visual is a swappable <img> per item (their own
-     product screenshot), not a single static mock, switched by data-state
-     rather than a hand-built mini-card. */
+  
   .acc-visual-img { position: absolute; inset: 28px; width: calc(100% - 56px); height: calc(100% - 56px); object-fit: cover; display: block;
     border-radius: var(--pb-radius-m); opacity: 0; transition: opacity .4s var(--pb-ease-snap); }
   .acc-visual-img.active { opacity: 1; }
@@ -554,34 +402,15 @@
     align-items: center; justify-content: center; margin-bottom: 18px; }
   .acc-visual-chip .ic { width: 32px; height: 32px; }
   .acc-visual .cap { font-size: 15px; font-weight: 600; color: var(--pb-base-900); text-align: center; }
-  /* flex column + space-between, not block flow — real mercury.com has
-     exactly 2 children here (the heading block, the items block) spread to
-     opposite ends of the stretched column, which is what actually produces
-     the big gap above the items (not a bottom-align of the whole column). */
+  
   .acc-list-wrap { display: flex; flex-direction: column; justify-content: space-between; }
   .acc-list-wrap h2 { margin-bottom: 8px; font-size: clamp(1.375rem, 1.1rem + 1vw, 1.75rem); }
-  /* Real values, live-measured on mercury.com/personal-banking (computed
-     styles, not Tailwind class guesses): the divider above a closed item is
-     a faint rgba(112,115,147,.22), darkening to a near-solid rgb(42,41,36)
-     for the item that's currently open — and the dot isn't a hollow ring
-     that fills in, it's fully invisible (no border at all) until open, then
-     a small solid dot. Transition timing/easing matches their own
-     "transition-colors" default. */
-  /* Real mercury.com puts the gap below an item's text on the NEXT item, as
-     margin-top:12px (not padding on the current one — confirmed live via
-     full box-model dump: a closed item's own padding/margin-bottom is 0px;
-     the 12px lives entirely on `not-first:mt-s12`). Precisely reconciles the
-     measured gaps: ~13.6px between two closed items (12px margin + ~1.6px
-     of the title's own line-height leading, not a spacing rule) and exactly
-     32px after the open item (that same 12px plus .acc-a p's own 20px
-     bottom padding below). */
+  
+  
   .acc-item { border-top: 1px solid rgba(112,115,147,.22); transition: border-color .4s var(--pb-ease-snap); }
   .acc-item:not(:first-child) { margin-top: 12px; }
   .acc-item.open { border-top-color: #2a2924; }
-  /* 12px top, 0 bottom — real measured value: the gap above each item's
-     title comes entirely from padding-top under its own divider; there's no
-     matching bottom padding, the next item's divider sits right after the
-     text's own line-height. */
+  
   .acc-q { width: 100%; text-align: left; background: none; border: 0; padding: 12px 0 0; display: flex; align-items: center;
     gap: 14px; cursor: pointer; font-family: var(--pb-font); }
   .acc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; background: transparent; transition: background-color .4s var(--pb-ease-snap); }
@@ -591,35 +420,16 @@
   .acc-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s var(--pb-ease-transform); }
   .acc-item.open .acc-a { grid-template-rows: 1fr; }
   .acc-a-inner { overflow: hidden; }
-  /* 0 top — real measured value: title and body are structurally flush, no
-     gap/rule between them, confirmed via a full box-model dump (both sides'
-     padding/margin are 0px). The 20px bottom was already right. */
+  
   .acc-a p { padding: 0 0 20px 23px; font-size: 14.5px; line-height: 1.6; color: var(--pb-base-600); max-width: 440px; }
 
-  /* ---------- Carousel: "Banking that moves like software" --------
-     Real page: a slideshow (Embla-signature), NOT an accordion —
-     corrected this round. One big image + 3 persistent captions below
-     it on desktop (active one emphasised); each slide carries its own
-     caption on mobile. Built with a plain transform-based track
-     (own implementation, not the Embla library) — same end behaviour. */
+  
   .carousel-section { background: var(--pb-base-100); }
   .car-viewport { overflow: hidden; border-radius: var(--pb-radius-l); max-width: 1040px; margin: 0 auto; }
-  /* Real mercury.com doesn't use a CSS transition here at all — it's a custom
-     JS/rAF physics loop (confirmed live: transitionDuration computes to 0s,
-     no Web Animations object either), easing out over ~680ms to 99% with a
-     long asymptotic tail past 1.5s. A full physics reimplementation isn't
-     proportionate here; this longer, more decelerated curve gets close to
-     the same FEEL without one. */
+  
   .car-track { display: flex; transition: transform .6s cubic-bezier(.16,1,.3,1); }
-  /* 2/1 throughout, not 4/5-on-mobile-then-2/1 — the three real images here
-     are landscape screenshots (1774x887, exactly 2:1), same reasoning as the
-     hero preview card: forcing a portrait crop on mobile would just show a
-     thin unreadable sliver with no tall-shaped asset to back it. */
-  /* No border/shadow — real mercury.com has neither on this card (confirmed
-     live: border-width and box-shadow both compute to none/0 on every
-     element in that stack); the only "frame" is the photo itself clipped to
-     this same 12px radius (--pb-radius-l already matches their measured
-     12px exactly). */
+  
+  
   .car-slide { flex: 0 0 100%; aspect-ratio: 2/1; background: #fff; border-radius: var(--pb-radius-l);
     overflow: hidden; position: relative; display: flex; align-items: center; justify-content: center; }
   .car-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -639,31 +449,23 @@
   .car-cap-mobile h4 { font-size: 15px; margin-bottom: 4px; }
   .car-cap-mobile p { font-size: 13px; color: var(--pb-base-600); line-height: 1.5; }
   @media (min-width: 640px) { .car-cap-mobile { display: none; } }
-  /* Gaps are real measured values: viewport-&gt;captions 24px (was 40 — that was
-     actually the OTHER gap's value, the two had gotten swapped), inter-
-     caption gap 32px (was 40). */
+  
   .car-captions { display: none; }
   @media (min-width: 640px) { .car-captions { display: grid; grid-template-columns: repeat(3,1fr); gap: 32px; max-width: 1040px; margin: 24px auto 0; } }
-  /* Pure opacity swap, confirmed live — no color or font-weight change
-     between active/inactive (real title/body colors are byte-identical in
-     both states; reusing section 2's own exact-measured values here too,
-     since they're the same ink tokens). .62/.2s replaced with the real
-     .7/.3s ease-out (Tailwind's own cubic-bezier, not a generic ease). */
+  
   .car-cap-btn { text-align: left; background: none; border: 0; padding: 0; cursor: pointer; font-family: var(--pb-font); opacity: .7; transition: opacity .3s cubic-bezier(0,0,.2,1); }
   .car-cap-btn.active, .car-cap-btn:hover { opacity: 1; }
   .car-cap-btn h4 { font-size: 15.5px; margin-bottom: 6px; color: #2a2924; }
   .car-cap-btn p { font-size: 13.5px; color: #5a5548; line-height: 1.5; }
   .car-controls { display: flex; align-items: center; justify-content: flex-start; gap: 16px; margin-top: 40px; max-width: 1040px; margin-inline: auto; }
   .car-arrow-group { display: flex; gap: 8px; }
-  /* Real values: a warm gold/tan tint, not a neutral gray — rgba(138,117,60,
-     .1) resting, deepening to .16 on hover (opacity-only, same hue, no
-     border/shadow at either state, both confirmed live). */
+  
   .car-arrow { width: 40px; height: 40px; border-radius: 50%; background: rgba(138,117,60,.1); border: 0; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .15s; flex-shrink: 0; }
   .car-arrow:hover { background: rgba(138,117,60,.16); }
   .car-arrow svg { width: 14px; height: 14px; }
   .car-pager { font-family: var(--pb-font); font-size: 16px; font-weight: 500; color: #2a2924; min-width: 44px; text-align: center; }
 
-  /* ---------- Split-image rows: savings / investing / protection --- */
+  
   .split-section:nth-of-type(even) .split-row { flex-direction: row-reverse; }
   .split-row { display: flex; align-items: center; gap: 64px; }
   @media (max-width: 900px) { .split-row { flex-direction: column !important; gap: 32px; } }
@@ -680,7 +482,7 @@
   .split-visual .ic-chip .ic { width: 36px; height: 36px; }
   .split-visual .mini-card { width: 84%; }
 
-  /* ---------- Bullet grid ---------- */
+  
   .bullet-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; background: var(--pb-border); border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); overflow: hidden; }
   @media (max-width: 768px) { .bullet-grid { grid-template-columns: 1fr; } }
   .bullet-item { background: #fff; padding: 24px 28px; display: flex; gap: 14px; align-items: flex-start; }
@@ -688,7 +490,7 @@
   .bullet-item .dot-ic svg { width: 11px; height: 9px; }
   .bullet-item p { font-size: 15px; color: var(--pb-base-700); line-height: 1.5; }
 
-  /* ---------- Tabs ---------- */
+  
   .tabs-head { display: flex; justify-content: center; gap: 4px; border-bottom: 1px solid var(--pb-border); margin-bottom: 40px; overflow-x: auto; }
   .tab-btn { padding: 13px 18px; font-size: 14.5px; font-weight: 500; color: var(--pb-base-500); border-bottom: 1px solid transparent;
     cursor: pointer; white-space: nowrap; transition: color .15s, border-color .15s; background: none; font-family: var(--pb-font); }
@@ -703,10 +505,7 @@
   .tab-visual .ic-chip { width: 72px; height: 72px; background: var(--pb-base-100); }
   .tab-visual .ic-chip .ic { width: 38px; height: 38px; }
 
-  /* ---------- Testimonial — single quote, full-bleed photo-
-     placeholder + gradient, overlaid blockquote (corrected from a
-     2-quote tab-switcher — the real page's SSR markup shows no tab
-     triggers, just one panel). ---------- */
+  
   .testi-section .wrap { text-align: center; }
   .testi-disclosure { font-size: 12px; color: var(--pb-base-500); max-width: 560px; margin: 0 auto 28px; line-height: 1.6; }
   .testi-card { position: relative; border-radius: var(--pb-radius-xl); overflow: hidden; aspect-ratio: 16/10; max-width: 1040px; margin: 0 auto; }
@@ -723,10 +522,7 @@
   .testi-name { display: block; font-size: 15px; font-weight: 600; color: #fff; }
   .testi-role { display: block; font-size: 13px; color: rgba(255,255,255,.6); margin-top: 2px; }
 
-  /* ---------- Included — plain bordered list, beige (NOT purple —
-     corrected this round; the real section carries no colour block
-     and no icons at all). "Included" label right-aligned on desktop
-     (flex-row-reverse), centered/stacked on mobile. ---------- */
+  
   .incl-list { border-top: 1px solid var(--pb-border); border-bottom: 1px solid var(--pb-border); max-width: 760px; margin: 0 auto; }
   .incl-row { border-top: 1px solid var(--pb-border); padding: 22px 0; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 6px; }
   .incl-row:first-child { border-top: none; }
@@ -734,9 +530,7 @@
   .incl-row .incl-label { font-weight: 560; color: var(--pb-base-900); font-size: 16px; flex-shrink: 0; }
   .incl-row .incl-desc { color: var(--pb-base-600); font-size: 14.5px; }
 
-  /* ---------- FAQ — same grid-rows accordion technique, top-border-
-     only rows (confirmed identical mechanic to the "One subscription"
-     accordion on the real page). ---------- */
+  
   .faq-list { max-width: 760px; margin: 0 auto; border-top: 1px solid var(--pb-border); }
   .faq-item { border-bottom: 1px solid var(--pb-border); }
   .faq-q { width: 100%; text-align: left; background: none; border: 0; padding: 22px 0; display: flex; justify-content: space-between; align-items: center;
@@ -751,13 +545,11 @@
   .faq-a-inner { overflow: hidden; }
   .faq-a p { padding-bottom: 22px; font-size: 14.5px; line-height: 1.6; color: var(--pb-base-600); max-width: 640px; }
 
-  /* ---------- Closing CTA ---------- */
+  
   .closer { text-align: center; background: var(--pb-beige-100); }
   .closer h2 { margin-bottom: 28px; }
 
-  /* ---------- Footer + disclaimers — dark-purple theme (moved here
-     from "Included" this round; this is the page's one saturated
-     section, confirmed). ---------- */
+  
   .dark-purple { background: var(--pb-dp-bg); }
   footer.dp { padding: 64px 0 40px; }
   .foot-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 32px 24px; margin-bottom: 8px; }
@@ -778,39 +570,22 @@
   .foot-bottom a { color: var(--pb-dp-muted); }
   .foot-bottom a:hover { color: #fff; }
 
-  /* ---------- Scroll-reveal ---------- */
+  
   .reveal { opacity: 0; transform: translateY(18px); }
   @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; } }
 
-  /* ============================================================
-     BUSINESS BANKING — page-specific sections, deep-researched
-     live against mercury.com/business-banking. Separate palette
-     from personal-banking (lavender/indigo "purple" theme, not
-     beige/neutral) — new --bb-* tokens below rather than forcing
-     personal-banking's beige ramp onto a page that isn't beige.
-     --pb-purple-600 (#5266eb) IS reused for the accent — it's
-     already an exact match for the real measured button color.
-     ============================================================ */
+  
   :root {
     --bb-lavender-bg: #f5f4fd;
     --bb-ink-900: #28253b;
     --bb-ink-600: #554e7b;
     --bb-muted-border: rgba(112,115,147,.22);
     --bb-muted-surface: rgba(112,115,147,.1);
-    /* Real h1 isn't var(--pb-size-hero) — that clamp was tuned
-       specifically for personal-banking's own (larger) headline.
-       Reverse-engineered from the real measured block: 948x136px
-       for 2 lines at a 1600px viewport implies ~64px type there;
-       this clamp lands on that same ~64px at 1600w. */
+    
     --bb-size-hero: clamp(2.25rem, .8rem + 3.2vw, 4rem);
   }
 
-  /* No overflow:hidden/blur-clip wrapper needed here (unlike
-     personal-banking's hero) — the real background is a flat
-     solid color, not a blurred photo, so there's no overscan to
-     clip and the sticky disclosure pill doesn't need the
-     sibling-of-a-clipped-layer workaround either; it's just a
-     normal child here. */
+  
   .bb-hero { position: relative; margin-top: -73px; background: var(--bb-lavender-bg); padding: calc(72px + 73px) 0 0; text-align: center; }
   .bb-hero.tr-hero-neutral { background: #fbfcfd; }
   .bb-hero-inner { max-width: 948px; margin: 0 auto; padding: 0 24px; }
@@ -825,26 +600,13 @@
   .bb-cta-secondary { height: 40px; padding: 0 24px; border-radius: var(--pb-radius-full); border: 1px solid var(--bb-muted-border);
     background: var(--bb-muted-surface); color: var(--bb-ink-900); font-size: 15px; font-weight: 500; display: inline-flex; align-items: center; }
   @media (max-width: 640px) { .bb-hero-cta { flex-direction: column; } .bb-email-pill { width: 100%; } }
-  /* Real breakpoints: 4:5 mobile -> 16:9 at 640px -> 21:9 at 1280px,
-     full-bleed edge to edge, object-position:top, zero CSS radius/
-     shadow (that "dashboard card" look is baked into the real
-     source image itself, confirmed by downloading and inspecting
-     the raw asset — not something to recreate in CSS here). */
+  
   .bb-hero-visual { position: relative; margin-top: 40px; width: 100%; aspect-ratio: 4/5; overflow: hidden; }
   @media (min-width: 640px) { .bb-hero-visual { aspect-ratio: 16/9; } }
   @media (min-width: 1280px) { .bb-hero-visual { aspect-ratio: 21/9; } }
-  /* Real mercury.com uses ZERO CSS trickery for the edge blend — confirmed
-     live (mask-image:none at rest, no border/shadow anywhere) — it's purely
-     that their own photo asset is naturally blurred/defocused at the edges
-     to a tone that happens to match the page background. We can't re-edit
-     our supplied PNG's own pixels the same way, so this mask-image fade is
-     the CSS-side equivalent: same visible outcome (edges dissolve into
-     .bb-hero's own background below), achieved differently since the
-     asset itself can't be touched. */
+  
   .bb-hv-layer { position: absolute; inset: 0; }
-  /* Fades all 4 edges, not just left/right — two perpendicular gradients
-     intersected (both must be "visible" at a given pixel for it to show),
-     so corners fade correctly too instead of just two opposite sides. */
+  
   .bb-hv-layer img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block;
     -webkit-mask-image: linear-gradient(90deg, transparent 0%, #fff 14%, #fff 86%, transparent 100%), linear-gradient(180deg, transparent 0%, #fff 16%, #fff 88%, transparent 100%);
     -webkit-mask-composite: source-in, source-in;
@@ -852,20 +614,7 @@
     mask-composite: intersect; }
   .bb-hv-mask { z-index: 1; }
   .bb-hv-reveal { z-index: 2; }
-  /* Real mechanism, confirmed live via real cursor moves + a full DOM/asset
-     dump: 3 stacked identical-position image layers, not one image with a
-     clip effect. Top layer (opaque "plain" photo) simply opacity-fades out
-     on hover of the whole visual (500ms) to reveal a second "plain" copy
-     underneath, EXCEPT that second copy has its own cursor-following
-     500px-radius transparent hole (mask-image:radial-gradient, a real
-     Tailwind lg:-gated utility there) — so wherever the hole currently
-     sits, a third, different "enriched" image shows through from the very
-     bottom. We only have one dashboard asset family, so the "enriched"
-     bottom layer reuses the same dashboard's own un-faded original (more
-     visible content at its edges than the soft-fade top/middle layers)
-     rather than a genuinely distinct asset — same mechanism, same-family
-     imagery instead of purpose-built edge content. lg: breakpoint only
-     (1024px+), matching the real page — no hover target on touch anyway. */
+  
   @media (min-width: 1024px) {
     .bb-hv-reveal img { -webkit-mask-image: linear-gradient(90deg, transparent 0%, #fff 14%, #fff 86%, transparent 100%), linear-gradient(180deg, transparent 0%, #fff 16%, #fff 88%, transparent 100%), radial-gradient(circle at var(--hvx, -9999px) var(--hvy, -9999px), transparent, #fff 500px);
       -webkit-mask-composite: source-in, source-in, source-in;
@@ -875,9 +624,7 @@
   .bb-hv-top { z-index: 3; opacity: 1; transition: opacity .5s ease; }
   .bb-hero-visual:hover .bb-hv-top { opacity: 0; }
 
-  /* ---------- Text listing: heading + CTA pill + 6-item icon grid,
-     no card chrome at all (confirmed live: zero bg/border/radius/
-     shadow anywhere in the item grid) ---------- */
+  
   .bb-listing { padding: 128px 0; background: #fbfcfd; }
   .bb-listing-head { max-width: 720px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 40px; text-align: center; }
   .bb-listing-head h2 { font-size: clamp(1.75rem, 1.3rem + 2.2vw, 3rem); font-weight: 480; line-height: 1.15; letter-spacing: .015em; color: #272735; }
@@ -906,12 +653,7 @@
   .fd-partner-card-more { display: flex; align-items: center; justify-content: center; background: var(--bb-lavender-bg); border-style: dashed; }
   .fd-partner-card-more p { color: var(--pb-base-700); font-size: 15px; margin: 0; }
 
-  /* ---------- Split rows (4x): text/media alternating, each row abuts
-     the next (72px top padding only, 0 bottom — confirmed live). Video
-     rows (2 of the real 4) substituted with static images from our own
-     asset set instead of building a video pipeline — a video thumbnail
-     with a disabled-looking play affordance would read as broken, a
-     static image doesn't. ---------- */
+  
   .bb-split-section { padding: 72px 0 0; background: #fbfcfd; }
   .bb-split-section:last-of-type { padding-bottom: 72px; }
   .bb-split-umbrella { max-width: 752px; margin: 0 auto 40px; text-align: center; font-size: 48px; font-weight: 480; line-height: 1.15; color: #272735; }
@@ -930,10 +672,7 @@
   .bb-split-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
   @media (max-width: 768px) { .bb-split-row { grid-template-columns: 1fr; } .bb-split-text { order: 0; } .bb-split-media { order: 0; } .bb-split-row.media-right .bb-split-media { order: -1; } .bb-split-text { max-width: none; } }
 
-  /* ---------- Wayfinding: 3-up product cross-sell cards, purple theme.
-     No hover reaction on the card itself (confirmed live — zero change
-     to background/shadow/transform on hover), only the small circular
-     arrow button's background opacity steps up. ---------- */
+  
   .bb-wayfind-section { padding: 72px 0; background: #f5f4fd; }
   .bb-wayfind-head { max-width: 752px; margin: 0 auto 56px; text-align: center; font-size: 48px; font-weight: 480; line-height: 1.15; letter-spacing: .005em; color: #28253b; }
   .bb-wayfind-grid { max-width: 1144px; margin: 0 auto; display: flex; flex-direction: column; gap: 32px; }
@@ -949,9 +688,7 @@
     display: flex; align-items: center; justify-content: center; color: #28253b; transition: background-color .3s var(--pb-ease-appear); align-self: flex-start; }
   .bb-wayfind-card:hover .bb-wf-arrow { background: rgba(82,102,235,.16); }
 
-  /* ---------- Transparent pricing: heading+CTA then a 9-row divided
-     checklist. Icon flips side mobile->desktop on the real page; we
-     keep it simple/consistent (icon left, text right) throughout. ---------- */
+  
   .bb-pricing-section { padding: 128px 0 72px; background: #f5f4fd; }
   .bb-pricing-head { max-width: 752px; margin: 0 auto 72px; display: flex; flex-direction: column; align-items: center; gap: 40px; text-align: center; }
   .bb-pricing-head h2 { font-size: 48px; font-weight: 480; line-height: 1.15; letter-spacing: .005em; color: #28253b; }
@@ -960,11 +697,7 @@
   .bb-pricing-list li svg { flex-shrink: 0; color: #28253b; }
   .bb-pricing-list li span.t { font-size: 28px; font-weight: 360; line-height: 1.2; letter-spacing: .015em; color: #554e7b; }
 
-  /* ---------- Testimonial tabs: stacked crossfade panels + 3 sliding
-     "progress pill" tab buttons. Simplified from the real page's
-     clip-path sliding-window indicator + sequential 300ms-out/300ms-in
-     panel fade to a single crossfade + solid active-pill — same visual
-     idea, far less bespoke machinery for a 3-tab widget. ---------- */
+  
   .bb-testi-section { padding: 112px 0 0; background: #f5f4fd; }
   .bb-testi-stage { max-width: 948px; margin: 0 auto; min-height: 273px; display: flex; align-items: center; justify-content: center; text-align: center; position: relative; }
   .bb-testi-panel { display: none; }
@@ -980,9 +713,7 @@
   .bb-testi-tab:hover span { background: rgba(112,115,147,.16); }
   .bb-testi-tab.active span { background: #28253b; }
 
-  /* ---------- FAQ accordion: plain Q/A list, multi-open (unlike
-     personal-banking's exclusive accordion). Right-side chevron, not a
-     left dot — different mechanism, confirmed live. ---------- */
+  
   .bb-faq-section { padding: 72px 0; background: #f5f4fd; }
   .bb-faq-wrap { max-width: 752px; margin: 0 auto; }
   .bb-faq-wrap h2 { text-align: center; font-size: 48px; font-weight: 480; line-height: 1.15; letter-spacing: .005em; color: #28253b; margin-bottom: 72px; }
@@ -1001,18 +732,14 @@
   .bb-faq-a-inner { overflow: hidden; }
   .bb-faq-a-inner p { padding-top: 12px; font-size: 18px; font-weight: 360; line-height: 1.35; color: #554e7b; max-width: none; }
 
-  /* ---------- Closing CTA band — flat full-bleed color, no card ---------- */
+  
   .bb-cta-band { background: #edecfb; padding: 128px 0; }
   .bb-cta-band-inner { max-width: 752px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; }
   .bb-cta-band h2 { font-size: 48px; font-weight: 480; line-height: 1.15; letter-spacing: .005em; color: #28253b; }
   .bb-cta-band .sub { margin-top: 12px; font-size: 21px; font-weight: 360; line-height: 1.35; color: #554e7b; }
   .bb-cta-band .btn-primary, .bb-cta-band .bb-cta-pill { margin-top: 40px; }
 
-  /* ---------- Treasury-only: testimonial-slider, mid-page CTA band, rate
-     table — all deep-researched live against mercury.com/treasury. New
-     .tr-* prefix (not .bb-*) because the real components genuinely differ
-     from business-banking's own tabs-testimonial/cta-band mechanics, not
-     just a copy-paste of an existing class under a new name. ---------- */
+  
   .tr-testi-section { padding: 112px 0; background: var(--bb-lavender-bg); }
   .tr-testi-col { max-width: 620px; margin: 0 auto; padding-top: 80px; text-align: center; }
   .tr-testi-quote { font-size: 21px; font-weight: 360; line-height: 1.35; color: var(--bb-ink-900); }
@@ -1024,9 +751,7 @@
   .tr-testi-who p:first-child, .tr-testi-where p:first-child { font-weight: 480; color: var(--bb-ink-900); }
   .tr-testi-who p:last-child, .tr-testi-where p:last-child { margin-top: 2px; font-weight: 360; color: var(--bb-ink-600); }
 
-  /* Confirmed near-identical typography/spacing to .bb-cta-band (48px/480
-     heading, 12px/40px gaps) — reused verbatim, just a shorter section and
-     a tonal .bb-cta-pill button instead of the closing band's solid one. */
+  
   .bb-cta-band.tr-raise-band { padding: 96px 0; }
 
   .tr-table-section { padding: 112px 0; background: var(--bb-lavender-bg); }
@@ -1042,10 +767,7 @@
   .tr-rate-table th { font-weight: 530; }
   .tr-rate-table td { font-weight: 360; }
 
-  /* Get-the-app QR modal — self-contained (no dependency on page-level CSS tokens), so this exact
-     block can be copy-pasted onto every marketing page unchanged. Opened by every "Log in"
-     link/button sitewide (wired by text content, not by class, in the matching script block —
-     see qr-modal-overlay's companion <script>). */
+  
   .qr-modal-overlay { position: fixed; inset: 0; z-index: 9999; background: rgba(10,10,14,.6); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity .25s cubic-bezier(.2,1,.4,1), visibility .25s; padding: 24px; }
   .qr-modal-overlay.is-open { opacity: 1; visibility: visible; }
   .qr-modal { position: relative; background: #ffffff; border-radius: 24px; padding: 44px 36px 36px; max-width: 340px; width: 100%; text-align: center; color: #0c1024; transform: scale(.94); transition: transform .25s cubic-bezier(.2,1,.4,1); box-shadow: 0 24px 60px -14px rgba(0,0,0,.28); font-family: inherit; }
@@ -1660,9 +1382,7 @@
       <a class="brand" href="../../index.html#top"><img class="mk" src="../../assets/brand/Subtract.png" alt="Raushco"> Raushco</a>
       <p class="foot-tag">Banking, credit cards, treasury, and finance ops in one platform.</p>
     </div>
-    <!-- Mercury's real footer: one 4-col grid that auto-wraps into 2 rows of 8 category columns
-         (not 2 hand-coded rows) — row-gap:80px/column-gap:40px, DOM order below reads row-major
-         (Banking…Finance Ops, then Solutions…Follow Us) same as theirs. -->
+    
     <div class="foot-grid-m">
       <div class="foot-col"><h4>Personal</h4><a href="../../savings-account/index.html">Savings Account</a><a href="../../fixed-deposit/index.html">Fixed Deposits</a><a href="../../recurring-deposit/index.html">Recurring Deposits</a><a href="../../forex-remittance/index.html">Forex &amp; Remittance</a><a href="../../gold-silver/index.html">Gold &amp; Silver</a><a href="../../mutual-funds/index.html">Mutual Funds &amp; SIPs</a><a href="../../bonds/index.html">Bonds</a><a href="../../nps/index.html">NPS</a><a href="../../corporate-nps/index.html">Corporate NPS</a><a href="../../nps-vatsalya/index.html">NPS Vatsalya</a><a href="../../insurance/index.html">Insurance</a><a href="../../fd-backed-credit-card/index.html">FD-Backed Credit Card</a><a href="../../personal-loans/index.html">Personal Loans</a><a href="../../loan-against-fd/index.html">Loan Against FD</a><a href="../../gold-loan/index.html">Gold Loan</a></div>
       <div class="foot-col"><h4>Business</h4><a href="../../business-banking/index.html">Business Checking &amp; Savings</a><a href="../../treasury/index.html">Treasury</a><a href="../../credit/index.html">Business Credit Cards</a><a href="../../working-capital-loans/index.html">Working Capital Loans</a><a href="../../venture-debt/index.html">Venture Debt</a><a href="../../business-payments/index.html">Payments</a><a href="#">Bill Pay</a><a href="../../invoicing/index.html">Invoicing</a><a href="../../spend-management/index.html">Spend Management</a><a href="#">Books</a><a href="../../accounting-integrations/index.html">Accounting Integrations</a><a href="#">Payroll</a><a href="../../invoice-discounting/index.html">Invoice Discounting</a><a href="../../collections/index.html">Collections</a></div>
@@ -1693,12 +1413,7 @@
   </div>
 </footer>
 
-<!-- Disclaimers and footnotes — a separate <section>, same #171721 band, immediately after
-     </footer> (mirrors mercury's real DOM: this legal block is a sibling of <footer>, not nested
-     inside it). Content below is 100% Raushco-specific, reusing only facts already established
-     elsewhere in this project (treasury/business-banking/venture-debt/credit/gold-loan/personal-loans
-     footnotes + this page's own "11+ partner banks" stat and "7.00% APY" copy) — none of mercury's
-     actual partner-bank names, entity IDs, or figures. -->
+
 <section class="foot-disclaimers" data-theme="dark">
   <div class="wrap">
     <div class="disc-grid-m">
@@ -1760,7 +1475,6 @@
   });
 
   // Mega-menu: click to open, click elsewhere to close (not hover-driven).
-  // Literal port of the mercury-wip-reference nav JS.
   document.querySelectorAll('.nav-item').forEach(function (item) {
     var trigger = item.querySelector('.nav-drop-trigger');
     if (!trigger) return;
@@ -1785,7 +1499,6 @@
   });
 
   // Nav crossfades dark/light as it slides over differently-themed section
-  // bands underneath. Confirmed from the real mercury.com/personal-banking
   // (live-measured, not guessed): it does NOT use a narrow band just under
   // the nav — it flips the instant a section boundary crosses the vertical
   // MIDPOINT of the viewport, i.e. whichever themed section covers more than
@@ -1813,7 +1526,6 @@
         });
         navEl.dataset.theme = topEl.dataset.theme;
         // Also stamped on <body>, not just the nav — confirmed live on
-        // mercury.com that the handoff section's own background/text swap
         // in lockstep with the nav off one shared flag (CSS transition doing
         // the crossfade), not a scroll-position gradient. See .acc-section's
         // dark-scope token override.
@@ -1841,7 +1553,6 @@
   }
   // Hero visual hover-reveal — tracks the cursor into --hvx/--hvy so the
   // reveal layer's radial mask (see CSS) follows it; confirmed live that
-  // mercury.com's own --x/--y are plain 1:1 cursor-position custom props
   // set on the container, not anything fancier.
   (function () {
     var vis = document.getElementById('bbHeroVisual');
@@ -1853,7 +1564,6 @@
     });
   })();
 
-  // FAQ accordion — multi-open (confirmed live on mercury.com/business-
   // banking: opening one item does NOT close the others, unlike
   // personal-banking's exclusive accordion, so this doesn't reuse
   // wireAccordion()).
@@ -1898,9 +1608,7 @@
   })();
 </script>
 
-<!-- Get-the-app QR modal<!-- Get-the-app QR modal — same markup/CSS/script on every marketing page. Every "Open account"
-     link/button on the page opens this instead of navigating, since the signup flow lives in the
-     app, not on this static site. -->
+
 <div class="qr-modal-overlay" id="qrModalOverlay" aria-hidden="true">
   <div class="qr-modal" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle">
     <button type="button" class="qr-modal-close" id="qrModalClose" aria-label="Close">&times;</button>
