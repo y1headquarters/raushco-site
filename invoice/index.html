@@ -265,7 +265,7 @@
      from-to -> itemized table -> highlighted total -> notes -> footer
      anatomy used by virtually every invoicing tool, not any one product's
      specific design. */
-  .ig-invoice { position: relative; background: #fff; border: 1px solid var(--pb-border); border-radius: 10px; padding: 44px 40px 32px; box-shadow: 0 10px 34px rgba(32,31,28,.09), 0 1px 3px rgba(32,31,28,.06); font-size: 13px; min-height: 520px; overflow: hidden; }
+  .ig-invoice { position: relative; max-width: 480px; aspect-ratio: 210 / 297; margin: 0 auto; background: #fff; border: 1px solid var(--pb-border); border-radius: 0; padding: 44px 40px 32px; box-shadow: 0 10px 34px rgba(32,31,28,.09), 0 1px 3px rgba(32,31,28,.06); font-size: 13px; }
   .ig-invoice::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: var(--pb-purple-600); }
   .ig-invoice-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
   .ig-invoice-top h4 { font-size: 29px; font-weight: 700; letter-spacing: -.02em; color: var(--pb-base-900); }
