@@ -711,6 +711,14 @@
     return '₹' + Math.round(n).toLocaleString('en-IN');
   }
 
+  // jsPDF's built-in "helvetica" font has no ₹ (U+20B9) glyph — passing it
+  // to doc.text() corrupts that line's character spacing. Use this instead
+  // of fmtINR() for any text drawn directly into the PDF.
+  function fmtINRPdf(n) {
+    if (!isFinite(n)) return 'Rs. 0';
+    return 'Rs. ' + Math.round(n).toLocaleString('en-IN');
+  }
+
   function toISODate(d) {
     return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
   }
@@ -959,40 +967,49 @@
     doc.setFontSize(26);
     doc.setTextColor.apply(doc, PDF_INK);
     doc.text('Invoice', margin, y);
+    y += 14;
 
-    y += 10;
-    var metaPairs = [
-      { label: 'Invoice No.', value: state.invoiceNumber },
-      { label: 'Date', value: fmtDateDisplay(state.invoiceDate) },
-      { label: 'Due', value: fmtDateDisplay(state.dueDate) }
-    ];
-    if (state.poNumber) metaPairs.push({ label: 'PO', value: state.poNumber });
-    drawMetaLine(doc, margin, y, metaPairs);
-
-    y += 8;
-    doc.setDrawColor.apply(doc, [225, 223, 217]);
-    doc.line(margin, y, pageW - margin, y);
-    y += 11;
+    // Three-column header: FROM / TO / DETAILS — same anatomy as the
+    // on-screen live-preview card (.ig-invoice-cols3).
+    var col1X = margin;
+    var col2X = margin + (pageW - margin * 2) * 0.38;
+    var col3X = margin + (pageW - margin * 2) * 0.72;
+    var colWidth = (pageW - margin * 2) * 0.32;
 
     doc.setFont('helvetica', 'bold');
     doc.setFontSize(9);
     doc.setTextColor.apply(doc, PDF_MUTED);
-    doc.text('FROM', margin, y);
-    doc.text('BILL TO', pageW / 2 + 5, y);
+    doc.text('FROM', col1X, y);
+    doc.text('TO', col2X, y);
+    doc.text('DETAILS', col3X, y);
     y += 6;
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(10.5);
     doc.setTextColor.apply(doc, PDF_INK);
-    var colWidth = pageW / 2 - margin - 10;
     var fromLines = [state.fromName]
       .concat(state.fromAddress ? doc.splitTextToSize(state.fromAddress, colWidth) : [])
       .concat(state.fromEmail ? [state.fromEmail] : []);
     var toLines = [state.toName]
       .concat(state.toAddress ? doc.splitTextToSize(state.toAddress, colWidth) : [])
       .concat(state.toEmail ? [state.toEmail] : []);
-    doc.text(fromLines, margin, y);
-    doc.text(toLines, pageW / 2 + 5, y);
+    doc.text(fromLines, col1X, y);
+    doc.text(toLines, col2X, y);
+
+    var dy = y;
+    doc.setFontSize(9.5);
+    doc.setTextColor.apply(doc, PDF_MUTED);
+    doc.text('Invoice no.', col3X, dy);
+    doc.setTextColor.apply(doc, PDF_INK);
+    doc.text(state.invoiceNumber || '-', pageW - margin, dy, { align: 'right' });
+    dy += 5.5;
+    if (state.poNumber) {
+      doc.setTextColor.apply(doc, PDF_MUTED);
+      doc.text('PO no.', col3X, dy);
+      doc.setTextColor.apply(doc, PDF_INK);
+      doc.text(state.poNumber, pageW - margin, dy, { align: 'right' });
+    }
+
     y += Math.max(fromLines.length, toLines.length) * 5.4 + 10;
     doc.setDrawColor.apply(doc, [225, 223, 217]);
     doc.line(margin, y, pageW - margin, y);
@@ -1004,7 +1021,7 @@
 
     state.items.forEach(function (item) {
       var amt = lineTotal(item);
-      if (y > pageH - 50) {
+      if (y > pageH - 60) {
         doc.addPage();
         y = 24;
         y = drawTableHeader(doc, margin, pageW, y);
@@ -1015,45 +1032,52 @@
       var descLines = doc.splitTextToSize(item.desc || '-', pageW - margin * 2 - 110);
       doc.text(descLines, margin + 2, y);
       doc.text(isFinite(item.qty) ? String(item.qty) : '-', pageW - margin - 70, y, { align: 'right' });
-      doc.text(isFinite(item.price) ? fmtINR(item.price) : '-', pageW - margin - 38, y, { align: 'right' });
-      doc.text(isFinite(amt) ? fmtINR(amt) : '-', pageW - margin - 3, y, { align: 'right' });
+      doc.text(isFinite(item.price) ? fmtINRPdf(item.price) : '-', pageW - margin - 38, y, { align: 'right' });
+      doc.text(isFinite(amt) ? fmtINRPdf(amt) : '-', pageW - margin - 3, y, { align: 'right' });
       y += Math.max(descLines.length, 1) * 5.6 + 4;
       doc.setDrawColor.apply(doc, [235, 233, 229]);
       doc.line(margin, y - 2, pageW - margin, y - 2);
     });
 
-    y += 6;
-    if (y > pageH - 50) { doc.addPage(); y = 24; }
-    doc.setFillColor.apply(doc, PDF_PURPLE_TINT);
-    doc.roundedRect(pageW - margin - 80, y - 7, 80, 12, 1.6, 1.6, 'F');
+    // Plain Total row — flat, no highlight band, matching .ig-total-row.
+    y += 10;
+    if (y > pageH - 60) { doc.addPage(); y = 24; }
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(13);
+    doc.setFontSize(15);
     doc.setTextColor.apply(doc, PDF_INK);
-    doc.text('Total', pageW - margin - 75, y);
-    doc.setTextColor.apply(doc, PDF_PURPLE_DARK);
-    doc.text(fmtINR(total), pageW - margin - 3, y, { align: 'right' });
-    doc.setTextColor.apply(doc, PDF_INK);
-    y += 16;
+    doc.text('Total', margin, y);
+    doc.text(fmtINRPdf(total), pageW - margin - 3, y, { align: 'right' });
+    y += 14;
 
-    if (state.notes) {
-      if (y > pageH - 50) { doc.addPage(); y = 24; }
-      var noteLines = doc.splitTextToSize(state.notes, pageW - margin * 2 - 10);
-      var noteBoxH = noteLines.length * 5 + 12;
-      doc.setFillColor.apply(doc, PDF_TINT);
-      doc.roundedRect(margin, y - 5, pageW - margin * 2, noteBoxH, 1.4, 1.4, 'F');
-      doc.setFillColor.apply(doc, PDF_PURPLE);
-      doc.rect(margin, y - 5, 1.1, noteBoxH, 'F');
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(8.5);
-      doc.setTextColor.apply(doc, PDF_MUTED);
-      doc.text('NOTES', margin + 6, y);
-      y += 5.5;
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(9.5);
-      doc.setTextColor.apply(doc, PDF_INK);
-      doc.text(noteLines, margin + 6, y);
-      y += noteLines.length * 5 + 8;
-    }
+    // Terms / Memo footer — same two-column anatomy as .ig-terms-memo.
+    if (y > pageH - 60) { doc.addPage(); y = 24; }
+    doc.setDrawColor.apply(doc, [225, 223, 217]);
+    doc.line(margin, y, pageW - margin, y);
+    y += 11;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor.apply(doc, PDF_MUTED);
+    doc.text('TERMS', col1X, y);
+    doc.text('MEMO', col2X, y);
+    y += 6;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9.5);
+    var termY = y;
+    doc.setTextColor.apply(doc, PDF_MUTED);
+    doc.text('Invoice date', col1X, termY);
+    doc.setTextColor.apply(doc, PDF_INK);
+    doc.text(fmtDateDisplay(state.invoiceDate), col1X + 28, termY);
+    termY += 5.5;
+    doc.setTextColor.apply(doc, PDF_MUTED);
+    doc.text('Due date', col1X, termY);
+    doc.setTextColor.apply(doc, PDF_INK);
+    doc.text(fmtDateDisplay(state.dueDate), col1X + 28, termY);
+
+    var memoLines = state.notes ? doc.splitTextToSize(state.notes, pageW - col2X - margin) : [];
+    if (memoLines.length) doc.text(memoLines, col2X, y);
+    y += Math.max(2, memoLines.length) * 5.5 + 10;
 
     var footerY = pageH - 16;
     doc.setDrawColor.apply(doc, [225, 223, 217]);

@@ -913,34 +913,77 @@
     els.errors.innerHTML = '<strong>Please fix the following:</strong><ul>' + errs.map(function (e) { return '<li>' + escapeHtml(e) + '</li>'; }).join('') + '</ul>';
   }
 
+  // Same anatomy as the on-screen .rr-receipt live-preview card: title +
+  // logo, receipt no./date line, a divider, a Landlord/Tenant two-column
+  // header, the receipt sentence, an optional stamp note, a PAN + Signature
+  // footer row, and a centered disclaimer line.
+  //
+  // IMPORTANT: jsPDF's built-in "helvetica" font doesn't carry a glyph for
+  // the ₹ sign (U+20B9) — passing it to doc.text() silently corrupts that
+  // line's character spacing in some renderers. fmtINRPdf() below is used
+  // ONLY for PDF text and spells out "Rs." instead; the on-screen HTML/CSS
+  // keeps using the real ₹ glyph via fmtINR(), since browsers render it fine.
+  var RR_PDF_INK = [32, 31, 28];
+  var RR_PDF_MUTED = [118, 113, 101];
+  var RR_PDF_LIGHT_GREY = [183, 181, 201];
+
+  function fmtINRPdf(n) {
+    if (isNaN(n)) return '';
+    return 'Rs. ' + Math.round(n).toLocaleString('en-IN');
+  }
+
   function drawReceiptPage(doc, state, monthLabel, receiptNo, isFirst) {
     if (!isFirst) doc.addPage();
     var pageW = doc.internal.pageSize.getWidth();
+    var pageH = doc.internal.pageSize.getHeight();
     var margin = 20;
-    var y = 24;
-
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(18);
-    doc.text('RENT RECEIPT', pageW / 2, y, { align: 'center' });
-    y += 12;
+    var y = 26;
 
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(10);
-    doc.text('Receipt No: ' + receiptNo, margin, y);
-    doc.text('Date: ' + new Date().toLocaleDateString('en-IN'), pageW - margin, y, { align: 'right' });
-    y += 6;
-    doc.setDrawColor(200);
-    doc.line(margin, y, pageW - margin, y);
-    y += 10;
+    doc.setFontSize(20);
+    doc.setTextColor.apply(doc, RR_PDF_INK);
+    doc.text('Rent Receipt', margin, y);
 
+    y += 9;
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.setTextColor.apply(doc, RR_PDF_MUTED);
+    doc.text('Receipt No. ' + receiptNo + '   ·   Date: ' + new Date().toLocaleDateString('en-IN'), margin, y);
+
+    y += 7;
+    doc.setDrawColor(225, 223, 217);
+    doc.line(margin, y, pageW - margin, y);
+    y += 11;
+
+    var colWidth = (pageW - margin * 2) / 2 - 10;
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(9);
+    doc.setTextColor.apply(doc, RR_PDF_MUTED);
+    doc.text('LANDLORD', margin, y);
+    doc.text('TENANT', margin + (pageW - margin * 2) / 2, y);
+    y += 6;
+
+    doc.setFont('helvetica', 'normal');
     doc.setFontSize(11);
+    doc.setTextColor.apply(doc, RR_PDF_INK);
+    var landlordLines = doc.splitTextToSize(state.landlord || '-', colWidth);
+    var tenantLines = doc.splitTextToSize(state.tenant || '-', colWidth);
+    doc.text(landlordLines, margin, y);
+    doc.text(tenantLines, margin + (pageW - margin * 2) / 2, y);
+    y += Math.max(landlordLines.length, tenantLines.length) * 5.4 + 10;
+    doc.setDrawColor(225, 223, 217);
+    doc.line(margin, y, pageW - margin, y);
+    y += 11;
+
+    doc.setFontSize(11.5);
+    doc.setTextColor.apply(doc, RR_PDF_INK);
     var amountWords = (state.rent && state.rent > 0) ? ' (Rupees ' + numberToWordsIndian(state.rent) + ' only)' : '';
-    var sentence = 'Received with thanks from ' + state.tenant + ', a sum of ' + fmtINR(state.rent) + amountWords +
+    var sentence = 'Received with thanks from ' + state.tenant + ', a sum of ' + fmtINRPdf(state.rent) + amountWords +
       ' towards rent for the premises situated at ' + state.propertyAddress +
       ', for the month of ' + monthLabel + ', paid via ' + state.mode + '.';
     var lines = doc.splitTextToSize(sentence, pageW - margin * 2);
     doc.text(lines, margin, y);
-    y += lines.length * 6 + 6;
+    y += lines.length * 6.2 + 10;
 
     var needsStamp = state.mode === 'Cash' && state.rent > 5000;
     if (needsStamp) {
@@ -949,36 +992,44 @@
       doc.rect(pageW - margin - 38, y - 4, 38, 20);
       doc.setLineDashPattern([], 0);
       doc.setFontSize(8);
+      doc.setTextColor.apply(doc, RR_PDF_MUTED);
       doc.text('Revenue stamp', pageW - margin - 19, y + 8, { align: 'center' });
-      doc.setFontSize(9);
-      var noteLines = doc.splitTextToSize('A revenue stamp has been affixed above and should be signed across by the landlord, as required for cash payments over ₹5,000 under the Indian Stamp Act.', pageW - margin * 2 - 46);
+      doc.setFontSize(9.5);
+      var noteLines = doc.splitTextToSize('A revenue stamp must be affixed here and signed across by the landlord, as required for cash payments over Rs. 5,000 under the Indian Stamp Act.', pageW - margin * 2 - 46);
+      doc.setTextColor.apply(doc, RR_PDF_INK);
       doc.text(noteLines, margin, y + 2);
-      y += Math.max(24, noteLines.length * 5 + 6);
+      y += Math.max(26, noteLines.length * 5.2 + 8);
     }
 
-    doc.setFontSize(10);
-    doc.text('Landlord: ' + state.landlord, margin, y);
-    y += 6;
-    if (state.landlordAddress) {
-      var laLines = doc.splitTextToSize(state.landlordAddress, pageW - margin * 2);
-      doc.text(laLines, margin, y);
-      y += laLines.length * 5 + 2;
-    }
-    if (state.pan) { doc.text('Landlord PAN: ' + state.pan, margin, y); y += 6; }
-    doc.text('Tenant: ' + state.tenant, margin, y);
-    y += 6;
-    doc.text('Payment mode: ' + state.mode, margin, y);
+    doc.setDrawColor(225, 223, 217);
+    doc.line(margin, y, pageW - margin, y);
+    y += 10;
 
-    var footY = Math.max(y + 30, 250);
-    doc.setDrawColor(120);
-    doc.line(pageW - margin - 55, footY, pageW - margin, footY);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(9.5);
+    doc.setTextColor.apply(doc, RR_PDF_MUTED);
+    var panLineY = y;
+    if (state.pan) {
+      doc.text('Landlord PAN:', margin, panLineY);
+      doc.setTextColor.apply(doc, RR_PDF_INK);
+      doc.text(state.pan, margin + doc.getTextWidth('Landlord PAN:') + 2, panLineY);
+      doc.setTextColor.apply(doc, RR_PDF_MUTED);
+    }
+
+    var sigLineY = panLineY + 2;
+    doc.setDrawColor.apply(doc, RR_PDF_MUTED);
+    doc.line(pageW - margin - 60, sigLineY, pageW - margin, sigLineY);
     doc.setFontSize(9);
-    doc.text('Signature of Landlord', pageW - margin - 27.5, footY + 5, { align: 'center' });
-    doc.text('(' + state.landlord + ')', pageW - margin - 27.5, footY + 10, { align: 'center' });
+    doc.text('Signature of Landlord', pageW - margin - 30, sigLineY + 5, { align: 'center' });
 
-    doc.setFontSize(7.5);
-    doc.setTextColor(140);
-    doc.text('Generated with the Rent Receipt tool at raushco.com — for reference only; please confirm your own compliance requirements.', margin, 285);
+    var footerY = pageH - 16;
+    doc.setDrawColor(225, 223, 217);
+    doc.line(margin, footerY - 6, pageW - margin, footerY - 6);
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(8);
+    doc.setTextColor.apply(doc, RR_PDF_LIGHT_GREY);
+    var disclaimer = 'Generated with the Rent Receipt tool at raushco.com — for reference only; please confirm your own compliance requirements.';
+    doc.text(disclaimer, pageW / 2, footerY, { align: 'center', maxWidth: pageW - margin * 2 });
     doc.setTextColor(0);
   }
 
