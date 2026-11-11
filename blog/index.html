@@ -801,7 +801,9 @@
   .disc-copyright { color: #C3C3CC; }
   @media (max-width: 760px) { .foot-grid-m { grid-template-columns: 1fr 1fr; } .disc-grid-m { grid-template-columns: 1fr; } .disc-grid-m h2, .disc-grid-m .disc-content-m { grid-column: 1 / -1; } }
 
-  
+  /* Native cross-document view-transitions between blog pages — Chrome 126+,
+     no-op elsewhere. Used here instead of this project's site-wide
+     GSAP+Lenis .reveal convention for lighter-weight page-to-page motion. */
   @view-transition { navigation: auto; }
   ::view-transition-old(root) { animation: bl-fade-out .15s ease-in both; }
   ::view-transition-new(root) { animation: bl-fade-in .21s ease-out .15s both; }
@@ -809,7 +811,9 @@
   @keyframes bl-fade-in { from { opacity: 0; } }
   @media (prefers-reduced-motion: reduce) { ::view-transition-old(root), ::view-transition-new(root) { animation: none; } }
 
-  
+  /* ============================================================
+     Blog — shared components (index + article).
+     ============================================================ */
   .bl-hero { position: relative; margin-top: -73px; background: #fbfcfd; padding: calc(64px + 73px) 0 40px; text-align: center; }
   .bl-hero h1 { font-size: var(--bb-size-hero); font-weight: 480; line-height: 1.04; letter-spacing: -.02em; color: var(--bb-ink-900); max-width: 18ch; margin: 0 auto; }
   .bl-hero h1 em { font-family: var(--pb-serif, Georgia, serif); font-style: italic; font-weight: 400; color: var(--pb-purple-600); }
@@ -825,18 +829,17 @@
   .bl-group { max-width: 1240px; margin: 0 auto 72px; }
   .bl-group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 28px; border-bottom: 1px solid var(--pb-border); padding-bottom: 16px; }
   .bl-group-head h2 { font-size: 20px; font-weight: 600; color: var(--bb-ink-900); margin: 0; }
-  .bl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px 24px; }
+  .bl-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
   @media (max-width: 1024px) { .bl-grid { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 560px) { .bl-grid { grid-template-columns: 1fr; } }
 
   .bl-card { display: block; text-decoration: none; color: inherit; }
   .bl-card-img-wrap { aspect-ratio: 16/9; overflow: hidden; margin-bottom: 14px; background: var(--pb-base-100); }
-  .bl-card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 0; transition: transform .5s var(--pb-ease-snap, ease); }
-  .bl-card:hover .bl-card-img-wrap img { transform: scale(1.04); }
-  .bl-cat { display: block; font-size: 12px; font-weight: 600; color: var(--pb-purple-600); text-transform: uppercase; letter-spacing: .04em; margin-bottom: 8px; }
-  .bl-card h3 { font-size: 17px; font-weight: 600; line-height: 1.35; color: var(--bb-ink-900); margin: 0 0 8px; }
-  .bl-card p { font-size: 14px; line-height: 1.55; color: var(--pb-base-600); margin: 0 0 10px; }
-  .bl-by { font-size: 12.5px; color: var(--pb-base-500); }
+  .bl-card-img-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 0; }
+  .bl-cat { display: block; font-size: 13px; font-weight: 500; color: var(--pb-purple-600); text-transform: uppercase; letter-spacing: .02em; margin-bottom: 8px; }
+  .bl-card h3 { font-family: var(--pb-serif, Georgia, serif); font-size: 20px; font-weight: 500; line-height: 1.25; color: var(--bb-ink-900); margin: 0 0 8px; }
+  .bl-card p { font-size: 15px; line-height: 1.55; color: var(--pb-base-600); margin: 0 0 10px; }
+  .bl-by { font-size: 13.5px; color: var(--pb-base-500); }
 
   .bl-newsletter { max-width: 720px; margin: 0 auto; text-align: center; padding: 56px 40px; background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); }
   .bl-newsletter h3 { font-size: 22px; font-weight: 600; color: var(--bb-ink-900); margin: 0 0 10px; }
@@ -845,32 +848,32 @@
   .bl-newsletter input[type=email] { flex: 1; font-family: inherit; font-size: 14px; padding: 11px 16px; border: 1px solid var(--pb-border-input); border-radius: 999px; }
   .bl-newsletter input[type=email]:focus { outline: none; border-color: var(--pb-border-focus); }
 
-  
-  .bl-art-hero { max-width: 760px; margin: 0 auto; padding: calc(56px + 73px) 40px 0; text-align: left; }
-  .bl-art-hero .bl-cat { font-size: 12.5px; }
-  .bl-art-hero h1 { font-size: clamp(32px, 2.6vw + 20px, 46px); font-weight: 560; line-height: 1.12; letter-spacing: -.01em; color: var(--bb-ink-900); margin: 10px 0 18px; }
-  .bl-dek { font-family: var(--pb-serif, Georgia, serif); font-size: 19px; line-height: 1.5; color: var(--bb-ink-600); margin: 0 0 28px; }
-  .bl-byline { display: flex; align-items: center; gap: 10px; padding: 20px 0; border-top: 1px solid var(--pb-border); }
+  /* ---- Article page ---- */
+  .bl-art-hero { max-width: 760px; margin: 0 auto; padding: calc(56px + 73px) 40px 0; text-align: center; }
+  .bl-art-hero h1 { font-family: var(--pb-serif, Georgia, serif); font-size: clamp(32px, 2.6vw + 20px, 46px); font-weight: 500; line-height: 1.12; letter-spacing: -.01em; color: var(--bb-ink-900); margin: 10px 0 18px; }
+  .bl-dek { font-family: var(--pb-serif, Georgia, serif); font-size: 19px; line-height: 1.3; color: var(--bb-ink-900); margin: 0 0 28px; }
+  .bl-byline-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px 24px; padding: 20px 0 24px; border-top: 1px solid var(--pb-border); text-align: left; }
+  .bl-byline { display: flex; align-items: center; gap: 10px; }
   .bl-byline-av { width: 40px; height: 40px; border-radius: 999px; background: var(--pb-purple-600); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 600; flex-shrink: 0; }
   .bl-byline-name { font-size: 14px; font-weight: 600; color: var(--bb-ink-900); }
   .bl-byline-role { font-size: 12.5px; color: var(--pb-base-500); }
-  .bl-byline-date { margin-left: auto; font-size: 12.5px; color: var(--pb-base-500); }
-  .bl-share { display: flex; align-items: center; gap: 14px; padding: 4px 0 24px; }
+  .bl-byline-date { font-size: 12.5px; color: var(--pb-base-500); margin-top: 2px; }
+  .bl-share { display: flex; align-items: center; gap: 14px; }
   .bl-share a { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 999px; border: 1px solid var(--pb-border); color: var(--pb-base-600); transition: color .15s, border-color .15s; }
   .bl-share a:hover { color: var(--pb-purple-600); border-color: var(--pb-purple-600); }
   .bl-share svg { width: 15px; height: 15px; }
-  .bl-art-hero-img { max-width: 900px; margin: 8px auto 0; aspect-ratio: 16/9; overflow: hidden; border-radius: var(--pb-radius-l); background: var(--pb-base-100); }
+  .bl-art-hero-img { max-width: 900px; margin: 8px auto 0; aspect-ratio: 16/9; overflow: hidden; border-radius: 0; background: var(--pb-base-100); }
   .bl-art-hero-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-  .bl-art-body { max-width: 680px; margin: 48px auto 0; padding: 0 40px; font-family: var(--pb-serif, Georgia, serif); font-size: 18px; line-height: 1.7; color: var(--bb-ink-900); }
-  .bl-art-body h2 { font-family: var(--font-sans, inherit); font-size: 25px; font-weight: 650; line-height: 1.3; color: var(--bb-ink-900); margin: 44px 0 18px; }
+  .bl-art-body { max-width: 680px; margin: 48px auto 0; padding: 0 40px; font-family: var(--pb-serif, Georgia, serif); font-size: 18px; line-height: 1.5; color: var(--bb-ink-900); }
+  .bl-art-body h2 { font-family: var(--pb-font); font-size: 26px; font-weight: 500; letter-spacing: .01em; line-height: 1.2; color: var(--bb-ink-900); margin: 44px 0 18px; }
   .bl-art-body p { margin: 0 0 22px; }
   .bl-art-body ul, .bl-art-body ol { margin: 0 0 22px; padding-left: 24px; }
   .bl-art-body li { margin-bottom: 10px; }
   .bl-art-body strong { font-weight: 650; }
   .bl-art-body img { width: 100%; border-radius: var(--pb-radius-m); margin: 8px 0 28px; display: block; }
   .bl-art-body blockquote { font-style: italic; font-size: 21px; line-height: 1.5; color: var(--bb-ink-900); border-left: 3px solid var(--pb-purple-600); padding-left: 20px; margin: 32px 0; }
-  sup.fn { font-size: .55em; margin-left: 2px; position: relative; top: -.3em; font-family: var(--font-sans, inherit); }
+  sup.fn { font-size: .55em; margin-left: 2px; position: relative; top: -.3em; font-family: var(--pb-font); }
   sup.fn a.fn-link { counter-increment: fn; color: inherit; opacity: .6; text-decoration: underline; text-underline-offset: 2px; }
   sup.fn a.fn-link::before { content: counter(fn); }
   .bl-footnotes { max-width: 680px; margin: 48px auto 0; padding: 24px 40px 0; border-top: 1px solid var(--pb-border); font-size: 13px; line-height: 1.6; color: var(--pb-base-600); counter-reset: fn; }
@@ -1141,7 +1144,7 @@
     </div>
     <div class="bl-toolbar">
       <input type="search" class="bl-search" id="blSearch" placeholder="Search articles">
-      <button type="button" class="bl-topic active" data-cat="all">All</button><button type="button" class="bl-topic" data-cat="Corporate NPS">Corporate NPS</button><button type="button" class="bl-topic" data-cat="Guides">Guides</button><button type="button" class="bl-topic" data-cat="NPS Vatsalya">NPS Vatsalya</button><button type="button" class="bl-topic" data-cat="Personal Finance">Personal Finance</button><button type="button" class="bl-topic" data-cat="Regulatory & Industry">Regulatory & Industry</button><button type="button" class="bl-topic" data-cat="Retirement Planning">Retirement Planning</button><button type="button" class="bl-topic" data-cat="Tax">Tax</button>
+      <button type="button" class="bl-topic active" data-cat="all">All</button><button type="button" class="bl-topic" data-cat="Corporate NPS">Corporate NPS</button><button type="button" class="bl-topic" data-cat="Fixed Deposits & Recurring Deposits">Fixed Deposits & Recurring Deposits</button><button type="button" class="bl-topic" data-cat="Guides">Guides</button><button type="button" class="bl-topic" data-cat="NPS Vatsalya">NPS Vatsalya</button><button type="button" class="bl-topic" data-cat="Personal Finance">Personal Finance</button><button type="button" class="bl-topic" data-cat="Regulatory & Industry">Regulatory & Industry</button><button type="button" class="bl-topic" data-cat="Retirement Planning">Retirement Planning</button><button type="button" class="bl-topic" data-cat="Tax">Tax</button>
     </div>
   </section>
 
@@ -1455,6 +1458,66 @@
           <span class="bl-by">By Saket Raushan</span>
         </a>
       </div>
+    </div><div class="bl-group reveal" data-group="Fixed deposits & RDs">
+      <div class="bl-group-head"><h2>Fixed deposits & RDs</h2><a href="#" style="font-size:13.5px;color:var(--pb-purple-600);text-decoration:none;">See all deposit articles</a></div>
+      <div class="bl-grid">
+        <a class="bl-card" href="fd-types-explained/index.html" data-cat="Fixed Deposits & Recurring Deposits">
+          <div class="bl-card-img-wrap"><img src="../assets/images/blog/guides.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Fixed Deposits & Recurring Deposits</span>
+          <h3>The Five Fixed Deposit Types Nobody Explains Clearly</h3>
+          <p>A fixed deposit is not one product — it's at least five, and the one your bank defaults you into is rarely the one that fits your money.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+        <a class="bl-card" href="fd-premature-withdrawal-rules/index.html" data-cat="Fixed Deposits & Recurring Deposits">
+          <div class="bl-card-img-wrap"><img src="../assets/images/blog/guides.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Fixed Deposits & Recurring Deposits</span>
+          <h3>What Actually Happens When You Break an FD Early</h3>
+          <p>The penalty on a premature FD withdrawal isn't a flat fee — banks quietly recompute the interest rate itself, and that's where most depositors lose more than they bargained for.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+        <a class="bl-card" href="fd-laddering-strategy/index.html" data-cat="Fixed Deposits & Recurring Deposits">
+          <div class="bl-card-img-wrap"><img src="../assets/images/blog/guides.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Fixed Deposits & Recurring Deposits</span>
+          <h3>What Is FD Laddering? A Smarter Way to Lock In Rates</h3>
+          <p>Instead of betting one lump sum on a single maturity date, laddering splits it across several — so you're never fully locked in and never fully guessing.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+        <a class="bl-card" href="loan-and-overdraft-against-fd/index.html" data-cat="Fixed Deposits & Recurring Deposits">
+          <div class="bl-card-img-wrap"><img src="../assets/images/blog/guides.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Fixed Deposits & Recurring Deposits</span>
+          <h3>Why Borrow Against Your FD Instead of Breaking It</h3>
+          <p>An FD-backed loan or overdraft lets you access cash within hours while your deposit keeps earning interest in the background — here's the math that makes it worth doing.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+        <a class="bl-card" href="tax-on-fd-interest-explained/index.html" data-cat="Fixed Deposits & Recurring Deposits">
+          <div class="bl-card-img-wrap"><img src="../assets/images/blog/guides.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Fixed Deposits & Recurring Deposits</span>
+          <h3>Why Your FD's TDS Isn't the Full Tax Story</h3>
+          <p>Banks deduct 10% TDS on fixed deposit interest, but what you actually owe depends on your income slab — and most depositors never close that gap.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+        <a class="bl-card" href="nre-nro-fcnr-account-differences/index.html" data-cat="Fixed Deposits & Recurring Deposits">
+          <div class="bl-card-img-wrap"><img src="../assets/images/blog/guides.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Fixed Deposits & Recurring Deposits</span>
+          <h3>NRE vs NRO vs FCNR: Which Account Fits You</h3>
+          <p>Three accounts solve three different problems — moving money home tax-free, banking what India already owes you, and refusing to bet on the rupee.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+        <a class="bl-card" href="recurring-deposit-explained/index.html" data-cat="Fixed Deposits & Recurring Deposits">
+          <div class="bl-card-img-wrap"><img src="../assets/images/blog/guides.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Fixed Deposits & Recurring Deposits</span>
+          <h3>What a Recurring Deposit Actually Is</h3>
+          <p>It isn't a fixed deposit paid in instalments — it's a separate compounding mechanism built around a habit, not a lump sum.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+        <a class="bl-card" href="certificate-of-deposit-explained/index.html" data-cat="Fixed Deposits & Recurring Deposits">
+          <div class="bl-card-img-wrap"><img src="../assets/images/blog/guides.jpg" alt="" loading="lazy"></div>
+          <span class="bl-cat">Fixed Deposits & Recurring Deposits</span>
+          <h3>Certificate of Deposit vs FD: What Actually Separates Them</h3>
+          <p>CDs look like FDs' institutional cousin on paper, but the way they're priced, held, and traded makes them a different instrument entirely.</p>
+          <span class="bl-by">By Saket Raushan</span>
+        </a>
+      </div>
     </div>
     </div>
     <div class="bl-newsletter reveal" style="margin-top:24px;">
@@ -1700,8 +1763,7 @@
   })();
 </script>
 
-
-<div class="qr-modal-overlay" id="qrModalOverlay" aria-hidden="true">
+<div class="qr-modal-overlay"<div class="qr-modal-overlay" id="qrModalOverlay" aria-hidden="true">
   <div class="qr-modal" role="dialog" aria-modal="true" aria-labelledby="qrModalTitle">
     <button type="button" class="qr-modal-close" id="qrModalClose" aria-label="Close">&times;</button>
     <h3 id="qrModalTitle">Get the Raushco app</h3>
