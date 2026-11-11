@@ -1,0 +1,1221 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rent Receipt | Raushco</title>
+<meta name="description" content="Generate HRA-ready rent receipts for any month, or a whole range of months at once, and download them as a PDF. Free, no sign-up, nothing leaves your browser.">
+<link rel="icon" href="data:,">
+<style>
+
+  @font-face {
+    font-family: 'Inter';
+    src: url('../assets/fonts/Inter-VariableFont_opsz,wght.ttf') format('truetype');
+    font-weight: 300 800; font-style: normal; font-display: swap;
+  }
+  @font-face {
+    font-family: 'Geist Mono';
+    src: url('../assets/fonts/GeistMono-VariableFont_wght.ttf') format('truetype');
+    font-weight: 400 600; font-style: normal; font-display: swap;
+  }
+
+
+  :root {
+    --pb-purple-200: #c1c9fa;
+    --pb-purple-300: #a7b6f8;
+    --pb-purple-400: #9cb4e8;
+    --pb-purple-600: #5266eb;
+    --pb-purple-700: #4354c8;
+    --pb-purple-800: #3442a6;
+
+    --pb-neutral-1000: #10101a;
+    --pb-neutral-950: #171721;
+
+    --pb-beige-50:  #fcfcfa;
+    --pb-beige-100: #f6f5f2;
+    --pb-beige-150: #efeee9;
+    --pb-beige-200: #e0ded7;
+    --pb-beige-300: #c8c4b8;
+    --pb-beige-500: #767165;
+    --pb-beige-700: #3a3831;
+    --pb-beige-900: #201f1c;
+
+
+    --pb-base-100: var(--pb-beige-100);
+    --pb-base-150: var(--pb-beige-150);
+    --pb-base-200: var(--pb-beige-200);
+    --pb-base-400: var(--pb-beige-300);
+    --pb-base-500: var(--pb-beige-500);
+    --pb-base-600: var(--pb-beige-500);
+    --pb-base-700: var(--pb-beige-700);
+    --pb-base-900: var(--pb-beige-900);
+
+    --pb-green-600: #188554;
+
+
+    --pb-dp-bg: #181623;
+    --pb-dp-bg-2: #1e1b2c;
+    --pb-dp-border: rgba(255,255,255,.1);
+    --pb-dp-text: rgba(255,255,255,.92);
+    --pb-dp-muted: rgba(255,255,255,.5);
+
+    --pb-border: rgba(58,56,49,.12);
+    --pb-border-input: rgba(58,56,49,.18);
+    --pb-border-focus: #707393;
+
+    --pb-radius-s: 4px;
+    --pb-radius-m: 8px;
+    --pb-radius-l: 12px;
+    --pb-radius-xl: 20px;
+    --pb-radius-full: 9999px;
+
+    --pb-card-shadow: 0 0 2px rgba(175,178,206,.4), 0 1px 4px rgba(4,4,52,.08);
+
+    --pb-ease-appear: cubic-bezier(0,0,.2,1);
+    --pb-ease-transform: cubic-bezier(.2,.4,.2,1);
+    --pb-ease-snap: cubic-bezier(.16,0,.13,1);
+    --pb-ease-pop: cubic-bezier(.2,1,.4,1);
+
+    --pb-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --pb-serif: Georgia, 'Iowan Old Style', 'Times New Roman', serif;
+    --pb-mono: 'Geist Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+
+    --pb-size-hero: clamp(2.5rem, .4rem + 6.2vw, 7rem);
+    --pb-size-module: clamp(1.875rem, 1.1rem + 3vw, 4.5rem);
+    --pb-size-sub: clamp(1.25rem, 1.05rem + .5vw, 1.5rem);
+    --pb-size-lede: clamp(1.125rem, 1rem + .4vw, 1.375rem);
+
+    --bb-lavender-bg: #f5f4fd;
+    --bb-ink-900: #28253b;
+    --bb-ink-600: #554e7b;
+    --bb-muted-border: rgba(112,115,147,.22);
+    --bb-muted-surface: rgba(112,115,147,.1);
+    --bb-size-hero: clamp(2.25rem, .8rem + 3.2vw, 4rem);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: #f5f4fd;
+    color: var(--pb-base-700);
+    font-family: var(--pb-font);
+    font-size: 16px;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+  img, svg { max-width: 100%; display: block; }
+  a { color: inherit; text-decoration: none; }
+  .wrap { max-width: 1240px; margin: 0 auto; padding: 0 40px; }
+  @media (max-width: 640px) { .wrap { padding: 0 20px; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; } }
+
+  .eyebrow {
+    font-family: var(--pb-mono); font-size: 12px; letter-spacing: .14em;
+    text-transform: uppercase; font-weight: 500; color: var(--pb-purple-600);
+  }
+  h1, h2, h3, h4 { font-family: var(--pb-font); margin: 0; text-wrap: balance; color: var(--pb-base-900); }
+  h1 { font-size: var(--pb-size-hero); font-weight: 480; line-height: 1.04; letter-spacing: -0.02em; }
+  h2 { font-weight: 480; line-height: 1.12; letter-spacing: -0.01em; font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.75rem); }
+  h3 { font-size: clamp(1.375rem, 1.1rem + 1vw, 1.875rem); font-weight: 560; line-height: 1.2; }
+  h4 { font-size: 17px; font-weight: 600; line-height: 1.3; }
+  p { margin: 0; }
+  .lede { font-size: var(--pb-size-lede); line-height: 1.45; color: var(--pb-base-600); font-weight: 400; }
+
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    font-family: var(--pb-font); font-weight: 500; font-size: 15px;
+    padding: 8px 32px; min-height: 40px; border-radius: var(--pb-radius-full);
+    border: 1px solid transparent; cursor: pointer; text-decoration: none;
+    transition: background .2s var(--pb-ease-transform), border-color .2s var(--pb-ease-transform), color .2s var(--pb-ease-transform);
+  }
+  .btn-primary { background: var(--pb-purple-600); color: #fff; }
+  .btn-primary:hover { background: var(--pb-purple-700); }
+  .btn-primary:disabled { background: var(--pb-purple-300); cursor: not-allowed; }
+  .btn-ghost { border-color: transparent; color: var(--pb-base-700); background: transparent; }
+  .btn-ghost:hover { color: var(--pb-purple-600); }
+  .btn-lg { padding: 11px 36px; font-size: 16px; min-height: 48px; }
+  .btn-line { background: transparent; color: var(--pb-base-900); padding: 8px 15px; border-radius: 999px; border: 1px solid var(--pb-border-input); font-size: 14.5px; font-weight: 500; display: inline-flex; align-items: center; transition: border-color .16s var(--pb-ease-snap); }
+  .btn-line:hover { border-color: var(--pb-base-900); }
+
+  .input {
+    font-family: var(--pb-font); font-size: 15px; line-height: 24px;
+    padding: 8px 14px; border-radius: var(--pb-radius-m);
+    border: 1px solid var(--pb-border-input); background: #fff; color: var(--pb-base-700);
+    outline: none; transition: border-color .15s;
+  }
+  .input:focus { border-color: var(--pb-border-focus); }
+  .input::placeholder { color: var(--pb-base-500); }
+
+
+  .nav { position: sticky; top: 0; z-index: 60; background: transparent; backdrop-filter: none; border-bottom: 1px solid transparent; transition: border-color .3s var(--pb-ease-snap), background .4s var(--pb-ease-snap), color .4s var(--pb-ease-snap), backdrop-filter .4s var(--pb-ease-snap); }
+  .nav.scrolled { border-color: var(--pb-border); background: rgba(255,255,255,.85); backdrop-filter: saturate(180%) blur(16px); -webkit-backdrop-filter: saturate(180%) blur(16px); }
+  .nav-inner { position: relative; display: flex; align-items: center; justify-content: space-between; height: 72px; width: 100%; padding: 0 36px; }
+  @media (max-width: 640px) { .nav-inner { padding: 0 20px; } }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 17px; color: var(--pb-base-900); }
+  .brand .mk { width: 26px; height: 26px; flex: 0 0 26px; }
+  .nav-links { position: absolute; inset: 0; margin: auto; width: fit-content; height: fit-content; display: flex; align-items: center; gap: 2px; }
+  .nav-links a { height: 38px; font-size: 14.5px; color: var(--pb-base-700); font-weight: 500; padding: 0 15px; border-radius: 999px; transition: color .15s var(--pb-ease-snap), background .15s var(--pb-ease-snap); display: inline-flex; align-items: center; gap: 5px; }
+  .nav-links > a:hover, .nav-links > .nav-item > a:hover { color: var(--pb-base-900); background: var(--pb-base-100); }
+  .caret { font-size: 9px; color: var(--pb-base-500); display: inline-flex; }
+  .caret svg { transition: transform .2s var(--pb-ease-snap); display: block; }
+
+  .nav-item { position: relative; }
+  .nav-item.open .nav-drop-trigger { background: rgba(120,126,150,.3); }
+  .nav-item.open .caret svg { transform: rotate(180deg); }
+  .mega-menu { position: fixed; left: 0; right: 0; top: 72px; background: #fff; border: 1px solid var(--pb-border); border-radius: 0 0 16px 16px; overflow: hidden; opacity: 0; visibility: hidden; transform: translateY(-6px); transition: opacity .2s var(--pb-ease-snap), transform .2s var(--pb-ease-snap), visibility 0s .2s; z-index: 55; text-align: left; }
+  .nav-item.open .mega-menu { opacity: 1; visibility: visible; transform: none; transition-delay: 0s; }
+  .nav:has(.nav-item.open) { background: #fff !important; border-color: transparent; }
+  .mega-grid { display: grid; grid-template-columns: 1.25fr repeat(4, 1fr); column-gap: 40px; max-width: 1240px; margin: 0 auto; padding: 40px 36px; }
+  .mega-grid-3 { grid-template-columns: repeat(3, 1fr); row-gap: 32px; }
+  .mega-grid-4 { grid-template-columns: repeat(4, 1fr); row-gap: 32px; }
+  .mega-col-more { grid-column: 3; grid-row: 1 / span 3; }
+  .mega-feature, .mega-col { border-right: 1px solid var(--pb-border); }
+  .mega-grid > :last-child { border-right: none; }
+  .mega-feature h4, .mega-col h4 { color: var(--pb-base-900); font-weight: 600; letter-spacing: -.015em; margin: 0 0 8px; }
+  .mega-feature h4 { font-size: 21px; }
+  .mega-feature-item { border-top: 1px solid var(--pb-border); padding: 14px 0; }
+  .mega-feature-item h5 { color: var(--pb-base-900); font-size: 16px; font-weight: 600; margin: 0 0 3px; letter-spacing: -.01em; }
+  .mega-feature-item p { font-size: 13px; color: var(--pb-base-700); margin: 0; line-height: 1.4; }
+  .mega-feature .mega-cta { margin-top: 20px; }
+  .mega-col h4 { font-size: 15.5px; }
+  .mega-feature p, .mega-col p { font-size: 13.5px; color: var(--pb-base-700); line-height: 1.5; margin: 0; }
+  .mega-feature p { margin-bottom: 20px; }
+  .mega-cta { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--pb-base-900); background: rgba(0,0,0,.05); padding: 9px 16px; border-radius: 999px; transition: background .15s var(--pb-ease-snap); }
+  .mega-cta:hover { background: rgba(0,0,0,.09); }
+  .mega-label { display: block; font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--pb-base-500); margin: 18px 0 12px; }
+  .mega-col { padding-right: 24px; }
+  .mega-menu a.mega-col { display: block; height: auto; padding: 0 24px 0 0; gap: 0; border-radius: 0; }
+  .mega-menu a.mega-col:hover { background: rgba(0,0,0,.025); }
+  .mega-menu a.mega-head-link { display: block; height: auto; padding: 0; gap: 0; border-radius: 0; }
+  .mega-menu a.mega-head-link::after { content: none; }
+  .mega-menu a.mega-foot { display: block; height: auto; padding: 24px 36px; gap: 0; border-radius: 0; }
+  .mega-col a { display: flex; align-items: center; gap: 6px; font-size: 14.5px; color: var(--pb-base-700); padding: 6px 0; transition: color .15s var(--pb-ease-snap); }
+  .mega-col a:hover { color: var(--pb-base-900); }
+  .mega-col a::after { content: '\2192'; opacity: 0; transform: translateX(-4px); transition: opacity .15s var(--pb-ease-snap), transform .15s var(--pb-ease-snap); }
+  .mega-col a:hover::after { opacity: 1; transform: none; }
+  .mega-foot { display: block; border-top: 1px solid var(--pb-border); padding: 24px 36px; background: rgba(0,0,0,.015); transition: background .15s var(--pb-ease-snap); }
+  .mega-foot:hover { background: rgba(0,0,0,.035); }
+  .mega-foot h4 { display: inline-flex; align-items: center; gap: 8px; color: var(--pb-base-900); font-size: 19px; font-weight: 600; letter-spacing: -.015em; margin: 0 0 1px; }
+  .mega-foot h4 .arrow { width: 20px; height: 20px; border-radius: 50%; background: rgba(0,0,0,.06); display: inline-flex; align-items: center; justify-content: center; font-size: 11px; transition: background .15s var(--pb-ease-snap), transform .15s var(--pb-ease-snap); }
+  .mega-foot:hover h4 .arrow { background: rgba(0,0,0,.1); transform: translateX(2px); }
+  .mega-foot p { font-size: 13.5px; color: var(--pb-base-700); margin: 0; }
+  @media (max-width: 980px) { .mega-menu { display: none; } }
+
+  .nav-cta { display: flex; align-items: center; gap: 10px; }
+  .nav .btn-primary, .nav .btn-ghost, .nav .btn-line { height: 38px; }
+  .nav-burger { display: none; width: 34px; height: 34px; border: none; background: transparent; color: var(--pb-base-900); cursor: pointer; align-items: center; justify-content: center; font-size: 18px; }
+  @media (max-width: 980px) { .nav-links, .nav-cta { display: none; } .nav-burger { display: flex; } }
+  .nav-menu { display: none; flex-direction: column; gap: 2px; padding: 8px 20px 20px; border-top: 1px solid var(--pb-border); background: rgba(255,255,255,.97); backdrop-filter: blur(16px); }
+  .nav.menu-open .nav-menu { display: flex; }
+  .nav-menu a { padding: 12px 4px; font-size: 15px; font-weight: 500; color: inherit; border-bottom: 1px solid var(--pb-border); }
+  .nav-menu .btn { margin-top: 10px; justify-content: center; }
+
+  section { padding: clamp(64px, 5vw + 40px, 128px) 0; }
+
+
+  .fc-hero { position: relative; margin-top: -73px; background: #fbfcfd; padding: calc(40px + 73px) 0 48px; text-align: center; }
+  .fc-breadcrumb-wrap { max-width: 1040px; margin: 0 auto 32px; padding: 0 40px; }
+  .fc-breadcrumb { display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 13px; color: var(--pb-base-500); }
+  .fc-breadcrumb-home svg { width: 15px; height: 15px; display: block; }
+  .fc-breadcrumb a { color: var(--pb-base-500); text-decoration: none; }
+  .fc-breadcrumb a:hover { color: var(--pb-base-900); text-decoration: underline; }
+  .fc-breadcrumb span[aria-current] { color: var(--pb-base-700); }
+  .fc-hero h1 { font-size: var(--bb-size-hero); font-weight: 480; line-height: 1.04; letter-spacing: -.02em; color: var(--bb-ink-900); max-width: 18ch; margin: 0 auto; }
+  .fc-hero-sub { margin: 16px auto 0; max-width: 620px; font-size: var(--pb-size-lede); line-height: 1.45; color: var(--bb-ink-600); }
+
+  .fc-tool-section { padding: 40px 0 clamp(64px, 5vw + 40px, 112px); background: #fbfcfd; }
+  .fc-tool-card { max-width: 1080px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); align-items: stretch; background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-l); overflow: hidden; }
+  @media (max-width: 860px) { .fc-tool-card { grid-template-columns: minmax(0, 1fr); } }
+  .fc-tool-col { padding: 36px 40px; min-width: 0; }
+  .fc-tool-col.l { border-right: 1px solid var(--pb-border); }
+  @media (max-width: 860px) { .fc-tool-col.l { border-right: none; border-bottom: 1px solid var(--pb-border); } }
+  .fc-field label { display: flex; justify-content: space-between; align-items: baseline; font-size: 13.5px; color: var(--pb-base-600); margin-bottom: 8px; }
+  .fc-field label .fc-unit { font-size: 12px; color: var(--pb-base-500); }
+  .fc-field input, .fc-field select, .fc-field textarea { width: 100%; box-sizing: border-box; padding: 11px 14px; border: 1px solid var(--pb-border-input); border-radius: var(--pb-radius-m); font-family: inherit; font-size: 15px; color: var(--bb-ink-900); background: #fff; }
+  .fc-field input, .fc-field select { height: 46px; }
+  .fc-field textarea { min-height: 64px; resize: vertical; line-height: 1.4; }
+  .fc-field select { appearance: none; -webkit-appearance: none; padding-right: 36px; cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none'%3E%3Cpath d='M4 6l4 4 4-4' stroke='%23707393' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 12px center; }
+  .fc-field input:focus, .fc-field select:focus, .fc-field textarea:focus { outline: none; border-color: var(--pb-border-focus); }
+  .fc-field-note { font-size: 11.5px; color: var(--pb-base-500); margin-top: 6px; line-height: 1.4; }
+  .fc-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .fc-tool-col > .fc-field + .fc-field, .fc-tool-col > .fc-field + .fc-row2, .fc-tool-col > .fc-row2 + .fc-field, .fc-tool-col > .fc-row2 + .fc-row2 { margin-top: 20px; }
+  .fc-tool-col .btn { width: 100%; margin-top: 24px; }
+  .fc-result-head { font-size: 12.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--pb-base-500); margin-bottom: 14px; }
+
+
+  .rr-field.has-error input, .rr-field.has-error select, .rr-field.has-error textarea { border-color: #b3261e; }
+  .rr-quickrow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .rr-quick-btn { font-family: inherit; font-size: 12.5px; font-weight: 500; color: var(--pb-base-700); background: var(--pb-base-100); border: 1px solid var(--pb-border); padding: 6px 13px; border-radius: 999px; cursor: pointer; transition: background .15s, border-color .15s; }
+  .rr-quick-btn:hover { background: var(--pb-base-150); border-color: var(--pb-base-400); }
+  .rr-mode-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 8px; }
+  @media (max-width: 480px) { .rr-mode-grid { grid-template-columns: 1fr; } }
+  .rr-mode-card { position: relative; display: flex; gap: 10px; align-items: flex-start; border: 1px solid var(--pb-border); background: var(--pb-base-100); border-radius: var(--pb-radius-m); padding: 11px 13px; cursor: pointer; transition: border-color .15s, background .15s; }
+  .rr-mode-card:hover { border-color: var(--pb-base-400); }
+  .rr-mode-card.sel { border-color: var(--pb-purple-600); background: rgba(82,102,235,.06); }
+  .rr-mode-card input { position: absolute; opacity: 0; width: 0; height: 0; }
+  .rr-mode-dot { width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid var(--pb-border-input); flex: 0 0 16px; margin-top: 2px; display: flex; align-items: center; justify-content: center; transition: border-color .15s, background .15s; }
+  .rr-mode-card.sel .rr-mode-dot { border-color: var(--pb-purple-600); background: var(--pb-purple-600); }
+  .rr-mode-dot::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; opacity: 0; transition: opacity .15s; }
+  .rr-mode-card.sel .rr-mode-dot::after { opacity: 1; }
+  .rr-mode-body .t { font-size: 13.5px; font-weight: 600; color: var(--pb-base-900); display: block; margin-bottom: 2px; }
+  .rr-mode-body .d { font-size: 12px; color: var(--pb-base-500); line-height: 1.4; display: block; }
+  .rr-errors { background: rgba(179,38,30,.07); border: 1px solid rgba(179,38,30,.25); border-radius: var(--pb-radius-m); padding: 12px 16px; margin-top: 20px; font-size: 13px; color: #8a2016; display: none; }
+  .rr-errors.show { display: block; }
+  .rr-errors ul { margin: 4px 0 0; padding-left: 18px; }
+  .rr-errors li { margin-bottom: 2px; }
+
+  .rr-preview-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--pb-purple-700); background: rgba(82,102,235,.1); padding: 5px 12px; border-radius: 999px; margin-bottom: 18px; }
+  .rr-receipt { background: #fff; border: 1px solid var(--pb-border); border-radius: var(--pb-radius-m); padding: 22px 22px 20px; box-shadow: var(--pb-card-shadow); font-size: 13px; }
+  .rr-receipt-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
+  .rr-receipt-top h4 { font-size: 18px; letter-spacing: -.01em; }
+  .rr-receipt-logo { width: 30px; height: 30px; border-radius: 8px; background: var(--pb-neutral-1000); display: flex; align-items: center; justify-content: center; flex: 0 0 30px; }
+  .rr-receipt-logo img { width: 16px; height: 16px; filter: brightness(0) invert(1); }
+  .rr-receipt-meta { text-align: right; font-size: 11.5px; color: var(--pb-base-500); line-height: 1.5; }
+  .rr-receipt-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 14px 0; border-top: 1px solid var(--pb-border); border-bottom: 1px solid var(--pb-border); margin-bottom: 14px; }
+  .rr-receipt-cols .lab { font-size: 10.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--pb-base-500); margin-bottom: 6px; display: block; }
+  .rr-receipt-cols .val { font-size: 13px; color: var(--pb-base-900); line-height: 1.45; }
+  .rr-receipt-body p { font-size: 13.5px; line-height: 1.7; color: var(--pb-base-700); }
+  .rr-skel { display: inline-block; height: 10px; border-radius: 4px; background: var(--pb-base-200); vertical-align: middle; margin: 0 1px; }
+  .rr-fill { color: var(--pb-base-900); font-weight: 600; }
+  .rr-stamp-note { margin-top: 12px; border: 1px dashed var(--pb-base-400); border-radius: var(--pb-radius-m); padding: 9px 12px; font-size: 12px; color: var(--pb-base-600); background: var(--pb-base-100); }
+  .rr-receipt-foot { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--pb-border); display: flex; justify-content: space-between; align-items: flex-end; gap: 12px; }
+  .rr-receipt-foot .sig { text-align: center; font-size: 11px; color: var(--pb-base-500); }
+  .rr-receipt-foot .sig-line { width: 140px; border-top: 1px solid var(--pb-base-400); margin-bottom: 6px; }
+  .rr-receipt-foot .pan { font-size: 11.5px; color: var(--pb-base-600); }
+  .rr-months-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .rr-chip { font-size: 11.5px; font-weight: 500; color: var(--pb-base-700); background: var(--pb-base-100); border: 1px solid var(--pb-border); padding: 4px 10px; border-radius: 999px; }
+  .rr-chip.more { color: var(--pb-base-500); background: transparent; border-style: dashed; }
+
+</style>
+<link rel="stylesheet" href="../assets/css/step-wizard.css">
+<style>
+  .fc-section { padding: clamp(56px, 5vw + 32px, 96px) 0; }
+  .fc-section .wrap { max-width: 900px; }
+  .fc-section h2 { text-align: center; margin-bottom: 40px; }
+  .fc-points { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  @media (max-width: 700px) { .fc-points { grid-template-columns: 1fr; } }
+  .fc-point h3 { font-size: 16px; font-weight: 600; color: var(--bb-ink-900); margin-bottom: 8px; }
+  .fc-point p { font-size: 14.5px; line-height: 1.6; color: var(--pb-base-600); }
+
+  .bb-faq-section { padding: 72px 0; background: var(--bb-lavender-bg); }
+  .bb-faq-wrap { max-width: 752px; margin: 0 auto; }
+  .bb-faq-wrap h2 { text-align: center; margin-bottom: 40px; }
+  .bb-faq-item { border-top: 1px solid #c3c0df; transition: border-color .15s var(--pb-ease-appear); }
+  .bb-faq-item:not(:first-child) { margin-top: 24px; }
+  .bb-faq-item:last-child { border-bottom: 1px solid #c3c0df; padding-bottom: 24px; }
+  .bb-faq-item.open { border-color: #28253b; }
+  .bb-faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 32px; background: none; border: 0; padding: 24px 0 0; cursor: pointer; text-align: left; font-family: var(--pb-font); }
+  .bb-faq-q span.t { font-size: 17px; font-weight: 500; line-height: 1.35; color: #28253b; transition: color .15s var(--pb-ease-appear); }
+  .bb-faq-chevron { width: 18px; height: 18px; flex-shrink: 0; color: #28253b; transition: transform .3s ease-in-out, color .15s var(--pb-ease-appear); }
+  .bb-faq-item.open .bb-faq-chevron { transform: rotate(180deg); }
+  .bb-faq-a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .3s ease-out; }
+  .bb-faq-item.open .bb-faq-a { grid-template-rows: 1fr; }
+  .bb-faq-a-inner { overflow: hidden; }
+  .bb-faq-a-inner p { padding-top: 12px; font-size: 15px; font-weight: 400; line-height: 1.55; color: #554e7b; max-width: none; }
+
+  .bb-cta-band { background: #edecfb; padding: 96px 0; }
+  .bb-cta-band-inner { max-width: 752px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .bb-cta-band h2 { font-size: 36px; font-weight: 480; line-height: 1.15; letter-spacing: .005em; color: #28253b; }
+  .bb-cta-band .sub { margin-top: 12px; font-size: 18px; font-weight: 360; line-height: 1.35; color: #554e7b; }
+  .bb-cta-band .btn-primary { margin-top: 32px; }
+
+  footer { padding: 96px 0 0; }
+  footer[data-theme="dark"], section.foot-disclaimers[data-theme="dark"] { background: #171721; color: #fff; }
+  footer[data-theme="dark"] .brand { color: #fff; }
+  .foot-brand { margin-bottom: 56px; }
+  .foot-brand .brand { margin-bottom: 12px; }
+  .foot-brand .brand .mk { filter: brightness(0) invert(1); }
+  .foot-tag { font-size: 13.5px; color: rgba(255,255,255,.5); max-width: 28ch; line-height: 1.5; }
+  .foot-grid-m { display: grid; grid-template-columns: repeat(4, 1fr); column-gap: 40px; row-gap: 80px; align-items: start; padding-bottom: 56px; }
+  .foot-col { display: grid; row-gap: 8px; align-items: start; }
+  .foot-col h4 { font-size: 16px; line-height: 1.4; font-weight: 400; color: #C3C3CC; text-transform: none; letter-spacing: normal; margin: 0 0 2px; }
+  .foot-col a { font-size: 16px; line-height: 1.25; font-weight: 420; color: #EDEDF3; text-decoration: none; border-radius: 2px; transition: color .3s ease-out; }
+  .foot-col a:hover { color: #C3C3CC; text-decoration: underline; text-decoration-color: #C3C3CC; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+  .foot-disclaimers .wrap { margin-top: 64px; border-top: 1px solid #C3C3CC; padding: 32px 24px 64px; }
+  .disc-grid-m { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: 0; row-gap: 20px; }
+  .disc-grid-m h2 { grid-column: span 4; font-size: 12px; line-height: 1.4; font-weight: 400; color: #EDEDF3; }
+  .disc-content-m { grid-column: span 8; font-size: 12px; line-height: 1.4; color: #EDEDF3; }
+  .disc-content-m > p, .disc-content-m > ol { margin: 0 0 20px; }
+  .disc-content-m ol { list-style: decimal outside; padding-left: 16px; }
+  .disc-content-m li { margin-bottom: 20px; }
+  .disc-copyright { color: #C3C3CC; }
+  @media (max-width: 760px) { .foot-grid-m { grid-template-columns: 1fr 1fr; } .disc-grid-m { grid-template-columns: 1fr; } .disc-grid-m h2, .disc-grid-m .disc-content-m { grid-column: 1 / -1; } }
+
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+    <div class="nav-inner">
+      <a class="brand" href="https://raushco.com/"><img class="mk" src="../assets/brand/Subtract.png" alt="Raushco"> Raushco</a>
+      <div class="nav-links">
+        <div class="nav-item">
+          <a href="#" class="nav-drop-trigger">Personal <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          <div class="mega-menu">
+            <div class="mega-grid mega-grid-4">
+              <div class="mega-col">
+                <h4>Banking</h4>
+                <p>Everyday accounts and money movement.</p>
+                <span class="mega-label">Products</span>
+                <a href="../savings-account/index.html">Savings Account</a>
+                <a href="../fixed-deposit/index.html">Fixed Deposits</a>
+                <a href="../recurring-deposit/index.html">Recurring Deposits</a>
+                <a href="../forex-remittance/index.html">Forex &amp; Remittance</a>
+              </div>
+              <div class="mega-col">
+                <h4>Investments</h4>
+                <p>Grow your money beyond a savings rate.</p>
+                <span class="mega-label">Products</span>
+                <a href="../gold-silver/index.html">Gold &amp; Silver</a>
+                <a href="../mutual-funds/index.html">Mutual Funds &amp; SIPs</a>
+                <a href="../bonds/index.html">Bonds</a>
+              </div>
+              <div class="mega-col">
+                <h4>Retirement &amp; Insurance</h4>
+                <p>Plan for later, and protect what you have.</p>
+                <span class="mega-label">Products</span>
+                <a href="../nps/index.html">NPS</a>
+                <a href="../corporate-nps/index.html">Corporate NPS</a>
+                <a href="../nps-vatsalya/index.html">NPS Vatsalya</a>
+                <a href="../insurance/index.html">Insurance</a>
+              </div>
+              <div class="mega-col">
+                <h4>Credit &amp; Loans</h4>
+                <p>Spend and borrow against what you already have.</p>
+                <span class="mega-label">Products</span>
+                <a href="../fd-backed-credit-card/index.html">FD-Backed Credit Card</a>
+                <a href="../personal-loans/index.html">Personal Loans</a>
+                <a href="../loan-against-fd/index.html">Loan Against FD</a>
+                <a href="../gold-loan/index.html">Gold Loan</a>
+              </div>
+            </div>
+            <a class="mega-foot" href="../personal-banking/index.html">
+              <span><h4>Personal Banking <span class="arrow">&rarr;</span></h4><p>A smarter way to manage, move, and grow your personal finances.</p></span>
+            </a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-drop-trigger">Business <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          <div class="mega-menu">
+            <div class="mega-grid">
+              <div class="mega-feature">
+                <h4>Business Banking</h4>
+                <p>Manage your business finances at every stage of growth.</p>
+                <div class="mega-feature-item"><h5>Books</h5><p>AI-powered accounting software</p></div>
+                <div class="mega-feature-item"><h5>Payroll</h5><p>Pay your team, file taxes</p></div>
+                <a class="mega-cta" href="https://app.raushco.com/auth/initiate-otp">Try the demo <span class="arrow">&#8599;</span></a>
+              </div>
+              <div class="mega-col">
+                <h4>Banking &amp; More</h4>
+                <p>Apply for business accounts, earn yield, and access capital.</p>
+                <span class="mega-label">Products</span>
+                <a href="../business-banking/index.html">Checking &amp; Savings</a>
+                <a href="../working-capital-loans/index.html">Working Capital Loans</a>
+                <a href="../venture-debt/index.html">Venture Debt</a>
+                <a href="../treasury/index.html">Treasury</a>
+              </div>
+              <div class="mega-col">
+                <h4>Cards &amp; Expense Management</h4>
+                <p>Issue cards instantly and control team and vendor spend.</p>
+                <span class="mega-label">Products</span>
+                <a href="../credit/index.html">Business Credit Cards</a>
+                <a href="../spend-management/index.html">Spend Management</a>
+              </div>
+              <div class="mega-col">
+                <h4>Payments &amp; Invoicing</h4>
+                <p>Send payments, create invoices, and sync your accounting tools.</p>
+                <span class="mega-label">Products</span>
+                <a href="../business-payments/index.html">Payments</a>
+                <a href="../invoicing/index.html">Invoicing</a>
+                <a href="../accounting-integrations/index.html">Accounting Automations</a>
+                <a href="../invoice-discounting/index.html">Invoice Discounting</a>
+                <a href="../collections/index.html">Collections</a>
+              </div>
+              <div class="mega-col">
+                <h4>Intelligence</h4>
+                <p>Leverage AI to understand and manage your finances.</p>
+                <span class="mega-label">Products</span>
+                <a href="#">Command</a>
+                <a href="#">Insights</a>
+                <a href="#">API</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-drop-trigger">Solutions <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          <div class="mega-menu">
+            <div class="mega-grid mega-grid-3">
+              <a class="mega-col" href="../tech-ai-startups/index.html">
+                <h4>Tech</h4><p>Spend less time on money management and more time building.</p>
+              </a>
+              <a class="mega-col" href="../vc-funds/index.html">
+                <h4>VC Funds</h4><p>Manage investments in all your portfolio companies in one place.</p>
+              </a>
+              <a class="mega-col" href="../ecommerce/index.html">
+                <h4>Ecommerce</h4><p>Get everything you need to grow your brand at every stage.</p>
+              </a>
+              <a class="mega-col" href="../web3/index.html">
+                <h4>Crypto</h4><p>Run everything from a fast, compliant hub built for the speed of crypto.</p>
+              </a>
+              <a class="mega-col" href="../agencies-and-consultants/index.html">
+                <h4>Agencies, Consultants &amp; Firms</h4><p>Simplify your finances across every client and project.</p>
+              </a>
+              <a class="mega-col" href="../accounting-firms/index.html">
+                <h4>Accounting Firms</h4><p>Bring clarity to your clients and efficiency to your firm.</p>
+              </a>
+              <div class="mega-col mega-col-more">
+                <span class="mega-label" style="margin-top:0">&amp; More</span>
+                <a href="#">SaaS</a>
+                <a href="#">LLCs</a>
+                <a href="#">Life Science</a>
+                <a href="#">Climate</a>
+                <a href="#">Real Estate &amp; Construction</a>
+                <a href="#">Healthcare Services</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-drop-trigger">Resources <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          <div class="mega-menu">
+            <div class="mega-grid mega-grid-3">
+              <div class="mega-col">
+                <a class="mega-head-link" href="../blog/index.html"><h4>Blog</h4><p>Practical resources, insights, and inspiration.</p></a>
+                <span class="mega-label">Jump to</span>
+                <a href="#">Starting A Business</a>
+                <a href="#">Scaling &amp; Growing</a>
+                <a href="#">Stories</a>
+                <a href="#">Company News</a>
+              </div>
+              <div class="mega-col">
+                <h4>Perks</h4><p>Deals on the top software picks for growing businesses.</p>
+                <span class="mega-label">Jump to</span>
+                <a href="#">Startup Bundle</a>
+                <a href="#">Growth Bundle</a>
+                <a href="#">Ecommerce Bundle</a>
+              </div>
+              <div class="mega-col">
+                <h4>Tools</h4><p>Free calculators, templates, and databases.</p>
+                <span class="mega-label">Jump to</span>
+                <a href="#">Investor Database</a>
+                <a href="#">SAFE Generator</a>
+                <a href="#">Burn Rate Calculator</a>
+              </div>
+            </div>
+            <a class="mega-foot" href="../releases/index.html"><span><h4>Product Releases <span class="arrow">&rarr;</span></h4></span></a>
+          </div>
+        </div>
+        <div class="nav-item">
+          <a href="#" class="nav-drop-trigger">About <span class="caret"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+          <div class="mega-menu">
+            <div class="mega-grid mega-grid-3">
+              <a class="mega-col" href="../about/index.html">
+                <h4>Our Story</h4><p>The vision behind Raushco and the people helping to shape the future of banking.</p>
+              </a>
+              <div class="mega-col">
+                <span class="mega-label" style="margin-top:0">Connect</span>
+                <a href="#">Events</a>
+                <a href="../partnerships/index.html">Partnerships</a>
+                <a href="../jobs/index.html">Careers</a>
+              </div>
+              <div class="mega-col">
+                <span class="mega-label" style="margin-top:0">Support</span>
+                <a href="#">Help Center &#8599;</a>
+                <a href="#">FAQs</a>
+                <a href="#">Switch to Raushco</a>
+              </div>
+            </div>
+            <a class="mega-foot" href="../contact/index.html"><span><h4>Contact us <span class="arrow">&rarr;</span></h4></span></a>
+          </div>
+        </div>
+        <a href="../pricing/index.html">Pricing</a>
+      </div>
+      <div class="nav-cta">
+        <a class="btn btn-ghost" href="https://dev.raushco.com/login">Log in</a>
+        <a class="btn btn-primary" href="https://dev.raushco.com/create-account">Open account</a>
+      </div>
+      <button class="nav-burger" id="navBurger" aria-label="Menu">&#9776;</button>
+    </div>
+    <div class="nav-menu" id="navMenu">
+      <a href="../tools/index.html">All tools</a>
+      <a href="../about/index.html">Our story</a>
+      <a href="../pricing/index.html">Pricing</a>
+      <a href="../contact/index.html">Contact us</a>
+      <a class="btn btn-ghost" href="https://dev.raushco.com/login">Log in</a>
+      <a class="btn btn-primary" href="https://dev.raushco.com/create-account">Open account</a>
+    </div>
+  </nav>
+
+<main>
+
+  <section class="fc-hero" id="top">
+    <div class="fc-breadcrumb-wrap">
+      <nav class="fc-breadcrumb" aria-label="Breadcrumb">
+        <a href="../index.html#top" class="fc-breadcrumb-home" aria-label="Home"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/></svg></a>
+        <span>/</span>
+        <a href="../tools/index.html">Tools</a>
+        <span>/</span>
+        <span aria-current="page">Rent Receipt</span>
+      </nav>
+    </div>
+    <div class="wrap">
+      <h1>Rent Receipt</h1>
+      <p class="fc-hero-sub">Fill in your tenancy details once and generate HRA-ready rent receipts for a single month or a whole range of months — downloaded as a PDF, right from your browser.</p>
+    </div>
+  </section>
+
+  <section class="fc-tool-section">
+    <div class="wrap">
+      <div class="fc-tool-card" id="rrTool">
+        <div class="fc-tool-col l">
+
+          <div class="sw-indicator" id="rrIndicator"></div>
+
+          <div class="sw-panel active" data-step="0">
+            <div class="sw-step-title">Step 1 of 4</div>
+            <h4 style="margin-bottom:6px;">Who's this for</h4>
+            <p class="sw-step-sub">Start with the two names that go on every receipt.</p>
+
+            <div class="fc-field rr-field" data-field="tenant">
+              <label for="rrTenant">Tenant name</label>
+              <input class="input" type="text" id="rrTenant" placeholder="e.g. Ananya Sharma" autocomplete="off">
+            </div>
+
+            <div class="fc-field rr-field" data-field="landlord">
+              <label for="rrLandlord">Landlord name</label>
+              <input class="input" type="text" id="rrLandlord" placeholder="e.g. Vikram Mehta" autocomplete="off">
+            </div>
+          </div>
+
+          <div class="sw-panel" data-step="1">
+            <div class="sw-step-title">Step 2 of 4</div>
+            <h4 style="margin-bottom:6px;">Property &amp; rent</h4>
+            <p class="sw-step-sub">What was rented, how much the rent is, and how it's paid.</p>
+
+            <div class="fc-field rr-field" data-field="propertyAddress">
+              <label for="rrPropertyAddress">Rented property — full address</label>
+              <textarea class="input" id="rrPropertyAddress" placeholder="Flat/House no., street, locality, city, state, PIN"></textarea>
+            </div>
+
+            <div class="fc-field" data-field="landlordAddress">
+              <label for="rrLandlordAddress">Landlord's address <span class="fc-unit">optional</span></label>
+              <textarea class="input" id="rrLandlordAddress" placeholder="Useful for completeness, not mandatory"></textarea>
+            </div>
+
+            <div class="fc-field rr-field" data-field="rent">
+              <label for="rrRent">Monthly rent amount <span class="fc-unit">₹</span></label>
+              <input class="input" type="number" id="rrRent" min="0" step="100" placeholder="e.g. 25000">
+            </div>
+
+            <div class="fc-field rr-field" data-field="mode">
+              <label>Payment mode</label>
+              <div class="rr-mode-grid" id="rrModeGrid">
+                <label class="rr-mode-card" data-mode="Cash">
+                  <input type="radio" name="rrMode" value="Cash">
+                  <span class="rr-mode-dot"></span>
+                  <span class="rr-mode-body"><span class="t">Cash</span><span class="d">Needs a revenue stamp if rent is over ₹5,000/month.</span></span>
+                </label>
+                <label class="rr-mode-card sel" data-mode="Bank Transfer">
+                  <input type="radio" name="rrMode" value="Bank Transfer" checked>
+                  <span class="rr-mode-dot"></span>
+                  <span class="rr-mode-body"><span class="t">Bank Transfer</span><span class="d">No revenue stamp required.</span></span>
+                </label>
+                <label class="rr-mode-card" data-mode="UPI">
+                  <input type="radio" name="rrMode" value="UPI">
+                  <span class="rr-mode-dot"></span>
+                  <span class="rr-mode-body"><span class="t">UPI</span><span class="d">No revenue stamp required.</span></span>
+                </label>
+                <label class="rr-mode-card" data-mode="Cheque">
+                  <input type="radio" name="rrMode" value="Cheque">
+                  <span class="rr-mode-dot"></span>
+                  <span class="rr-mode-body"><span class="t">Cheque</span><span class="d">No revenue stamp required.</span></span>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="sw-panel" data-step="2">
+            <div class="sw-step-title">Step 3 of 4</div>
+            <h4 style="margin-bottom:6px;">PAN &amp; month range</h4>
+            <p class="sw-step-sub">Choose which months need a receipt, and add a PAN if the year's rent crosses ₹1,00,000.</p>
+
+            <div class="fc-field rr-field" data-field="period">
+              <label>Rent period</label>
+              <div class="fc-row2">
+                <input class="input" type="month" id="rrFrom" aria-label="From month">
+                <input class="input" type="month" id="rrTo" aria-label="To month">
+              </div>
+              <div class="rr-quickrow">
+                <button type="button" class="rr-quick-btn" data-quick="this-month">This month only</button>
+                <button type="button" class="rr-quick-btn" data-quick="fy">This financial year (Apr–Mar)</button>
+                <button type="button" class="rr-quick-btn" data-quick="last3">Last 3 months</button>
+                <button type="button" class="rr-quick-btn" data-quick="last6">Last 6 months</button>
+              </div>
+              <p class="fc-field-note">One receipt is generated for every month in this range — up to 36 at a time.</p>
+            </div>
+
+            <div class="fc-field" data-field="pan">
+              <label for="rrPan">Landlord's PAN <span class="fc-unit">optional</span></label>
+              <input class="input" type="text" id="rrPan" placeholder="e.g. ABCDE1234F" maxlength="10" style="text-transform:uppercase">
+              <p class="fc-field-note">Your employer's payroll team will usually ask for this if your rent for the year adds up to more than ₹1,00,000 — it's required to claim the HRA exemption.</p>
+            </div>
+          </div>
+
+          <div class="sw-panel" data-step="3">
+            <div class="sw-step-title">Step 4 of 4</div>
+            <h4 style="margin-bottom:6px;">Review &amp; download</h4>
+            <p class="sw-step-sub">Check everything below, then download every receipt in the range as one PDF.</p>
+
+            <div class="sw-review-grid">
+              <div class="sw-review-item"><span class="lab">Tenant</span><div class="val" id="rrReviewTenant">—</div></div>
+              <div class="sw-review-item"><span class="lab">Landlord</span><div class="val" id="rrReviewLandlord">—</div></div>
+              <div class="sw-review-item"><span class="lab">Monthly rent</span><div class="val" id="rrReviewRent">—</div></div>
+              <div class="sw-review-item"><span class="lab">Payment mode</span><div class="val" id="rrReviewMode">—</div></div>
+              <div class="sw-review-item"><span class="lab">Month range</span><div class="val" id="rrReviewPeriod">—</div></div>
+              <div class="sw-review-item"><span class="lab">Landlord PAN</span><div class="val" id="rrReviewPan">—</div></div>
+            </div>
+
+            <div class="rr-errors" id="rrErrors"></div>
+          </div>
+
+          <div class="sw-nav">
+            <button type="button" class="btn btn-ghost" id="rrBackBtn">Back</button>
+            <button type="button" class="btn btn-primary" id="rrNextBtn">Next</button>
+          </div>
+        </div>
+
+        <div class="fc-tool-col">
+          <div class="fc-result-head">Live preview</div>
+          <div class="rr-preview-badge" id="rrCountBadge">1 receipt will be generated</div>
+
+          <div class="rr-receipt" id="rrReceipt">
+            <div class="rr-receipt-top">
+              <h4>Rent Receipt</h4>
+              <div class="rr-receipt-logo"><img src="../assets/brand/Subtract.png" alt=""></div>
+            </div>
+            <div class="rr-receipt-meta" id="rrMetaRow" style="text-align:left;margin:-6px 0 12px;"></div>
+            <div class="rr-receipt-cols">
+              <div>
+                <span class="lab">Landlord</span>
+                <div class="val" id="rrColLandlord"></div>
+              </div>
+              <div>
+                <span class="lab">Tenant</span>
+                <div class="val" id="rrColTenant"></div>
+              </div>
+            </div>
+            <div class="rr-receipt-body">
+              <p id="rrSentence"></p>
+            </div>
+            <div class="rr-stamp-note" id="rrStampNote" style="display:none;">A revenue stamp must be affixed here and signed across by the landlord, as required for cash payments over ₹5,000 under the Indian Stamp Act.</div>
+            <div class="rr-receipt-foot">
+              <div class="pan" id="rrPanLine"></div>
+              <div class="sig">
+                <div class="sig-line"></div>
+                Signature of Landlord
+              </div>
+            </div>
+          </div>
+
+          <div class="rr-months-chips" id="rrMonthsChips"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="fc-section" data-theme="neutral">
+    <div class="wrap">
+      <h2>Why rent receipts matter for your taxes</h2>
+      <div class="fc-points">
+        <div class="fc-point"><h3>Proof your employer will accept</h3><p>If HRA is part of your salary, payroll needs documented proof you actually paid rent before it can treat that part of your pay as exempt from tax. A properly formatted receipt is that proof.</p></div>
+        <div class="fc-point"><h3>The ₹1,00,000-a-year PAN rule</h3><p>Once your total rent for the financial year crosses ₹1,00,000, the Income Tax Department requires your landlord's PAN on the receipts you submit — otherwise the exemption can be denied.</p></div>
+        <div class="fc-point"><h3>The revenue stamp rule</h3><p>Under the Indian Stamp Act, a cash rent payment over ₹5,000 needs a revenue stamp affixed to the receipt, signed across by the landlord. Paying by bank transfer, UPI, or cheque skips this entirely.</p></div>
+        <div class="fc-point"><h3>One form, a whole year of receipts</h3><p>Most months look identical except for the date. Fill the form once, pick a date range, and this generates every month's receipt as its own page in a single PDF.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bb-faq-section" data-theme="purple">
+    <div class="wrap bb-faq-wrap">
+      <h2>Frequently asked questions</h2>
+      <div id="faqList">
+        <div class="bb-faq-item open" data-faq="0">
+          <button class="bb-faq-q"><span class="t">Do I still need a receipt if I pay rent by bank transfer or UPI?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>Yes. Your bank statement shows that money moved, but not that it was rent for a specific property and period — your employer's payroll team typically still wants a signed receipt for the HRA claim.</p></div></div>
+        </div>
+        <div class="bb-faq-item" data-faq="1">
+          <button class="bb-faq-q"><span class="t">What if my landlord doesn't have a PAN?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>If annual rent exceeds ₹1,00,000 and your landlord genuinely has no PAN, the usual workaround is a signed declaration from them (commonly Form 60) submitted alongside your receipts — check with your payroll team on their exact process.</p></div></div>
+        </div>
+        <div class="bb-faq-item" data-faq="2">
+          <button class="bb-faq-q"><span class="t">Can I generate receipts for past months?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>Yes — pick any from/to month range, past or present. This is meant to help you catch up on missing receipts for a financial year just as easily as generating this month's.</p></div></div>
+        </div>
+        <div class="bb-faq-item" data-faq="3">
+          <button class="bb-faq-q"><span class="t">Does this tool store or send my details anywhere?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>No. Every field stays in your browser tab and the PDF is built there too — nothing you type is uploaded or saved anywhere.</p></div></div>
+        </div>
+        <div class="bb-faq-item" data-faq="4">
+          <button class="bb-faq-q"><span class="t">Is a receipt from this generator legally valid?</span><svg class="bb-faq-chevron" viewBox="-20 -20 40 40" fill="none"><line x1="-10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><line x1="10" y1="-5" x2="0" y2="5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg></button>
+          <div class="bb-faq-a"><div class="bb-faq-a-inner"><p>The format includes everything a standard Indian rent receipt needs. It still needs to be signed by your landlord (and stamped, where a revenue stamp applies) to be a valid proof-of-payment document — this tool only handles the formatting and paperwork.</p></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="bb-cta-band" data-theme="purple">
+    <div class="wrap bb-cta-band-inner">
+      <h2>Need more than a receipt?</h2>
+      <p class="sub">Open a Raushco account to manage rent payments, savings, and everything else in one place.</p>
+      <a class="btn btn-primary btn-lg" href="https://app.raushco.com/auth/initiate-otp">Open account</a>
+    </div>
+  </section>
+
+</main>
+
+<footer data-theme="dark">
+  <div class="wrap">
+    <div class="foot-brand">
+      <a class="brand" href="../index.html#top"><img class="mk" src="../assets/brand/Subtract.png" alt="Raushco"> Raushco</a>
+      <p class="foot-tag">Banking, credit cards, treasury, and finance ops in one platform.</p>
+    </div>
+    <div class="foot-grid-m">
+      <div class="foot-col"><h4>Personal</h4><a href="../savings-account/index.html">Savings Account</a><a href="../fixed-deposit/index.html">Fixed Deposits</a><a href="../recurring-deposit/index.html">Recurring Deposits</a><a href="../forex-remittance/index.html">Forex &amp; Remittance</a><a href="../gold-silver/index.html">Gold &amp; Silver</a><a href="../mutual-funds/index.html">Mutual Funds &amp; SIPs</a><a href="../bonds/index.html">Bonds</a><a href="../nps/index.html">NPS</a><a href="../corporate-nps/index.html">Corporate NPS</a><a href="../nps-vatsalya/index.html">NPS Vatsalya</a><a href="../insurance/index.html">Insurance</a><a href="../fd-backed-credit-card/index.html">FD-Backed Credit Card</a><a href="../personal-loans/index.html">Personal Loans</a><a href="../loan-against-fd/index.html">Loan Against FD</a><a href="../gold-loan/index.html">Gold Loan</a></div>
+      <div class="foot-col"><h4>Business</h4><a href="../business-banking/index.html">Business Checking &amp; Savings</a><a href="../treasury/index.html">Treasury</a><a href="../credit/index.html">Business Credit Cards</a><a href="../working-capital-loans/index.html">Working Capital Loans</a><a href="../venture-debt/index.html">Venture Debt</a><a href="../business-payments/index.html">Payments</a><a href="#">Bill Pay</a><a href="../invoicing/index.html">Invoicing</a><a href="../spend-management/index.html">Spend Management</a><a href="#">Books</a><a href="../accounting-integrations/index.html">Accounting Integrations</a><a href="#">Payroll</a><a href="../invoice-discounting/index.html">Invoice Discounting</a><a href="../collections/index.html">Collections</a></div>
+      <div class="foot-col"><h4>Platform</h4><a href="../pricing/index.html">Pricing</a><a href="#">Switch to Raushco</a><a href="#">Command</a><a href="#">Insights</a><a href="#">API</a><a href="#">Perks</a></div>
+      <div class="foot-col"><h4>Resources</h4><a href="#">Help Center</a><a href="../blog/index.html">Blog</a><a href="../tools/index.html">Tools</a><a href="#">Events</a><a href="../releases/index.html">Product Releases</a><a href="#">FAQs</a></div>
+      <div class="foot-col"><h4>Solutions</h4><a href="../tech-ai-startups/index.html">Tech &amp; AI Startups</a><a href="../ecommerce/index.html">Ecommerce</a><a href="../agencies-and-consultants/index.html">Agencies, Consultants &amp; Firms</a><a href="../vc-funds/index.html">VC Funds</a><a href="../web3/index.html">Web3 &amp; Crypto</a><a href="../accounting-firms/index.html">Accounting Firms</a><a href="#">SaaS</a><a href="#">LLCs</a><a href="#">Real Estate &amp; Construction</a><a href="#">Healthcare Services</a></div>
+      <div class="foot-col"><h4>Account</h4><a href="https://dev.raushco.com/create-account">Open Account</a><a href="https://dev.raushco.com/login">Log In</a><a href="#">iOS</a><a href="#">Android</a></div>
+      <div class="foot-col"><h4>About</h4><a href="#">How Raushco Works</a><a href="../about/index.html">Our Story</a><a href="../jobs/index.html">Careers</a><a href="../partnerships/index.html">Partnerships</a><a href="../contact/index.html">Contact</a><a href="../legal/index.html">Legal</a><a href="../legal/privacy/index.html">Privacy Policy</a></div>
+      <div class="foot-col"><h4>Follow Us</h4><a href="#">X</a><a href="#">LinkedIn</a><a href="#">YouTube</a><a href="#">Instagram</a></div>
+    </div>
+  </div>
+</footer>
+
+<section class="foot-disclaimers" data-theme="dark">
+  <div class="wrap">
+    <div class="disc-grid-m">
+      <h2>Disclaimers and footnotes</h2>
+      <div class="disc-content-m">
+        <p>Raushco is a fintech platform, not a bank. Deposit and card products are provided through our partner banks and NBFCs, as applicable, and are governed by each partner's own terms.</p>
+        <p>The Rent Receipt tool is a free formatting tool only. It does not constitute tax, legal, or accounting advice, and Raushco is not responsible for how receipts generated here are used or accepted by any employer or tax authority. Please verify your own compliance requirements.</p>
+        <p class="disc-copyright">© 2026 Raushco. All rights reserved.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="../assets/js/step-wizard.js"></script>
+<script>
+  // Placeholder links (href="#") shouldn't append "#" to the URL bar.
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest('a[href="#"]');
+    if (a) e.preventDefault();
+  });
+
+  // Mega-menu: click to open, click elsewhere to close.
+  document.querySelectorAll('.nav-item').forEach(function (item) {
+    var trigger = item.querySelector('.nav-drop-trigger');
+    if (!trigger) return;
+    trigger.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      var wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.nav-item.open').forEach(function (o) { o.classList.remove('open'); });
+      if (!wasOpen) item.classList.add('open');
+    });
+  });
+  document.addEventListener('click', function () {
+    document.querySelectorAll('.nav-item.open').forEach(function (o) { o.classList.remove('open'); });
+  });
+
+  var navEl = document.getElementById('nav');
+  addEventListener('scroll', function () { navEl.classList.toggle('scrolled', scrollY > 8); }, { passive: true });
+  var navBurger = document.getElementById('navBurger');
+  if (navBurger) navBurger.addEventListener('click', function () {
+    navEl.classList.toggle('menu-open');
+    navBurger.innerHTML = navEl.classList.contains('menu-open') ? '&#10005;' : '&#9776;';
+  });
+
+  // FAQ accordion (single-open).
+  document.querySelectorAll('#faqList .bb-faq-q').forEach(function (q) {
+    q.addEventListener('click', function () {
+      var item = q.closest('.bb-faq-item');
+      var willOpen = !item.classList.contains('open');
+      document.querySelectorAll('#faqList .bb-faq-item').forEach(function (o) { o.classList.remove('open'); });
+      if (willOpen) item.classList.add('open');
+    });
+  });
+</script>
+
+<script>
+(function () {
+  'use strict';
+
+  var MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var PAN_RE = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+  var els = {
+    tenant: document.getElementById('rrTenant'),
+    landlord: document.getElementById('rrLandlord'),
+    propertyAddress: document.getElementById('rrPropertyAddress'),
+    landlordAddress: document.getElementById('rrLandlordAddress'),
+    rent: document.getElementById('rrRent'),
+    from: document.getElementById('rrFrom'),
+    to: document.getElementById('rrTo'),
+    pan: document.getElementById('rrPan'),
+    errors: document.getElementById('rrErrors'),
+    countBadge: document.getElementById('rrCountBadge'),
+    sentence: document.getElementById('rrSentence'),
+    colLandlord: document.getElementById('rrColLandlord'),
+    colTenant: document.getElementById('rrColTenant'),
+    metaRow: document.getElementById('rrMetaRow'),
+    stampNote: document.getElementById('rrStampNote'),
+    panLine: document.getElementById('rrPanLine'),
+    monthsChips: document.getElementById('rrMonthsChips'),
+    indicator: document.getElementById('rrIndicator'),
+    backBtn: document.getElementById('rrBackBtn'),
+    nextBtn: document.getElementById('rrNextBtn'),
+    reviewTenant: document.getElementById('rrReviewTenant'),
+    reviewLandlord: document.getElementById('rrReviewLandlord'),
+    reviewRent: document.getElementById('rrReviewRent'),
+    reviewMode: document.getElementById('rrReviewMode'),
+    reviewPeriod: document.getElementById('rrReviewPeriod'),
+    reviewPan: document.getElementById('rrReviewPan')
+  };
+
+  var wizard; // assigned once validate()/render()/generatePdf() below are defined
+
+  function todayYM() {
+    var d = new Date();
+    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0');
+  }
+  els.from.value = todayYM();
+  els.to.value = todayYM();
+
+  function getMode() {
+    var checked = document.querySelector('input[name="rrMode"]:checked');
+    return checked ? checked.value : 'Bank Transfer';
+  }
+  document.querySelectorAll('.rr-mode-card').forEach(function (card) {
+    card.addEventListener('click', function () {
+      document.querySelectorAll('.rr-mode-card').forEach(function (c) { c.classList.remove('sel'); });
+      card.classList.add('sel');
+      render();
+    });
+  });
+
+  document.querySelectorAll('.rr-quick-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var today = new Date();
+      var y = today.getFullYear(), m = today.getMonth(); // m is 0-indexed
+      function ym(year, monthIdx) { return year + '-' + String(monthIdx + 1).padStart(2, '0'); }
+      var kind = btn.getAttribute('data-quick');
+      if (kind === 'this-month') {
+        els.from.value = ym(y, m); els.to.value = ym(y, m);
+      } else if (kind === 'fy') {
+        var fyStartYear = (m >= 3) ? y : y - 1; // April = index 3
+        els.from.value = ym(fyStartYear, 3);
+        els.to.value = ym(fyStartYear + 1, 2); // March
+      } else if (kind === 'last3') {
+        var d3 = new Date(y, m - 2, 1);
+        els.from.value = ym(d3.getFullYear(), d3.getMonth()); els.to.value = ym(y, m);
+      } else if (kind === 'last6') {
+        var d6 = new Date(y, m - 5, 1);
+        els.from.value = ym(d6.getFullYear(), d6.getMonth()); els.to.value = ym(y, m);
+      }
+      render();
+    });
+  });
+
+  function parseYM(v) {
+    if (!v) return null;
+    var parts = v.split('-');
+    return { year: parseInt(parts[0], 10), month: parseInt(parts[1], 10) - 1 }; // month 0-indexed
+  }
+
+  function monthsInRange(fromV, toV) {
+    var from = parseYM(fromV), to = parseYM(toV);
+    if (!from || !to) return [];
+    var list = [];
+    var cursor = { year: from.year, month: from.month };
+    var guard = 0;
+    while (guard < 400) {
+      guard++;
+      var idx = cursor.year * 12 + cursor.month;
+      var endIdx = to.year * 12 + to.month;
+      if (idx > endIdx) break;
+      list.push({ year: cursor.year, month: cursor.month, label: MONTH_NAMES[cursor.month] + ' ' + cursor.year });
+      cursor.month++;
+      if (cursor.month > 11) { cursor.month = 0; cursor.year++; }
+      if (list.length > 400) break;
+    }
+    return list;
+  }
+
+  function fmtINR(n) {
+    if (isNaN(n)) return '';
+    return '₹' + Math.round(n).toLocaleString('en-IN');
+  }
+
+  // Simple Indian-numbering number-to-words converter, for "Rupees X only".
+  var ONES = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten',
+    'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+  var TENS = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+  function twoDigits(n) {
+    if (n < 20) return ONES[n];
+    var t = Math.floor(n / 10), o = n % 10;
+    return TENS[t] + (o ? ' ' + ONES[o] : '');
+  }
+  function threeDigits(n) {
+    var h = Math.floor(n / 100), r = n % 100;
+    var parts = [];
+    if (h) parts.push(ONES[h] + ' Hundred');
+    if (r) parts.push(twoDigits(r));
+    return parts.join(' ');
+  }
+  function numberToWordsIndian(num) {
+    num = Math.round(num);
+    if (num === 0) return 'Zero';
+    var crore = Math.floor(num / 10000000); num %= 10000000;
+    var lakh = Math.floor(num / 100000); num %= 100000;
+    var thousand = Math.floor(num / 1000); num %= 1000;
+    var rest = num;
+    var parts = [];
+    if (crore) parts.push(threeDigits(crore) + ' Crore');
+    if (lakh) parts.push(twoDigits(lakh) + ' Lakh');
+    if (thousand) parts.push(twoDigits(thousand) + ' Thousand');
+    if (rest) parts.push(threeDigits(rest));
+    return parts.join(' ');
+  }
+
+  function skelOr(value, widthCh) {
+    if (value === null || value === undefined || String(value).trim() === '') {
+      return '<span class="rr-skel" style="width:' + (widthCh || 70) + 'px;">&nbsp;</span>';
+    }
+    return '<span class="rr-fill">' + escapeHtml(String(value)) + '</span>';
+  }
+  function escapeHtml(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+
+  function collectState() {
+    return {
+      tenant: els.tenant.value.trim(),
+      landlord: els.landlord.value.trim(),
+      propertyAddress: els.propertyAddress.value.trim(),
+      landlordAddress: els.landlordAddress.value.trim(),
+      rent: parseFloat(els.rent.value),
+      mode: getMode(),
+      pan: els.pan.value.trim().toUpperCase(),
+      fromV: els.from.value,
+      toV: els.to.value
+    };
+  }
+
+  function validate(state) {
+    var errs = [];
+    if (!state.tenant) errs.push('Tenant name is required.');
+    if (!state.landlord) errs.push('Landlord name is required.');
+    if (!state.propertyAddress) errs.push('The rented property\'s address is required.');
+    if (!state.rent || isNaN(state.rent) || state.rent <= 0) errs.push('Monthly rent amount must be a positive number.');
+    if (!state.fromV || !state.toV) errs.push('Please choose a from and to month.');
+    else {
+      var from = parseYM(state.fromV), to = parseYM(state.toV);
+      if (from.year * 12 + from.month > to.year * 12 + to.month) errs.push('The end month must be the same as or after the start month.');
+      else {
+        var count = monthsInRange(state.fromV, state.toV).length;
+        if (count > 36) errs.push('Please choose a range of 36 months or fewer at a time.');
+      }
+    }
+    if (state.pan && !PAN_RE.test(state.pan)) errs.push('Landlord PAN doesn\'t match the expected format (e.g. ABCDE1234F).');
+    return errs;
+  }
+
+  function render() {
+    var state = collectState();
+    var months = (state.fromV && state.toV) ? monthsInRange(state.fromV, state.toV) : [];
+    var count = months.length;
+
+    els.countBadge.textContent = count === 1 ? '1 receipt will be generated' : (count > 1 ? count + ' receipts will be generated' : 'Choose a valid month range');
+
+    var firstMonthLabel = months.length ? months[0].label : null;
+
+    // Header columns
+    var landlordHtml = skelOr(state.landlord, 90) + '<br>' + (state.landlordAddress ? '<span style="font-size:11.5px;color:var(--pb-base-600);">' + escapeHtml(state.landlordAddress) + '</span>' : '');
+    els.colLandlord.innerHTML = landlordHtml;
+    els.colTenant.innerHTML = skelOr(state.tenant, 90);
+    els.metaRow.innerHTML = 'Receipt No. RR-' + (new Date().getFullYear()) + '-001 &nbsp;&middot;&nbsp; Date: ' + new Date().toLocaleDateString('en-IN');
+
+    // Body sentence (token-level skeleton fill)
+    var amountWords = (state.rent && !isNaN(state.rent) && state.rent > 0) ? ' (Rupees ' + numberToWordsIndian(state.rent) + ' only)' : '';
+    var sentence = 'Received with thanks from ' + skelOr(state.tenant, 70) +
+      ', a sum of ' + skelOr(state.rent ? fmtINR(state.rent) : '', 60) + amountWords +
+      ' towards rent for the premises situated at ' + skelOr(state.propertyAddress, 140) +
+      ', for the month of ' + skelOr(firstMonthLabel, 70) +
+      ', paid via ' + skelOr(state.mode, 70) + '.';
+    els.sentence.innerHTML = sentence;
+
+    // Revenue stamp note
+    var needsStamp = state.mode === 'Cash' && state.rent > 5000;
+    els.stampNote.style.display = needsStamp ? 'block' : 'none';
+
+    // PAN line
+    els.panLine.innerHTML = state.pan && PAN_RE.test(state.pan) ? 'Landlord PAN: <strong>' + escapeHtml(state.pan) + '</strong>' : (state.pan ? '<span style="color:#8a2016;">Check PAN format</span>' : '');
+
+    // Month chips
+    var chipsHtml = '';
+    var shown = months.slice(0, 8);
+    shown.forEach(function (m) { chipsHtml += '<span class="rr-chip">' + m.label + '</span>'; });
+    if (months.length > shown.length) chipsHtml += '<span class="rr-chip more">+' + (months.length - shown.length) + ' more</span>';
+    els.monthsChips.innerHTML = chipsHtml;
+
+    // Step 4 review summary.
+    els.reviewTenant.textContent = state.tenant || '—';
+    els.reviewLandlord.textContent = state.landlord || '—';
+    els.reviewRent.textContent = (state.rent && !isNaN(state.rent)) ? fmtINR(state.rent) + '/month' : '—';
+    els.reviewMode.textContent = state.mode || '—';
+    els.reviewPeriod.textContent = months.length ? (months[0].label + (months.length > 1 ? ' – ' + months[months.length - 1].label : '') + ' (' + count + (count === 1 ? ' receipt' : ' receipts') + ')') : '—';
+    els.reviewPan.textContent = state.pan ? state.pan : 'Not provided';
+
+    if (wizard) wizard.refreshGating();
+  }
+
+  ['input', 'change'].forEach(function (evt) {
+    [els.tenant, els.landlord, els.propertyAddress, els.landlordAddress, els.rent, els.from, els.to, els.pan].forEach(function (el) {
+      el.addEventListener(evt, render);
+    });
+  });
+
+  function showErrors(errs) {
+    if (!errs.length) { els.errors.classList.remove('show'); els.errors.innerHTML = ''; return; }
+    els.errors.classList.add('show');
+    els.errors.innerHTML = '<strong>Please fix the following:</strong><ul>' + errs.map(function (e) { return '<li>' + escapeHtml(e) + '</li>'; }).join('') + '</ul>';
+  }
+
+  function drawReceiptPage(doc, state, monthLabel, receiptNo, isFirst) {
+    if (!isFirst) doc.addPage();
+    var pageW = doc.internal.pageSize.getWidth();
+    var margin = 20;
+    var y = 24;
+
+    doc.setFont('helvetica', 'bold');
+    doc.setFontSize(18);
+    doc.text('RENT RECEIPT', pageW / 2, y, { align: 'center' });
+    y += 12;
+
+    doc.setFont('helvetica', 'normal');
+    doc.setFontSize(10);
+    doc.text('Receipt No: ' + receiptNo, margin, y);
+    doc.text('Date: ' + new Date().toLocaleDateString('en-IN'), pageW - margin, y, { align: 'right' });
+    y += 6;
+    doc.setDrawColor(200);
+    doc.line(margin, y, pageW - margin, y);
+    y += 10;
+
+    doc.setFontSize(11);
+    var amountWords = (state.rent && state.rent > 0) ? ' (Rupees ' + numberToWordsIndian(state.rent) + ' only)' : '';
+    var sentence = 'Received with thanks from ' + state.tenant + ', a sum of ' + fmtINR(state.rent) + amountWords +
+      ' towards rent for the premises situated at ' + state.propertyAddress +
+      ', for the month of ' + monthLabel + ', paid via ' + state.mode + '.';
+    var lines = doc.splitTextToSize(sentence, pageW - margin * 2);
+    doc.text(lines, margin, y);
+    y += lines.length * 6 + 6;
+
+    var needsStamp = state.mode === 'Cash' && state.rent > 5000;
+    if (needsStamp) {
+      doc.setDrawColor(150);
+      doc.setLineDashPattern([2, 1.5], 0);
+      doc.rect(pageW - margin - 38, y - 4, 38, 20);
+      doc.setLineDashPattern([], 0);
+      doc.setFontSize(8);
+      doc.text('Revenue stamp', pageW - margin - 19, y + 8, { align: 'center' });
+      doc.setFontSize(9);
+      var noteLines = doc.splitTextToSize('A revenue stamp has been affixed above and should be signed across by the landlord, as required for cash payments over ₹5,000 under the Indian Stamp Act.', pageW - margin * 2 - 46);
+      doc.text(noteLines, margin, y + 2);
+      y += Math.max(24, noteLines.length * 5 + 6);
+    }
+
+    doc.setFontSize(10);
+    doc.text('Landlord: ' + state.landlord, margin, y);
+    y += 6;
+    if (state.landlordAddress) {
+      var laLines = doc.splitTextToSize(state.landlordAddress, pageW - margin * 2);
+      doc.text(laLines, margin, y);
+      y += laLines.length * 5 + 2;
+    }
+    if (state.pan) { doc.text('Landlord PAN: ' + state.pan, margin, y); y += 6; }
+    doc.text('Tenant: ' + state.tenant, margin, y);
+    y += 6;
+    doc.text('Payment mode: ' + state.mode, margin, y);
+
+    var footY = Math.max(y + 30, 250);
+    doc.setDrawColor(120);
+    doc.line(pageW - margin - 55, footY, pageW - margin, footY);
+    doc.setFontSize(9);
+    doc.text('Signature of Landlord', pageW - margin - 27.5, footY + 5, { align: 'center' });
+    doc.text('(' + state.landlord + ')', pageW - margin - 27.5, footY + 10, { align: 'center' });
+
+    doc.setFontSize(7.5);
+    doc.setTextColor(140);
+    doc.text('Generated with the Rent Receipt tool at raushco.com — for reference only; please confirm your own compliance requirements.', margin, 285);
+    doc.setTextColor(0);
+  }
+
+  function generatePdf() {
+    var state = collectState();
+    var errs = validate(state);
+    showErrors(errs);
+    if (errs.length) return;
+
+    var months = monthsInRange(state.fromV, state.toV);
+    if (!months.length) return;
+
+    var doc = new window.jspdf.jsPDF({ unit: 'mm', format: 'a4' });
+    months.forEach(function (m, idx) {
+      var receiptNo = 'RR-' + m.year + String(m.month + 1).padStart(2, '0') + '-' + String(idx + 1).padStart(3, '0');
+      drawReceiptPage(doc, state, m.label, receiptNo, idx === 0);
+    });
+
+    var safeTenant = (state.tenant || 'tenant').replace(/[^a-z0-9]+/gi, '-').toLowerCase();
+    var filename = 'rent-receipts-' + safeTenant + '-' + state.fromV + '-to-' + state.toV + '.pdf';
+    doc.save(filename);
+  }
+
+  wizard = SW.createWizard({
+    panels: Array.prototype.slice.call(document.querySelectorAll('#rrTool .sw-panel')),
+    steps: [
+      { title: 'Who', validate: function () { var s = collectState(); return !!s.tenant && !!s.landlord; } },
+      { title: 'Property', validate: function () { var s = collectState(); return !!s.propertyAddress && !!s.rent && !isNaN(s.rent) && s.rent > 0; } },
+      { title: 'PAN & range', validate: function () {
+          var s = collectState();
+          if (!s.fromV || !s.toV) return false;
+          var from = parseYM(s.fromV), to = parseYM(s.toV);
+          if (from.year * 12 + from.month > to.year * 12 + to.month) return false;
+          if (monthsInRange(s.fromV, s.toV).length > 36) return false;
+          if (s.pan && !PAN_RE.test(s.pan)) return false;
+          return true;
+        } },
+      { title: 'Review' }
+    ],
+    indicatorEl: els.indicator,
+    backBtn: els.backBtn,
+    nextBtn: els.nextBtn,
+    submitLabel: 'Download PDF',
+    onChange: render,
+    onSubmit: generatePdf
+  });
+
+  render();
+  wizard.render();
+})();
+</script>
+
+</body>
+</html>
