@@ -664,16 +664,16 @@
     .hero-form input, .email-field { width: 100%; }
     .hero-form .btn-lg { flex: 1; justify-content: center; }
     .hero-form > a.btn-purple, .hero-form > a.btn-line { display: inline-flex; }
-    /* Row 1: phone-chip + number input, as two separate pills (the .email-combo
-       wrapper that joins them into one seamless pill on desktop is dissolved
-       here via display:contents so each can size/wrap independently). Row 2:
-       Open account + Launch demo together, forced onto their own line by the
-       flex-basis:100% trick on the first row-2 item. */
+    /* The .email-combo wrapper that joins phone-chip + input into one seamless
+       pill on desktop is dissolved here via display:contents so the Open
+       account button (its third child) can land on row 2 instead, alongside
+       Launch demo. phone-chip + email-field recreate that same seamless pill
+       look as two halves joined with a negative margin (no gap/seam between
+       them) instead of being each other's shared-box siblings. */
     .email-combo { display: contents; }
-    .phone-chip { flex: 0 0 auto; height: 48px; padding: 0 16px 0 14px; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; background: rgba(255,255,255,.1); backdrop-filter: blur(10px); }
-    .phone-chip::after { display: none; }
-    .email-field { flex: 1 1 auto; width: auto; min-width: 0; height: 48px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; background: rgba(255,255,255,.1); backdrop-filter: blur(10px); }
-    .email-combo input { max-width: none; width: 100%; height: 100%; padding-left: 16px; }
+    .phone-chip { flex: 0 0 auto; height: 48px; padding: 0 14px; border: 1px solid rgba(255,255,255,.25); border-right: none; border-radius: 999px 0 0 999px; background: rgba(255,255,255,.1); backdrop-filter: blur(10px); }
+    .email-field { flex: 1 1 auto; width: auto; min-width: 0; height: 48px; display: flex; align-items: center; border: 1px solid rgba(255,255,255,.25); border-left: none; border-radius: 0 999px 999px 0; background: rgba(255,255,255,.1); backdrop-filter: blur(10px); margin-left: -10px; }
+    .email-combo input { max-width: none; width: 100%; height: 100%; padding-left: 14px; }
     .email-combo .btn-purple { flex: 1 1 auto; order: 2; height: 48px; justify-content: center; }
     .hero-demo-btn { flex: 1 1 auto; order: 3; height: 48px; justify-content: center; }
     .email-tip { left: 50%; transform: translate(-50%,-4px); width: 280px; }
