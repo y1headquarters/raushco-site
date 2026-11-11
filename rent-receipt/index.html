@@ -252,7 +252,7 @@
   .fc-field input:focus, .fc-field select:focus, .fc-field textarea:focus { outline: none; border-color: var(--pb-border-focus); }
   .fc-field-note { font-size: 11.5px; color: var(--pb-base-500); margin-top: 6px; line-height: 1.4; }
   .fc-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .fc-tool-col > .fc-field + .fc-field, .fc-tool-col > .fc-field + .fc-row2, .fc-tool-col > .fc-row2 + .fc-field, .fc-tool-col > .fc-row2 + .fc-row2 { margin-top: 20px; }
+  .fc-tool-col > .fc-field + .fc-field, .fc-tool-col > .fc-field + .fc-row2, .fc-tool-col > .fc-row2 + .fc-field, .fc-tool-col > .fc-row2 + .fc-row2 { margin-top: 28px; }
   .fc-tool-col .btn { width: 100%; margin-top: 24px; }
   .fc-result-head { font-size: 12.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--pb-base-500); margin-bottom: 14px; }
 
@@ -279,7 +279,8 @@
   .rr-errors li { margin-bottom: 2px; }
 
   .rr-preview-badge { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--pb-purple-700); background: rgba(82,102,235,.1); padding: 5px 12px; border-radius: 999px; margin-bottom: 18px; }
-  .rr-receipt { max-width: 480px; aspect-ratio: 210 / 297; margin: 0 auto; background: #fff; border: 1px solid var(--pb-border); border-radius: 0; padding: 22px 22px 20px; box-shadow: var(--pb-card-shadow); font-size: 13px; }
+  .rr-receipt { display: flex; flex-direction: column; max-width: 480px; aspect-ratio: 210 / 297; margin: 0 auto; background: #fff; border: 1px solid var(--pb-border); border-radius: 0; padding: 22px 22px 20px; box-shadow: var(--pb-card-shadow); font-size: 13px; }
+  .rr-receipt-footer { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--pb-border); text-align: center; font-size: 10.5px; letter-spacing: .03em; color: var(--pb-base-400, #b7b5c9); }
   .rr-receipt-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 14px; }
   .rr-receipt-top h4 { font-size: 24px; font-weight: 500; letter-spacing: -.01em; }
   .rr-receipt-logo { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; flex: 0 0 30px; }
@@ -534,6 +535,7 @@
                 Signature of Landlord
               </div>
             </div>
+            <div class="rr-receipt-footer">Powered by RAUSHCO</div>
           </div>
 
           <div class="rr-months-chips" id="rrMonthsChips"></div>
@@ -1003,7 +1005,7 @@
 
     doc.setDrawColor(225, 223, 217);
     doc.line(margin, y, pageW - margin, y);
-    y += 10;
+    y += 20;
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(9.5);
@@ -1026,10 +1028,9 @@
     doc.setDrawColor(225, 223, 217);
     doc.line(margin, footerY - 6, pageW - margin, footerY - 6);
     doc.setFont('helvetica', 'normal');
-    doc.setFontSize(8);
+    doc.setFontSize(9);
     doc.setTextColor.apply(doc, RR_PDF_LIGHT_GREY);
-    var disclaimer = 'Generated with the Rent Receipt tool at raushco.com — for reference only; please confirm your own compliance requirements.';
-    doc.text(disclaimer, pageW / 2, footerY, { align: 'center', maxWidth: pageW - margin * 2 });
+    doc.text('Powered by RAUSHCO', pageW / 2, footerY, { align: 'center' });
     doc.setTextColor(0);
   }
 

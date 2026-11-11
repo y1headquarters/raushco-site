@@ -249,7 +249,7 @@
   .fc-field input:focus, .fc-field select:focus, .fc-field textarea:focus { outline: none; border-color: var(--pb-border-focus); }
   .fc-field-note { font-size: 11.5px; color: var(--pb-base-500); margin-top: 6px; line-height: 1.4; }
   .fc-row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  .fc-tool-col > .fc-field + .fc-field, .fc-tool-col > .fc-field + .fc-row2, .fc-tool-col > .fc-row2 + .fc-field, .fc-tool-col > .fc-row2 + .fc-row2 { margin-top: 20px; }
+  .fc-tool-col > .fc-field + .fc-field, .fc-tool-col > .fc-field + .fc-row2, .fc-tool-col > .fc-row2 + .fc-field, .fc-tool-col > .fc-row2 + .fc-row2 { margin-top: 28px; }
   .fc-tool-col .btn { width: 100%; margin-top: 24px; }
   .fc-result-head { font-size: 12.5px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; color: var(--pb-base-500); margin-bottom: 14px; }
 
@@ -266,26 +266,31 @@
      from-to -> itemized table -> highlighted total -> notes -> footer
      anatomy used by virtually every invoicing tool, not any one product's
      specific design. */
-  .ig-invoice { position: relative; display: flex; flex-direction: column; max-width: 480px; aspect-ratio: 210 / 297; margin: 0 auto; background: #fff; border: 1px solid var(--pb-border); border-radius: 0; padding: 44px 40px 32px; box-shadow: 0 10px 34px rgba(32,31,28,.09), 0 1px 3px rgba(32,31,28,.06); font-size: 13px; }
-  .ig-invoice::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 5px; background: var(--pb-purple-600); }
-  .ig-invoice-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 10px; }
-  .ig-invoice-top h4 { font-size: 24px; font-weight: 500; letter-spacing: -.01em; color: var(--pb-base-900); }
-  .ig-invoice-logo { width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; flex: 0 0 34px; }
-  .ig-invoice-logo img { width: 34px; height: 34px; display: block; }
-  .ig-invoice-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; padding-bottom: 18px; border-bottom: 1px solid var(--pb-border); margin-bottom: 20px; }
-  .ig-invoice-cols3 { grid-template-columns: 1.1fr 1.1fr 1fr; }
-  .ig-invoice-cols .lab { font-size: 10.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--pb-base-500); margin-bottom: 7px; display: block; }
-  .ig-invoice-cols .val { font-size: 12.5px; color: var(--pb-base-900); line-height: 1.6; }
-  .ig-detail-row { display: flex; justify-content: space-between; gap: 8px; font-size: 12px; margin-top: 2px; }
-  .ig-detail-row .dl { color: var(--pb-base-500); }
-  .ig-detail-row .dv { color: var(--pb-base-900); font-weight: 500; text-align: right; }
-  .ig-table { width: 100%; border-collapse: collapse; margin-top: 2px; }
-  .ig-table th { text-align: left; font-size: 10px; letter-spacing: .05em; text-transform: uppercase; color: var(--pb-base-500); font-weight: 600; padding: 0 8px 8px 0; border-bottom: 1px solid var(--pb-border); }
+  .ig-invoice { position: relative; display: flex; flex-direction: column; max-width: 480px; aspect-ratio: 210 / 297; margin: 0 auto; background: #fff; border: 1px solid var(--pb-border); border-radius: 0; padding: 40px 36px 28px; box-shadow: 0 10px 34px rgba(32,31,28,.09), 0 1px 3px rgba(32,31,28,.06); font-size: 12px; }
+  .ig-invoice-top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: 8px; }
+  .ig-invoice-top h4 { font-size: 21px; font-weight: 500; letter-spacing: -.01em; color: var(--pb-base-900); }
+  .ig-invoice-logo { width: 30px; height: 30px; display: flex; align-items: center; justify-content: center; flex: 0 0 30px; }
+  .ig-invoice-logo img { width: 30px; height: 30px; display: block; }
+  .ig-invoice-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding-bottom: 16px; border-bottom: 1px solid var(--pb-border); margin-bottom: 18px; }
+  .ig-invoice-cols3 { grid-template-columns: 1fr 1fr 1.3fr; }
+  .ig-invoice-cols .lab { font-size: 9.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--pb-base-500); margin-bottom: 6px; display: block; }
+  .ig-invoice-cols .val { font-size: 11.5px; color: var(--pb-base-900); line-height: 1.55; overflow-wrap: anywhere; }
+  .ig-detail-row { display: flex; justify-content: space-between; gap: 6px; font-size: 10.5px; margin-top: 2px; }
+  .ig-detail-row .dl { color: var(--pb-base-500); flex: 0 0 auto; white-space: nowrap; }
+  .ig-detail-row .dv { color: var(--pb-base-900); font-weight: 500; text-align: right; flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ig-table { width: 100%; border-collapse: collapse; margin-top: 2px; table-layout: fixed; }
+  .ig-table th { text-align: left; font-size: 9px; letter-spacing: .05em; text-transform: uppercase; color: var(--pb-base-500); font-weight: 600; padding: 0 6px 7px 0; border-bottom: 1px solid var(--pb-border); }
   .ig-table th.num, .ig-table td.num { text-align: right; }
-  .ig-table td { padding: 10px 8px 10px 0; font-size: 12.5px; color: var(--pb-base-900); border-bottom: 1px solid var(--pb-border); vertical-align: top; }
-  .ig-total-row { display: flex; justify-content: space-between; align-items: baseline; padding: 14px 0; font-size: 19px; font-weight: 700; color: var(--pb-base-900); margin-bottom: 24px; }
-  .ig-terms-memo { border-top: 1px solid var(--pb-border); border-bottom: none; padding-top: 18px; margin-bottom: 0; }
-  .ig-invoice-footer { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--pb-border); text-align: center; font-size: 10.5px; letter-spacing: .03em; color: var(--pb-base-400, #b7b5c9); }
+  .ig-table th:nth-child(1) { width: 46%; }
+  .ig-table th:nth-child(2) { width: 16%; }
+  .ig-table th:nth-child(3) { width: 19%; }
+  .ig-table th:nth-child(4) { width: 19%; }
+  .ig-table td { padding: 9px 6px 9px 0; font-size: 11px; color: var(--pb-base-900); border-bottom: 1px solid var(--pb-border); vertical-align: top; overflow-wrap: anywhere; }
+  .ig-total-row { display: flex; justify-content: space-between; align-items: baseline; padding: 12px 0; font-size: 16px; font-weight: 700; color: var(--pb-base-900); margin-bottom: 20px; }
+  .ig-total-row .num { color: var(--pb-purple-700); overflow-wrap: anywhere; text-align: right; max-width: 60%; }
+  .ig-terms-memo { border-top: 1px solid var(--pb-border); border-bottom: none; padding-top: 16px; margin-bottom: 0; }
+  .ig-terms-memo .val { overflow-wrap: anywhere; }
+  .ig-invoice-footer { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--pb-border); text-align: center; font-size: 9.5px; letter-spacing: .03em; color: var(--pb-base-400, #b7b5c9); }
 
   .ig-running-total { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; padding: 12px 14px; background: var(--pb-base-100); border-radius: var(--pb-radius-m); font-size: 14px; color: var(--pb-base-900); }
   .ig-running-total strong { font-size: 18px; font-variant-numeric: tabular-nums; }
@@ -934,6 +939,16 @@
     doc.setTextColor.apply(doc, PDF_INK);
   }
 
+  // Truncates text with an ellipsis so a long user-typed value (PO number,
+  // invoice number, etc.) never overlaps its label or runs past the page —
+  // jsPDF has no built-in "fit to width" text helper.
+  function truncateToWidth(doc, text, maxWidth) {
+    if (doc.getTextWidth(text) <= maxWidth) return text;
+    var t = text;
+    while (t.length > 1 && doc.getTextWidth(t + '…') > maxWidth) t = t.slice(0, -1);
+    return t + '…';
+  }
+
   function drawTableHeader(doc, margin, pageW, yy) {
     doc.setFillColor.apply(doc, PDF_TINT);
     doc.roundedRect(margin, yy - 5, pageW - margin * 2, 9, 1.4, 1.4, 'F');
@@ -960,8 +975,6 @@
     var pageH = doc.internal.pageSize.getHeight();
     var margin = PDF_MARGIN;
     var y = 24;
-
-    addAccentBar(doc, pageW);
 
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(20);
@@ -997,17 +1010,18 @@
     doc.text(toLines, col2X, y);
 
     var dy = y;
+    var detailValMaxW = pageW - margin - col3X - 32;
     doc.setFontSize(9.5);
     doc.setTextColor.apply(doc, PDF_MUTED);
     doc.text('Invoice no.', col3X, dy);
     doc.setTextColor.apply(doc, PDF_INK);
-    doc.text(state.invoiceNumber || '-', pageW - margin, dy, { align: 'right' });
+    doc.text(truncateToWidth(doc, state.invoiceNumber || '-', detailValMaxW), pageW - margin, dy, { align: 'right' });
     dy += 5.5;
     if (state.poNumber) {
       doc.setTextColor.apply(doc, PDF_MUTED);
       doc.text('PO no.', col3X, dy);
       doc.setTextColor.apply(doc, PDF_INK);
-      doc.text(state.poNumber, pageW - margin, dy, { align: 'right' });
+      doc.text(truncateToWidth(doc, state.poNumber, detailValMaxW), pageW - margin, dy, { align: 'right' });
     }
 
     y += Math.max(fromLines.length, toLines.length) * 5.4 + 10;
@@ -1043,10 +1057,12 @@
     y += 10;
     if (y > pageH - 60) { doc.addPage(); y = 24; }
     doc.setFont('helvetica', 'bold');
-    doc.setFontSize(15);
+    doc.setFontSize(14);
     doc.setTextColor.apply(doc, PDF_INK);
     doc.text('Total', margin, y);
+    doc.setTextColor.apply(doc, PDF_PURPLE_DARK);
     doc.text(fmtINRPdf(total), pageW - margin - 3, y, { align: 'right' });
+    doc.setTextColor.apply(doc, PDF_INK);
     y += 14;
 
     // Terms / Memo footer — same two-column anatomy as .ig-terms-memo.

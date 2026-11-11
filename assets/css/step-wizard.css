@@ -39,10 +39,11 @@
 .sw-fill { color: var(--pb-base-900); font-weight: 600; }
 
 /* generic repeatable line-item rows, used by the invoice generator */
-.sw-lineitem { display: grid; grid-template-columns: 1fr 56px 90px 90px 28px; gap: 8px; align-items: start; margin-bottom: 10px; }
+.sw-lineitem { display: grid; grid-template-columns: minmax(0,1fr) 66px 108px minmax(88px, max-content) 32px; gap: 8px; align-items: start; margin-bottom: 10px; }
 @media (max-width: 760px) { .sw-lineitem { grid-template-columns: 1fr 1fr; grid-template-areas: "desc desc" "qty price" "total remove"; } }
-.sw-lineitem input { width: 100%; }
-.sw-lineitem .sw-li-total { display: flex; align-items: center; justify-content: flex-end; font-size: 14px; font-weight: 600; color: var(--pb-base-900); height: 46px; padding-right: 4px; font-variant-numeric: tabular-nums; }
+.sw-lineitem input { width: 100%; min-width: 0; }
+.sw-lineitem .li-desc { overflow: hidden; text-overflow: ellipsis; }
+.sw-lineitem .sw-li-total { display: flex; align-items: center; justify-content: flex-end; font-size: 14px; font-weight: 600; color: var(--pb-base-900); height: 46px; padding-right: 4px; font-variant-numeric: tabular-nums; white-space: nowrap; }
 .sw-li-remove { width: 28px; height: 46px; display: flex; align-items: center; justify-content: center; background: none; border: none; color: var(--pb-base-500); cursor: pointer; border-radius: var(--pb-radius-m); transition: background .15s, color .15s; }
 .sw-li-remove:hover { background: rgba(179,38,30,.08); color: #b3261e; }
 .sw-li-remove:disabled { opacity: .3; cursor: not-allowed; }
